@@ -13,7 +13,7 @@ namespace DoomBubblesMod.Items
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("The Observable Universe");
+            DisplayName.SetDefault("Pocket Galaxy");
             Tooltip.SetDefault("An endless amount of stars");
         }
 
@@ -36,6 +36,7 @@ namespace DoomBubblesMod.Items
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.FallenStar, 999);
             recipe.SetResult(this);
+            recipe.AddTile(TileID.CrystalBall);
             recipe.AddRecipe();
         }
     }

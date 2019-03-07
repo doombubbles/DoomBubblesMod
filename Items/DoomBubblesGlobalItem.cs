@@ -213,10 +213,5 @@ namespace DoomBubblesMod.Items
 			return base.ReforgePrice(item, ref reforgePrice, ref canApplyDiscount);
 		}
 
-		public override void GetWeaponDamage(Item item, Player player, ref int damage)
-        {
-            damage = (int) (damage * player.GetModPlayer<DoomBubblesPlayer>().damage);
-        }
-
     }
 }

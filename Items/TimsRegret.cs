@@ -29,7 +29,16 @@ namespace DoomBubblesMod.Items
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<DoomBubblesPlayer>().damage += .25f;
+            Mod allDamageMod = ModLoader.GetMod("AllDamage");
+            if (allDamageMod != null) {
+                allDamageMod.Call(new object[]{"Damage", player, .25f});
+            } else {
+                player.meleeDamage += .25f;
+                player.rangedDamage += .25f;
+                player.magicDamage += .25f;
+                player.minionDamage += .25f;
+                player.thrownDamage += .25f;
+            }
         }
 
         public override void AddRecipes()

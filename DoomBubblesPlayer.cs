@@ -14,7 +14,7 @@ namespace DoomBubblesMod
     class DoomBubblesPlayer : ModPlayer
     {
 
-        public float damage = 1f;
+        public float magicMult = 1f;
         public float critDamage;
         public float critChanceMult = 1f;
 
@@ -46,7 +46,7 @@ namespace DoomBubblesMod
             sterak = false;
             homing = false;
             powerStone = false;
-            damage = 1f;
+            magicMult = 1f;
             critDamage = 0f;
             critChanceMult = 1f;
             reforgeCheatCodes = false;
@@ -140,6 +140,7 @@ namespace DoomBubblesMod
             player.meleeCrit = (int) (player.meleeCrit * critChanceMult);
             player.rangedCrit = (int) (player.rangedCrit * critChanceMult);
             player.thrownCrit = (int) (player.thrownCrit * critChanceMult);
+            
             
             base.PostUpdate();
         }

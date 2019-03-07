@@ -49,7 +49,7 @@ namespace DoomBubblesMod.Items
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.SpikyBall, 100);
-            recipe.AddIngredient(ItemID.MeteoriteBar, 20);
+            recipe.AddIngredient(ItemID.MeteoriteBar, 10);
             recipe.AddIngredient(ItemID.FlintlockPistol, 1);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
@@ -62,7 +62,7 @@ namespace DoomBubblesMod.Items
             {
                 return false;
             }
-            else return base.ConsumeAmmo(player);
+            return base.ConsumeAmmo(player);
             
         }
     }

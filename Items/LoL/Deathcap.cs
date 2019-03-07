@@ -32,9 +32,8 @@ namespace DoomBubblesMod.Items.LoL
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.magicDamage += .1f;
-            player.magicDamage += (player.magicDamage + player.GetModPlayer<DoomBubblesPlayer>().damage - 2f) * .25f;
+            player.GetModPlayer<DoomBubblesPlayer>().magicMult += .25f;
 
-        
         }
 
         public override void AddRecipes()
