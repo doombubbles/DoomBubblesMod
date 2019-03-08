@@ -140,7 +140,9 @@ namespace DoomBubblesMod
             player.meleeCrit = (int) (player.meleeCrit * critChanceMult);
             player.rangedCrit = (int) (player.rangedCrit * critChanceMult);
             player.thrownCrit = (int) (player.thrownCrit * critChanceMult);
-            
+
+
+            player.magicDamage += (int) ((player.magicDamage - 1f) * magicMult);
             
             base.PostUpdate();
         }

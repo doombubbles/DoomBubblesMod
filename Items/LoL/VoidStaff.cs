@@ -47,7 +47,7 @@ namespace DoomBubblesMod.Items.LoL
             recipe.AddIngredient(ItemID.InfernoFork, 1);
             recipe.AddIngredient(ItemID.SpectreStaff, 1);
             recipe.AddIngredient(mod.ItemType("RunicEssence"), 15);
-            recipe.AddTile(TileID.Dirt);
+            recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }
