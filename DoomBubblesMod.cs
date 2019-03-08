@@ -25,7 +25,7 @@ namespace DoomBubblesMod
 
         public override void AddRecipes()
         {
-            /*
+            
             RecipeFinder finder = new RecipeFinder();
             finder.AddIngredient(ItemID.FrostsparkBoots);
             finder.AddIngredient(ItemID.LavaWaders);
@@ -41,7 +41,7 @@ namespace DoomBubblesMod
                 editor.AddIngredient(ItemID.SoulofLight);
                 editor.AddIngredient(ItemID.SoulofNight);
             }
-
+            /*
             RecipeFinder finder2 = new RecipeFinder();
             finder2.AddIngredient(ItemID.FrostsparkBoots);
             finder2.AddIngredient(ItemID.LavaWaders);

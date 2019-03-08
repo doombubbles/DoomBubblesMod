@@ -35,10 +35,7 @@ namespace DoomBubblesMod.Items
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            for (int i = 0; i < 7; i++)
-            {
-                recipe.AddIngredient(ItemID.NaturesGift);
-            }
+            recipe.AddIngredient(ItemID.NaturesGift, 7);
             recipe.AddTile(TileID.TinkerersWorkbench);
             recipe.SetResult(this);
             recipe.AddRecipe();

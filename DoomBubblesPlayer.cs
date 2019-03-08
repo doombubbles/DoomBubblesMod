@@ -18,18 +18,14 @@ namespace DoomBubblesMod
         public float critDamage;
         public float critChanceMult = 1f;
 
-        
-        
         public bool sterak;
         public bool homing;
         public bool reforgeCheatCodes;
-        
         
         public int doom = 0;
         public int botrk;
         public int frostmourne = 0;
 
-        
         public bool soulStone;
         public Tile soulStoneTile = new Tile();
         public bool soulStoneTileActive;
@@ -38,8 +34,6 @@ namespace DoomBubblesMod
         public int powerStoneCharge;
         public bool powerStone;
         public List<int> powerStoning = new List<int>();
-        
-        
 
         public override void ResetEffects()
         {
