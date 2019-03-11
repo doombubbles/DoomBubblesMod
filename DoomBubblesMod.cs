@@ -11,6 +11,8 @@ namespace DoomBubblesMod
 {
     public class DoomBubblesMod : Mod
     {
+        public static bool allDamageLoaded = false;
+        
         public DoomBubblesMod()
         {
             Properties = new ModProperties()
@@ -19,8 +21,13 @@ namespace DoomBubblesMod
                 AutoloadGores = true,
                 AutoloadSounds = true
             };
+        }
 
 
+        public override void Load()
+        {
+            allDamageLoaded = ModLoader.GetMod("AllDamage") != null;
+            base.Load();
         }
 
         public override void AddRecipes()

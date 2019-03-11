@@ -29,9 +29,8 @@ namespace DoomBubblesMod.Items
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            Mod allDamageMod = ModLoader.GetMod("AllDamage");
-            if (allDamageMod != null) {
-                allDamageMod.Call(new object[]{"Damage", player, .25f});
+            if (DoomBubblesMod.allDamageLoaded) {
+                ModLoader.GetMod("AllDamage").Call(new object[]{"Damage", player, .25f});
             } else {
                 player.meleeDamage += .25f;
                 player.rangedDamage += .25f;

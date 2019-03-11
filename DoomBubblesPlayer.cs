@@ -63,6 +63,10 @@ namespace DoomBubblesMod
 
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
+            if (damageSource.SourceProjectileType == 286 && damageSource.SourcePlayerIndex == player.whoAmI)
+            {
+                return false;
+            }
             if (damage >= (player.statLife / 4) && sterak)
             {
                 player.AddBuff(mod.BuffType("Sterak"), 600, false);
@@ -129,6 +133,15 @@ namespace DoomBubblesMod
             {
                 soulStone = false;
             }
+            
+            base.PostUpdate();
+        }
+
+
+        public override void UpdateEquips(ref bool wallSpeedBuff, ref bool tileSpeedBuff, ref bool tileRangeBuff)
+        {
+            base.UpdateEquips(ref wallSpeedBuff, ref tileSpeedBuff, ref tileRangeBuff);
+            
 
             player.magicCrit = (int) (player.magicCrit * critChanceMult);
             player.meleeCrit = (int) (player.meleeCrit * critChanceMult);
@@ -136,9 +149,7 @@ namespace DoomBubblesMod
             player.thrownCrit = (int) (player.thrownCrit * critChanceMult);
 
 
-            player.magicDamage += (int) ((player.magicDamage - 1f) * magicMult);
-            
-            base.PostUpdate();
+            player.magicDamage += (player.magicDamage - 1f) * (magicMult - 1f);
         }
 
         public override bool ConsumeAmmo(Item weapon, Item ammo)

@@ -15,8 +15,7 @@ namespace DoomBubblesMod.Items.LoL
         {
             DisplayName.SetDefault("Rabadon's Deathcap");
             Tooltip.SetDefault("10% increased magic damage\n" +
-                               "Magic damage increases are 25% more effective\n" +
-                               "(Put in bottom-most accesory slot)");
+                               "Magic damage increases are 25% more effective");
         }
 
         public override void SetDefaults()

@@ -2,3 +2,5 @@
 *.user
 *.cache
 DoomBubblesMod.sln
+.vs/config/applicationhost.config
+*.suo
