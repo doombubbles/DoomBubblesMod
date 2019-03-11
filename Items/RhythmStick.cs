@@ -20,8 +20,8 @@ namespace DoomBubblesMod.Items
             item.rare = 1;
             item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/RhythmStick");
             item.useStyle = 1;
-            item.useAnimation = 60;
-            item.useTime = 60;
+            item.useAnimation = 360;
+            item.useTime = 360;
             // Set other item.X values here
         }
 
