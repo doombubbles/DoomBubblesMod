@@ -90,6 +90,7 @@
     <Compile Include="Items\LoL\SteraksGage.cs" />
     <Compile Include="Items\LoL\TitanicHydra.cs" />
     <Compile Include="Items\LoL\VoidStaff.cs" />
+    <Compile Include="Items\RhythmStick.cs" />
     <Compile Include="Items\Thanos\InfinityGauntlet.cs" />
     <Compile Include="Items\Thanos\MindStone.cs" />
     <Compile Include="Items\Thanos\PowerStone.cs" />
@@ -137,6 +138,7 @@
     <Compile Include="Sounds\Botrk2.cs" />
     <Compile Include="Sounds\Botrk.cs" />
     <Compile Include="Sounds\MindStone.cs" />
+    <Compile Include="Sounds\RhythmStick.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="build.txt" />
