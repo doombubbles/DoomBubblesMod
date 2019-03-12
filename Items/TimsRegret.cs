@@ -29,9 +29,12 @@ namespace DoomBubblesMod.Items
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            if (DoomBubblesMod.allDamageLoaded) {
-                ModLoader.GetMod("AllDamage").Call(new object[]{"Damage", player, .25f});
-            } else {
+            if (DoomBubblesMod.allDamageLoaded)
+            {
+                ModLoader.GetMod("AllDamage").Call(new object[] {"Damage", player, .25f});
+            }
+            else
+            {
                 player.meleeDamage += .25f;
                 player.rangedDamage += .25f;
                 player.magicDamage += .25f;
@@ -51,17 +54,24 @@ namespace DoomBubblesMod.Items
             recipe.AddIngredient(ItemID.DestroyerEmblem);
             recipe.AddIngredient(ItemID.CelestialEmblem);
 
-            Mod thoriumMod = ModLoader.GetMod("ThoriumMod");
-            if (thoriumMod != null)
+
+            if (DoomBubblesMod.thoriumLoaded)
             {
-                recipe.AddIngredient(thoriumMod.ItemType("BardEmblem"));
-                recipe.AddIngredient(thoriumMod.ItemType("NinjaEmblem"));
-                recipe.AddIngredient(thoriumMod.ItemType("ClericEmblem"));
-                recipe.AddIngredient(thoriumMod.ItemType("ArcaniteEmblem"));
+                addThoriumRecipes(ref recipe);
             }
+
             recipe.AddTile(TileID.TinkerersWorkbench);
             recipe.SetResult(this);
             recipe.AddRecipe();
+        }
+
+        public void addThoriumRecipes(ref ModRecipe recipe)
+        {
+            Mod thoriumMod = ModLoader.GetMod("ThoriumMod");
+            recipe.AddIngredient(thoriumMod.ItemType("BardEmblem"));
+            recipe.AddIngredient(thoriumMod.ItemType("NinjaEmblem"));
+            recipe.AddIngredient(thoriumMod.ItemType("ClericEmblem"));
+            recipe.AddIngredient(thoriumMod.ItemType("ArcaniteEmblem"));
         }
     }
 }

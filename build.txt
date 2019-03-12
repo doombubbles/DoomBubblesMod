@@ -1,9 +1,9 @@
 author = DoomBubbles
-version = 0.17.3
+version = 0.17.4
 displayName = Doom Bubbles' Mod
 hideCode = true
 hideResources = true
 includeSource = false
 buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*
 includePDB = true
-weakReferences = CalamityMod, ThoriumMod, AllDamage
+weakReferences = ThoriumMod, AllDamage

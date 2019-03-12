@@ -11,7 +11,8 @@ namespace DoomBubblesMod
 {
     public class DoomBubblesMod : Mod
     {
-        public static bool allDamageLoaded = false;
+        public static bool allDamageLoaded;
+        public static bool thoriumLoaded;
         
         public DoomBubblesMod()
         {
@@ -27,6 +28,7 @@ namespace DoomBubblesMod
         public override void Load()
         {
             allDamageLoaded = ModLoader.GetMod("AllDamage") != null;
+            thoriumLoaded = ModLoader.GetMod("ThoriumMod") != null;
             base.Load();
         }
 
