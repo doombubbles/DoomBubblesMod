@@ -1,11 +1,19 @@
-C:\Users\James Gale\Documents\My Games\Terraria\ModLoader\Mod Sources\DoomBubblesMod\bin\Debug\Microsoft.Xna.Framework.dll
-C:\Users\James Gale\Documents\My Games\Terraria\ModLoader\Mod Sources\DoomBubblesMod\bin\Debug\Microsoft.Xna.Framework.Game.dll
-C:\Users\James Gale\Documents\My Games\Terraria\ModLoader\Mod Sources\DoomBubblesMod\bin\Debug\Microsoft.Xna.Framework.Graphics.dll
-C:\Users\James Gale\Documents\My Games\Terraria\ModLoader\Mod Sources\DoomBubblesMod\bin\Debug\Microsoft.Xna.Framework.Xact.dll
-C:\Users\James Gale\Documents\My Games\Terraria\ModLoader\Mod Sources\DoomBubblesMod\bin\Debug\Terraria.exe
-C:\Users\James Gale\Documents\My Games\Terraria\ModLoader\Mod Sources\DoomBubblesMod\bin\Debug\DoomBubblesMod.dll.config
-C:\Users\James Gale\Documents\My Games\Terraria\ModLoader\Mod Sources\DoomBubblesMod\bin\Debug\DoomBubblesMod.dll
-C:\Users\James Gale\Documents\My Games\Terraria\ModLoader\Mod Sources\DoomBubblesMod\bin\Debug\DoomBubblesMod.pdb
-C:\Users\James Gale\Documents\My Games\Terraria\ModLoader\Mod Sources\DoomBubblesMod\obj\Debug\DoomBubblesMod.dll
-C:\Users\James Gale\Documents\My Games\Terraria\ModLoader\Mod Sources\DoomBubblesMod\obj\Debug\DoomBubblesMod.pdb
-C:\Users\James Gale\Documents\My Games\Terraria\ModLoader\Mod Sources\DoomBubblesMod\obj\Debug\DoomBubblesMod.csprojResolveAssemblyReference.cache
+C:/Users/James Gale/Documents/My Games/Terraria/ModLoader/Mod Sources/DoomBubblesMod/bin/Debug/Microsoft.Xna.Framework.dll
+C:/Users/James Gale/Documents/My Games/Terraria/ModLoader/Mod Sources/DoomBubblesMod/bin/Debug/Microsoft.Xna.Framework.Game.dll
+C:/Users/James Gale/Documents/My Games/Terraria/ModLoader/Mod Sources/DoomBubblesMod/bin/Debug/Microsoft.Xna.Framework.Graphics.dll
+C:/Users/James Gale/Documents/My Games/Terraria/ModLoader/Mod Sources/DoomBubblesMod/bin/Debug/Microsoft.Xna.Framework.Xact.dll
+C:/Users/James Gale/Documents/My Games/Terraria/ModLoader/Mod Sources/DoomBubblesMod/bin/Debug/Terraria.exe
+C:/Users/James Gale/Documents/My Games/Terraria/ModLoader/Mod Sources/DoomBubblesMod/bin/Debug/DoomBubblesMod.dll.config
+C:/Users/James Gale/Documents/My Games/Terraria/ModLoader/Mod Sources/DoomBubblesMod/bin/Debug/DoomBubblesMod.dll
+C:/Users/James Gale/Documents/My Games/Terraria/ModLoader/Mod Sources/DoomBubblesMod/bin/Debug/DoomBubblesMod.pdb
+C:/Users/James Gale/Documents/My Games/Terraria/ModLoader/Mod Sources/DoomBubblesMod/obj/Debug/DoomBubblesMod.dll
+C:/Users/James Gale/Documents/My Games/Terraria/ModLoader/Mod Sources/DoomBubblesMod/obj/Debug/DoomBubblesMod.pdb
+C:/Users/James Gale/Documents/My Games/Terraria/ModLoader/Mod Sources/DoomBubblesMod/obj/Debug/DoomBubblesMod.csprojResolveAssemblyReference.cache
+/Users/jamesgale/Library/Application Support/Terraria/ModLoader/Mod Sources/DoomBubblesMod/bin/Debug/DoomBubblesMod.dll.config
+/Users/jamesgale/Library/Application Support/Terraria/ModLoader/Mod Sources/DoomBubblesMod/bin/Debug/DoomBubblesMod.dll
+/Users/jamesgale/Library/Application Support/Terraria/ModLoader/Mod Sources/DoomBubblesMod/bin/Debug/DoomBubblesMod.pdb
+/Users/jamesgale/Library/Application Support/Terraria/ModLoader/Mod Sources/DoomBubblesMod/obj/Debug/DoomBubblesMod.csprojAssemblyReference.cache
+/Users/jamesgale/Library/Application Support/Terraria/ModLoader/Mod Sources/DoomBubblesMod/obj/Debug/DoomBubblesMod.csproj.CoreCompileInputs.cache
+/Users/jamesgale/Library/Application Support/Terraria/ModLoader/Mod Sources/DoomBubblesMod/obj/Debug/DoomBubblesMod.csproj.CopyComplete
+/Users/jamesgale/Library/Application Support/Terraria/ModLoader/Mod Sources/DoomBubblesMod/obj/Debug/DoomBubblesMod.dll
+/Users/jamesgale/Library/Application Support/Terraria/ModLoader/Mod Sources/DoomBubblesMod/obj/Debug/DoomBubblesMod.pdb
