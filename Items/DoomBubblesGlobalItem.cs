@@ -13,11 +13,25 @@ namespace DoomBubblesMod.Items
 	{
 		public override void SetDefaults(Item item)
 		{
+			Dictionary<string, string> itemNameOverrides = new Dictionary<string, string>
+			{
+				["Avenger Emblem"] = "Avengers' Emblem"
+			};
+
+			foreach ( KeyValuePair<string, string> kvp in itemNameOverrides)
+			{
+				string originalName = kvp.Key;
+				string replacementName = kvp.Value;
+				if (item.Name == originalName)
+				{
+					item.SetNameOverride(replacementName);
+				}
+			}
 			if (item.type == ItemID.SpikyBall)
 			{
                 item.ammo = item.type;
 			}
-
+			/*
 			if (item.Name == "Waifu in a Bottle")
 			{
 				item.SetNameOverride("Weeaboo in a Bottle");
@@ -55,8 +69,7 @@ namespace DoomBubblesMod.Items
 						item.SetNameOverride("Rare Lucy in a Bottle");
 					}
 				}
-			}
-            
+			}*/
 		}
 
 		public override void PostReforge(Item item)
