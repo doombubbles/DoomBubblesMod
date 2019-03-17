@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,24 +15,27 @@ namespace DoomBubblesMod.Items
 	{
 		public override void SetDefaults(Item item)
 		{
-			Dictionary<string, string> itemNameOverrides = new Dictionary<string, string>
+			
+			Dictionary<int, string> itemNameOverrides = new Dictionary<int, string>
 			{
-				["Avenger Emblem"] = "Avengers' Emblem"
+				[ItemID.AvengerEmblem] = "Avengers Emblem"
 			};
 
-			foreach ( KeyValuePair<string, string> kvp in itemNameOverrides)
+			foreach ( KeyValuePair<int, string> kvp in itemNameOverrides)
 			{
-				string originalName = kvp.Key;
+				int itemId = kvp.Key;
 				string replacementName = kvp.Value;
-				if (item.Name == originalName)
+				if (item.type == itemId)
 				{
 					item.SetNameOverride(replacementName);
 				}
 			}
+			
 			if (item.type == ItemID.SpikyBall)
 			{
                 item.ammo = item.type;
 			}
+			
 			/*
 			if (item.Name == "Waifu in a Bottle")
 			{
@@ -71,6 +76,7 @@ namespace DoomBubblesMod.Items
 				}
 			}*/
 		}
+		
 
 		public override void PostReforge(Item item)
 		{
@@ -225,6 +231,7 @@ namespace DoomBubblesMod.Items
 			}
 			return base.ReforgePrice(item, ref reforgePrice, ref canApplyDiscount);
 		}
-
-    }
+	}
+	
+	
 }

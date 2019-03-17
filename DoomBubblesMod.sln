@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoomBubblesMod", "DoomBubblesMod.csproj", "{EA45A9C1-095F-41EA-82E5-CC2A8F589961}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoomBubblesMod", "DoomBubblesMod.csproj", "{7773BDD8-037E-46DB-B842-B0EE41E74873}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +13,14 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EA45A9C1-095F-41EA-82E5-CC2A8F589961}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EA45A9C1-095F-41EA-82E5-CC2A8F589961}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EA45A9C1-095F-41EA-82E5-CC2A8F589961}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{EA45A9C1-095F-41EA-82E5-CC2A8F589961}.Debug|x86.Build.0 = Debug|Any CPU
-		{EA45A9C1-095F-41EA-82E5-CC2A8F589961}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EA45A9C1-095F-41EA-82E5-CC2A8F589961}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EA45A9C1-095F-41EA-82E5-CC2A8F589961}.Release|x86.ActiveCfg = Release|Any CPU
-		{EA45A9C1-095F-41EA-82E5-CC2A8F589961}.Release|x86.Build.0 = Release|Any CPU
+		{7773BDD8-037E-46DB-B842-B0EE41E74873}.Debug|Any CPU.ActiveCfg = Mono|Any CPU
+		{7773BDD8-037E-46DB-B842-B0EE41E74873}.Debug|Any CPU.Build.0 = Mono|Any CPU
+		{7773BDD8-037E-46DB-B842-B0EE41E74873}.Debug|x86.ActiveCfg = Mono|Any CPU
+		{7773BDD8-037E-46DB-B842-B0EE41E74873}.Debug|x86.Build.0 = Mono|Any CPU
+		{7773BDD8-037E-46DB-B842-B0EE41E74873}.Release|Any CPU.ActiveCfg = Mono|Any CPU
+		{7773BDD8-037E-46DB-B842-B0EE41E74873}.Release|Any CPU.Build.0 = Mono|Any CPU
+		{7773BDD8-037E-46DB-B842-B0EE41E74873}.Release|x86.ActiveCfg = Mono|Any CPU
+		{7773BDD8-037E-46DB-B842-B0EE41E74873}.Release|x86.Build.0 = Mono|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
