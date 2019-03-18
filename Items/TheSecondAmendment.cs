@@ -9,34 +9,36 @@ using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Items
 {
-    class FredericksGift : ModItem
+    class TheSecondAmendment : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Frederick's Gift");
-            Tooltip.SetDefault("42% reduced mana usage");
+            DisplayName.SetDefault("The Second Amendment");
+            Tooltip.SetDefault("17.76% increased ranged firing rate");
         }
 
         public override void SetDefaults()
         {
             item.value = 100000;
-            item.width = 34;
-            item.height = 22;
-            item.rare = 2;
+            item.width = 30;
+            item.height = 30;
+            item.rare = 7;
             item.accessory = true;
         }
 
-
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.manaCost -= .42f;
+            player.GetModPlayer<DoomBubblesPlayer>().fireRate += .1776f;
         }
 
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.NaturesGift, 7);
-            recipe.AddTile(TileID.TinkerersWorkbench);
+            recipe.AddIngredient(ItemID.Silk, 10);
+            recipe.AddIngredient(ItemID.Feather);
+            recipe.AddIngredient(ItemID.BlackInk);
+            recipe.AddIngredient(ItemID.MusketBall, 1776);
+            recipe.AddTile(TileID.LihzahrdAltar);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

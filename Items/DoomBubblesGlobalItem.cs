@@ -18,7 +18,7 @@ namespace DoomBubblesMod.Items
 			
 			Dictionary<int, string> itemNameOverrides = new Dictionary<int, string>
 			{
-				[ItemID.AvengerEmblem] = "Avengers Emblem"
+				{ItemID.AvengerEmblem, "Avengers Emblem"}
 			};
 
 			foreach ( KeyValuePair<int, string> kvp in itemNameOverrides)
@@ -34,6 +34,11 @@ namespace DoomBubblesMod.Items
 			if (item.type == ItemID.SpikyBall)
 			{
                 item.ammo = item.type;
+			}
+
+			if (item.type == ItemID.ExplodingBullet || item.Name == "Endless Explosive Pouch")
+			{
+				item.damage *= 2;
 			}
 			
 			/*
@@ -76,7 +81,6 @@ namespace DoomBubblesMod.Items
 				}
 			}*/
 		}
-		
 
 		public override void PostReforge(Item item)
 		{

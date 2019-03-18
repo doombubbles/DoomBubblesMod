@@ -17,6 +17,7 @@ namespace DoomBubblesMod
         public float magicMult = 1f;
         public float critDamage;
         public float critChanceMult = 1f;
+        public float fireRate = 1f;
 
         public bool sterak;
         public bool homing;
@@ -41,6 +42,7 @@ namespace DoomBubblesMod
             homing = false;
             powerStone = false;
             magicMult = 1f;
+            fireRate = 1f;
             critDamage = 0f;
             critChanceMult = 1f;
             reforgeCheatCodes = false;

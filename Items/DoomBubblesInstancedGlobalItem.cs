@@ -1,6 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.IO;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -111,6 +113,25 @@ namespace DoomBubblesMod.Items
             mana = reader.ReadByte();
             critDamage = reader.ReadByte();
             hp = reader.ReadByte();
+        }
+
+
+        public override float UseTimeMultiplier(Item item, Player player)
+        {
+            if (item.ranged)
+            {
+                return base.UseTimeMultiplier(item, player) * player.GetModPlayer<DoomBubblesPlayer>().fireRate;
+            }
+            return base.UseTimeMultiplier(item, player);
+        }
+
+        public override float MeleeSpeedMultiplier(Item item, Player player)
+        {
+            if (item.ranged)
+            {
+                return base.MeleeSpeedMultiplier(item, player) * player.GetModPlayer<DoomBubblesPlayer>().fireRate;
+            }
+            return base.MeleeSpeedMultiplier(item, player);
         }
     }
 }

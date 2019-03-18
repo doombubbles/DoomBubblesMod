@@ -22,7 +22,7 @@ namespace DoomBubblesMod.Items
             item.value = 100000;
             item.width = 42;
             item.height = 42;
-            item.rare = 9;
+            item.rare = 6;
             item.accessory = true;
         }
 

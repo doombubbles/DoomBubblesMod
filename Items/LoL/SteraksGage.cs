@@ -17,7 +17,7 @@ namespace DoomBubblesMod.Items.LoL
             item.value = 100000;
             item.width = 22;
             item.height = 20;
-            item.rare = 9;
+            item.rare = 8;
             item.accessory = true;
 
 
