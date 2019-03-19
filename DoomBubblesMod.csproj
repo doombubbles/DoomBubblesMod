@@ -86,8 +86,12 @@
     <Compile Include="Commands\GameBalanceCommand.cs" />
     <Compile Include="DoomBubblesGlobalProjectile.cs" />
     <Compile Include="DoomBubblesWorld.cs" />
+    <Compile Include="Items\AK47.cs" />
     <Compile Include="Items\BigBadBundle.cs" />
+    <Compile Include="Items\BlankDye.cs" />
+    <Compile Include="Items\BrokenHeroGun.cs" />
     <Compile Include="Items\DoomBubblesInstancedGlobalItem.cs" />
+    <Compile Include="Items\MidnightMaelstrom.cs" />
     <Compile Include="Items\FredericksGift.cs" />
     <Compile Include="Items\LoL\BlackCleaver.cs" />
     <Compile Include="Items\LoL\Botrk.cs" />
@@ -111,6 +115,7 @@
     <Compile Include="Items\Thanos\SpaceStone.cs" />
     <Compile Include="Items\Thanos\TimeStone.cs" />
     <Compile Include="Items\TheObservableUniverse.cs" />
+    <Compile Include="Items\TheSecondAmendment.cs" />
     <Compile Include="Items\TimsRegret.cs" />
     <Compile Include="Items\Frostmourne.cs" />
     <Compile Include="Items\Doomhammer.cs" />
@@ -123,6 +128,8 @@
     <Compile Include="Items\SpikyBallBlaster.cs" />
     <Compile Include="Items\RoyalHoney.cs" />
     <Compile Include="Items\TinkerersCheatCodes.cs" />
+    <Compile Include="Items\TrueMidnightMaelstrom.cs" />
+    <Compile Include="Items\TrueTrigun.cs" />
     <Compile Include="NPCs\ValoranSpirit.cs" />
     <Compile Include="Prefixes\CritDamagePrefix.cs" />
     <Compile Include="Prefixes\HpPrefix.cs" />
@@ -132,6 +139,8 @@
     <Compile Include="Projectiles\DoomhammerGlow.cs" />
     <Compile Include="Projectiles\Etonmourne.cs" />
     <Compile Include="Projectiles\DoomLightning.cs" />
+    <Compile Include="Projectiles\TrueHomingBullet.cs" />
+    <Compile Include="Projectiles\MidnightBlast.cs" />
     <Compile Include="Projectiles\PowerStone.cs" />
     <Compile Include="Projectiles\RealityBeam.cs" />
     <Compile Include="Projectiles\PowerExplosion.cs" />
@@ -144,6 +153,7 @@
     <Compile Include="Projectiles\Echo.cs" />
     <Compile Include="Projectiles\Hurricane.cs" />
     <Compile Include="Projectiles\Cleaver.cs" />
+    <Compile Include="Projectiles\TruePiercingBullet.cs" />
     <Compile Include="Sounds\Crescent.cs" />
     <Compile Include="Sounds\GauntletComplete.cs" />
     <Compile Include="Sounds\Lightning.cs" />
@@ -162,6 +172,6 @@
     <VisualStudio AllowExistingFolder="true" />
   </ProjectExtensions>
   <Target Name="AfterBuild">
-    <Exec Command='cp bin\Mono\DoomBubblesMod.dll All.dll' />
+    <Exec Command="cp bin\Mono\DoomBubblesMod.dll All.dll" />
   </Target>
 </Project>

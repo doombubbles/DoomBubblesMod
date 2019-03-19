@@ -213,7 +213,7 @@ namespace DoomBubblesMod
             }
 
 
-            if (npc.type == NPCID.Mothron && Main.rand.Next(5) == 1)
+            if (npc.type == NPCID.Mothron && Main.rand.Next(4) == 1)
             {
                 Item.NewItem(npc.position, mod.ItemType("BrokenHeroGun"));
             }
@@ -237,31 +237,19 @@ namespace DoomBubblesMod
 
         }
 
-        /*
-        public override void UpdateLifeRegen(NPC npc, ref int damage)
+        public override void SetupShop(int type, Chest shop, ref int nextSlot)
         {
-            int powerStoneDamage = 100 + (int) Math.Min(npc.lifeMax * .01, 1000);
-            if (npc.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).powerStoned > 58)
+            switch (type)
             {
-                if (npc.lifeRegen > 0)
-                {
-                    npc.lifeRegen = 0;
-                }
-
-                npc.lifeRegen -= powerStoneDamage * 2;
-                if (damage < powerStoneDamage)
-                {
-                    damage = powerStoneDamage;
-                }
+                case NPCID.DyeTrader:
+                    if (Main.hardMode)
+                    {
+                        shop.item[nextSlot].SetDefaults(mod.ItemType("BlankDye"));
+                        nextSlot++;
+                    }
+                    break;
             }
-            else if (npc.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).powerStoned > 0)
-            {
-                npc.lifeRegenCount = 0;
-            }
-            
-            
-            base.UpdateLifeRegen(npc, ref damage);
+            base.SetupShop(type, shop, ref nextSlot);
         }
-        */
     }
 }

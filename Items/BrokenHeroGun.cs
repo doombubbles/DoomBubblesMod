@@ -15,7 +15,7 @@ namespace DoomBubblesMod.Items
         {
             item.width = 30;
             item.height = 26;
-            item.maxStack = 1;
+            item.maxStack = 99;
             item.value = Item.sellPrice(0, 2, 0, 0);
             item.rare = 8;
         }

@@ -168,7 +168,7 @@ namespace DoomBubblesMod.Items.Thanos
                 foreach (Dust dust in Main.dust)
                 {
                     Vector2 gauntlet = new Vector2(player.Center.X + 10 * player.direction, player.Center.Y - 25);
-                    if (dust.customData == "Reality Beam" && Math.Sqrt(Math.Pow(gauntlet.X - dust.position.X, 2) + Math.Pow(gauntlet.Y - dust.position.Y, 2)) < 10f)
+                    if ((string) dust.customData == "Reality Beam" && Math.Sqrt(Math.Pow(gauntlet.X - dust.position.X, 2) + Math.Pow(gauntlet.Y - dust.position.Y, 2)) < 10f)
                     {
                         dust.active = false;
                     }

@@ -31,7 +31,7 @@ namespace DoomBubblesMod.Items
 			item.value = Item.sellPrice(0, 10);
 			item.rare = 8;
 			item.UseSound = SoundID.Item11;
-			item.autoReuse = true;
+			item.autoReuse = false;
 			item.shoot = 10; //idk why but all the guns in the vanilla source have this
 			item.shootSpeed = 10f;
 			item.useAmmo = AmmoID.Bullet;

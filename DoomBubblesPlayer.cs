@@ -26,6 +26,7 @@ namespace DoomBubblesMod
         public int doom = 0;
         public int botrk;
         public int frostmourne = 0;
+        public int critCombo = 0;
 
         public bool soulStone;
         public Tile soulStoneTile = new Tile();
@@ -138,8 +139,7 @@ namespace DoomBubblesMod
             
             base.PostUpdate();
         }
-
-
+        
         public override void UpdateEquips(ref bool wallSpeedBuff, ref bool tileSpeedBuff, ref bool tileRangeBuff)
         {
             base.UpdateEquips(ref wallSpeedBuff, ref tileSpeedBuff, ref tileRangeBuff);
