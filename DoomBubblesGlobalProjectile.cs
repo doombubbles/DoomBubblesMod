@@ -28,6 +28,8 @@ namespace DoomBubblesMod
 
         public bool realityStone;
 
+        public bool ak47;
+
         public override bool PreAI(Projectile pProjectile)
         {
             if (pProjectile.friendly && Main.player[pProjectile.owner].GetModPlayer<DoomBubblesPlayer>(mod).homing && (pProjectile.aiStyle == 1 || pProjectile.aiStyle == 2 || pProjectile.aiStyle == 5 || pProjectile.aiStyle == 27))
@@ -157,6 +159,26 @@ namespace DoomBubblesMod
                 return base.PreAI(pProjectile);
             }
             else return base.PreAI(pProjectile);
+        }
+
+
+        public override void ModifyHitNPC(Projectile projectile, NPC target, ref int damage, ref float knockback, ref bool crit,
+            ref int hitDirection)
+        {
+            if (projectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>().ak47)
+            {
+                Player player = Main.player[projectile.owner];
+                if (crit)
+                {
+                    player.GetModPlayer<DoomBubblesPlayer>().critCombo++;
+                    damage = (int) (damage / 2f) * (Math.Min(player.GetModPlayer<DoomBubblesPlayer>().critCombo, 9) + 1);
+                }
+                else
+                {
+                    player.GetModPlayer<DoomBubblesPlayer>().critCombo = 0;
+                }
+            }
+            base.ModifyHitNPC(projectile, target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
     }
 }

@@ -75,7 +75,9 @@
     <Compile Include="Commands\GameBalanceCommand.cs" />
     <Compile Include="DoomBubblesGlobalProjectile.cs" />
     <Compile Include="DoomBubblesWorld.cs" />
+    <Compile Include="Items\AK47.cs" />
     <Compile Include="Items\BigBadBundle.cs" />
+    <Compile Include="Items\BlankDye.cs" />
     <Compile Include="Items\BrokenHeroGun.cs" />
     <Compile Include="Items\DoomBubblesInstancedGlobalItem.cs" />
     <Compile Include="Items\MidnightMaelstrom.cs" />

@@ -46,7 +46,7 @@ namespace DoomBubblesMod.Items
             recipe.AddIngredient(ItemID.FrostCore, 2);
             recipe.AddIngredient(ItemID.SoulofFright, 20);
             recipe.AddIngredient(mod.ItemType("RunicEssence"), 15);
-            recipe.needWater = true;
+            recipe.AddTile(TileID.IceMachine);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

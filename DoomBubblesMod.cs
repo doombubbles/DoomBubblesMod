@@ -110,6 +110,10 @@ namespace DoomBubblesMod
                         Main.projectile[id].velocity = realityBeam.velocity;
                     }
                     break;
+                case DoomBubblesModMessageType.ak47:
+                    int proj = reader.ReadInt32();
+                    Main.projectile[proj].GetGlobalProjectile<DoomBubblesGlobalProjectile>().ak47 = true;
+                    break;
             }
 
 
@@ -124,7 +128,8 @@ namespace DoomBubblesMod
         cleaved,
         cleaving,
         doomlightning,
-        infinityStone
+        infinityStone,
+        ak47
     }
         
 }

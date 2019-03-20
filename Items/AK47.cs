@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -9,18 +10,20 @@ namespace DoomBubblesMod.Items
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Successive crits do increasing damage.");
+			Tooltip.SetDefault("Shoots a powerful, high velocity bullet\n"+
+			                   "Successive crits do increasing damage.");
 			DisplayName.SetDefault("AK-47");
 		}
 
 		public override void SetDefaults()
 		{
-			item.damage = 28;
+			item.damage = 45;
 			item.ranged = true;
-			item.width = 52;
-			item.height = 20;
-			item.useTime = 28;
-			item.useAnimation = 28;
+			item.width = 64;
+			item.height = 28;
+			item.useTime = 11;
+			item.useAnimation = 11;
+			item.crit = 6;
 			item.useStyle = 5;
 			item.noMelee = true; //so the item's animation doesn't do damage
 			item.knockBack = 4;
@@ -31,29 +34,20 @@ namespace DoomBubblesMod.Items
 			item.shoot = 10; //idk why but all the guns in the vanilla source have this
 			item.shootSpeed = 10f;
 			item.useAmmo = AmmoID.Bullet;
+			item.scale = .9f;
 		}
 
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ItemID.Uzi);
+			recipe.AddIngredient(ItemID.IllegalGunParts, 2);
+			recipe.AddIngredient(ItemID.SoulofFright, 20);
+			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}
-
-
-		public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
-		{
-			if (crit)
-			{
-				player.GetModPlayer<DoomBubblesPlayer>().critCombo++;
-				damage = (int) (damage / 2f) * player.GetModPlayer<DoomBubblesPlayer>().critCombo;
-			}
-			else
-			{
-				player.GetModPlayer<DoomBubblesPlayer>().critCombo = 0;
-			}
-			base.ModifyHitNPC(player, target, ref damage, ref knockBack, ref crit);
-		}
+		
 		// What if I wanted this gun to have a 38% chance not to consume ammo?
 		/*public override bool ConsumeAmmo(Player player)
 		{
@@ -62,14 +56,27 @@ namespace DoomBubblesMod.Items
 
 		// What if I wanted it to work like Uzi, replacing regular bullets with High Velocity Bullets?
 		// Uzi/Molten Fury style: Replace normal Bullets with Highvelocity
-		/*public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
 			if (type == ProjectileID.Bullet) // or ProjectileID.WoodenArrowFriendly
 			{
 				type = ProjectileID.BulletHighVelocity; // or ProjectileID.FireArrow;
 			}
-			return true; // return true to allow tmodloader to call Projectile.NewProjectile as normal
-		}*/
+
+			Projectile projectile = Projectile.NewProjectileDirect(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI);
+			if (Main.netMode == 1)
+			{
+				ModPacket packet = mod.GetPacket();
+				packet.Write((byte)DoomBubblesModMessageType.ak47);
+				packet.Write(projectile.whoAmI);
+				packet.Send();
+			}
+			else
+			{
+				projectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>().ak47 = true;
+			}
+			return false; // return true to allow tmodloader to call Projectile.NewProjectile as normal
+		}
 
 
 		/*
