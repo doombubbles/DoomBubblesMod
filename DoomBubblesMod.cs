@@ -62,6 +62,47 @@ namespace DoomBubblesMod
             }
             */
             
+            RecipeFinder finder2 = new RecipeFinder();
+            finder2.SetResult(ItemID.TerraBlade);
+            foreach (var searchRecipe in finder2.SearchRecipes())
+            {
+                RecipeEditor editor = new RecipeEditor(searchRecipe);
+                editor.AddIngredient(this.ItemType("HeartOfTerraria"));
+            }
+
+            if (thoriumLoaded)
+            {
+                modifyThoriumRecipes();
+            }
+            
+        }
+
+        private void modifyThoriumRecipes()
+        {
+            Mod thoriumMod = ModLoader.GetMod("ThoriumMod");
+            RecipeFinder finder = new RecipeFinder();
+            finder.SetResult(thoriumMod.ItemType("TerraStaff"));
+            foreach (var searchRecipe in finder.SearchRecipes())
+            {
+                RecipeEditor editor = new RecipeEditor(searchRecipe);
+                editor.AddIngredient(this.ItemType("HeartOfTerraria"));
+            }
+            
+            finder = new RecipeFinder();
+            finder.SetResult(thoriumMod.ItemType("TerraScythe"));
+            foreach (var searchRecipe in finder.SearchRecipes())
+            {
+                RecipeEditor editor = new RecipeEditor(searchRecipe);
+                editor.AddIngredient(this.ItemType("HeartOfTerraria"));
+            }
+            
+            finder = new RecipeFinder();
+            finder.SetResult(thoriumMod.ItemType("TerraBow"));
+            foreach (var searchRecipe in finder.SearchRecipes())
+            {
+                RecipeEditor editor = new RecipeEditor(searchRecipe);
+                editor.AddIngredient(this.ItemType("HeartOfTerraria"));
+            }
         }
 
         public override void HandlePacket(BinaryReader reader, int whoAmI)

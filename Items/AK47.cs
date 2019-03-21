@@ -17,7 +17,7 @@ namespace DoomBubblesMod.Items
 
 		public override void SetDefaults()
 		{
-			item.damage = 45;
+			item.damage = 47;
 			item.ranged = true;
 			item.width = 64;
 			item.height = 28;

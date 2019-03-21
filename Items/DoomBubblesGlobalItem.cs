@@ -235,6 +235,15 @@ namespace DoomBubblesMod.Items
 			}
 			return base.ReforgePrice(item, ref reforgePrice, ref canApplyDiscount);
 		}
+
+		public override void OpenVanillaBag(string context, Player player, int arg)
+		{
+			if (arg == ItemID.PlanteraBossBag && context == "bossBag")
+			{
+				player.QuickSpawnItem(mod.ItemType("HeartOfTerraria"));
+			}
+			base.OpenVanillaBag(context, player, arg);
+		}
 	}
 	
 	

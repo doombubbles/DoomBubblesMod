@@ -217,6 +217,11 @@ namespace DoomBubblesMod
             {
                 Item.NewItem(npc.position, mod.ItemType("BrokenHeroGun"));
             }
+
+            if (npc.type == NPCID.Plantera && !Main.expertMode)
+            {
+                Item.NewItem(npc.position, mod.ItemType("HeartOfTerraria"));
+            }
             
             
 

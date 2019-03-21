@@ -43,6 +43,15 @@ namespace DoomBubblesMod.Items
 			{
 				addThoriumRecipe();
 			}
+			else
+			{
+				ModRecipe recipe = new ModRecipe(mod);
+				recipe.AddIngredient(ItemID.HallowedBar, 9);
+				recipe.AddIngredient(mod.ItemType("BrokenHeroGun"));
+				recipe.AddTile(TileID.MythrilAnvil);
+				recipe.SetResult(this);
+				recipe.AddRecipe();
+			}
 		}
 
 		private void addThoriumRecipe()
