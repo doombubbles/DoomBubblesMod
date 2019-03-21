@@ -2,9 +2,11 @@ using System;
 using System.IO;
 using Terraria;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace DoomBubblesMod
@@ -152,8 +154,14 @@ namespace DoomBubblesMod
                     }
                     break;
                 case DoomBubblesModMessageType.ak47:
-                    int proj = reader.ReadInt32();
-                    Main.projectile[proj].GetGlobalProjectile<DoomBubblesGlobalProjectile>().ak47 = true;
+                    int identity = reader.ReadInt32();
+                    for (int j = 0; j < 1000; j++) {
+                        if (Main.projectile[j].identity == identity && Main.projectile[j].active && Main.projectile[j].Name != "Depth Bubble") {
+                            Main.projectile[j].GetGlobalProjectile<DoomBubblesGlobalProjectile>(this).ak47 = true;
+                            NetMessage.BroadcastChatMessage(NetworkText.FromLiteral(Main.projectile[j].GetGlobalProjectile<DoomBubblesGlobalProjectile>(this).ak47 + ""), Color.White);
+                            break;
+                        }
+                    }
                     break;
             }
 

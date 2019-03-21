@@ -2,6 +2,7 @@ using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Items
@@ -68,12 +69,12 @@ namespace DoomBubblesMod.Items
 			{
 				ModPacket packet = mod.GetPacket();
 				packet.Write((byte)DoomBubblesModMessageType.ak47);
-				packet.Write(projectile.whoAmI);
+				packet.Write(projectile.identity);
 				packet.Send();
 			}
 			else
 			{
-				projectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>().ak47 = true;
+				projectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>(mod).ak47 = true;
 			}
 			return false; // return true to allow tmodloader to call Projectile.NewProjectile as normal
 		}

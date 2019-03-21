@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 
@@ -165,13 +166,13 @@ namespace DoomBubblesMod
         public override void ModifyHitNPC(Projectile projectile, NPC target, ref int damage, ref float knockback, ref bool crit,
             ref int hitDirection)
         {
-            if (projectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>().ak47)
+            if (projectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>(mod).ak47)
             {
                 Player player = Main.player[projectile.owner];
                 if (crit)
                 {
                     player.GetModPlayer<DoomBubblesPlayer>().critCombo++;
-                    damage = (int) (damage / 2f) * (Math.Min(player.GetModPlayer<DoomBubblesPlayer>().critCombo, 9) + 1);
+                    damage = (int) (damage / 2f) * (Math.Min(player.GetModPlayer<DoomBubblesPlayer>(mod).critCombo + 1, 10));
                 }
                 else
                 {
@@ -180,5 +181,6 @@ namespace DoomBubblesMod
             }
             base.ModifyHitNPC(projectile, target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
+        
     }
 }
