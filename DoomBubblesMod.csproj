@@ -108,6 +108,7 @@
     <Compile Include="Items\LoL\TitanicHydra.cs" />
     <Compile Include="Items\LoL\VoidStaff.cs" />
     <Compile Include="Items\RhythmStick.cs" />
+    <Compile Include="Items\TerraRifle.cs" />
     <Compile Include="Items\Thanos\InfinityGauntlet.cs" />
     <Compile Include="Items\Thanos\MindStone.cs" />
     <Compile Include="Items\Thanos\PowerStone.cs" />
@@ -131,6 +132,7 @@
     <Compile Include="Items\TinkerersCheatCodes.cs" />
     <Compile Include="Items\TrueMidnightMaelstrom.cs" />
     <Compile Include="Items\TrueTrigun.cs" />
+    <Compile Include="Items\Ultrashark.cs" />
     <Compile Include="NPCs\ValoranSpirit.cs" />
     <Compile Include="Prefixes\CritDamagePrefix.cs" />
     <Compile Include="Prefixes\HpPrefix.cs" />
@@ -140,6 +142,7 @@
     <Compile Include="Projectiles\DoomhammerGlow.cs" />
     <Compile Include="Projectiles\Etonmourne.cs" />
     <Compile Include="Projectiles\DoomLightning.cs" />
+    <Compile Include="Projectiles\TerraBullet.cs" />
     <Compile Include="Projectiles\TrueHomingBullet.cs" />
     <Compile Include="Projectiles\MidnightBlast.cs" />
     <Compile Include="Projectiles\PowerStone.cs" />
