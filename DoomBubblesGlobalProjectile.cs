@@ -162,17 +162,36 @@ namespace DoomBubblesMod
             else return base.PreAI(pProjectile);
         }
 
+        public override void ModifyHitPlayer(Projectile projectile, Player target, ref int damage, ref bool crit)
+        {
+            if (projectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>(mod).ak47)
+            { 
+                Main.NewText("yup ak");
+                Player player = Main.player[projectile.owner];
+                if (crit)
+                {
+                    player.GetModPlayer<DoomBubblesPlayer>().critCombo++;
+                    damage = (int) (damage) * (Math.Min(player.GetModPlayer<DoomBubblesPlayer>(mod).critCombo + 1, 10));
+                }
+                else
+                {
+                    player.GetModPlayer<DoomBubblesPlayer>().critCombo = 0;
+                }
+            }
+            base.ModifyHitPlayer(projectile, target, ref damage, ref crit);
+        }
 
         public override void ModifyHitNPC(Projectile projectile, NPC target, ref int damage, ref float knockback, ref bool crit,
             ref int hitDirection)
         {
             if (projectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>(mod).ak47)
-            {
+            { 
+                Main.NewText("yup ak");
                 Player player = Main.player[projectile.owner];
                 if (crit)
                 {
                     player.GetModPlayer<DoomBubblesPlayer>().critCombo++;
-                    damage = (int) (damage / 2f) * (Math.Min(player.GetModPlayer<DoomBubblesPlayer>(mod).critCombo + 1, 10));
+                    damage = (int) (damage) * (Math.Min(player.GetModPlayer<DoomBubblesPlayer>(mod).critCombo + 1, 10));
                 }
                 else
                 {

@@ -222,6 +222,12 @@ namespace DoomBubblesMod
             {
                 Item.NewItem(npc.position, mod.ItemType("HeartOfTerraria"));
             }
+
+            if (npc.type == NPCID.DukeFishron && Main.rand.Next(1, 5) == 1)
+            {
+                Item.NewItem(npc.position, mod.ItemType("Ultrashark"));
+                
+            }
             
             
 

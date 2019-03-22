@@ -242,6 +242,13 @@ namespace DoomBubblesMod.Items
 			{
 				player.QuickSpawnItem(mod.ItemType("HeartOfTerraria"));
 			}
+			if (arg == ItemID.FishronBossBag && context == "bossBag")
+			{
+				if (Main.rand.Next(1, 5) == 1)
+				{
+					player.QuickSpawnItem(mod.ItemType("Ultrashark"));
+				}
+			}
 			base.OpenVanillaBag(context, player, arg);
 		}
 	}

@@ -11,7 +11,8 @@ namespace DoomBubblesMod.Items
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("50% chance to not consume ammo");
+			Tooltip.SetDefault("50% chance to not consume ammo\n" +
+			                   "Turns Musket Balls into Terra Bullets");
 			DisplayName.SetDefault("Terra Rifle");
 		}
 
@@ -28,7 +29,7 @@ namespace DoomBubblesMod.Items
 			item.knockBack = 6;
 			item.value = Item.sellPrice(0, 20, 0, 0);
 			item.rare = 8;
-			item.UseSound = SoundID.Item40;
+			item.UseSound = SoundID.Item36;
 			item.autoReuse = true;
 			item.shoot = 10; //idk why but all the guns in the vanilla source have this
 			item.shootSpeed = 11f;
@@ -39,7 +40,7 @@ namespace DoomBubblesMod.Items
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(mod.ItemType("TrueMidnightMaelstrom"));
-			recipe.AddIngredient(mod.ItemType("TruTrigun"));
+			recipe.AddIngredient(mod.ItemType("TrueTrigun"));
 			recipe.AddIngredient(mod.ItemType("HeartOfTerraria"));
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
@@ -55,10 +56,20 @@ namespace DoomBubblesMod.Items
 		
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			if (Main.rand.NextFloat() <= .3)
+			if (type == ProjectileID.Bullet)
+			{
+				type = mod.ProjectileType("TerraBullet");
+			}
+			
+			
+			
+			
+			if (Main.rand.NextFloat() <= .2)
 			{
 				Projectile.NewProjectile(position.X, position.Y, speedX, speedY, mod.ProjectileType("MidnightBlast"), (int) (damage * 2), knockBack, player.whoAmI);
+				Main.PlaySound(SoundID.Item38, position);
 			}
+			/* Other implementation
 			else
 			{
 				int numberProjectiles = 2;
@@ -68,10 +79,10 @@ namespace DoomBubblesMod.Items
 					// If you want to randomize the speed to stagger the projectiles
 					float scale = 1f - (Main.rand.NextFloat() * .1f);
 					perturbedSpeed = perturbedSpeed * scale; 
-					Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("TerraBullet"), (damage), knockBack, player.whoAmI);
+					Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("TerraBullet"), (int)(.5 * damage), knockBack, player.whoAmI);
 				}
 			}
-			
+			*/
 			
 			return true;
 		}

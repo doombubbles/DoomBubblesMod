@@ -20,7 +20,7 @@ namespace DoomBubblesMod.Projectiles
             projectile.friendly = true;         
             projectile.hostile = false;         
             projectile.ranged = true;           
-            projectile.penetrate = 3;           
+            projectile.penetrate = 1;           
             projectile.timeLeft = 600;          
             projectile.alpha = 255;             
             projectile.ignoreWater = true;      
@@ -125,9 +125,23 @@ namespace DoomBubblesMod.Projectiles
         
         public override void Kill(int timeLeft)
         {
-            // This code and the similar code above in OnTileCollide spawn dust from the tiles collided with. SoundID.Item10 is the bounce sound you hear.
-            Collision.HitTiles(projectile.position + projectile.velocity, projectile.velocity, projectile.width, projectile.height);
-            Main.PlaySound(SoundID.Item10, projectile.position);
+            Main.PlaySound(0, (int) projectile.position.X, (int) projectile.position.Y, 1, 1f, 0.0f);
+            for (int index1 = 0; index1 < 5; ++index1)
+            {
+              int index2 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 167, 0.0f, 0.0f, 0, new Color(), 1f);
+              Main.dust[index2].noGravity = true;
+              Main.dust[index2].velocity *= 1.5f;
+              Main.dust[index2].scale *= 0.9f;
+            }
+            if (projectile.owner == Main.myPlayer)
+            {
+              for (int index = 0; index < 3; ++index)
+              {
+                float SpeedX = (float) (-(double) projectile.velocity.X * (double) Main.rand.Next(40, 70) * 0.00999999977648258 + (double) Main.rand.Next(-20, 21) * 0.400000005960464);
+                float SpeedY = (float) (-(double) projectile.velocity.Y * (double) Main.rand.Next(40, 70) * 0.00999999977648258 + (double) Main.rand.Next(-20, 21) * 0.400000005960464);
+                Projectile.NewProjectile(projectile.position.X + SpeedX, projectile.position.Y + SpeedY, SpeedX, SpeedY, mod.ProjectileType("TerraShard"), (int) ((double) projectile.damage * 0.5), 0.0f, projectile.owner, 0.0f, 0.0f);
+              }
+            }
         }
     }
 }

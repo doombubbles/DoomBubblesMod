@@ -52,7 +52,7 @@ namespace DoomBubblesMod.Projectiles
                     for (int index1 = 0; (double) index1 < (double) num; ++index1)
                     {
                         Vector2 vector2 = (Vector2.UnitX * 0.0f + -Vector2.UnitY.RotatedBy((double) index1 * (6.28318548202515 / (double) num), new Vector2()) * new Vector2(1f, 4f)).RotatedBy((double) projectile.velocity.ToRotation(), new Vector2());
-                        int index2 = Dust.NewDust(projectile.Center, 0, 0, 62, 0.0f, 0.0f, 0, new Color(55,255,0), 1f);
+                        int index2 = Dust.NewDust(projectile.Center, 0, 0, 61, 0.0f, 0.0f, 0, new Color(), 1f);
                         Main.dust[index2].scale = 1.5f;
                         Main.dust[index2].noLight = true;
                         Main.dust[index2].noGravity = true;
@@ -98,12 +98,11 @@ namespace DoomBubblesMod.Projectiles
                 Main.dust[index2].noLight = true;
                 Main.dust[index2].velocity *= 1.5f;
                 Main.dust[index2].velocity += projectile.DirectionTo(Main.dust[index2].position) * (float) (2.0 + (double) Main.rand.NextFloat() * 2.0);
-                int index3 = Dust.NewDust(Position, Width, Height, 62, 0.0f, 0.0f, 100, new Color(), 1.5f);
+                int index3 = Dust.NewDust(Position, Width, Height, 61, 0.0f, 0.0f, 100, new Color(), 1.5f);
                 Main.dust[index3].position = projectile.Center + Vector2.UnitY.RotatedByRandom(3.14159274101257) * (float) Main.rand.NextDouble() * (float) Width / 2f;
                 Main.dust[index3].velocity *= 1.5f;
                 Main.dust[index3].noGravity = true;
                 Main.dust[index3].fadeIn = 1f;
-                Main.dust[index3].color = Color.Crimson * 0.5f;
                 Main.dust[index3].noLight = true;
                 Main.dust[index3].velocity += projectile.DirectionTo(Main.dust[index3].position) * 4f;
             }

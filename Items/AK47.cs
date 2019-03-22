@@ -46,7 +46,7 @@ namespace DoomBubblesMod.Items
 			recipe.AddIngredient(ItemID.SoulofFright, 20);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
-			recipe.AddRecipe();
+			//recipe.AddRecipe();
 		}
 		
 		// What if I wanted this gun to have a 38% chance not to consume ammo?
@@ -78,7 +78,6 @@ namespace DoomBubblesMod.Items
 			}
 			return false; // return true to allow tmodloader to call Projectile.NewProjectile as normal
 		}
-
 
 		/*
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

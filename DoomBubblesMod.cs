@@ -155,13 +155,20 @@ namespace DoomBubblesMod
                     break;
                 case DoomBubblesModMessageType.ak47:
                     int identity = reader.ReadInt32();
+                    if (Main.netMode == NetmodeID.Server)
+                    {
+                        ModPacket packet = GetPacket();
+                        packet.Write((byte)DoomBubblesModMessageType.ak47);
+                        packet.Write(identity);
+                        packet.Send();
+                    }
                     for (int j = 0; j < 1000; j++) {
-                        if (Main.projectile[j].identity == identity && Main.projectile[j].active && Main.projectile[j].Name != "Depth Bubble") {
+                        if (Main.projectile[j].identity == identity && Main.projectile[j].active && Main.projectile[j].Name == "Bullet") {
                             Main.projectile[j].GetGlobalProjectile<DoomBubblesGlobalProjectile>(this).ak47 = true;
-                            NetMessage.BroadcastChatMessage(NetworkText.FromLiteral(Main.projectile[j].GetGlobalProjectile<DoomBubblesGlobalProjectile>(this).ak47 + ""), Color.White);
                             break;
                         }
                     }
+                    
                     break;
             }
 

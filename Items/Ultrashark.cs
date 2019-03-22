@@ -57,7 +57,7 @@ namespace DoomBubblesMod.Items
 		// Help, my gun isn't being held at the handle! Adjust these 2 numbers until it looks right.
 		public override Vector2? HoldoutOffset()
 		{
-			return new Vector2(-2, 0);
+			return new Vector2(-2, -3);
 		}
 	}
 }
