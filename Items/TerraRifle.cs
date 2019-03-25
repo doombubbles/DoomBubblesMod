@@ -12,13 +12,13 @@ namespace DoomBubblesMod.Items
 		public override void SetStaticDefaults()
 		{
 			Tooltip.SetDefault("50% chance to not consume ammo\n" +
-			                   "Turns Musket Balls into Terra Bullets");
+			                   "Turns Bullets into Terra Bullets");
 			DisplayName.SetDefault("Terra Rifle");
 		}
 
 		public override void SetDefaults()
 		{
-			item.damage = 65;
+			item.damage = 64;
 			item.ranged = true;
 			item.width = 64;
 			item.height = 22;
@@ -56,10 +56,8 @@ namespace DoomBubblesMod.Items
 		
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			if (type == ProjectileID.Bullet)
-			{
-				type = mod.ProjectileType("TerraBullet");
-			}
+			type = mod.ProjectileType("TerraBullet");
+			
 			
 			
 			

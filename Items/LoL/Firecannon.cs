@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 
 namespace DoomBubblesMod.Items.LoL
 {
@@ -21,7 +22,7 @@ namespace DoomBubblesMod.Items.LoL
             item.useStyle = 5;
             item.useAnimation = 15;
             item.useTime = 5;
-            item.reuseDelay = 14;
+            item.reuseDelay = 15;
             item.width = 48;
             item.height = 24;
             item.shoot = 10;
@@ -33,11 +34,11 @@ namespace DoomBubblesMod.Items.LoL
             item.autoReuse = true;
         }
 
-    public override void SetStaticDefaults()
-    {
-      DisplayName.SetDefault("Rapid Firecannon");
-      Tooltip.SetDefault("Three round burst\nFires a spread of bullets");
-    }
+        public override void SetStaticDefaults()
+        {
+          DisplayName.SetDefault("Firecannon");
+          Tooltip.SetDefault("Three round burst\nFires a spread of bullets");
+        }
 
 
         public override void AddRecipes()
@@ -100,6 +101,12 @@ namespace DoomBubblesMod.Items.LoL
                 Main.PlaySound(2, position, 38);
             }
             return false;
+        }
+
+
+        public override int ChoosePrefix(UnifiedRandom rand)
+        {
+            return PrefixID.Rapid;
         }
     }
 }

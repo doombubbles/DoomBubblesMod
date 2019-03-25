@@ -22,6 +22,8 @@ namespace DoomBubblesMod
         public bool sterak;
         public bool homing;
         public bool reforgeCheatCodes;
+        public bool extraCrystals;
+        public bool noExplosionBulletDamage;
         
         public int doom = 0;
         public int botrk;
@@ -42,6 +44,8 @@ namespace DoomBubblesMod
             sterak = false;
             homing = false;
             powerStone = false;
+            extraCrystals = false;
+            noExplosionBulletDamage = false;
             magicMult = 1f;
             fireRate = 1f;
             critDamage = 0f;
@@ -66,7 +70,7 @@ namespace DoomBubblesMod
 
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
-            if (damageSource.SourceProjectileType == 286 && damageSource.SourcePlayerIndex == player.whoAmI)
+            if (noExplosionBulletDamage && damageSource.SourceProjectileType == 286 && damageSource.SourcePlayerIndex == player.whoAmI)
             {
                 return false;
             }
@@ -82,7 +86,7 @@ namespace DoomBubblesMod
             NPC target = Main.npc[npcId];
             if (!target.immortal)
             {
-                int damage = 10 + Math.Min((int) (target.lifeMax * .01), 990);
+                int damage = 10 + Math.Min((int) (target.lifeMax * .001), 490);
                 Projectile.NewProjectileDirect(target.Center, new Vector2(0,0), mod.ProjectileType("PowerStone"), damage, 0, player.whoAmI);
             }
         }
@@ -149,8 +153,6 @@ namespace DoomBubblesMod
             player.meleeCrit = (int) (player.meleeCrit * critChanceMult);
             player.rangedCrit = (int) (player.rangedCrit * critChanceMult);
             player.thrownCrit = (int) (player.thrownCrit * critChanceMult);
-
-
             player.magicDamage += (player.magicDamage - 1f) * (magicMult - 1f);
         }
 

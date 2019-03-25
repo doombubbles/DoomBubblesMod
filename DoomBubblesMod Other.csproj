@@ -79,7 +79,10 @@
     <Compile Include="Items\BigBadBundle.cs" />
     <Compile Include="Items\BlankDye.cs" />
     <Compile Include="Items\BrokenHeroGun.cs" />
+    <Compile Include="Items\CrystalCore.cs" />
+    <Compile Include="Items\CrystalEmblem.cs" />
     <Compile Include="Items\DoomBubblesInstancedGlobalItem.cs" />
+    <Compile Include="Items\ExplosiveCharm.cs" />
     <Compile Include="Items\HeartOfTerraria.cs" />
     <Compile Include="Items\MidnightMaelstrom.cs" />
     <Compile Include="Items\FredericksGift.cs" />

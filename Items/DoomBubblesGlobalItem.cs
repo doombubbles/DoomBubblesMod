@@ -35,13 +35,16 @@ namespace DoomBubblesMod.Items
 			{
                 item.ammo = item.type;
 			}
-
-			if (item.type == ItemID.ExplodingBullet || item.Name == "Endless Explosive Pouch")
+			
+			
+			
+			/*
+			if ()
 			{
 				item.damage *= 2;
 			}
 			
-			/*
+			
 			if (item.Name == "Waifu in a Bottle")
 			{
 				item.SetNameOverride("Weeaboo in a Bottle");
@@ -80,6 +83,16 @@ namespace DoomBubblesMod.Items
 					}
 				}
 			}*/
+		}
+
+		public override void GetWeaponDamage(Item item, Player player, ref int damage)
+		{
+			if ((item.type == ItemID.ExplodingBullet || item.Name == "Endless Explosive Pouch") &&
+			    player.GetModPlayer<DoomBubblesPlayer>().noExplosionBulletDamage)
+			{
+				damage *= 2;
+			}
+			base.GetWeaponDamage(item, player, ref damage);
 		}
 
 		public override void PostReforge(Item item)

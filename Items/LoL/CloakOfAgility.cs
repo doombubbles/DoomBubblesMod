@@ -14,7 +14,7 @@ namespace DoomBubblesMod.Items.LoL
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Cloak of Agility");
-            Tooltip.SetDefault("Your Crit Chance is doubled\n" +
+            Tooltip.SetDefault("Your Crit Chance is 1.5x higher\n" +
                                "Causes stars to fall when damaged");
         }
 
@@ -37,7 +37,7 @@ namespace DoomBubblesMod.Items.LoL
             player.rangedCrit *= 2;
             player.thrownCrit *= 2;
             */
-            player.GetModPlayer<DoomBubblesPlayer>().critChanceMult *= 2f;
+            player.GetModPlayer<DoomBubblesPlayer>().critChanceMult *= 1.5f;
         }
 
         public override void AddRecipes()

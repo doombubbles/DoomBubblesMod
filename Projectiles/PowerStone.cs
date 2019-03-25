@@ -36,6 +36,8 @@ namespace DoomBubblesMod.Projectiles
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
+            damage = 10 + (int)(target.lifeMax * .001);
+            crit = false;
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
     }

@@ -200,6 +200,34 @@ namespace DoomBubblesMod
             }
             base.ModifyHitNPC(projectile, target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
-        
+
+
+        public override void Kill(Projectile projectile, int timeLeft)
+        {
+            base.Kill(projectile, timeLeft);
+            if (Main.player[projectile.owner].GetModPlayer<DoomBubblesPlayer>().extraCrystals &&
+                projectile.owner == Main.myPlayer)
+            {
+                int type;
+                if (projectile.type == ProjectileID.CrystalBullet)
+                {
+                    type = ProjectileID.CrystalShard;
+                } else if (projectile.type == mod.ProjectileType("TerraBullet"))
+                {
+                    type = mod.ProjectileType("TerraShard");
+                }
+                else
+                {
+                    return;
+                }
+                
+                for (int index = 0; index < 3; ++index)
+                {
+                    float SpeedX = (float) (-(double) projectile.velocity.X * (double) Main.rand.Next(40, 70) * 0.00999999977648258 + (double) Main.rand.Next(-20, 21) * 0.400000005960464);
+                    float SpeedY = (float) (-(double) projectile.velocity.Y * (double) Main.rand.Next(40, 70) * 0.00999999977648258 + (double) Main.rand.Next(-20, 21) * 0.400000005960464);
+                    Projectile.NewProjectile(projectile.position.X + SpeedX, projectile.position.Y + SpeedY, SpeedX, SpeedY, type, (int) (projectile.damage * 0.5), 0.0f, projectile.owner);
+                }
+            }
+        }
     }
 }
