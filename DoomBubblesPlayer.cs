@@ -30,6 +30,9 @@ namespace DoomBubblesMod
         public int frostmourne = 0;
         public int critCombo = 0;
 
+        public int gem = -1;
+        public int tbMouseX;
+        public int tbMouseY;
         public bool soulStone;
         public Tile soulStoneTile = new Tile();
         public bool soulStoneTileActive;

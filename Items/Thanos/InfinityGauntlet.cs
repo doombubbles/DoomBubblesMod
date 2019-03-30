@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DoomBubblesMod.UI;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -48,6 +49,51 @@ namespace DoomBubblesMod.Items.Thanos
         public override bool AltFunctionUse(Player player)
         {
             return true;
+        }
+
+        public override void UpdateInventory(Player player)
+        {
+            switch (player.GetModPlayer<DoomBubblesPlayer>().gem)
+            {
+                case 0:
+                    item.SetNameOverride("Infinity Gauntlet (Power)");
+                    item.rare = 11;
+                    item.expert = false;
+                    item.channel = true;
+                    break;
+                case 1:
+                    item.SetNameOverride("Infinity Gauntlet (Space)");
+                    item.rare = 1;
+                    item.expert = false;
+                    item.channel = false;
+                    break;
+                case 2:
+                    item.SetNameOverride("Infinity Gauntlet (Reality)");
+                    item.rare = 10;
+                    item.expert = false;
+                    item.channel = true;
+                    break;
+                case 3:
+                    item.SetNameOverride("Infinity Gauntlet (Soul)");
+                    item.rare = -11;
+                    item.expert = false;
+                    item.channel = false;
+                    break;
+                case 4:
+                    item.SetNameOverride("Infinity Gauntlet (Time)");
+                    item.rare = 2;
+                    item.expert = false;
+                    item.channel = false;
+                    break;
+                case 5:
+                    item.SetNameOverride("Infinity Gauntlet (Mind)");
+                    item.rare = 8;
+                    item.expert = false;
+                    item.channel = false;
+                    break;
+                default:
+                    break;
+            }
         }
 
         public override bool CanUseItem(Player player)
@@ -126,7 +172,13 @@ namespace DoomBubblesMod.Items.Thanos
             
             if (player.altFunctionUse == 2 && player.itemAnimation == player.itemAnimationMax - 1)
             {
-                switchGem();
+                //switchGem();
+                player.GetModPlayer<DoomBubblesPlayer>().tbMouseX = Main.mouseX;
+                player.GetModPlayer<DoomBubblesPlayer>().tbMouseY = Main.mouseY;
+                InfinityGauntletUI.visible = true;
+                
+                
+                
                 return false;
             }
             
@@ -414,6 +466,9 @@ namespace DoomBubblesMod.Items.Thanos
             
             player.AddBuff(mod.BuffType("MindStoneCooldown"), 1200);
         }
+        
+        
+        
         
         void switchGem()
         {

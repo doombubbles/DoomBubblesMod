@@ -90,7 +90,10 @@
     <Compile Include="Items\BigBadBundle.cs" />
     <Compile Include="Items\BlankDye.cs" />
     <Compile Include="Items\BrokenHeroGun.cs" />
+    <Compile Include="Items\CrystalCore.cs" />
+    <Compile Include="Items\CrystalEmblem.cs" />
     <Compile Include="Items\DoomBubblesInstancedGlobalItem.cs" />
+    <Compile Include="Items\ExplosiveCharm.cs" />
     <Compile Include="Items\HeartOfTerraria.cs" />
     <Compile Include="Items\MidnightMaelstrom.cs" />
     <Compile Include="Items\FredericksGift.cs" />
@@ -143,6 +146,7 @@
     <Compile Include="Projectiles\Etonmourne.cs" />
     <Compile Include="Projectiles\DoomLightning.cs" />
     <Compile Include="Projectiles\TerraBullet.cs" />
+    <Compile Include="Projectiles\TerraShard.cs" />
     <Compile Include="Projectiles\TrueHomingBullet.cs" />
     <Compile Include="Projectiles\MidnightBlast.cs" />
     <Compile Include="Projectiles\PowerStone.cs" />
@@ -165,12 +169,12 @@
     <Compile Include="Sounds\Botrk.cs" />
     <Compile Include="Sounds\MindStone.cs" />
     <Compile Include="Sounds\RhythmStick.cs" />
+    <Compile Include="UI\InfinityGauntletUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="build.txt" />
     <Content Include="description.txt" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>
     <VisualStudio AllowExistingFolder="true" />

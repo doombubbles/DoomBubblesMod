@@ -2,12 +2,14 @@ using System;
 using System.IO;
 using Terraria;
 using System.Collections.Generic;
+using DoomBubblesMod.UI;
 using Microsoft.Xna.Framework;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.UI;
 
 namespace DoomBubblesMod
 {
@@ -15,6 +17,9 @@ namespace DoomBubblesMod
     {
         public static bool allDamageLoaded;
         public static bool thoriumLoaded;
+
+        private UserInterface infinityGauntletUserInterface;
+        internal InfinityGauntletUI infinityGauntletUi;
         
         public DoomBubblesMod()
         {
@@ -31,7 +36,34 @@ namespace DoomBubblesMod
         {
             allDamageLoaded = ModLoader.GetMod("AllDamage") != null;
             thoriumLoaded = ModLoader.GetMod("ThoriumMod") != null;
+            
+            infinityGauntletUi = new InfinityGauntletUI();
+            infinityGauntletUserInterface = new UserInterface();
+            
+            infinityGauntletUserInterface.SetState(infinityGauntletUi);
+            
             base.Load();
+        }
+
+        public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
+        {
+            int MouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
+            if (MouseTextIndex != -1)
+            {
+                layers.Insert(MouseTextIndex, new LegacyGameInterfaceLayer(
+                    "DoomBubblesMod",
+                    delegate
+                    {
+                        if (InfinityGauntletUI.visible)
+                        {
+                            infinityGauntletUserInterface.Update(Main._drawInterfaceGameTime);	//I don't understand
+                            infinityGauntletUi.Draw(Main.spriteBatch);
+                        }
+                        return true;
+                    },
+                    InterfaceScaleType.UI)
+                );
+            }
         }
 
         public override void AddRecipes()
