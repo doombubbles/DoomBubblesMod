@@ -1,11 +1,9 @@
-using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace DoomBubblesMod.Items
+namespace DoomBubblesMod.Items.Weapons
 {
 	public class Doomhammer : ModItem
 	{

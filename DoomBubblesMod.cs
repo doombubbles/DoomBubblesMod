@@ -36,13 +36,15 @@ namespace DoomBubblesMod
         {
             allDamageLoaded = ModLoader.GetMod("AllDamage") != null;
             thoriumLoaded = ModLoader.GetMod("ThoriumMod") != null;
+
+            if (!Main.dedServ)
+            {
+                infinityGauntletUi = new InfinityGauntletUI();
+                infinityGauntletUi.Activate();
+                infinityGauntletUserInterface = new UserInterface();
+                infinityGauntletUserInterface.SetState(infinityGauntletUi);
+            }
             
-            infinityGauntletUi = new InfinityGauntletUI();
-            infinityGauntletUserInterface = new UserInterface();
-            
-            infinityGauntletUserInterface.SetState(infinityGauntletUi);
-            
-            base.Load();
         }
 
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)

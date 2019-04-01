@@ -26,7 +26,7 @@ namespace DoomBubblesMod.Items.Thanos
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Infinity Gauntlet");
-            Tooltip.SetDefault("Right click to cycle stone\n" +
+            Tooltip.SetDefault("Right click to select stone\n" +
                                "\"Perfectly balanced...\n" +
                                "...as all things should be.\"\n" +
                                "-Thanos");
@@ -220,10 +220,14 @@ namespace DoomBubblesMod.Items.Thanos
                 foreach (Dust dust in Main.dust)
                 {
                     Vector2 gauntlet = new Vector2(player.Center.X + 10 * player.direction, player.Center.Y - 25);
-                    if ((string) dust.customData == "Reality Beam" && Math.Sqrt(Math.Pow(gauntlet.X - dust.position.X, 2) + Math.Pow(gauntlet.Y - dust.position.Y, 2)) < 10f)
+                    if (dust.customData is string)
                     {
-                        dust.active = false;
+                        if ((string) dust.customData == "Reality Beam" && Math.Sqrt(Math.Pow(gauntlet.X - dust.position.X, 2) + Math.Pow(gauntlet.Y - dust.position.Y, 2)) < 10f)
+                        {
+                            dust.active = false;
+                        }
                     }
+                    
                 }
             }
             else if (item.Name.Contains("(Soul)"))

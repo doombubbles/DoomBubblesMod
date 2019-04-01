@@ -1,54 +1,49 @@
-using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace DoomBubblesMod.Items
+namespace DoomBubblesMod.Items.Weapons
 {
-	public class AK47 : ModItem
+	public class MidnightMaelstrom : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Shoots a powerful, high velocity bullet\n"+
-			                   "Successive crits do increasing damage.");
-			DisplayName.SetDefault("AK-47");
+			//Tooltip.SetDefault("This is a modded gun.");
+			DisplayName.SetDefault("Midnight Maelstrom");
 		}
 
 		public override void SetDefaults()
 		{
-			item.damage = 47;
+			item.damage = 28;
 			item.ranged = true;
-			item.width = 64;
-			item.height = 28;
-			item.useTime = 11;
-			item.useAnimation = 11;
-			item.crit = 6;
+			item.width = 52;
+			item.height = 20;
+			item.useTime = 28;
+			item.useAnimation = 28;
 			item.useStyle = 5;
 			item.noMelee = true; //so the item's animation doesn't do damage
 			item.knockBack = 4;
 			item.value = 54000;
 			item.rare = 3;
 			item.UseSound = SoundID.Item41;
-			item.autoReuse = true;
+			item.autoReuse = false;
 			item.shoot = 10; //idk why but all the guns in the vanilla source have this
 			item.shootSpeed = 10f;
 			item.useAmmo = AmmoID.Bullet;
-			item.scale = .9f;
 		}
 
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.Uzi);
-			recipe.AddIngredient(ItemID.IllegalGunParts, 2);
-			recipe.AddIngredient(ItemID.SoulofFright, 20);
-			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.AddIngredient(ItemID.Musket);
+			recipe.AddIngredient(ItemID.Boomstick);
+			recipe.AddIngredient(ItemID.PhoenixBlaster);
+			recipe.AddTile(TileID.DemonAltar);
 			recipe.SetResult(this);
-			//recipe.AddRecipe();
+			recipe.AddRecipe();
 		}
-		
+
 		// What if I wanted this gun to have a 38% chance not to consume ammo?
 		/*public override bool ConsumeAmmo(Player player)
 		{
@@ -57,37 +52,41 @@ namespace DoomBubblesMod.Items
 
 		// What if I wanted it to work like Uzi, replacing regular bullets with High Velocity Bullets?
 		// Uzi/Molten Fury style: Replace normal Bullets with Highvelocity
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		/*public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
 			if (type == ProjectileID.Bullet) // or ProjectileID.WoodenArrowFriendly
 			{
 				type = ProjectileID.BulletHighVelocity; // or ProjectileID.FireArrow;
 			}
+			return true; // return true to allow tmodloader to call Projectile.NewProjectile as normal
+		}*/
 
-			Projectile projectile = Projectile.NewProjectileDirect(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI);
-			if (Main.netMode == 1)
-			{
-				ModPacket packet = mod.GetPacket();
-				packet.Write((byte)DoomBubblesModMessageType.ak47);
-				packet.Write(projectile.identity);
-				packet.Send();
-			}
-			else
-			{
-				projectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>(mod).ak47 = true;
-			}
-			return false; // return true to allow tmodloader to call Projectile.NewProjectile as normal
-		}
-
-		/*
+		// What if I wanted it to shoot like a shotgun?
+		// Shotgun style: Multiple Projectiles, Random spread 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(5));
+			Main.PlaySound(SoundID.Item36, position);
+			int numberProjectiles = 2 + Main.rand.Next(2); 
+			for (int i = 0; i < numberProjectiles; i++)
+			{
+				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(10)); // 30 degree spread.
+				// If you want to randomize the speed to stagger the projectiles
+				float scale = 1f - (Main.rand.NextFloat() * .1f);
+				perturbedSpeed = perturbedSpeed * scale; 
+				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, (int) (damage / 2.0), knockBack, player.whoAmI);
+			}
+			return true;
+		}
+
+		// What if I wanted an inaccurate gun? (Chain Gun)
+		// Inaccurate Gun style: Single Projectile, Random spread 
+		/*public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		{
+			Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(30));
 			speedX = perturbedSpeed.X;
 			speedY = perturbedSpeed.Y;
 			return true;
-		}
-		*/
+		}*/
 
 		// What if I wanted multiple projectiles in a even spread? (Vampire Knives) 
 		// Even Arc style: Multiple Projectile, Even Spread 

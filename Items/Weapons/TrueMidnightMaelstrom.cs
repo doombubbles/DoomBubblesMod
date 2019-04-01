@@ -2,9 +2,8 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
 
-namespace DoomBubblesMod.Items
+namespace DoomBubblesMod.Items.Weapons
 {
 	public class TrueMidnightMaelstrom : ModItem
 	{

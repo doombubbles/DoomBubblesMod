@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Terraria;
-using Terraria.ID;
+﻿using Terraria;
 using Terraria.ModLoader;
 
-
-namespace DoomBubblesMod.Items
+namespace DoomBubblesMod.Items.Accessories
 {
     class TargetingComputer : ModItem
     {

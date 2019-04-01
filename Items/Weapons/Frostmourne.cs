@@ -4,13 +4,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
-using DoomBubblesMod;
-using System.Collections.Generic;
-using System.IO;
-using Terraria.DataStructures;
 
-namespace DoomBubblesMod.Items
+namespace DoomBubblesMod.Items.Weapons
 {
 	public class Frostmourne : ModItem
 	{

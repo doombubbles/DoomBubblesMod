@@ -107,7 +107,7 @@ namespace DoomBubblesMod.Projectiles
 			target.AddBuff(BuffID.OnFire, 60 * Main.rand.Next(5, 10), false);
 			target.AddBuff(BuffID.CursedInferno, 60 * Main.rand.Next(5, 10), false);
 			target.AddBuff(BuffID.Frostburn, 60 * Main.rand.Next(5, 10), false);
-			target.immune[projectile.owner] = 7;
+			target.immune[projectile.owner] = 1;
 			base.OnHitNPC(target, damage, knockback, crit);
 		}
 	}

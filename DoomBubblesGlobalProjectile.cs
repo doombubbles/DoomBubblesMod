@@ -199,13 +199,20 @@ namespace DoomBubblesMod
                 }
             }
             base.ModifyHitNPC(projectile, target, ref damage, ref knockback, ref crit, ref hitDirection);
+
+            if (projectile.owner != 255 &&
+                Main.player[projectile.owner].GetModPlayer<DoomBubblesPlayer>().luminiteBulletBonus &&
+                projectile.type == ProjectileID.MoonlordBullet)
+            {
+                projectile.damage = (int) (projectile.damage * 1.1f);
+            }
         }
 
 
         public override void Kill(Projectile projectile, int timeLeft)
         {
             base.Kill(projectile, timeLeft);
-            if (Main.player[projectile.owner].GetModPlayer<DoomBubblesPlayer>().extraCrystals &&
+            if (Main.player[projectile.owner].GetModPlayer<DoomBubblesPlayer>().crystalBulletBonus &&
                 projectile.owner == Main.myPlayer)
             {
                 int type;

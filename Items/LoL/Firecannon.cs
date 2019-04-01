@@ -93,7 +93,7 @@ namespace DoomBubblesMod.Items.LoL
 
             int spread = 30;
             float spreadMult = 0.05f;
-            for (int i = 0; i < 4; ++i)
+            for (int i = 0; i < 3; ++i)
             {
                 float vX = speedX + (float)Main.rand.Next(-spread, spread + 1) * spreadMult;
                 float vY = speedY + (float)Main.rand.Next(-spread, spread + 1) * spreadMult;

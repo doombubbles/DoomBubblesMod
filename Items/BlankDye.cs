@@ -18,7 +18,6 @@ namespace DoomBubblesMod.Items
         public override void AddRecipes()
         {
             List<int> dyes = new List<int>();
-            dyes.Add(3024);
             for (int i = 1007; i <= 1070; i++)
             {
                 dyes.Add(i);
@@ -28,6 +27,14 @@ namespace DoomBubblesMod.Items
                 dyes.Add(i);
             }
             for (int i = 2883; i <= 2885; i++)
+            {
+                dyes.Add(i);
+            }
+            for (int i = 3024; i <= 3028; i++)
+            {
+                dyes.Add(i);
+            }
+            for (int i = 3038; i <= 3042; i++)
             {
                 dyes.Add(i);
             }

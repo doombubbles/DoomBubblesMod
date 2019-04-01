@@ -16,8 +16,6 @@ namespace DoomBubblesMod.UI
         public static bool visible = false;
         public float panelWidth;
         public float panelHeight;
-        public float buttonWidth;
-        public float buttonHeight;
         List<UIImageButton> buttonList;
 
 
@@ -27,8 +25,6 @@ namespace DoomBubblesMod.UI
             buttonList = new List<UIImageButton>();
             panelWidth = 84f;
             panelHeight = 117f;
-            buttonWidth = 14f;
-            buttonHeight = 20f;
             
             backgroundPanel = new UIImage(ModLoader.GetMod("DoomBubblesMod").GetTexture("UI/Gauntlet"));
             backgroundPanel.SetPadding(0);
@@ -36,7 +32,6 @@ namespace DoomBubblesMod.UI
             backgroundPanel.Top.Set((float)Main.screenHeight / 2 - panelHeight / 2, 0f);
             backgroundPanel.Width.Set(panelWidth, 0f);
             backgroundPanel.Height.Set(panelHeight, 0f);
-            
             
             initializeGems(ref backgroundPanel);
             
@@ -72,7 +67,7 @@ namespace DoomBubblesMod.UI
             float newPanelX = Main.player[Main.myPlayer].GetModPlayer<DoomBubblesPlayer>().tbMouseX - panelWidth / 2;
             float newPanelY = Main.player[Main.myPlayer].GetModPlayer<DoomBubblesPlayer>().tbMouseY - panelHeight / 2;
 
-            if (backgroundPanel.Left.Equals(newPanelX))
+            if (backgroundPanel.Left.Pixels == newPanelX)
             {
                 if (!backgroundPanel.ContainsPoint(new Vector2((float) Main.mouseX, (float) Main.mouseY)))
                 {

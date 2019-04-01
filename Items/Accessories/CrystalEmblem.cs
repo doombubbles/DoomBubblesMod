@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-
-namespace DoomBubblesMod.Items
+namespace DoomBubblesMod.Items.Accessories
 {
     class CrystalEmblem : ModItem
     {
@@ -30,7 +25,7 @@ namespace DoomBubblesMod.Items
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.rangedDamage += .15f;
-            player.GetModPlayer<DoomBubblesPlayer>().extraCrystals = true;
+            player.GetModPlayer<DoomBubblesPlayer>().crystalBulletBonus = true;
         }
 
         public override void AddRecipes()

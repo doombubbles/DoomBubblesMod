@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using DoomBubblesMod.Items;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
@@ -18,12 +19,17 @@ namespace DoomBubblesMod
         public float critDamage;
         public float critChanceMult = 1f;
         public float fireRate = 1f;
-
+        public float customRadiantDamage = 1f;
+        public float customSymphonicDamage = 1f;
+        public int customRadiantCrit = 0;
+        public int customSymphonicCrit = 0;
+        
         public bool sterak;
         public bool homing;
         public bool reforgeCheatCodes;
-        public bool extraCrystals;
-        public bool noExplosionBulletDamage;
+        public bool crystalBulletBonus;
+        public bool explosionBulletBonus;
+        public bool luminiteBulletBonus;
         
         public int doom = 0;
         public int botrk;
@@ -47,13 +53,18 @@ namespace DoomBubblesMod
             sterak = false;
             homing = false;
             powerStone = false;
-            extraCrystals = false;
-            noExplosionBulletDamage = false;
+            crystalBulletBonus = false;
+            explosionBulletBonus = false;
+            luminiteBulletBonus = false;
             magicMult = 1f;
             fireRate = 1f;
             critDamage = 0f;
             critChanceMult = 1f;
             reforgeCheatCodes = false;
+            customRadiantDamage = 1f;
+            customSymphonicDamage = 1f;
+            customRadiantCrit = 0;
+            customSymphonicCrit = 0;
             if (powerStoned > 0)
             {
                 powerStoned--;
@@ -73,7 +84,7 @@ namespace DoomBubblesMod
 
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
-            if (noExplosionBulletDamage && damageSource.SourceProjectileType == 286 && damageSource.SourcePlayerIndex == player.whoAmI)
+            if (explosionBulletBonus && damageSource.SourceProjectileType == 286 && damageSource.SourcePlayerIndex == player.whoAmI)
             {
                 return false;
             }
@@ -151,11 +162,6 @@ namespace DoomBubblesMod
         {
             base.UpdateEquips(ref wallSpeedBuff, ref tileSpeedBuff, ref tileRangeBuff);
             
-
-            player.magicCrit = (int) (player.magicCrit * critChanceMult);
-            player.meleeCrit = (int) (player.meleeCrit * critChanceMult);
-            player.rangedCrit = (int) (player.rangedCrit * critChanceMult);
-            player.thrownCrit = (int) (player.thrownCrit * critChanceMult);
             player.magicDamage += (player.magicDamage - 1f) * (magicMult - 1f);
         }
 
@@ -183,7 +189,6 @@ namespace DoomBubblesMod
                 }
                 
             }
-
             if (crit)
             {
                 damage += (int)(damage * (player.GetModPlayer<DoomBubblesPlayer>().critDamage / 200f));
@@ -211,6 +216,25 @@ namespace DoomBubblesMod
                 damage += (int)(damage * (player.GetModPlayer<DoomBubblesPlayer>().critDamage / 200f));
             }
             base.ModifyHitNPCWithProj(proj, target, ref damage, ref knockback, ref crit, ref hitDirection);
+        }
+
+
+        public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit)
+        {
+            if (crit)
+            {
+                damage += (int)(damage * (player.GetModPlayer<DoomBubblesPlayer>().critDamage / 200f));
+            }
+            base.ModifyHitPvpWithProj(proj, target, ref damage, ref crit);
+        }
+
+        public override void ModifyHitPvp(Item item, Player target, ref int damage, ref bool crit)
+        {
+            if (crit)
+            {
+                damage += (int)(damage * (player.GetModPlayer<DoomBubblesPlayer>().critDamage / 200f));
+            }
+            base.ModifyHitPvp(item, target, ref damage, ref crit);
         }
     }
 }
