@@ -21,7 +21,7 @@ namespace DoomBubblesMod.Items.Phase
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.RedPhaseblade);
+            recipe.AddIngredient(ItemID.RedPhasesaber);
             recipe.AddIngredient(ItemID.Ectoplasm, 25);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);

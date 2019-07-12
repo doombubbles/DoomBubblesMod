@@ -29,7 +29,7 @@ namespace DoomBubblesMod.Items.Phase
         private void AddThoriumRecipe()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(mod.ItemType("PinkPhaseblade"));
+            recipe.AddIngredient(ModLoader.GetMod("ThoriumMod").ItemType("PinkPhasesaber"));
             recipe.AddIngredient(ItemID.Ectoplasm, 25);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);

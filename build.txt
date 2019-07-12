@@ -1,5 +1,5 @@
 author = doombubbles
-version = 0.24.4
+version = 0.24.7
 displayName = Doom Bubbles' Mod
 hideCode = false
 hideResources = false
