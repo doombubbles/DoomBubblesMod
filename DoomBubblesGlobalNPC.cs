@@ -15,21 +15,11 @@ namespace DoomBubblesMod
 {
     class DoomBubblesGlobalNPC: GlobalNPC
     {
-        public override bool InstancePerEntity
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public override bool InstancePerEntity => true;
 
         public int Cleaved = 0;
 
         //public List<int> cleavedby = new List<int> { };
-
-        public int frostmournedmg = 0;
-
-        public int doomlightning;
 
         public bool mindStoneFriendly;
         
@@ -47,25 +37,11 @@ namespace DoomBubblesMod
             {
                 npc.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).Cleaved = 0;
             }
-            if (npc.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).doomlightning > 0)
-            {
-                npc.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).doomlightning -= 1;
-            }
         }
 
         public override void SetDefaults(NPC npc)
         {
-            if (!npc.boss)
-            {
-                npc.lifeMax = (int)(npc.lifeMax * DoomBubblesWorld.enemyHP);
-                npc.life = (int)(npc.life * DoomBubblesWorld.enemyHP);
-                npc.damage = (int)(npc.damage * DoomBubblesWorld.mobDMG);
-            } else if (!npc.friendly)
-            {
-                npc.lifeMax = (int)(npc.lifeMax * DoomBubblesWorld.bossHP);
-                npc.life = (int)(npc.life * DoomBubblesWorld.bossHP);
-                npc.damage = (int)(npc.damage * DoomBubblesWorld.mobDMG);
-            }
+            
         }
 
         public override void DrawEffects(NPC npc, ref Color drawColor)
@@ -94,7 +70,6 @@ namespace DoomBubblesMod
 
         public override bool PreAI(NPC npc)
         {
-            
             if (npc.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).mindStoneFriendly)
             {
                 int projCount = 0;
@@ -119,7 +94,6 @@ namespace DoomBubblesMod
                 npc.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).mindStoneProjCount = projCount;
                 npc.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).mindStoneNpcCount = npcCount;
             }
-            
             return base.PreAI(npc);
         }
 
@@ -228,39 +202,9 @@ namespace DoomBubblesMod
                 Item.NewItem(npc.position, mod.ItemType("Ultrashark"));
                 
             }
-            
-            
-
-            //Frostmourne Spirits
-            int frederick = npc.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).frostmournedmg;
-
-            while (frederick > 1000)
-            {
-                Item.NewItem((int)npc.Center.X, (int)npc.Center.Y, npc.width, npc.height, mod.ItemType("Spirit"));
-                frederick -= 1000;
-            }
-            if (Main.rand.Next(1, 1000) <= frederick)
-            {
-                Item.NewItem((int)npc.Center.X, (int)npc.Center.Y, npc.width, npc.height, mod.ItemType("Spirit"));
-            }
 
 
 
-        }
-
-        public override void SetupShop(int type, Chest shop, ref int nextSlot)
-        {
-            switch (type)
-            {
-                case NPCID.DyeTrader:
-                    if (Main.hardMode)
-                    {
-                        shop.item[nextSlot].SetDefaults(mod.ItemType("BlankDye"));
-                        nextSlot++;
-                    }
-                    break;
-            }
-            base.SetupShop(type, shop, ref nextSlot);
         }
     }
 }

@@ -24,7 +24,9 @@ namespace DoomBubblesMod.Items
 				{"Celestial Vestment", "Heavenly Vestment"},
 				{"Celestial Leggings", "Heavenly Leggings"},
 				{"Celestial Carrier", "Heavenly Carrier"},
-				{"Celestial Burst Staff", "Heavenly Burst Staff"}
+				{"Celestial Burst Staff", "Heavenly Burst Staff"},
+				{"Waifu in a Bottle", "Weeaboo in a Bottle"},
+				{"Rare Waifu in a Bottle", "Rare Weeaboo in a Bottle"}
 			};
 
 			foreach ( KeyValuePair<string, string> kvp in itemNameOverrides)
@@ -44,54 +46,11 @@ namespace DoomBubblesMod.Items
 			
 			
 			
-			
-			
-			
 			if (radiantWeapons.Contains(item.Name))
 			{
 				item.damage *= 2;
 			}
 			
-			/*
-			
-			if (item.Name == "Waifu in a Bottle")
-			{
-				item.SetNameOverride("Weeaboo in a Bottle");
-				if (item.owner != 255)
-				{
-					if (Main.player[item.owner].name == "Ron F***ing Swanson")
-					{
-						item.SetNameOverride("Tammy I in a Bottle");
-					}
-					else if (Main.player[item.owner].name == "Ben Wyatt")
-					{
-						item.SetNameOverride("Leslie in a Bottle");
-					}
-					else if (Main.player[item.owner].name == "Tom Haverford")
-					{
-						item.SetNameOverride("Lucy in a Bottle");
-					}
-				}
-			}
-			if (item.Name == "Rare Waifu in a Bottle")
-			{
-				item.SetNameOverride("Rare Weeaboo in a Bottle");
-				if (item.owner != 255)
-				{
-					if (Main.player[item.owner].name == "Ron F***ing Swanson")
-					{
-						item.SetNameOverride("Tammy II in a Bottle");
-					}
-					else if (Main.player[item.owner].name == "Ben Wyatt")
-					{
-						item.SetNameOverride("Rare Leslie in a Bottle");
-					}
-					else if (Main.player[item.owner].name == "Tom Haverford")
-					{
-						item.SetNameOverride("Rare Lucy in a Bottle");
-					}
-				}
-			}*/
 		}
 
 		public override void GetWeaponCrit(Item item, Player player, ref int crit)
@@ -110,178 +69,25 @@ namespace DoomBubblesMod.Items
 			base.GetWeaponCrit(item, player, ref crit);
 		}
 
-		public override void GetWeaponDamage(Item item, Player player, ref int damage)
+		public override void ModifyWeaponDamage(Item item, Player player, ref float add, ref float mult)
 		{
 			if ((item.type == ItemID.ExplodingBullet || item.Name == "Endless Explosive Pouch") &&
 			    player.GetModPlayer<DoomBubblesPlayer>().explosionBulletBonus)
 			{
-				damage *= 2;
-			}
-
-			if (radiantWeapons.Contains(item.Name))
-			{
-				damage += (int) (item.damage * (player.GetModPlayer<DoomBubblesPlayer>().customRadiantDamage - 1f));
-			}
-
-			if (symphonicWeapons.Contains(item.Name))
-			{
-				damage += (int) (item.damage * (player.GetModPlayer<DoomBubblesPlayer>().customSymphonicDamage - 1f));
-			}
-			base.GetWeaponDamage(item, player, ref damage);
-		}
-
-		public override void PostReforge(Item item)
-		{
-			if (Main.player[item.owner].GetModPlayer<DoomBubblesPlayer>().reforgeCheatCodes && item.accessory)
-			{
-				Main.NewText(item.prefix);
-				if (item.prefix == PrefixID.Hard )
-				{
-					item.rare += 2;
-					item.prefix = PrefixID.Warding;
-					item.value = 10 * (int) Math.Round((item.value / 1.1025 * 1.44) / 10);
-				} 
-				else if (item.prefix == PrefixID.Guarding)
-				{
-					item.rare++;
-					item.prefix = PrefixID.Warding;
-					item.value = 10 * (int) Math.Round((item.value / 1.21 * 1.44) / 10);
-				}
-				else if (item.prefix == PrefixID.Armored)
-				{
-					item.rare++;
-					item.prefix = PrefixID.Warding;
-					item.value = 10 * (int) Math.Round((item.value / 1.3225 * 1.44) / 10);
-				}
-				
-				else if (item.prefix == mod.PrefixType("Mysterious"))
-				{
-					item.rare += 2;
-					item.prefix = mod.PrefixType("Sorcerous");
-					item.GetGlobalItem<DoomBubblesInstancedGlobalItem>().mana = 40;
-					item.value = 10 * (int) Math.Round((item.value / 1.1025 * 1.44) / 10);
-				} 
-				else if (item.prefix == PrefixID.Arcane)
-				{
-					item.rare++;
-					item.prefix = mod.PrefixType("Sorcerous");
-					item.GetGlobalItem<DoomBubblesInstancedGlobalItem>().mana = 40;
-					item.value = 10 * (int) Math.Round((item.value / 1.3225 * 1.44) / 10);
-				}
-				else if (item.prefix == mod.PrefixType("Mystical"))
-				{
-					item.rare++;
-					item.prefix = mod.PrefixType("Sorcerous");
-					item.GetGlobalItem<DoomBubblesInstancedGlobalItem>().mana = 40;
-					item.value = 10 * (int) Math.Round((item.value / 1.3225 * 1.44) / 10);
-				}
-				
-				else if (item.prefix == PrefixID.Precise)
-				{
-					item.rare++;
-					item.prefix = PrefixID.Lucky;
-					item.value = 10 * (int) Math.Round((item.value / 1.21 * 1.44) / 10);
-				} 
-				
-				else if (item.prefix == PrefixID.Jagged)
-				{
-					item.rare += 2;
-					item.prefix = PrefixID.Menacing;
-					item.value = 10 * (int) Math.Round((item.value / 1.1025 * 1.44) / 10);
-				} 
-				else if (item.prefix == PrefixID.Spiked)
-				{
-					item.rare++;
-					item.prefix = PrefixID.Menacing;
-					item.value = 10 * (int) Math.Round((item.value / 1.21 * 1.44) / 10);
-				}
-				else if (item.prefix == PrefixID.Angry)
-				{
-					item.rare++;
-					item.prefix = PrefixID.Menacing;
-					item.value = 10 * (int) Math.Round((item.value / 1.3225 * 1.44) / 10);
-				}
-				
-				else if (item.prefix == PrefixID.Brisk)
-				{
-					item.rare += 2;
-					item.prefix = PrefixID.Quick2;
-					item.value = 10 * (int) Math.Round((item.value / 1.1025 * 1.44) / 10);
-				} 
-				
-				else if (item.prefix == PrefixID.Fleeting)
-				{
-					item.rare++;
-					item.prefix = item.prefix = PrefixID.Quick2;
-					item.value = 10 * (int) Math.Round((item.value / 1.21 * 1.44) / 10);
-				}
-				else if (item.prefix == PrefixID.Hasty2)
-				{
-					item.rare++;
-					item.prefix = item.prefix = PrefixID.Quick2;
-					item.value = 10 * (int) Math.Round((item.value / 1.3225 * 1.44) / 10);
-				}
-				
-				else if (item.prefix == PrefixID.Wild)
-				{
-					item.rare += 2;
-					item.prefix = PrefixID.Violent;
-					item.value = 10 * (int) Math.Round((item.value / 1.1025 * 1.44) / 10);
-				} 
-				else if (item.prefix == PrefixID.Rash)
-				{
-					item.rare++;
-					item.prefix = PrefixID.Violent;
-					item.value = 10 * (int) Math.Round((item.value / 1.21 * 1.44) / 10);
-				}
-				else if (item.prefix == PrefixID.Intrepid)
-				{
-					item.rare++;
-					item.prefix = PrefixID.Violent;
-					item.value = 10 * (int) Math.Round((item.value / 1.3225 * 1.44) / 10);
-				}
-				
-				else if (item.prefix == mod.PrefixType("Opportune"))
-				{
-					item.GetGlobalItem<DoomBubblesInstancedGlobalItem>().critDamage = 10;
-					item.rare++;
-					item.prefix = mod.PrefixType("Decisive");
-					item.value = 10 * (int) Math.Round((item.value / 1.21 * 1.44) / 10);
-				} 
-				
-				else if (item.prefix == mod.PrefixType("Fresh"))
-				{
-					item.rare += 2;
-					item.GetGlobalItem<DoomBubblesInstancedGlobalItem>().hp = 20;
-					item.prefix = mod.PrefixType("Vigorous");
-					item.value = 10 * (int) Math.Round((item.value / 1.1025 * 1.44) / 10);
-				}
-				else if (item.prefix == mod.PrefixType("Tough"))
-				{
-					item.rare++;
-					item.GetGlobalItem<DoomBubblesInstancedGlobalItem>().hp = 20;
-					item.prefix = mod.PrefixType("Vigorous");
-					item.value = 10 * (int) Math.Round((item.value / 1.21 * 1.44) / 10);
-				}
-				else if (item.prefix == mod.PrefixType("Healthy"))
-				{
-					item.rare++;
-					item.GetGlobalItem<DoomBubblesInstancedGlobalItem>().hp = 20;
-					item.prefix = mod.PrefixType("Vigorous");
-					item.value = 10 * (int) Math.Round((item.value / 1.3225 * 1.44) / 10);
-				}
+				mult *= 2;
 			}
 			
-			base.PostReforge(item);
-		}
-
-		public override bool ReforgePrice(Item item, ref int reforgePrice, ref bool canApplyDiscount)
-		{
-			if (Main.player[item.owner].GetModPlayer<DoomBubblesPlayer>().reforgeCheatCodes && item.accessory)
+			if (radiantWeapons.Contains(item.Name))
 			{
-				reforgePrice *= 2;
+				mult += (player.GetModPlayer<DoomBubblesPlayer>().customRadiantDamage - 1f);
 			}
-			return base.ReforgePrice(item, ref reforgePrice, ref canApplyDiscount);
+			
+			if (symphonicWeapons.Contains(item.Name))
+			{
+				mult += (player.GetModPlayer<DoomBubblesPlayer>().customSymphonicDamage - 1f);
+			}
+
+			base.ModifyWeaponDamage(item, player, ref add, ref mult);
 		}
 
 		public override void OpenVanillaBag(string context, Player player, int arg)
@@ -300,16 +106,11 @@ namespace DoomBubblesMod.Items
 			base.OpenVanillaBag(context, player, arg);
 		}
 
-
-		public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
+		public override void ModifyManaCost(Item item, Player player, ref float reduce, ref float mult)
 		{
-			if (item.social && !item.accessory)
+			if (player.GetModPlayer<DoomBubblesPlayer>().noManaItems.Contains(item.type))
 			{
-				string secondSetBonus = Main.player[item.owner].GetModPlayer<DoubleSetBonuses>().secondSetBonus;
-				if (secondSetBonus != "")
-				{
-					tooltips.Add(new TooltipLine(mod, "SetBonusCheat", "Set Bonus: " + secondSetBonus));
-				}
+				mult = 0f;
 			}
 		}
 

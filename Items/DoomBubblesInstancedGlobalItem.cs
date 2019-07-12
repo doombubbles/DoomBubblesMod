@@ -71,6 +71,18 @@ namespace DoomBubblesMod.Items
                     tooltips.Add(line);
                 }
             }
+
+            if (item.owner != 255 && item.owner != -1 && Main.player[item.owner].GetModPlayer<DoomBubblesPlayer>().noManaItems.Contains(item.type))
+            {
+                for (var i = 0; i < tooltips.Count; i++)
+                {
+                    if (tooltips[i].Name == "UseMana" && tooltips[i].mod.Equals("Terraria"))
+                    {
+                        tooltips.RemoveAt(i);
+                        i--;
+                    }
+                }
+            }
         }
 
         public override bool NewPreReforge(Item item)

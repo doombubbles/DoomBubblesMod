@@ -18,8 +18,8 @@ namespace DoomBubblesMod
         public static bool allDamageLoaded;
         public static bool thoriumLoaded;
 
-        private UserInterface infinityGauntletUserInterface;
-        internal InfinityGauntletUI infinityGauntletUi;
+        private UserInterface m_InfinityGauntletUserInterface;
+        private InfinityGauntletUI m_InfinityGauntletUi;
         
         public DoomBubblesMod()
         {
@@ -39,27 +39,27 @@ namespace DoomBubblesMod
 
             if (!Main.dedServ)
             {
-                infinityGauntletUi = new InfinityGauntletUI();
-                infinityGauntletUi.Activate();
-                infinityGauntletUserInterface = new UserInterface();
-                infinityGauntletUserInterface.SetState(infinityGauntletUi);
+                m_InfinityGauntletUi = new InfinityGauntletUI();
+                m_InfinityGauntletUi.Activate();
+                m_InfinityGauntletUserInterface = new UserInterface();
+                m_InfinityGauntletUserInterface.SetState(m_InfinityGauntletUi);
             }
             
         }
 
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
         {
-            int MouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
-            if (MouseTextIndex != -1)
+            int mouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
+            if (mouseTextIndex != -1)
             {
-                layers.Insert(MouseTextIndex, new LegacyGameInterfaceLayer(
+                layers.Insert(mouseTextIndex, new LegacyGameInterfaceLayer(
                     "DoomBubblesMod",
                     delegate
                     {
                         if (InfinityGauntletUI.visible)
                         {
-                            infinityGauntletUserInterface.Update(Main._drawInterfaceGameTime);	//I don't understand
-                            infinityGauntletUi.Draw(Main.spriteBatch);
+                            m_InfinityGauntletUserInterface.Update(Main._drawInterfaceGameTime);	//I don't understand
+                            m_InfinityGauntletUi.Draw(Main.spriteBatch);
                         }
                         return true;
                     },
@@ -108,12 +108,12 @@ namespace DoomBubblesMod
 
             if (thoriumLoaded)
             {
-                modifyThoriumRecipes();
+                ModifyThoriumRecipes();
             }
             
         }
 
-        private void modifyThoriumRecipes()
+        private void ModifyThoriumRecipes()
         {
             Mod thoriumMod = ModLoader.GetMod("ThoriumMod");
             RecipeFinder finder = new RecipeFinder();
@@ -146,11 +146,6 @@ namespace DoomBubblesMod
             DoomBubblesModMessageType msgType = (DoomBubblesModMessageType)reader.ReadByte();
             switch (msgType)
             {
-                case DoomBubblesModMessageType.frostmournedmg:
-                    int npc = reader.ReadInt32();
-                    int frostmournedmg = reader.ReadInt32();
-                    Main.npc[npc].GetGlobalNPC<DoomBubblesGlobalNPC>(this).frostmournedmg = frostmournedmg;
-                    break;
                 case DoomBubblesModMessageType.cleaved:
                     int npc2 = reader.ReadInt32();
                     Main.npc[npc2].GetGlobalNPC<DoomBubblesGlobalNPC>(this).Cleaved += 1;
@@ -159,10 +154,6 @@ namespace DoomBubblesMod
                     int npc3 = reader.ReadInt32();
                     int projectile = reader.ReadInt32();
                     Main.projectile[projectile].GetGlobalProjectile<DoomBubblesGlobalProjectile>(this).cleaving.Add(npc3);
-                    break;
-                case DoomBubblesModMessageType.doomlightning:
-                    int npc4 = reader.ReadInt32();
-                    Main.npc[npc4].GetGlobalNPC<DoomBubblesGlobalNPC>(this).doomlightning += 10;
                     break;
                 case DoomBubblesModMessageType.infinityStone:
                     int id = reader.ReadInt32();
@@ -214,10 +205,8 @@ namespace DoomBubblesMod
 
     public enum DoomBubblesModMessageType : byte
     {
-        frostmournedmg,
         cleaved,
         cleaving,
-        doomlightning,
         infinityStone,
         ak47
     }

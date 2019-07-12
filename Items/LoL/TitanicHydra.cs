@@ -43,10 +43,10 @@ namespace DoomBubblesMod.Items.LoL
             recipe.AddRecipe();
         }
 
-        public override void GetWeaponDamage(Player player, ref int damage)
+        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult)
         {
-            damage += player.statDefense;
-            base.GetWeaponDamage(player, ref damage);
+            add += (player.statDefense / 40f);
+            base.ModifyWeaponDamage(player, ref add, ref mult);
         }
 
         public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)

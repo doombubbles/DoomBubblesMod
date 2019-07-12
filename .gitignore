@@ -4,3 +4,6 @@
 DoomBubblesMod.sln
 .vs/config/applicationhost.config
 *.suo
+*.dll
+bin/
+obj/

@@ -26,14 +26,11 @@ namespace DoomBubblesMod
         
         public bool sterak;
         public bool homing;
-        public bool reforgeCheatCodes;
         public bool crystalBulletBonus;
         public bool explosionBulletBonus;
         public bool luminiteBulletBonus;
         
-        public int doom = 0;
         public int botrk;
-        public int frostmourne = 0;
         public int critCombo = 0;
 
         public int gem = -1;
@@ -48,6 +45,8 @@ namespace DoomBubblesMod
         public bool powerStone;
         public List<int> powerStoning = new List<int>();
 
+        public List<int> noManaItems = new List<int>();
+
         public override void ResetEffects()
         {
             sterak = false;
@@ -60,7 +59,6 @@ namespace DoomBubblesMod
             fireRate = 1f;
             critDamage = 0f;
             critChanceMult = 1f;
-            reforgeCheatCodes = false;
             customRadiantDamage = 1f;
             customSymphonicDamage = 1f;
             customRadiantCrit = 0;
@@ -80,6 +78,8 @@ namespace DoomBubblesMod
             {
                 botrk = 0;
             }
+            
+            noManaItems = new List<int>();
         }
 
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
@@ -236,5 +236,8 @@ namespace DoomBubblesMod
             }
             base.ModifyHitPvp(item, target, ref damage, ref crit);
         }
+        
+        
+        
     }
 }

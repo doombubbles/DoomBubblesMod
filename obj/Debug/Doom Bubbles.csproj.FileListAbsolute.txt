@@ -1,3 +1,0 @@
-C:\Users\James Gale\Documents\My Games\Terraria\ModLoader\Mod Sources\Project1\bin\Debug\Project1.exe.config
-C:\Users\James Gale\Documents\My Games\Terraria\ModLoader\Mod Sources\Project1\bin\Debug\Doom Bubbles.exe.config
-C:\Users\James Gale\Documents\My Games\Terraria\ModLoader\Mod Sources\Project1\obj\Debug\Doom Bubbles.csprojResolveAssemblyReference.cache
