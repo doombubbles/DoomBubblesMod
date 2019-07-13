@@ -1,5 +1,5 @@
 author = doombubbles
-version = 0.24.7
+version = 0.25.0
 displayName = Doom Bubbles' Mod
 hideCode = false
 hideResources = false
@@ -8,3 +8,4 @@ buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*
 includePDB = true
 weakReferences = ThoriumMod, AllDamage
 noCompile = false
+homepage=https://github.com/doombubbles/DoomBubblesMod

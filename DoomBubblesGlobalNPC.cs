@@ -37,13 +37,13 @@ namespace DoomBubblesMod
             {
                 npc.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).Cleaved = 0;
             }
-        }
 
-        public override void SetDefaults(NPC npc)
-        {
-            
+            if (npc.FullName == "Hag")
+            {
+                npc.GivenName = "Bitch";
+            }
         }
-
+        
         public override void DrawEffects(NPC npc, ref Color drawColor)
         {
             if(npc.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).Cleaved != 0)

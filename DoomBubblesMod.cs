@@ -21,6 +21,8 @@ namespace DoomBubblesMod
         private UserInterface m_InfinityGauntletUserInterface;
         private InfinityGauntletUI m_InfinityGauntletUi;
         
+        public static List<Color> rainbowColors = new List<Color>() {Color.Red, Color.Orange, Color.Yellow, Color.LimeGreen, Color.Blue, Color.Indigo, Color.Violet};
+        
         public DoomBubblesMod()
         {
             Properties = new ModProperties()
