@@ -29,6 +29,7 @@ namespace DoomBubblesMod
         public bool crystalBulletBonus;
         public bool explosionBulletBonus;
         public bool luminiteBulletBonus;
+        public bool sStone;
         
         public int botrk;
         public int critCombo = 0;
@@ -55,6 +56,7 @@ namespace DoomBubblesMod
             crystalBulletBonus = false;
             explosionBulletBonus = false;
             luminiteBulletBonus = false;
+            sStone = false;
             magicMult = 1f;
             fireRate = 1f;
             critDamage = 0f;
@@ -236,8 +238,11 @@ namespace DoomBubblesMod
             }
             base.ModifyHitPvp(item, target, ref damage, ref crit);
         }
-        
-        
-        
+
+
+        public override void UpdateLifeRegen()
+        {
+            base.UpdateLifeRegen();
+        }
     }
 }

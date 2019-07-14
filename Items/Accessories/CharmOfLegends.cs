@@ -11,7 +11,7 @@ namespace DoomBubblesMod.Items.Accessories
         {
             DisplayName.SetDefault("Charm of Legends");
             Tooltip.SetDefault("Reduces the cooldown of healing potions\n"
-                               + "Your mana regenerates more freely\n"
+                               + "Health/mana always regenerates as if you weren't moving\n"
                                + "Incrases maximum mana by 20\n"
                                + "Increases mana and life regeneration rate");
         }
@@ -26,7 +26,7 @@ namespace DoomBubblesMod.Items.Accessories
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.manaRegenBuff = true;
+            player.GetModPlayer<DoomBubblesPlayer>().sStone = true;
             player.statManaMax2 += 20;
             player.manaRegenDelayBonus++;
             player.manaRegenBonus += 25;

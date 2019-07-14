@@ -10,8 +10,7 @@ namespace DoomBubblesMod.Items.Accessories
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sorcerer's Stone");
-            Tooltip.SetDefault("Your mana regenerates more freely\n"
-                                + "(Mana Regen Potion effect)");
+            Tooltip.SetDefault("Your health and mana always regenerate as if you weren't moving");
         }
 
         public override void SetDefaults()
@@ -22,7 +21,7 @@ namespace DoomBubblesMod.Items.Accessories
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.manaRegenBuff = true;
+            player.GetModPlayer<DoomBubblesPlayer>().sStone = true;
         }
 
 

@@ -10,6 +10,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
+using Player = On.Terraria.Player;
 
 namespace DoomBubblesMod
 {
@@ -46,7 +47,41 @@ namespace DoomBubblesMod
                 m_InfinityGauntletUserInterface = new UserInterface();
                 m_InfinityGauntletUserInterface.SetState(m_InfinityGauntletUi);
             }
-            
+
+            Player.UpdateLifeRegen += PlayerOnUpdateLifeRegen;
+            Player.UpdateManaRegen += PlayerOnUpdateManaRegen;
+        }
+
+        private void PlayerOnUpdateManaRegen(Player.orig_UpdateManaRegen orig, Terraria.Player self)
+        {
+            bool sStone = self.GetModPlayer<DoomBubblesPlayer>().sStone;
+            if (sStone)
+            {
+                Vector2 v = self.velocity;
+                self.velocity = new Vector2(0,0);
+                orig(self);
+                self.velocity = v;
+            }
+            else
+            {
+                orig(self);
+            }
+        }
+
+        private void PlayerOnUpdateLifeRegen(Player.orig_UpdateLifeRegen orig, Terraria.Player self)
+        {
+            bool sStone = self.GetModPlayer<DoomBubblesPlayer>().sStone;
+            if (sStone)
+            {
+                Vector2 v = self.velocity;
+                self.velocity = new Vector2(0,0);
+                orig(self);
+                self.velocity = v;
+            }
+            else
+            {
+                orig(self);
+            }
         }
 
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
@@ -203,7 +238,6 @@ namespace DoomBubblesMod
         }
         
     }
-
 
     public enum DoomBubblesModMessageType : byte
     {
