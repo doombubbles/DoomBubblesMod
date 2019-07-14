@@ -15,12 +15,14 @@ namespace DoomBubblesMod.Items
         public byte mana;
         public byte critDamage;
         public byte hp;
+        public byte regen;
 
         public DoomBubblesInstancedGlobalItem()
         {
             mana = 0;
             critDamage = 0;
             hp = 0;
+            regen = 0;
         }
 
         public override bool InstancePerEntity
@@ -34,6 +36,7 @@ namespace DoomBubblesMod.Items
             myClone.mana = mana;
             myClone.critDamage = critDamage;
             myClone.hp = hp;
+            myClone.regen = regen;
             return myClone;
         }
 
@@ -72,6 +75,17 @@ namespace DoomBubblesMod.Items
                 }
             }
 
+            if (!item.social && item.prefix > 0)
+            {
+                int bonus = regen - Main.cpItem.GetGlobalItem<DoomBubblesInstancedGlobalItem>().regen;
+                if (bonus > 0)
+                {
+                    TooltipLine line = new TooltipLine(mod, "RegenPrefix", "+" + Math.Round(bonus / 2.0, 1) + " Life Regen");
+                    line.isModifier = true;
+                    tooltips.Add(line);
+                }
+            }
+
             if (item.owner != 255 && item.owner != -1 && Main.player[item.owner].GetModPlayer<DoomBubblesPlayer>().noManaItems.Contains(item.type))
             {
                 for (var i = 0; i < tooltips.Count; i++)
@@ -90,6 +104,7 @@ namespace DoomBubblesMod.Items
             mana = 0;
             critDamage = 0;
             hp = 0;
+            regen = 0;
             return base.NewPreReforge(item);
         }
 
@@ -109,6 +124,11 @@ namespace DoomBubblesMod.Items
             {
                 player.statLifeMax2 += hp;
             }
+            
+            if (item.GetGlobalItem<DoomBubblesInstancedGlobalItem>().regen > 0)
+            {
+                player.lifeRegen += regen;
+            }
 
             base.UpdateEquip(item, player);
         }
@@ -118,6 +138,7 @@ namespace DoomBubblesMod.Items
             writer.Write(mana);
             writer.Write(critDamage);
             writer.Write(hp);
+            writer.Write(regen);
         }
 
         public override void NetReceive(Item item, BinaryReader reader)
@@ -125,6 +146,7 @@ namespace DoomBubblesMod.Items
             mana = reader.ReadByte();
             critDamage = reader.ReadByte();
             hp = reader.ReadByte();
+            regen = reader.ReadByte();
         }
 
 

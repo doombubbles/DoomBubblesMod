@@ -179,31 +179,30 @@ namespace DoomBubblesMod
                 NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("ValoranSpirit"));
             }
 
-
-
-            if (npc.type == NPCID.GoblinTinkerer)
+            if (Main.expertMode)
             {
-                Item.NewItem(npc.position, mod.ItemType("TinkerersCheatCodes"));
+                if (npc.type == NPCID.Mothron && Main.rand.Next(1,3) == 1)
+                {
+                    Item.NewItem(npc.position, mod.ItemType("BrokenHeroGun"));
+                }
             }
-
-
-            if (npc.type == NPCID.Mothron && Main.rand.Next(4) == 1)
+            else
             {
-                Item.NewItem(npc.position, mod.ItemType("BrokenHeroGun"));
-            }
+                if (npc.type == NPCID.Mothron && Main.rand.Next(1,4) == 1)
+                {
+                    Item.NewItem(npc.position, mod.ItemType("BrokenHeroGun"));
+                }
+                if (npc.type == NPCID.Plantera)
+                {
+                    Item.NewItem(npc.position, mod.ItemType("HeartOfTerraria"));
+                }
 
-            if (npc.type == NPCID.Plantera && !Main.expertMode)
-            {
-                Item.NewItem(npc.position, mod.ItemType("HeartOfTerraria"));
-            }
-
-            if (npc.type == NPCID.DukeFishron && Main.rand.Next(1, 5) == 1 && !Main.expertMode)
-            {
-                Item.NewItem(npc.position, mod.ItemType("Ultrashark"));
+                if (npc.type == NPCID.DukeFishron && Main.rand.Next(1, 5) == 1)
+                {
+                    Item.NewItem(npc.position, mod.ItemType("Ultrashark"));
                 
+                }
             }
-
-
 
         }
     }

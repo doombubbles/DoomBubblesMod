@@ -14,7 +14,7 @@ namespace DoomBubblesMod.Items.Weapons
         {
             item.damage = 105;
             item.magic = true;
-            item.mana = 8;
+            item.mana = 5;
             item.width = 20;
             item.height = 12;
             item.useTime = 20;

@@ -31,6 +31,7 @@ namespace DoomBubblesMod.Items.Accessories
             player.doubleJumpSail = true;
             player.doubleJumpUnicorn = true;
             player.bee = true;
+            
         }
 
         public override void AddRecipes()
