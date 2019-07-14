@@ -15,7 +15,6 @@ namespace DoomBubblesMod
     class DoomBubblesPlayer : ModPlayer
     {
 
-        public float magicMult = 1f;
         public float critDamage;
         public float critChanceMult = 1f;
         public float fireRate = 1f;
@@ -30,6 +29,7 @@ namespace DoomBubblesMod
         public bool explosionBulletBonus;
         public bool luminiteBulletBonus;
         public bool sStone;
+        public bool rabadon;
         
         public int botrk;
         public int critCombo = 0;
@@ -57,7 +57,7 @@ namespace DoomBubblesMod
             explosionBulletBonus = false;
             luminiteBulletBonus = false;
             sStone = false;
-            magicMult = 1f;
+            rabadon = false;
             fireRate = 1f;
             critDamage = 0f;
             critChanceMult = 1f;
@@ -159,13 +159,6 @@ namespace DoomBubblesMod
             
             base.PostUpdate();
         }
-        
-        public override void UpdateEquips(ref bool wallSpeedBuff, ref bool tileSpeedBuff, ref bool tileRangeBuff)
-        {
-            base.UpdateEquips(ref wallSpeedBuff, ref tileSpeedBuff, ref tileRangeBuff);
-            
-            player.magicDamage += (player.magicDamage - 1f) * (magicMult - 1f);
-        }
 
         public override bool ConsumeAmmo(Item weapon, Item ammo)
         {
@@ -239,10 +232,12 @@ namespace DoomBubblesMod
             base.ModifyHitPvp(item, target, ref damage, ref crit);
         }
 
-
-        public override void UpdateLifeRegen()
+        public override void ModifyWeaponDamage(Item item, ref float add, ref float mult)
         {
-            base.UpdateLifeRegen();
+            if (player.GetModPlayer<DoomBubblesPlayer>().rabadon && item.magic)
+            {
+                add = 1f + (add - 1f) * 1.25f;
+            }
         }
     }
 }

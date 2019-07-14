@@ -31,7 +31,7 @@ namespace DoomBubblesMod.Items.LoL
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.magicDamage += .1f;
-            player.GetModPlayer<DoomBubblesPlayer>().magicMult += .25f;
+            player.GetModPlayer<DoomBubblesPlayer>().rabadon = true;
 
         }
 
