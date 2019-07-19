@@ -51,7 +51,7 @@ namespace DoomBubblesMod
             Player.UpdateLifeRegen += PlayerOnUpdateLifeRegen;
             Player.UpdateManaRegen += PlayerOnUpdateManaRegen;
         }
-
+        
         private void PlayerOnUpdateManaRegen(Player.orig_UpdateManaRegen orig, Terraria.Player self)
         {
             bool sStone = self.GetModPlayer<DoomBubblesPlayer>().sStone;
@@ -215,23 +215,6 @@ namespace DoomBubblesMod
                         Main.projectile[id].velocity = realityBeam.velocity;
                     }
                     break;
-                case DoomBubblesModMessageType.ak47:
-                    int identity = reader.ReadInt32();
-                    if (Main.netMode == NetmodeID.Server)
-                    {
-                        ModPacket packet = GetPacket();
-                        packet.Write((byte)DoomBubblesModMessageType.ak47);
-                        packet.Write(identity);
-                        packet.Send();
-                    }
-                    for (int j = 0; j < 1000; j++) {
-                        if (Main.projectile[j].identity == identity && Main.projectile[j].active && Main.projectile[j].Name == "Bullet") {
-                            Main.projectile[j].GetGlobalProjectile<DoomBubblesGlobalProjectile>(this).ak47 = true;
-                            break;
-                        }
-                    }
-                    
-                    break;
             }
 
 
@@ -243,8 +226,7 @@ namespace DoomBubblesMod
     {
         cleaved,
         cleaving,
-        infinityStone,
-        ak47
+        infinityStone
     }
         
 }

@@ -25,10 +25,7 @@ namespace DoomBubblesMod.Items
             regen = 0;
         }
 
-        public override bool InstancePerEntity
-        {
-            get { return true; }
-        }
+        public override bool InstancePerEntity => true;
 
         public override GlobalItem Clone(Item item, Item itemClone)
         {

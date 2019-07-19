@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Sounds
 {
-	public class Lightning : ModSound
+	public class TalentChange : ModSound
 	{
         public override SoundEffectInstance PlaySound(ref SoundEffectInstance soundInstance, float volume, float pan, SoundType type)
 		{

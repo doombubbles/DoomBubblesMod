@@ -9,6 +9,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace DoomBubblesMod
 {
@@ -22,6 +23,12 @@ namespace DoomBubblesMod
         public float customSymphonicDamage = 1f;
         public int customRadiantCrit = 0;
         public int customSymphonicCrit = 0;
+
+        public int fenixBombBuildUp;
+        public int fenixRepeaterBuff;
+        public int phaseUseTime;
+        public List<int> pylons = new List<int>();
+        public bool photonCannon;
         
         public bool sterak;
         public bool homing;
@@ -30,9 +37,8 @@ namespace DoomBubblesMod
         public bool luminiteBulletBonus;
         public bool sStone;
         public bool rabadon;
-        
-        public int botrk;
-        public int critCombo = 0;
+        public bool bloodlust;
+        public bool vampireKnifeBat;
 
         public int gem = -1;
         public int tbMouseX;
@@ -45,6 +51,7 @@ namespace DoomBubblesMod
         public int powerStoneCharge;
         public bool powerStone;
         public List<int> powerStoning = new List<int>();
+        
 
         public List<int> noManaItems = new List<int>();
 
@@ -58,11 +65,14 @@ namespace DoomBubblesMod
             luminiteBulletBonus = false;
             sStone = false;
             rabadon = false;
+            bloodlust = false;
+            
             fireRate = 1f;
             critDamage = 0f;
             critChanceMult = 1f;
             customRadiantDamage = 1f;
             customSymphonicDamage = 1f;
+            
             customRadiantCrit = 0;
             customSymphonicCrit = 0;
             if (powerStoned > 0)
@@ -70,16 +80,30 @@ namespace DoomBubblesMod
                 powerStoned--;
             }
 
-            powerStoning.RemoveAll(i => !Main.npc[i].HasBuff(mod.BuffType("PowerStoneDebuff")));
+            if (player.FindBuffIndex(mod.BuffType("FenixBombBuildUp")) <= 0)
+            {
+                fenixBombBuildUp = 0;
+            }
+            if (player.FindBuffIndex(mod.BuffType("FenixRepeaterBuff")) <= 0)
+            {
+                fenixRepeaterBuff = 0;
+            }
+            if (player.FindBuffIndex(mod.BuffType("PhotonCannon")) <= 0)
+            {
+                photonCannon = false;
+            }
+            
+            if (player.FindBuffIndex(mod.BuffType("VampireKnifeBat")) <= 0)
+            {
+                vampireKnifeBat = false;
+            }
 
-            if (botrk != 0)
+            if (phaseUseTime > 0)
             {
-                botrk -= 1;
+                phaseUseTime--;
             }
-            if (botrk < 0)
-            {
-                botrk = 0;
-            }
+
+            powerStoning.RemoveAll(i => !Main.npc[i].HasBuff(mod.BuffType("PowerStoneDebuff")));
             
             noManaItems = new List<int>();
         }
@@ -157,7 +181,13 @@ namespace DoomBubblesMod
                 soulStone = false;
             }
             
+            
             base.PostUpdate();
+
+            if (bloodlust)
+            {
+                player.lifeSteal = 1000f;
+            }
         }
 
         public override bool ConsumeAmmo(Item weapon, Item ammo)

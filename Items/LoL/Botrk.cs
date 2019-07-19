@@ -53,16 +53,6 @@ namespace DoomBubblesMod.Items.LoL
             recipe2.AddRecipe();
         }
         
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
-            if (player.GetModPlayer<DoomBubblesPlayer>(mod).botrk == 0)
-            {
-                player.GetModPlayer<DoomBubblesPlayer>(mod).botrk = (45/16 * item.useTime);
-                return true;
-            }
-            return false;
-        }
-        
 
     }
 }

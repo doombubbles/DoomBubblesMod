@@ -1,8 +1,8 @@
 author = doombubbles
-version = 0.26.2
+version = 0.27.0
 displayName = Doom Bubbles' Mod
-hideCode = false
-hideResources = false
+hideCode = true
+hideResources = true
 includeSource = false
 buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*
 includePDB = true

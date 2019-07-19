@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using DoomBubblesMod.Items;
 using DoomBubblesMod.Items.Thanos;
+using DoomBubblesMod.Items.Weapons;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -204,6 +205,74 @@ namespace DoomBubblesMod
                 }
             }
 
+        }
+
+        public override void SetupShop(int type, Chest shop, ref int nextSlot)
+        {
+            if (type == NPCID.Cyborg && NPC.downedGolemBoss)
+            {
+                List<ModItem> items = new List<ModItem>{mod.GetItem("LightningSurge"), 
+                    mod.GetItem("RepeaterCannon"), mod.GetItem("PhaseBombLauncher"),
+                    mod.GetItem("PylonStaff"), mod.GetItem("PhotonCannonStaff")
+                };
+                
+                foreach (var modItem in items)
+                {
+                    shop.item[nextSlot].SetDefaults(modItem.item.type);
+                    nextSlot++;
+                }
+
+                var hash = Main.LocalPlayer.name.GetHashCode();
+                
+                foreach (var modItem in items)
+                {
+                    TalentItem talentItem = (TalentItem) modItem;
+
+                    if (Main.LocalPlayer.HasItem(talentItem.item.type))
+                    {
+                        if (NPC.downedHalloweenKing && NPC.downedHalloweenTree)
+                        {
+                            addTalent(talentItem, hash % 3 + 1, shop, ref nextSlot);
+                        }
+                        if (NPC.downedChristmasIceQueen && NPC.downedChristmasSantank && NPC.downedChristmasTree)
+                        {
+                            addTalent(talentItem, hash % 3 + 2, shop, ref nextSlot);
+                        }
+                        if (NPC.downedMartians)
+                        {
+                            addTalent(talentItem, hash % 3 + 3, shop, ref nextSlot);
+                        }
+                    }
+                }
+
+            }
+
+
+            if (type == NPCID.WitchDoctor && Main.LocalPlayer.ZoneCrimson)
+            {
+                shop.item[nextSlot].SetDefaults(mod.ItemType("BloodlustTalisman"));
+                nextSlot++;
+            }
+        }
+
+
+        private void addTalent(TalentItem talentItem, int i, Chest shop, ref int nextSlot)
+        {
+            switch (i)
+            {
+                case 1:
+                    shop.item[nextSlot].SetDefaults(mod.ItemType(talentItem.Talent1Name));
+                    nextSlot++;
+                    break;
+                case 2:
+                    shop.item[nextSlot].SetDefaults(mod.ItemType(talentItem.Talent2Name));
+                    nextSlot++;
+                    break;
+                case 3:
+                    shop.item[nextSlot].SetDefaults(mod.ItemType(talentItem.Talent3Name));
+                    nextSlot++;
+                    break;
+            }
         }
     }
 }

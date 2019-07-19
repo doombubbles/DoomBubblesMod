@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -6,10 +7,8 @@ using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Projectiles
 {
-    public class Rainbow : ModProjectile
+    public class Repeater : ModProjectile
     {
-        
-        private List<int> hit = new List<int>();
         
         public override void SetDefaults()
         {
@@ -21,13 +20,32 @@ namespace DoomBubblesMod.Projectiles
             projectile.extraUpdates = 2;
             projectile.scale = 1f;
             projectile.timeLeft = 600;
-            projectile.magic = true;
+            projectile.ranged = true;
             projectile.ignoreWater = true;
-            projectile.penetrate = -1;
         }
 
-        
-        
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            Player player = Main.player[projectile.owner];
+            player.AddBuff(mod.BuffType("FenixBombBuildUp"), 360);
+            if (((projectile.ai[1] == 3 || projectile.ai[1] == -1) && player.GetModPlayer<DoomBubblesPlayer>().fenixBombBuildUp == 14)
+                || !(projectile.ai[1] == 3 || projectile.ai[1] == -1) && player.GetModPlayer<DoomBubblesPlayer>().fenixBombBuildUp == 9)
+            {
+                Main.PlaySound(SoundLoader.customSoundType, (int)projectile.position.X, (int)projectile.position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Boung"));
+            }
+            player.GetModPlayer<DoomBubblesPlayer>().fenixBombBuildUp++;
+            if (projectile.ai[1] == 3 || projectile.ai[1] == -1)
+            {
+                if (player.GetModPlayer<DoomBubblesPlayer>().fenixBombBuildUp > 15)
+                {
+                    player.GetModPlayer<DoomBubblesPlayer>().fenixBombBuildUp = 15;
+                }
+            } else if (player.GetModPlayer<DoomBubblesPlayer>().fenixBombBuildUp > 10)
+            {
+                player.GetModPlayer<DoomBubblesPlayer>().fenixBombBuildUp = 10;
+            }
+        }
+
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             float originX = (float)(Main.projectileTexture[projectile.type].Width - projectile.width) * 0.5f + (float)projectile.width * 0.5f;
@@ -42,10 +60,6 @@ namespace DoomBubblesMod.Projectiles
                 Vector2 value12 = new Vector2(projectile.position.X - Main.screenPosition.X + originX + (float)offsetX, projectile.position.Y - Main.screenPosition.Y + (float)(projectile.height / 2) + projectile.gfxOffY);
                 float num152 = 100f;
                 float scaleFactor = 3f;
-                if (projectile.ai[1] == 1f)
-                {
-                    num152 = (int)projectile.localAI[0];
-                }
                 for (int num153 = 1; num153 <= (int)projectile.localAI[0]; num153++)
                 {
                     Vector2 value13 = Vector2.Normalize(projectile.velocity) * num153 * scaleFactor;
@@ -70,43 +84,16 @@ namespace DoomBubblesMod.Projectiles
             {
                 projectile.alpha = 0;
             }
-            Lighting.AddLight((int)projectile.Center.X / 16, (int)projectile.Center.Y / 16, 0.5f, 0.5f, .5f);
+            Lighting.AddLight((int)projectile.Center.X / 16, (int)projectile.Center.Y / 16, 0.2f, 0.2f, 0.25f);
             
-            float num55 = 100f;
+            float num55 = 50f;
             float num56 = 3f;
-            if (projectile.ai[1] == 0f)
+            
+            projectile.localAI[0] += num56;
+            if (projectile.localAI[0] > num55)
             {
-                projectile.localAI[0] += num56;
-                if (projectile.localAI[0] > num55)
-                {
-                    projectile.localAI[0] = num55;
-                }
+                projectile.localAI[0] = num55;
             }
-            else
-            {
-                projectile.localAI[0] -= num56;
-                if (projectile.localAI[0] <= 0f)
-                {
-                    projectile.Kill();
-                }
-            }
-        }
-
-        
-        public override bool? CanHitNPC(NPC target)
-        {
-            if (hit.Contains(target.whoAmI))
-            {
-                return false;
-            }
-            return base.CanHitNPC(target);
-        }
-
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-            target.immune[projectile.owner] = 0;
-            hit.Add(target.whoAmI);
-            base.OnHitNPC(target, damage, knockback, crit);
         }
 
         public override void Kill(int timeLeft)
@@ -114,11 +101,12 @@ namespace DoomBubblesMod.Projectiles
             int num293 = Main.rand.Next(3, 7);
             for (int num294 = 0; num294 < num293; num294++)
             {
-                int num295 = Dust.NewDust(projectile.Center - projectile.velocity / 2f, 0, 0, 63, 0f, 0f, 100, DoomBubblesMod.rainbowColors[Main.rand.Next(0, 6)], 2.1f);
+                int num295 = Dust.NewDust(projectile.Center - projectile.velocity / 2f, 0, 0, 63, 0f, 0f, 100, Color.Lavender, 2.1f);
                 Dust dust = Main.dust[num295];
                 dust.velocity *= 2f;
                 Main.dust[num295].noGravity = true;
             }
+            Main.PlaySound(SoundLoader.customSoundType, (int)projectile.position.X, (int)projectile.position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Hit"));
             base.Kill(timeLeft);
         }
     }
