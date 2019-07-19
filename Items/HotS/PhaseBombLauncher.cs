@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Config.UI;
-using Terraria.ModLoader.IO;
 
-namespace DoomBubblesMod.Items.Weapons
+namespace DoomBubblesMod.Items.HotS
 {
     public class PhaseBombLauncher : TalentItem
     {

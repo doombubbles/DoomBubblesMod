@@ -63,5 +63,16 @@ namespace DoomBubblesMod.Items.Weapons
 
             base.ModifyTooltips(tooltips);
         }
+
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ItemID.BatScepter);
+            recipe.AddIngredient(ItemID.VampireKnives);
+            recipe.AddIngredient(ItemID.BrokenBatWing, 2);
+            recipe.AddTile(TileID.DemonAltar);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
+        }
     }
 }

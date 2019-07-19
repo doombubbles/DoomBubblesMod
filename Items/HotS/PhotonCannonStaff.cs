@@ -1,45 +1,46 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.GameContent.UI;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace DoomBubblesMod.Items.Weapons
+namespace DoomBubblesMod.Items.HotS
 {
-    public class PylonStaff : TalentItem
+    public class PhotonCannonStaff : TalentItem
     {
         public override bool CloneNewInstances => true;
-        public override string Talent1Name => "TalentPylonOvercharge";
-        public override string Talent2Name => "TalentConstructAdditionalPylons";
-        public override string Talent3Name => "TalentPowerOverflowing";
+        public override string Talent1Name => "TalentWarpResonance";
+        public override string Talent2Name => "TalentTowerDefense";
+        public override string Talent3Name => "TalentShootEmUp";
         protected override Color? TalentColor => Color.Blue;
         
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pylon Staff");
-            Tooltip.SetDefault("Warps in Pylons that power Photon Cannons and give regen\n" +
-                               "Max 2");
+            DisplayName.SetDefault("Photon Cannon Staff");
+            Tooltip.SetDefault("Warps Photon Cannons as stationary minions\n" +
+                               "Photon Cannons require a Pylon power field");
             
         }
 
         public override void SetDefaults()
         {
-            item.width = 38;
-            item.height = 38;
+            item.width = 36;
+            item.height = 36;
             item.mana = 10;
             item.useTime = 36;
             item.useAnimation = 36;
             item.useStyle = 1;
             item.noMelee = true;
-            item.damage = 96;
-            item.shoot = mod.ProjectileType("Pylon");
+            item.damage = 105;
+            item.shoot = mod.ProjectileType("PhotonCannon");
             item.value = Item.buyPrice(0, 69, 0, 0);
             item.rare = ItemRarityID.Yellow;
+            item.buffType = mod.BuffType("PhotonCannon");
+            item.buffTime = 3600; 
         }
         
         public override bool AltFunctionUse(Player player) {
-            return ChosenTalent == 1 || ChosenTalent == -1;
+            return true;
         }
         
         public override bool UseItem(Player player)
@@ -65,40 +66,26 @@ namespace DoomBubblesMod.Items.Weapons
                 }
                 num145--;
                 Main.PlaySound(SoundLoader.customSoundType, (int) (Main.mouseX + Main.screenPosition.X), (int)
-                    ( num145 * 16 - 12), mod.GetSoundSlot(SoundType.Custom, "Sounds/PylonWarpIn"));
-                int pylon = Projectile.NewProjectile((float)Main.mouseX + Main.screenPosition.X, num145 * 16 - 12, 0f, 15f, type, damage, knockBack, player.whoAmI, ChosenTalent);
-                player.GetModPlayer<DoomBubblesPlayer>().pylons.Add(pylon);
-                int maxPylons = ChosenTalent == 2 || ChosenTalent == -1 ? 3 : 2;
-                while (player.GetModPlayer<DoomBubblesPlayer>().pylons.Count > maxPylons)
-                {
-                    player.GetModPlayer<DoomBubblesPlayer>().pylons.RemoveAt(0);
-                }
+                    ( num145 * 16), mod.GetSoundSlot(SoundType.Custom, "Sounds/PhotonCannonWarpIn"));
+                Projectile.NewProjectile((float)Main.mouseX + Main.screenPosition.X, num145 * 16, 0f, 15f, type, damage, knockBack, player.whoAmI, ChosenTalent);
             }
             return false;
         }
-
         
+        
+
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            base.ModifyTooltips(tooltips);
-            
             for (var i = 0; i < tooltips.Count; i++)
             {
-                TooltipLine line = tooltips[i];
-                if (line.Name == "Damage" && ChosenTalent != 1 && ChosenTalent != -1)
-                {
-                    tooltips.RemoveAt(i);
-                    i--;
-                } else if (line.Name == "Knockback" && ChosenTalent != 1 && ChosenTalent != -1)
-                {
-                    tooltips.RemoveAt(i);
-                    i--;
-                } else if (line.Name == "CritChance" && ChosenTalent != 1 && ChosenTalent != -1)
+                if (tooltips[i].Name == "BuffTime")
                 {
                     tooltips.RemoveAt(i);
                     i--;
                 }
             }
+
+            base.ModifyTooltips(tooltips);
         }
         
     }

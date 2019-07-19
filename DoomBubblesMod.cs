@@ -16,7 +16,6 @@ namespace DoomBubblesMod
 {
     public class DoomBubblesMod : Mod
     {
-        public static bool allDamageLoaded;
         public static bool thoriumLoaded;
 
         private UserInterface m_InfinityGauntletUserInterface;
@@ -37,7 +36,6 @@ namespace DoomBubblesMod
 
         public override void Load()
         {
-            allDamageLoaded = ModLoader.GetMod("AllDamage") != null;
             thoriumLoaded = ModLoader.GetMod("ThoriumMod") != null;
 
             if (!Main.dedServ)

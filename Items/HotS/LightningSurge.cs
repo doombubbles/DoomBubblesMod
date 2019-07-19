@@ -7,7 +7,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
-namespace DoomBubblesMod.Items.Weapons
+namespace DoomBubblesMod.Items.HotS
 {
     public class LightningSurge : TalentItem
     {

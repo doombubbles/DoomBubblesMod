@@ -26,19 +26,8 @@ namespace DoomBubblesMod.Buffs
             player.manaRegenBuff = true;
             player.manaRegenBonus += 25;
             player.lifeRegen++;
-            
-            if (DoomBubblesMod.allDamageLoaded)
-            {
-                ModLoader.GetMod("AllDamage").Call(new object[] {"Damage", player, .15f});
-            }
-            else
-            {
-                player.meleeDamage += .15f;
-                player.rangedDamage += .15f;
-                player.magicDamage += .15f;
-                player.minionDamage += .15f;
-                player.thrownDamage += .15f;
-            }
+
+            player.allDamage += .15f;
         }
     }
 }
