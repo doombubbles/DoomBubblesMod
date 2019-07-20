@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace DoomBubblesMod.Projectiles
+namespace DoomBubblesMod.Projectiles.HotS
 {
     public class Pylon : ModProjectile
     {
@@ -59,14 +59,14 @@ namespace DoomBubblesMod.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            Main.player[projectile.owner].GetModPlayer<DoomBubblesPlayer>().pylons
+            Main.player[projectile.owner].GetModPlayer<HotSPlayer>().pylons
                 .RemoveAll(i => i == projectile.whoAmI);
             base.Kill(timeLeft);
         }
 
         public override void AI()
         {
-            if (!Main.player[projectile.owner].GetModPlayer<DoomBubblesPlayer>().pylons.Contains(projectile.whoAmI))
+            if (!Main.player[projectile.owner].GetModPlayer<HotSPlayer>().pylons.Contains(projectile.whoAmI))
             {
                 projectile.Kill();
             }

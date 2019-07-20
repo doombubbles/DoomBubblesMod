@@ -53,7 +53,7 @@ namespace DoomBubblesMod.Items.Thanos
 
         public override void UpdateInventory(Player player)
         {
-            switch (player.GetModPlayer<DoomBubblesPlayer>().gem)
+            switch (player.GetModPlayer<ThanosPlayer>().gem)
             {
                 case 0:
                     item.SetNameOverride("Infinity Gauntlet (Power)");
@@ -111,7 +111,7 @@ namespace DoomBubblesMod.Items.Thanos
                 }
                 if (item.Name.Contains("(Time)"))
                 {
-                    int previousHp = player.GetModPlayer<DoomBubblesPlayer>().timeHealth[300];
+                    int previousHp = player.GetModPlayer<ThanosPlayer>().timeHealth[300];
                     if (previousHp == 0 || player.HasBuff(mod.BuffType("TimeStoneCooldown")) || previousHp <= player.statLife)
                     {
                         return false;
@@ -173,8 +173,8 @@ namespace DoomBubblesMod.Items.Thanos
             if (player.altFunctionUse == 2 && player.itemAnimation == player.itemAnimationMax - 1)
             {
                 //switchGem();
-                player.GetModPlayer<DoomBubblesPlayer>().tbMouseX = Main.mouseX;
-                player.GetModPlayer<DoomBubblesPlayer>().tbMouseY = Main.mouseY;
+                player.GetModPlayer<ThanosPlayer>().tbMouseX = Main.mouseX;
+                player.GetModPlayer<ThanosPlayer>().tbMouseY = Main.mouseY;
                 InfinityGauntletUI.visible = true;
                 
                 
@@ -316,28 +316,28 @@ namespace DoomBubblesMod.Items.Thanos
             if (player.channel)
             {
                 player.itemAnimation = player.itemAnimationMax;
-                if (player.GetModPlayer<DoomBubblesPlayer>().powerStoneCharge < 300)
+                if (player.GetModPlayer<ThanosPlayer>().powerStoneCharge < 300)
                 {
-                    player.GetModPlayer<DoomBubblesPlayer>().powerStoneCharge += 1;
+                    player.GetModPlayer<ThanosPlayer>().powerStoneCharge += 1;
                     if (Main.time % 10 == 0)
                     {
-                        Main.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 34, .3f + (float) (.05 * Math.Sqrt(player.GetModPlayer<DoomBubblesPlayer>().powerStoneCharge)));
+                        Main.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 34, .3f + (float) (.05 * Math.Sqrt(player.GetModPlayer<ThanosPlayer>().powerStoneCharge)));
                     }
                 }
 
-                if (player.GetModPlayer<DoomBubblesPlayer>().powerStoneCharge > 100 && player.GetModPlayer<DoomBubblesPlayer>().powerStoneCharge < 300)
+                if (player.GetModPlayer<ThanosPlayer>().powerStoneCharge > 100 && player.GetModPlayer<ThanosPlayer>().powerStoneCharge < 300)
                 {
-                    player.GetModPlayer<DoomBubblesPlayer>().powerStoneCharge += 1;
+                    player.GetModPlayer<ThanosPlayer>().powerStoneCharge += 1;
                 }
                 
-                if (player.GetModPlayer<DoomBubblesPlayer>().powerStoneCharge > 200 && player.GetModPlayer<DoomBubblesPlayer>().powerStoneCharge < 300)
+                if (player.GetModPlayer<ThanosPlayer>().powerStoneCharge > 200 && player.GetModPlayer<ThanosPlayer>().powerStoneCharge < 300)
                 {
-                    player.GetModPlayer<DoomBubblesPlayer>().powerStoneCharge += 1;
+                    player.GetModPlayer<ThanosPlayer>().powerStoneCharge += 1;
                 }
                 
                 
                 
-                if (player.GetModPlayer<DoomBubblesPlayer>().powerStoneCharge == 300)
+                if (player.GetModPlayer<ThanosPlayer>().powerStoneCharge == 300)
                 {
                     if (Main.time % 10 == 0)
                     {
@@ -356,7 +356,7 @@ namespace DoomBubblesMod.Items.Thanos
                 }
                 else
                 {
-                    for (int i = 0; i < player.GetModPlayer<DoomBubblesPlayer>().powerStoneCharge / 10; i++)
+                    for (int i = 0; i < player.GetModPlayer<ThanosPlayer>().powerStoneCharge / 10; i++)
                     {
                         double rad = Math.PI * Main.rand.NextDouble() * 2;
                         float dX = (float) (10 * Math.Cos(rad));
@@ -375,16 +375,16 @@ namespace DoomBubblesMod.Items.Thanos
                 Main.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 93, .5f);
                 player.itemAnimation = 1;
                 
-                player.AddBuff(mod.BuffType("PowerStone"), 6 * player.GetModPlayer<DoomBubblesPlayer>().powerStoneCharge);
+                player.AddBuff(mod.BuffType("PowerStone"), 6 * player.GetModPlayer<ThanosPlayer>().powerStoneCharge);
                 for (int i = 0; i <= 360; i += 5)
                 {
                     double rad = (Math.PI * i) / 180;
                     float dX = (float) (20 * Math.Cos(rad));
                     float dY = (float) (20 * Math.Sin(rad));
-                    Projectile.NewProjectile(gauntlet, new Vector2(dX, dY), mod.ProjectileType("PowerExplosion"), (int) (player.GetModPlayer<DoomBubblesPlayer>().powerStoneCharge * 3.33333333f), 5, player.whoAmI);
+                    Projectile.NewProjectile(gauntlet, new Vector2(dX, dY), mod.ProjectileType("PowerExplosion"), (int) (player.GetModPlayer<ThanosPlayer>().powerStoneCharge * 3.33333333f), 5, player.whoAmI);
                 }
                 
-                player.GetModPlayer<DoomBubblesPlayer>().powerStoneCharge = 0;
+                player.GetModPlayer<ThanosPlayer>().powerStoneCharge = 0;
             }
         }
 
@@ -405,14 +405,14 @@ namespace DoomBubblesMod.Items.Thanos
                 Main.playerInventory = true;
                 Main.recBigList = false;
                 Recipe.FindRecipes();
-                player.GetModPlayer<DoomBubblesPlayer>().soulStone = true;
+                player.GetModPlayer<ThanosPlayer>().soulStone = true;
             }
         }
 
         void timeAbility(Player player)
         {
             Vector2 gauntlet = new Vector2(player.Center.X + 10 * player.direction, player.Center.Y - 25);
-            int previousHp = player.GetModPlayer<DoomBubblesPlayer>().timeHealth[300];
+            int previousHp = player.GetModPlayer<ThanosPlayer>().timeHealth[300];
             player.HealEffect(previousHp - player.statLife);
             player.statLife = previousHp;
             for (int i = 0; i <= 360; i += 4)

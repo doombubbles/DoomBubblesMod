@@ -48,7 +48,7 @@ namespace DoomBubblesMod.Projectiles
             if (target.HasBuff(mod.BuffType("PowerStoneDebuff")))
             {
                 if (target.buffTime[target.FindBuffIndex(mod.BuffType("PowerStoneDebuff"))] > 260 
-                    && Main.player[projectile.owner].GetModPlayer<DoomBubblesPlayer>().powerStoning.Contains(target.whoAmI))
+                    && Main.player[projectile.owner].GetModPlayer<ThanosPlayer>().powerStoning.Contains(target.whoAmI))
                 {
                     return false;
                 }
@@ -59,9 +59,9 @@ namespace DoomBubblesMod.Projectiles
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.AddBuff(mod.BuffType("PowerStoneDebuff"), 300);
-            if (!Main.player[projectile.owner].GetModPlayer<DoomBubblesPlayer>().powerStoning.Contains(target.whoAmI))
+            if (!Main.player[projectile.owner].GetModPlayer<ThanosPlayer>().powerStoning.Contains(target.whoAmI))
             {
-                Main.player[projectile.owner].GetModPlayer<DoomBubblesPlayer>().powerStoning.Add(target.whoAmI);
+                Main.player[projectile.owner].GetModPlayer<ThanosPlayer>().powerStoning.Add(target.whoAmI);
             }
             base.OnHitNPC(target, damage, knockback, crit);
         }

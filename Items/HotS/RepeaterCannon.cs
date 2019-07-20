@@ -14,7 +14,6 @@ namespace DoomBubblesMod.Items.HotS
     {
         private short m_Shot = 0;
         
-        public override bool CloneNewInstances => true;
         public override string Talent1Name => "TalentMobileOffense";
         public override string Talent2Name => "TalentOffensiveCadence";
         public override string Talent3Name => "TalentArsenalOvercharge";
@@ -86,7 +85,7 @@ namespace DoomBubblesMod.Items.HotS
 
         public override float UseTimeMultiplier(Player player)
         {
-            return base.UseTimeMultiplier(player) * (1f + .1f * player.GetModPlayer<DoomBubblesPlayer>().fenixRepeaterBuff);
+            return base.UseTimeMultiplier(player) * (1f + .1f * player.GetModPlayer<HotSPlayer>().fenixRepeaterBuff);
         }
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace DoomBubblesMod.Projectiles
+namespace DoomBubblesMod.Projectiles.HotS
 {
     public class PhaseBomb : ModProjectile
     {
@@ -131,10 +131,10 @@ namespace DoomBubblesMod.Projectiles
             {
                 Player player = Main.player[projectile.owner];
                 player.AddBuff(mod.BuffType("FenixRepeaterBuff"), 360);
-                player.GetModPlayer<DoomBubblesPlayer>().fenixRepeaterBuff += (int) projectile.localAI[0];
-                if (player.GetModPlayer<DoomBubblesPlayer>().fenixRepeaterBuff > 10)
+                player.GetModPlayer<HotSPlayer>().fenixRepeaterBuff += (int) projectile.localAI[0];
+                if (player.GetModPlayer<HotSPlayer>().fenixRepeaterBuff > 10)
                 {
-                    player.GetModPlayer<DoomBubblesPlayer>().fenixRepeaterBuff = 10;
+                    player.GetModPlayer<HotSPlayer>().fenixRepeaterBuff = 10;
                 }
             }
             base.Kill(timeLeft);

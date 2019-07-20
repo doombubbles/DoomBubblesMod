@@ -18,7 +18,7 @@ namespace DoomBubblesMod.Buffs
 
 		public override void Update(Player player, ref int buffIndex)
 		{
-			player.GetModPlayer<DoomBubblesPlayer>().powerStone = true;
+			player.GetModPlayer<ThanosPlayer>().powerStone = true;
 		}
 
 		public override bool ReApply(Player player, int time, int buffIndex)

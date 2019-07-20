@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
 
-namespace DoomBubblesMod.Projectiles
+namespace DoomBubblesMod.Projectiles.HotS
 {
     public class RepeaterBig : Repeater
     {

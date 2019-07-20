@@ -26,7 +26,7 @@ namespace DoomBubblesMod.Buffs
 		
 		public override void ModifyBuffTip(ref string tip, ref int rare)
 		{
-			int shots = Main.LocalPlayer.GetModPlayer<DoomBubblesPlayer>().fenixRepeaterBuff;
+			int shots = Main.LocalPlayer.GetModPlayer<HotSPlayer>().fenixRepeaterBuff;
 			tip = "Stacks: " + shots;
 		}
 

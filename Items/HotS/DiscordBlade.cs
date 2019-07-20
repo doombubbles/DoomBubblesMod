@@ -8,14 +8,15 @@ namespace DoomBubblesMod.Items.HotS
 {
     public class DiscordBlade : TalentItem
     {
-        public override bool CloneNewInstances => true;
         public override string Talent1Name => "TalentChaosReigns";
         public override string Talent2Name => "TalentDissonance";
         public override string Talent3Name => "TalentLethalOnslaught";
         protected override Color? TalentColor => Color.Red;
         
         private float Length => ChosenTalent == 2 || ChosenTalent == -1 ? 500f : 200f;
-        
+
+        public override bool OnlyShootOnSwing => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Discord Blade");
@@ -41,6 +42,15 @@ namespace DoomBubblesMod.Items.HotS
             item.shoot = mod.ProjectileType("DiscordStrike");
             item.shootSpeed = 10f;
             item.scale = 1.2f;
+        }
+        
+        public override void MeleeEffects(Player player, Rectangle hitbox) {
+            if (Main.rand.NextBool(5)) {
+                //Emit dusts when swing the sword
+                int dust = Dust.NewDust(new Vector2(hitbox.X, hitbox.Y), hitbox.Width, hitbox.Height, 182);
+                Main.dust[dust].noGravity = true;
+                Main.dust[dust].noLight = false;
+            }
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage,

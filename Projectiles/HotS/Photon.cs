@@ -5,7 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace DoomBubblesMod.Projectiles
+namespace DoomBubblesMod.Projectiles.HotS
 {
     public class Photon : ModProjectile
     {

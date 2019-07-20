@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace DoomBubblesMod.Projectiles
+namespace DoomBubblesMod.Projectiles.HotS
 {
     public class Repeater : ModProjectile
     {
@@ -28,21 +28,21 @@ namespace DoomBubblesMod.Projectiles
         {
             Player player = Main.player[projectile.owner];
             player.AddBuff(mod.BuffType("FenixBombBuildUp"), 360);
-            if (((projectile.ai[1] == 3 || projectile.ai[1] == -1) && player.GetModPlayer<DoomBubblesPlayer>().fenixBombBuildUp == 14)
-                || !(projectile.ai[1] == 3 || projectile.ai[1] == -1) && player.GetModPlayer<DoomBubblesPlayer>().fenixBombBuildUp == 9)
+            if (((projectile.ai[1] == 3 || projectile.ai[1] == -1) && player.GetModPlayer<HotSPlayer>().fenixBombBuildUp == 14)
+                || !(projectile.ai[1] == 3 || projectile.ai[1] == -1) && player.GetModPlayer<HotSPlayer>().fenixBombBuildUp == 9)
             {
                 Main.PlaySound(SoundLoader.customSoundType, (int)projectile.position.X, (int)projectile.position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Boung"));
             }
-            player.GetModPlayer<DoomBubblesPlayer>().fenixBombBuildUp++;
+            player.GetModPlayer<HotSPlayer>().fenixBombBuildUp++;
             if (projectile.ai[1] == 3 || projectile.ai[1] == -1)
             {
-                if (player.GetModPlayer<DoomBubblesPlayer>().fenixBombBuildUp > 15)
+                if (player.GetModPlayer<HotSPlayer>().fenixBombBuildUp > 15)
                 {
-                    player.GetModPlayer<DoomBubblesPlayer>().fenixBombBuildUp = 15;
+                    player.GetModPlayer<HotSPlayer>().fenixBombBuildUp = 15;
                 }
-            } else if (player.GetModPlayer<DoomBubblesPlayer>().fenixBombBuildUp > 10)
+            } else if (player.GetModPlayer<HotSPlayer>().fenixBombBuildUp > 10)
             {
-                player.GetModPlayer<DoomBubblesPlayer>().fenixBombBuildUp = 10;
+                player.GetModPlayer<HotSPlayer>().fenixBombBuildUp = 10;
             }
         }
 

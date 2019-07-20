@@ -7,13 +7,13 @@ using System;
 
 namespace DoomBubblesMod.Buffs
 {
-	public class FenixBombBuildUp : ModBuff
+	public class UnconqueredSpiritCooldown : ModBuff
 	{
 		public override void SetDefaults()
 		{
-			DisplayName.SetDefault("Phase Bomb Build Up");
+			DisplayName.SetDefault("Unconquered Spirit Cooldown");
 			Description.SetDefault("");
-			Main.debuff[Type] = false;
+			Main.debuff[Type] = true;
 			Main.pvpBuff[Type] = true;
 			Main.buffNoSave[Type] = true;
 			longerExpertDebuff = false;
@@ -24,20 +24,14 @@ namespace DoomBubblesMod.Buffs
             
         }
 
-		public override void ModifyBuffTip(ref string tip, ref int rare)
-		{
-			int shots = Main.LocalPlayer.GetModPlayer<HotSPlayer>().fenixBombBuildUp;
-			tip = "Stacks: " + shots;
-		}
-
-		public override bool ReApply(NPC npc, int time, int buffIndex)
+        public override bool ReApply(NPC npc, int time, int buffIndex)
         {
-            return false;
+            return true;
         }
 
         public override bool ReApply(Player player, int time, int buffIndex)
         {
-            return false;
+            return true;
         }
 
     }

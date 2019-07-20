@@ -64,8 +64,8 @@ namespace DoomBubblesMod.UI
 
         public override void Update(GameTime gameTime)
         {
-            float newPanelX = Main.player[Main.myPlayer].GetModPlayer<DoomBubblesPlayer>().tbMouseX - panelWidth / 2;
-            float newPanelY = Main.player[Main.myPlayer].GetModPlayer<DoomBubblesPlayer>().tbMouseY - panelHeight / 2;
+            float newPanelX = Main.player[Main.myPlayer].GetModPlayer<ThanosPlayer>().tbMouseX - panelWidth / 2;
+            float newPanelY = Main.player[Main.myPlayer].GetModPlayer<ThanosPlayer>().tbMouseY - panelHeight / 2;
 
             if (backgroundPanel.Left.Pixels == newPanelX)
             {
@@ -85,7 +85,7 @@ namespace DoomBubblesMod.UI
 
         public void chooseGem(int gem)
         {
-            Main.player[Main.myPlayer].GetModPlayer<DoomBubblesPlayer>().gem = gem;
+            Main.player[Main.myPlayer].GetModPlayer<ThanosPlayer>().gem = gem;
             visible = false;
         }
 

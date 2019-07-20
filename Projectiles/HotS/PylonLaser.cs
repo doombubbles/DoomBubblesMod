@@ -3,14 +3,14 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace DoomBubblesMod.Projectiles
+namespace DoomBubblesMod.Projectiles.HotS
 {
     public class PylonLaser : ModProjectile
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Pylon Laser");
-            ProjectileID.Sets.MinionShot[projectile.type] = true;
+            ProjectileID.Sets.SentryShot[projectile.type] = true;
         }
 
         public override void SetDefaults()

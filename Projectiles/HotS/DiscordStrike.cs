@@ -8,7 +8,7 @@ using Dust = Terraria.Dust;
 using Main = Terraria.Main;
 using NPC = Terraria.NPC;
 
-namespace DoomBubblesMod.Projectiles
+namespace DoomBubblesMod.Projectiles.HotS
 {
     public class DiscordStrike : ModProjectile
     {

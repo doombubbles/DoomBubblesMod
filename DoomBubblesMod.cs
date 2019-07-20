@@ -4,6 +4,7 @@ using Terraria;
 using System.Collections.Generic;
 using DoomBubblesMod.UI;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
@@ -48,8 +49,38 @@ namespace DoomBubblesMod
 
             Player.UpdateLifeRegen += PlayerOnUpdateLifeRegen;
             Player.UpdateManaRegen += PlayerOnUpdateManaRegen;
+            On.Terraria.Main.DrawInterface_Resources_Life += MainOnDrawInterfaceResourcesLife;
         }
-        
+
+        private void MainOnDrawInterfaceResourcesLife(On.Terraria.Main.orig_DrawInterface_Resources_Life orig)
+        {
+            if (Main.LocalPlayer.GetModPlayer<HotSPlayer>().shieldCapacitor > 0)
+            {
+                Texture2D heart = Main.heartTexture;
+                Texture2D heart2 = Main.heart2Texture;
+                int life = Main.LocalPlayer.statLife;
+                int maxLife = Main.LocalPlayer.statLifeMax2;
+
+                Main.heartTexture = GetTexture("UI/Barrier_Heart" +
+                                               Main.LocalPlayer.GetModPlayer<HotSPlayer>().shieldCapacitorChosenTalent);
+                Main.heart2Texture = GetTexture("UI/Barrier_LifeHeart" +
+                                                Main.LocalPlayer.GetModPlayer<HotSPlayer>()
+                                                    .shieldCapacitorChosenTalent);
+                Main.LocalPlayer.statLife = life + Main.LocalPlayer.GetModPlayer<HotSPlayer>().shieldCapacitor;
+                Main.LocalPlayer.statLifeMax2 =
+                    maxLife + Main.LocalPlayer.GetModPlayer<HotSPlayer>().shieldCapacitorMax;
+
+                orig();
+
+                Main.heartTexture = heart;
+                Main.heart2Texture = heart2;
+                Main.LocalPlayer.statLife = life;
+                Main.LocalPlayer.statLifeMax2 = maxLife;
+            }
+            else orig();
+
+        }
+
         private void PlayerOnUpdateManaRegen(Player.orig_UpdateManaRegen orig, Terraria.Player self)
         {
             bool sStone = self.GetModPlayer<DoomBubblesPlayer>().sStone;

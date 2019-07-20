@@ -7,7 +7,6 @@ namespace DoomBubblesMod.Items.HotS
 {
     public class PhaseBombLauncher : TalentItem
     {
-        public override bool CloneNewInstances => true;
         public override string Talent1Name => "TalentSecondaryFire";
         public override string Talent2Name => "TalentSingularityCharge";
         public override string Talent3Name => "TalentDivertPowerWeapons";
@@ -70,9 +69,9 @@ namespace DoomBubblesMod.Items.HotS
                 var dY = position.Y - Main.MouseWorld.Y;
                 var distance = Math.Sqrt(dX * dX + dY * dY);
                 Vector2 speed = new Vector2(speedX, speedY);
-                speed *= 1f + player.GetModPlayer<DoomBubblesPlayer>().fenixBombBuildUp * .1f;
-                knockBack *= 1f + player.GetModPlayer<DoomBubblesPlayer>().fenixBombBuildUp * .1f;
-                damage += (int)(damage * player.GetModPlayer<DoomBubblesPlayer>().fenixBombBuildUp * .1f);
+                speed *= 1f + player.GetModPlayer<HotSPlayer>().fenixBombBuildUp * .1f;
+                knockBack *= 1f + player.GetModPlayer<HotSPlayer>().fenixBombBuildUp * .1f;
+                damage += (int)(damage * player.GetModPlayer<HotSPlayer>().fenixBombBuildUp * .1f);
             
             
                 var speedFactor = 1.015;
@@ -85,7 +84,7 @@ namespace DoomBubblesMod.Items.HotS
                 {
                     player.DelBuff(player.FindBuffIndex(mod.BuffType("FenixBombBuildUp")));
                 }
-                player.GetModPlayer<DoomBubblesPlayer>().phaseUseTime = item.useTime;
+                player.GetModPlayer<HotSPlayer>().phaseUseTime = item.useTime;
                 player.itemAnimation = 10;
                 player.itemTime = 10;
             }
@@ -95,7 +94,7 @@ namespace DoomBubblesMod.Items.HotS
 
         public override bool CanUseItem(Player player)
         {
-            return player.GetModPlayer<DoomBubblesPlayer>().phaseUseTime == 0;
+            return player.GetModPlayer<HotSPlayer>().phaseUseTime == 0;
         }
     }
 }

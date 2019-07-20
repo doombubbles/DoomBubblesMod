@@ -21,6 +21,8 @@ namespace DoomBubblesMod.Items
         private bool Talent3 { get; set; }
         protected short ChosenTalent { get; private set; }
         
+        public override bool CloneNewInstances => true;
+        
         public override TagCompound Save()
         {
             TagCompound tag = new TagCompound();

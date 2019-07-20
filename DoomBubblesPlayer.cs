@@ -23,12 +23,6 @@ namespace DoomBubblesMod
         public float customSymphonicDamage = 1f;
         public int customRadiantCrit = 0;
         public int customSymphonicCrit = 0;
-
-        public int fenixBombBuildUp;
-        public int fenixRepeaterBuff;
-        public int phaseUseTime;
-        public List<int> pylons = new List<int>();
-        public bool photonCannon;
         
         public bool sterak;
         public bool homing;
@@ -40,26 +34,12 @@ namespace DoomBubblesMod
         public bool bloodlust;
         public bool vampireKnifeBat;
 
-        public int gem = -1;
-        public int tbMouseX;
-        public int tbMouseY;
-        public bool soulStone;
-        public Tile soulStoneTile = new Tile();
-        public bool soulStoneTileActive;
-        public int[] timeHealth = new int[302];
-        public int powerStoned;
-        public int powerStoneCharge;
-        public bool powerStone;
-        public List<int> powerStoning = new List<int>();
-        
-
         public List<int> noManaItems = new List<int>();
 
         public override void ResetEffects()
         {
             sterak = false;
             homing = false;
-            powerStone = false;
             crystalBulletBonus = false;
             explosionBulletBonus = false;
             luminiteBulletBonus = false;
@@ -75,35 +55,6 @@ namespace DoomBubblesMod
             
             customRadiantCrit = 0;
             customSymphonicCrit = 0;
-            if (powerStoned > 0)
-            {
-                powerStoned--;
-            }
-
-            if (player.FindBuffIndex(mod.BuffType("FenixBombBuildUp")) <= 0)
-            {
-                fenixBombBuildUp = 0;
-            }
-            if (player.FindBuffIndex(mod.BuffType("FenixRepeaterBuff")) <= 0)
-            {
-                fenixRepeaterBuff = 0;
-            }
-            if (player.FindBuffIndex(mod.BuffType("PhotonCannon")) <= 0)
-            {
-                photonCannon = false;
-            }
-            
-            if (player.FindBuffIndex(mod.BuffType("VampireKnifeBat")) <= 0)
-            {
-                vampireKnifeBat = false;
-            }
-
-            if (phaseUseTime > 0)
-            {
-                phaseUseTime--;
-            }
-
-            powerStoning.RemoveAll(i => !Main.npc[i].HasBuff(mod.BuffType("PowerStoneDebuff")));
             
             noManaItems = new List<int>();
         }
@@ -121,67 +72,8 @@ namespace DoomBubblesMod
             return base.PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource);
         }
 
-        public void powerStoneDamage(int npcId, float multiplier)
-        {
-            NPC target = Main.npc[npcId];
-            if (!target.immortal)
-            {
-                int damage = 10 + Math.Min((int) (target.lifeMax * .001), 490);
-                Projectile.NewProjectileDirect(target.Center, new Vector2(0,0), mod.ProjectileType("PowerStone"), damage, 0, player.whoAmI);
-            }
-        }
-
-        public override void PreUpdate()
-        {
-            if (Main.time % 60 == 0)
-            {
-                foreach (int i in powerStoning)
-                {
-                    powerStoneDamage(i, 1f);
-                }  
-            }
-            
-            if (soulStone)
-            {
-                player.chestX = (int) (player.position.X / 16f);
-                player.chestY = (int) (player.position.Y / 16f);
-                soulStoneTile = Main.tile[(int) (player.position.X / 16f), (int) (player.position.Y / 16f)];
-                soulStoneTileActive = soulStoneTile.active();
-                if (!soulStoneTileActive)
-                {
-                    soulStoneTile.active(true);
-                }
-            }
-
-            
-            for (int i = 300; i > 0; i--)
-            {
-                timeHealth[i] = timeHealth[i-1];
-            }
-
-            timeHealth[0] = player.statLife;
-            
-            base.PreUpdate();
-        }
-
-
         public override void PostUpdate()
         {
-            if (soulStone)
-            {
-                if (!soulStoneTileActive)
-                {
-                    soulStoneTile.active(false);
-                }
-            }
-            
-            
-            if (player.chest != -3)
-            {
-                soulStone = false;
-            }
-            
-            
             base.PostUpdate();
 
             if (bloodlust)
@@ -201,19 +93,6 @@ namespace DoomBubblesMod
 
         public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
         {
-            if (player.GetModPlayer<DoomBubblesPlayer>().powerStone)
-            {
-                if (target.HasBuff(mod.BuffType("PowerStoneDebuff")))
-                {
-                    player.GetModPlayer<DoomBubblesPlayer>().powerStoneDamage(target.whoAmI, .1f);
-                }
-                target.AddBuff(mod.BuffType("PowerStoneDebuff"), 300);
-                if (!player.GetModPlayer<DoomBubblesPlayer>().powerStoning.Contains(target.whoAmI))
-                {
-                    player.GetModPlayer<DoomBubblesPlayer>().powerStoning.Add(target.whoAmI);
-                }
-                
-            }
             if (crit)
             {
                 damage += (int)(damage * (player.GetModPlayer<DoomBubblesPlayer>().critDamage / 200f));
@@ -224,18 +103,6 @@ namespace DoomBubblesMod
         public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit,
             ref int hitDirection)
         {
-            if (player.GetModPlayer<DoomBubblesPlayer>().powerStone && proj.type != mod.ProjectileType("PowerStone"))
-            {
-                if (target.HasBuff(mod.BuffType("PowerStoneDebuff")))
-                {
-                    player.GetModPlayer<DoomBubblesPlayer>().powerStoneDamage(target.whoAmI, .1f);
-                }
-                target.AddBuff(mod.BuffType("PowerStoneDebuff"), 300);
-                if (!player.GetModPlayer<DoomBubblesPlayer>().powerStoning.Contains(target.whoAmI))
-                {
-                    player.GetModPlayer<DoomBubblesPlayer>().powerStoning.Add(target.whoAmI);
-                }
-            }
             if (crit)
             {
                 damage += (int)(damage * (player.GetModPlayer<DoomBubblesPlayer>().critDamage / 200f));

@@ -8,7 +8,6 @@ namespace DoomBubblesMod.Items.HotS
 {
     public class PhotonCannonStaff : TalentItem
     {
-        public override bool CloneNewInstances => true;
         public override string Talent1Name => "TalentWarpResonance";
         public override string Talent2Name => "TalentTowerDefense";
         public override string Talent3Name => "TalentShootEmUp";

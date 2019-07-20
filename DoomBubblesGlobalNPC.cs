@@ -211,8 +211,8 @@ namespace DoomBubblesMod
         {
             if (type == NPCID.Cyborg && NPC.downedGolemBoss)
             {
-                List<ModItem> items = new List<ModItem>{mod.GetItem("LightningSurge"), 
-                    mod.GetItem("RepeaterCannon"), mod.GetItem("PhaseBombLauncher"),
+                List<ModItem> items = new List<ModItem>{mod.GetItem("LightningSurge"), mod.GetItem("DiscordBlade"),
+                    mod.GetItem("RepeaterCannon"), mod.GetItem("PhaseBombLauncher"), mod.GetItem("ShieldCapacitor"),
                     mod.GetItem("PylonStaff"), mod.GetItem("PhotonCannonStaff")
                 };
                 

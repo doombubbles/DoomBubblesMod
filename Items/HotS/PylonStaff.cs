@@ -8,7 +8,6 @@ namespace DoomBubblesMod.Items.HotS
 {
     public class PylonStaff : TalentItem
     {
-        public override bool CloneNewInstances => true;
         public override string Talent1Name => "TalentPylonOvercharge";
         public override string Talent2Name => "TalentConstructAdditionalPylons";
         public override string Talent3Name => "TalentPowerOverflowing";
@@ -66,11 +65,11 @@ namespace DoomBubblesMod.Items.HotS
                 Main.PlaySound(SoundLoader.customSoundType, (int) (Main.mouseX + Main.screenPosition.X), (int)
                     ( num145 * 16 - 12), mod.GetSoundSlot(SoundType.Custom, "Sounds/PylonWarpIn"));
                 int pylon = Projectile.NewProjectile((float)Main.mouseX + Main.screenPosition.X, num145 * 16 - 12, 0f, 15f, type, damage, knockBack, player.whoAmI, ChosenTalent);
-                player.GetModPlayer<DoomBubblesPlayer>().pylons.Add(pylon);
+                player.GetModPlayer<HotSPlayer>().pylons.Add(pylon);
                 int maxPylons = ChosenTalent == 2 || ChosenTalent == -1 ? 3 : 2;
-                while (player.GetModPlayer<DoomBubblesPlayer>().pylons.Count > maxPylons)
+                while (player.GetModPlayer<HotSPlayer>().pylons.Count > maxPylons)
                 {
-                    player.GetModPlayer<DoomBubblesPlayer>().pylons.RemoveAt(0);
+                    player.GetModPlayer<HotSPlayer>().pylons.RemoveAt(0);
                 }
             }
             return false;

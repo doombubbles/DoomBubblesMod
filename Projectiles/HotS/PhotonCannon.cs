@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace DoomBubblesMod.Projectiles
+namespace DoomBubblesMod.Projectiles.HotS
 {
     public class PhotonCannon : ModProjectile
     {
@@ -86,7 +86,7 @@ namespace DoomBubblesMod.Projectiles
                 Vector2 pos = (projectile.position + new Vector2(projectile.width, projectile.height) / 2f +
                                Vector2.UnitY * projectile.gfxOffY - Main.screenPosition).Floor();
             
-                spriteBatch.Draw(mod.GetTexture("Projectiles/PhotonCannon_Glow"), pos, new Rectangle(0, y, texture2D.Width, height), projectile.GetAlpha(lightColor), projectile.rotation, new Vector2(texture2D.Width / 2f, (float) height / 2f), projectile.scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(mod.GetTexture("Projectiles/HotS/PhotonCannon_Glow"), pos, new Rectangle(0, y, texture2D.Width, height), projectile.GetAlpha(lightColor), projectile.rotation, new Vector2(texture2D.Width / 2f, (float) height / 2f), projectile.scale, SpriteEffects.None, 0f);
             }
             
         }
@@ -134,7 +134,7 @@ namespace DoomBubblesMod.Projectiles
         
         public void CheckActive() {
             Player player = Main.player[projectile.owner];
-            DoomBubblesPlayer modPlayer = player.GetModPlayer<DoomBubblesPlayer>();
+            HotSPlayer modPlayer = player.GetModPlayer<HotSPlayer>();
             if (player.dead) {
                 modPlayer.photonCannon = false;
             }

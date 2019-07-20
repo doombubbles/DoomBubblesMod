@@ -13,7 +13,7 @@ namespace DoomBubblesMod.Buffs
         }
 
         public override void Update(Player player, ref int buffIndex) {
-            DoomBubblesPlayer modPlayer = player.GetModPlayer<DoomBubblesPlayer>();
+            HotSPlayer modPlayer = player.GetModPlayer<HotSPlayer>();
             if (player.ownedProjectileCounts[mod.ProjectileType("PhotonCannon")] > 0) {
                 modPlayer.photonCannon = true;
             }

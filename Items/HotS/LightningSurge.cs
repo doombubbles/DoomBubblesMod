@@ -11,7 +11,6 @@ namespace DoomBubblesMod.Items.HotS
 {
     public class LightningSurge : TalentItem
     {
-        public override bool CloneNewInstances => true;
         public override string Talent1Name => "TalentSustainingPower";
         public override string Talent2Name => "TalentLightningBarrage";
         public override string Talent3Name => "TalentNegativelyCharged";
