@@ -6,12 +6,12 @@ using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Items.LoL
 {
-    public class TitanicHydra : ModItem
+    public class TitanicHydra2 : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Titanic Hydra");
-            Tooltip.SetDefault("Damage scales with defense");
+            DisplayName.SetDefault("Titanic Hydra 2");
+            Tooltip.SetDefault("Damage scales with bonus health");
         }
 
         public override void SetDefaults()
@@ -45,7 +45,7 @@ namespace DoomBubblesMod.Items.LoL
 
         public override void ModifyWeaponDamage(Player player, ref float add, ref float mult)
         {
-            add += ((player.statLifeMax2 + player.GetModPlayer<HotSPlayer>().shieldCapacitorMax - player.statLifeMax) / 40f);
+            add += (player.statDefense / 40f);
             base.ModifyWeaponDamage(player, ref add, ref mult);
         }
 

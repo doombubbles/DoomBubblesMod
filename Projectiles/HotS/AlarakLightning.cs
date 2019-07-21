@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
@@ -8,8 +9,6 @@ namespace DoomBubblesMod.Projectiles.HotS
 {
     public class AlarakLightning : ModProjectile
     {
-        private List<int> hit = new List<int>();
-        
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Alarak Lightning");
@@ -56,20 +55,21 @@ namespace DoomBubblesMod.Projectiles.HotS
             }
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-            target.immune[projectile.owner] = 0;
-            hit.Add(target.whoAmI);
-            base.OnHitNPC(target, damage, knockback, crit);
-        }
-
         public override bool? CanHitNPC(NPC target)
         {
-            if (hit.Contains(target.whoAmI))
+            if (projectile.localAI[0] == target.whoAmI || projectile.localAI[1] == target.whoAmI)
             {
                 return false;
             }
             return base.CanHitNPC(target);
+        }
+
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            target.immune[projectile.owner] = 0;
+            projectile.localAI[1] = projectile.localAI[0];
+            projectile.localAI[0] = target.whoAmI;
+            base.OnHitNPC(target, damage, knockback, crit);
         }
 
         public override void AI()

@@ -12,7 +12,7 @@ namespace DoomBubblesMod.Projectiles.HotS
 {
     public class DiscordStrike : ModProjectile
     {
-        private float Length => ChosenTalent == 2 || ChosenTalent == -1 ? 500f : 200f;
+        private float Length => ChosenTalent == 2 || ChosenTalent == -1 ? 600f : 300f;
         private int ChosenTalent => (int) Math.Round(projectile.ai[0]);
         private float DistanceFactor => (Origin - projectile.Center).Length() / Length;
         
@@ -86,8 +86,8 @@ namespace DoomBubblesMod.Projectiles.HotS
 
         private void HandlePosition()
         {
-            projectile.position += Main.player[projectile.owner].velocity;
-            Origin += Main.player[projectile.owner].velocity;
+            //projectile.position += Main.player[projectile.owner].velocity;
+            //Origin += Main.player[projectile.owner].velocity;
         }
         
         private void HandleSize()

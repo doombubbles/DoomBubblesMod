@@ -209,7 +209,7 @@ namespace DoomBubblesMod
 
         public override void SetupShop(int type, Chest shop, ref int nextSlot)
         {
-            if (type == NPCID.Cyborg && NPC.downedGolemBoss)
+            if (type == NPCID.Cyborg && NPC.downedPlantBoss)
             {
                 List<ModItem> items = new List<ModItem>{mod.GetItem("LightningSurge"), mod.GetItem("DiscordBlade"),
                     mod.GetItem("RepeaterCannon"), mod.GetItem("PhaseBombLauncher"), mod.GetItem("ShieldCapacitor"),
@@ -222,7 +222,7 @@ namespace DoomBubblesMod
                     nextSlot++;
                 }
 
-                var hash = Main.LocalPlayer.name.GetHashCode();
+                var hash = Math.Abs(Main.LocalPlayer.name.GetHashCode());
                 
                 foreach (var modItem in items)
                 {
@@ -236,11 +236,11 @@ namespace DoomBubblesMod
                         }
                         if (NPC.downedChristmasIceQueen && NPC.downedChristmasSantank && NPC.downedChristmasTree)
                         {
-                            addTalent(talentItem, hash % 3 + 2, shop, ref nextSlot);
+                            addTalent(talentItem, (hash + 1) % 3 + 1, shop, ref nextSlot);
                         }
                         if (NPC.downedMartians)
                         {
-                            addTalent(talentItem, hash % 3 + 3, shop, ref nextSlot);
+                            addTalent(talentItem, (hash + 2) % 3 + 1, shop, ref nextSlot);
                         }
                     }
                 }

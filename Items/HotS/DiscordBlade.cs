@@ -13,7 +13,7 @@ namespace DoomBubblesMod.Items.HotS
         public override string Talent3Name => "TalentLethalOnslaught";
         protected override Color? TalentColor => Color.Red;
         
-        private float Length => ChosenTalent == 2 || ChosenTalent == -1 ? 500f : 200f;
+        private float Length => ChosenTalent == 2 || ChosenTalent == -1 ? 600f : 300f;
 
         public override bool OnlyShootOnSwing => true;
 

@@ -8,9 +8,6 @@ namespace DoomBubblesMod.Projectiles
 {
     public class Rainbow : ModProjectile
     {
-        
-        private List<int> hit = new List<int>();
-        
         public override void SetDefaults()
         {
             projectile.width = 5;
@@ -42,11 +39,7 @@ namespace DoomBubblesMod.Projectiles
                 Vector2 value12 = new Vector2(projectile.position.X - Main.screenPosition.X + originX + (float)offsetX, projectile.position.Y - Main.screenPosition.Y + (float)(projectile.height / 2) + projectile.gfxOffY);
                 float num152 = 100f;
                 float scaleFactor = 3f;
-                if (projectile.ai[1] == 1f)
-                {
-                    num152 = (int)projectile.localAI[0];
-                }
-                for (int num153 = 1; num153 <= (int)projectile.localAI[0]; num153++)
+                for (int num153 = 1; num153 <= (int)projectile.ai[1]; num153++)
                 {
                     Vector2 value13 = Vector2.Normalize(projectile.velocity) * num153 * scaleFactor;
                     Color alpha2 = projectile.GetAlpha(lightColor);
@@ -74,28 +67,18 @@ namespace DoomBubblesMod.Projectiles
             
             float num55 = 100f;
             float num56 = 3f;
-            if (projectile.ai[1] == 0f)
+            
+            projectile.ai[1] += num56;
+            if (projectile.ai[1] > num55)
             {
-                projectile.localAI[0] += num56;
-                if (projectile.localAI[0] > num55)
-                {
-                    projectile.localAI[0] = num55;
-                }
-            }
-            else
-            {
-                projectile.localAI[0] -= num56;
-                if (projectile.localAI[0] <= 0f)
-                {
-                    projectile.Kill();
-                }
+                projectile.ai[1] = num55;
             }
         }
 
         
         public override bool? CanHitNPC(NPC target)
         {
-            if (hit.Contains(target.whoAmI))
+            if (projectile.localAI[0] == target.whoAmI || projectile.localAI[1] == target.whoAmI)
             {
                 return false;
             }
@@ -105,7 +88,8 @@ namespace DoomBubblesMod.Projectiles
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.immune[projectile.owner] = 0;
-            hit.Add(target.whoAmI);
+            projectile.localAI[1] = projectile.localAI[0];
+            projectile.localAI[0] = target.whoAmI;
             base.OnHitNPC(target, damage, knockback, crit);
         }
 

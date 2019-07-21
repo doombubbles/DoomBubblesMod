@@ -71,7 +71,7 @@ namespace DoomBubblesMod.Items.HotS
                 Vector2 speed = new Vector2(speedX, speedY);
                 speed *= 1f + player.GetModPlayer<HotSPlayer>().fenixBombBuildUp * .1f;
                 knockBack *= 1f + player.GetModPlayer<HotSPlayer>().fenixBombBuildUp * .1f;
-                damage += (int)(damage * player.GetModPlayer<HotSPlayer>().fenixBombBuildUp * .1f);
+                damage = (int)(damage * Math.Pow(1.1f, player.GetModPlayer<HotSPlayer>().fenixBombBuildUp));
             
             
                 var speedFactor = 1.015;

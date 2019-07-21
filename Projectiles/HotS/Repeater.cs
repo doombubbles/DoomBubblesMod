@@ -106,7 +106,7 @@ namespace DoomBubblesMod.Projectiles.HotS
                 dust.velocity *= 2f;
                 Main.dust[num295].noGravity = true;
             }
-            Main.PlaySound(SoundLoader.customSoundType, (int)projectile.position.X, (int)projectile.position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Hit"));
+            Main.PlaySound(SoundLoader.customSoundType, (int)projectile.position.X, (int)projectile.position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Hit"), .5f);
             base.Kill(timeLeft);
         }
     }
