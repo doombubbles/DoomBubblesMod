@@ -36,6 +36,7 @@ namespace DoomBubblesMod.Projectiles.HotS
             projectile.minionSlots = .5f;
             projectile.minion = true;
             projectile.netImportant = true;
+            projectile.alpha = 69;
         }
 
         public override bool PreKill(int timeLeft)
@@ -114,12 +115,18 @@ namespace DoomBubblesMod.Projectiles.HotS
 
         public override void AI()
         {
+            if (projectile.alpha == 69)
+            {
+                Main.PlaySound(SoundLoader.customSoundType, (int) projectile.Center.X, (int)
+                    projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/PhotonCannonWarpIn"));
+                projectile.alpha = 0;
+            }
             CheckActive();
             HandleFrames();
             if (projectile.frame > 1)
             {
                 CreateDust();
-                if (isPowered() || ChosenTalent == 1 || ChosenTalent == -1)
+                if ((isPowered() || ChosenTalent == 1 || ChosenTalent == -1) && projectile.owner == Main.myPlayer)
                 {
                     HandleAttacking();
                 }
@@ -163,7 +170,7 @@ namespace DoomBubblesMod.Projectiles.HotS
 
         private void CreateDust()
         {
-            if (Main.player[projectile.owner].inventory[Main.player[projectile.owner].selectedItem].type == mod.ItemType("PhotonCannonStaff") ||
+            if ((Main.player[projectile.owner].inventory[Main.player[projectile.owner].selectedItem].type == mod.ItemType("PhotonCannonStaff") && projectile.owner == Main.myPlayer)||
                 projectile.Hitbox.Contains(Main.MouseWorld.ToPoint()))
             {
                 for (int i = 0; i < 360; i++)

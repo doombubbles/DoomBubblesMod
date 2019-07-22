@@ -25,7 +25,7 @@ namespace DoomBubblesMod.Projectiles.HotS
             projectile.timeLeft = 1000;
             projectile.ranged = true;
             projectile.penetrate = -1; 
-            projectile.alpha = 255;
+            projectile.alpha = 69;
         }
 
 
@@ -49,7 +49,12 @@ namespace DoomBubblesMod.Projectiles.HotS
             {
                 return projectile.ai[1] == 1 || projectile.ai[1] == -1;
             }
-            return 1000 - projectile.timeLeft == (int)projectile.ai[0] + 1;
+
+            if (1000 - projectile.timeLeft != (int) projectile.ai[0] + 1)
+            {
+                return false;
+            }
+            return base.CanHitNPC(target);
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -59,6 +64,10 @@ namespace DoomBubblesMod.Projectiles.HotS
 
         public override void AI()
         {
+            if (projectile.alpha == 69)
+            {
+                Main.PlaySound(SoundLoader.customSoundType, (int)projectile.position.X, (int)projectile.position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Phase"));
+            }
             if (projectile.alpha > 0)
             {
                 projectile.alpha -= 15;

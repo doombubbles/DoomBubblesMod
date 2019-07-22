@@ -67,15 +67,12 @@ namespace DoomBubblesMod.Items.HotS
             
             if ((ChosenTalent == 2 || ChosenTalent == -1) && m_Shot == 3)
             {
-                pitch = -.25f;
-                Projectile.NewProjectile(position, new Vector2(speedX, speedY), mod.ProjectileType("RepeaterBig"), damage * 2, knockBack * 2f, player.whoAmI, 0, ChosenTalent);
+                Projectile.NewProjectile(position, new Vector2(speedX, speedY), mod.ProjectileType("RepeaterBig"), damage * 2, knockBack * 2f, player.whoAmI, 4, ChosenTalent);
             }
             else
             {
-                Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, 0, ChosenTalent);
+                Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, m_Shot, ChosenTalent);
             }
-
-            Main.PlaySound(SoundLoader.customSoundType, (int)position.X, (int)position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Repeater" + m_Shot), 1f, pitch);
             if (m_Shot >= 3)
             {
                 m_Shot = 0;

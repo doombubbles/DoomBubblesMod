@@ -118,7 +118,7 @@ namespace DoomBubblesMod.Items
                         }
                     }
 
-                    if (ChosenTalent != ogTalent)
+                    if (ChosenTalent != ogTalent && item.owner == Main.myPlayer)
                     {
                         Main.PlaySound(SoundLoader.customSoundType, (int)Main.player[item.owner].position.X, (int)Main.player[item.owner].position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/TalentChange"));
                     }

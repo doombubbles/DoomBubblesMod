@@ -66,7 +66,6 @@ namespace DoomBubblesMod.Items.HotS
                 speedY = (float) Math.Sin(theta) * Length / 15f;
                 int proj = Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, ChosenTalent);
                 Main.projectile[proj].netUpdate = true;
-                Main.PlaySound(SoundLoader.customSoundType, (int)position.X, (int)position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/DiscordStrike"));
             }
 
             return false;

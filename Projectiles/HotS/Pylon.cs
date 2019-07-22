@@ -29,9 +29,11 @@ namespace DoomBubblesMod.Projectiles.HotS
             projectile.friendly = true;
             projectile.ignoreWater = true;
             projectile.aiStyle = -1;
-            projectile.timeLeft = Projectile.SentryLifeTime;
+            projectile.timeLeft = Projectile.SentryLifeTime * 10;
             projectile.tileCollide = true;
             projectile.light = .25f;
+            projectile.minion = true;
+            projectile.alpha = 69;
             projectile.netImportant = true;
         }
 
@@ -66,9 +68,17 @@ namespace DoomBubblesMod.Projectiles.HotS
 
         public override void AI()
         {
-            if (!Main.player[projectile.owner].GetModPlayer<HotSPlayer>().pylons.Contains(projectile.whoAmI))
+            if (!Main.player[projectile.owner].GetModPlayer<HotSPlayer>().pylons.Contains(projectile.whoAmI) && projectile.owner == Main.myPlayer)
             {
                 projectile.Kill();
+                return;
+            }
+
+            if (projectile.alpha == 69)
+            {
+                Main.PlaySound(SoundLoader.customSoundType, (int) projectile.Center.X, (int)
+                    projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/PylonWarpIn"));
+                projectile.alpha = 0;
             }
             
             HandleFrames();
@@ -96,7 +106,7 @@ namespace DoomBubblesMod.Projectiles.HotS
 
         private void CreateDust()
         {
-            if (Main.player[projectile.owner].inventory[Main.player[projectile.owner].selectedItem].type == mod.ItemType("PylonStaff") ||
+            if ((Main.player[projectile.owner].inventory[Main.player[projectile.owner].selectedItem].type == mod.ItemType("PylonStaff") && projectile.owner == Main.myPlayer)||
                 projectile.Hitbox.Contains(Main.MouseWorld.ToPoint()))
             {
                 for (int i = 0; i < 360; i++)
@@ -145,7 +155,7 @@ namespace DoomBubblesMod.Projectiles.HotS
 
         public void HandleAttacking()
         {
-            if (ChosenTalent != 1 && ChosenTalent != -1)
+            if ((ChosenTalent != 1 && ChosenTalent != -1) || projectile.owner == Main.myPlayer)
             {
                 return;
             }

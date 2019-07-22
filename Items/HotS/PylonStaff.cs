@@ -62,9 +62,8 @@ namespace DoomBubblesMod.Items.HotS
                 {
                 }
                 num145--;
-                Main.PlaySound(SoundLoader.customSoundType, (int) (Main.mouseX + Main.screenPosition.X), (int)
-                    ( num145 * 16 - 12), mod.GetSoundSlot(SoundType.Custom, "Sounds/PylonWarpIn"));
                 int pylon = Projectile.NewProjectile((float)Main.mouseX + Main.screenPosition.X, num145 * 16 - 12, 0f, 15f, type, damage, knockBack, player.whoAmI, ChosenTalent);
+                Main.projectile[pylon].netUpdate = true;
                 player.GetModPlayer<HotSPlayer>().pylons.Add(pylon);
                 int maxPylons = ChosenTalent == 2 || ChosenTalent == -1 ? 3 : 2;
                 while (player.GetModPlayer<HotSPlayer>().pylons.Count > maxPylons)

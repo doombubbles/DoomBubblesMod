@@ -55,6 +55,7 @@ namespace DoomBubblesMod
             
             customRadiantCrit = 0;
             customSymphonicCrit = 0;
+            vampireKnifeBat = false;
             
             noManaItems = new List<int>();
         }

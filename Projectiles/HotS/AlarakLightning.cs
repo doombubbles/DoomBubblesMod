@@ -26,7 +26,7 @@ namespace DoomBubblesMod.Projectiles.HotS
             projectile.penetrate = -1;
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
-            projectile.alpha = 255;
+            projectile.alpha = 69;
         }
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
@@ -74,6 +74,12 @@ namespace DoomBubblesMod.Projectiles.HotS
 
         public override void AI()
         {
+            if (projectile.alpha == 69)
+            {
+                Main.PlaySound(SoundLoader.customSoundType, (int)projectile.position.X, (int)projectile.position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/LightningSurge2"), 1f, Main.rand.NextFloat(-.1f, .1f));
+                projectile.alpha = 255;
+            }
+            
             if (Main.rand.NextFloat(projectile.velocity.Length(), 10) > 5.5f)
             {
                 var slopeX = (Main.rand.NextDouble() - .5) * 5f;

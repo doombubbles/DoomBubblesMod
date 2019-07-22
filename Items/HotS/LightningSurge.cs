@@ -56,15 +56,15 @@ namespace DoomBubblesMod.Items.HotS
             if (npc != -1)
             {
                 NPC target = Main.npc[npc];
-                Main.PlaySound(SoundLoader.customSoundType, (int)position.X, (int)position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/LightningSurge2"));
-                 Projectile.NewProjectile(position, new Vector2((target.Center.X - position.X) / 200f, (target.Center.Y - position.Y) / 200f), type, damage, knockBack, player.whoAmI, npc, ChosenTalent);
+                int proj = Projectile.NewProjectile(position, new Vector2((target.Center.X - position.X) / 200f, (target.Center.Y - position.Y) / 200f), type, damage, knockBack, player.whoAmI, npc, ChosenTalent);
+                Main.projectile[proj].netUpdate = true;
             }
 
             if ((ChosenTalent == 2 || ChosenTalent == -1) && npcs.Count > 1)
             {
                 NPC target = Main.npc[npcs[1].Key];
-                Main.PlaySound(SoundLoader.customSoundType, (int)position.X, (int)position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/LightningSurge2"), 1f, -0.1f);
-                Projectile.NewProjectile(position, new Vector2((target.Center.X - position.X) / 200f, (target.Center.Y - position.Y) / 200f), type, damage, knockBack, player.whoAmI, target.whoAmI, ChosenTalent);
+                int proj = Projectile.NewProjectile(position, new Vector2((target.Center.X - position.X) / 200f, (target.Center.Y - position.Y) / 200f), type, damage, knockBack, player.whoAmI, target.whoAmI, ChosenTalent);
+                Main.projectile[proj].netUpdate = true;
             }
             return false;
         }

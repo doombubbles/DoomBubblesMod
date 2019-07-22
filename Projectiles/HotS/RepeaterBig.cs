@@ -17,6 +17,7 @@ namespace DoomBubblesMod.Projectiles.HotS
             projectile.timeLeft = 600;
             projectile.ranged = true;
             projectile.ignoreWater = true;
+            projectile.alpha = 69;
         }
 
 

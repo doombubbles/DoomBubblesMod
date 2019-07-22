@@ -77,6 +77,7 @@ namespace DoomBubblesMod.Projectiles.HotS
                 projectile.alpha = 255;
                 Origin = projectile.Center;
                 Theta = projectile.velocity.ToRotation();
+                Main.PlaySound(SoundLoader.customSoundType, (int)projectile.position.X, (int)projectile.position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/DiscordStrike"));
             }
 
             HandlePosition();

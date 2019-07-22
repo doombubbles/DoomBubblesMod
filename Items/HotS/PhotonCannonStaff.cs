@@ -64,8 +64,6 @@ namespace DoomBubblesMod.Items.HotS
                 {
                 }
                 num145--;
-                Main.PlaySound(SoundLoader.customSoundType, (int) (Main.mouseX + Main.screenPosition.X), (int)
-                    ( num145 * 16), mod.GetSoundSlot(SoundType.Custom, "Sounds/PhotonCannonWarpIn"));
                 Projectile.NewProjectile((float)Main.mouseX + Main.screenPosition.X, num145 * 16, 0f, 15f, type, damage, knockBack, player.whoAmI, ChosenTalent);
             }
             return false;

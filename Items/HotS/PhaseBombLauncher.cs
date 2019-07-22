@@ -88,7 +88,6 @@ namespace DoomBubblesMod.Items.HotS
                 player.itemAnimation = 10;
                 player.itemTime = 10;
             }
-            Main.PlaySound(SoundLoader.customSoundType, (int)position.X, (int)position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Phase"));
             return false;
         }
 

@@ -16,7 +16,7 @@ namespace DoomBubblesMod.Projectiles.HotS
             projectile.height = 5;
             projectile.aiStyle = 1;
             projectile.friendly = true;
-            projectile.alpha = 255;
+            projectile.alpha = 69;
             projectile.extraUpdates = 2;
             projectile.scale = 1f;
             projectile.timeLeft = 600;
@@ -26,23 +26,26 @@ namespace DoomBubblesMod.Projectiles.HotS
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            Player player = Main.player[projectile.owner];
-            player.AddBuff(mod.BuffType("FenixBombBuildUp"), 360);
-            if (((projectile.ai[1] == 3 || projectile.ai[1] == -1) && player.GetModPlayer<HotSPlayer>().fenixBombBuildUp == 14)
-                || !(projectile.ai[1] == 3 || projectile.ai[1] == -1) && player.GetModPlayer<HotSPlayer>().fenixBombBuildUp == 9)
+            if (projectile.owner == Main.myPlayer)
             {
-                Main.PlaySound(SoundLoader.customSoundType, (int)projectile.position.X, (int)projectile.position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Boung"));
-            }
-            player.GetModPlayer<HotSPlayer>().fenixBombBuildUp++;
-            if (projectile.ai[1] == 3 || projectile.ai[1] == -1)
-            {
-                if (player.GetModPlayer<HotSPlayer>().fenixBombBuildUp > 15)
+                Player player = Main.player[projectile.owner];
+                player.AddBuff(mod.BuffType("FenixBombBuildUp"), 360);
+                if (((projectile.ai[1] == 3 || projectile.ai[1] == -1) && player.GetModPlayer<HotSPlayer>().fenixBombBuildUp == 14)
+                    || !(projectile.ai[1] == 3 || projectile.ai[1] == -1) && player.GetModPlayer<HotSPlayer>().fenixBombBuildUp == 9)
                 {
-                    player.GetModPlayer<HotSPlayer>().fenixBombBuildUp = 15;
+                    Main.PlaySound(SoundLoader.customSoundType, (int)projectile.position.X, (int)projectile.position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Boung"));
                 }
-            } else if (player.GetModPlayer<HotSPlayer>().fenixBombBuildUp > 10)
-            {
-                player.GetModPlayer<HotSPlayer>().fenixBombBuildUp = 10;
+                player.GetModPlayer<HotSPlayer>().fenixBombBuildUp++;
+                if (projectile.ai[1] == 3 || projectile.ai[1] == -1)
+                {
+                    if (player.GetModPlayer<HotSPlayer>().fenixBombBuildUp > 15)
+                    {
+                        player.GetModPlayer<HotSPlayer>().fenixBombBuildUp = 15;
+                    }
+                } else if (player.GetModPlayer<HotSPlayer>().fenixBombBuildUp > 10)
+                {
+                    player.GetModPlayer<HotSPlayer>().fenixBombBuildUp = 10;
+                }
             }
         }
 
@@ -74,6 +77,12 @@ namespace DoomBubblesMod.Projectiles.HotS
 
         public override void AI()
         {
+            if (projectile.alpha == 69)
+            {
+                projectile.alpha = 255;
+                Main.PlaySound(SoundLoader.customSoundType, (int)projectile.position.X, (int)projectile.position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Repeater" + Math.Min(3, projectile.ai[0])), 1f, projectile.ai[0] == 4 ? -.25f : 0f);
+            }
+            
             projectile.ai[0] = 0;
             
             if (projectile.alpha > 0)

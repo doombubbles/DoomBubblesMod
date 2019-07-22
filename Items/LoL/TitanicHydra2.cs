@@ -43,10 +43,10 @@ namespace DoomBubblesMod.Items.LoL
             recipe.AddRecipe();
         }
 
-        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult)
+        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
         {
-            add += (player.statDefense / 40f);
-            base.ModifyWeaponDamage(player, ref add, ref mult);
+            flat += player.statLifeMax2 + player.GetModPlayer<HotSPlayer>().shieldCapacitorMax - player.statLifeMax;
+            base.ModifyWeaponDamage(player, ref add, ref mult, ref flat);
         }
 
         public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
