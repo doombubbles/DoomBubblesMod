@@ -29,7 +29,14 @@ namespace DoomBubblesMod
 
         public bool realityStone;
 
-        public bool ak47;
+        public override void SetDefaults(Projectile projectile)
+        {
+            if (projectile.type == ProjectileID.LastPrismLaser)
+            {
+                projectile.usesLocalNPCImmunity = true;
+                projectile.localNPCHitCooldown = 30;
+            }
+        }
 
         public override bool PreAI(Projectile pProjectile)
         {
@@ -165,15 +172,24 @@ namespace DoomBubblesMod
         public override void ModifyHitNPC(Projectile projectile, NPC target, ref int damage, ref float knockback, ref bool crit,
             ref int hitDirection)
         {
-
             if (projectile.owner != 255 &&
                 Main.player[projectile.owner].GetModPlayer<DoomBubblesPlayer>().luminiteBulletBonus &&
                 projectile.type == ProjectileID.MoonlordBullet)
             {
                 projectile.damage = (int) (projectile.damage * 1.1f);
             }
+            base.ModifyHitNPC(projectile, target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
 
+        public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit)
+        {
+            base.OnHitNPC(projectile, target, damage, knockback, crit);
+            if (projectile.type == ProjectileID.LastPrismLaser)
+            {
+                target.immune[projectile.owner] = 0;
+                projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
+            }
+        }
 
         public override void Kill(Projectile projectile, int timeLeft)
         {

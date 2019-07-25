@@ -130,8 +130,9 @@ namespace DoomBubblesMod
             base.ModifyHitPvp(item, target, ref damage, ref crit);
         }
 
-        public override void ModifyWeaponDamage(Item item, ref float add, ref float mult)
+        public override void ModifyWeaponDamage(Item item, ref float add, ref float mult, ref float flat)
         {
+            base.ModifyWeaponDamage(item, ref add, ref mult, ref flat);
             if (player.GetModPlayer<DoomBubblesPlayer>().rabadon && item.magic)
             {
                 add = 1f + (add - 1f) * 1.25f;

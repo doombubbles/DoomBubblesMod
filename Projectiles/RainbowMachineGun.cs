@@ -178,8 +178,9 @@ namespace DoomBubblesMod.Projectiles
                             spinningpoint2 = -Vector2.UnitY;
                         }
 
-                        Projectile.NewProjectile(vector2.X, vector2.Y, spinningpoint2.X, spinningpoint2.Y,
+                        int proj = Projectile.NewProjectile(vector2.X, vector2.Y, spinningpoint2.X, spinningpoint2.Y,
                             mod.ProjectileType("Rainbow"), projectile.damage, projectile.knockBack, projectile.owner);
+                        Main.projectile[proj].netUpdate = true;
                     }
                 }
                 else
@@ -206,7 +207,6 @@ namespace DoomBubblesMod.Projectiles
                 obj.velocity += projectile.localAI[0].ToRotationVector2();
                 obj.fadeIn = 1.5f;
             }*/
-            float num47 = 18f;
 
             /*
             for (int num48 = 0; (float) num48 < num47; num48++)

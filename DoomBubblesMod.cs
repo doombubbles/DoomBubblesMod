@@ -38,13 +38,16 @@ namespace DoomBubblesMod
         public override void Load()
         {
             thoriumLoaded = ModLoader.GetMod("ThoriumMod") != null;
-
+            
             if (!Main.dedServ)
             {
                 m_InfinityGauntletUi = new InfinityGauntletUI();
                 m_InfinityGauntletUi.Activate();
                 m_InfinityGauntletUserInterface = new UserInterface();
                 m_InfinityGauntletUserInterface.SetState(m_InfinityGauntletUi);
+
+                Main.projectileTexture[ProjectileID.MoonlordBullet] = GetTexture("Projectiles/Projectile_638");
+                Main.dustTexture = GetTexture("Dusts/Dust");
             }
 
             Player.UpdateLifeRegen += PlayerOnUpdateLifeRegen;

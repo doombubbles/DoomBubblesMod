@@ -21,6 +21,9 @@ namespace DoomBubblesMod.Projectiles
             projectile.magic = true;
             projectile.ignoreWater = true;
             projectile.penetrate = -1;
+            projectile.usesLocalNPCImmunity = true;
+            projectile.localNPCHitCooldown = -1;
+            projectile.light = .3f;
         }
 
         
@@ -63,7 +66,6 @@ namespace DoomBubblesMod.Projectiles
             {
                 projectile.alpha = 0;
             }
-            Lighting.AddLight((int)projectile.Center.X / 16, (int)projectile.Center.Y / 16, 0.5f, 0.5f, .5f);
             
             float num55 = 100f;
             float num56 = 3f;
@@ -73,24 +75,6 @@ namespace DoomBubblesMod.Projectiles
             {
                 projectile.ai[1] = num55;
             }
-        }
-
-        
-        public override bool? CanHitNPC(NPC target)
-        {
-            if (projectile.localAI[0] == target.whoAmI || projectile.localAI[1] == target.whoAmI)
-            {
-                return false;
-            }
-            return base.CanHitNPC(target);
-        }
-
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-            target.immune[projectile.owner] = 0;
-            projectile.localAI[1] = projectile.localAI[0];
-            projectile.localAI[0] = target.whoAmI;
-            base.OnHitNPC(target, damage, knockback, crit);
         }
 
         public override void Kill(int timeLeft)

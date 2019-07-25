@@ -81,8 +81,6 @@ namespace DoomBubblesMod.Items.HotS
                     i--;
                 }
             }
-
-            base.ModifyTooltips(tooltips);
         }
         
     }

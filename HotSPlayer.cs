@@ -23,19 +23,29 @@ namespace DoomBubblesMod
         public int shieldCapacitorDamageCounter;
         public int shieldCapacitorChosenTalent;
 
+        public bool verdant;
+        public bool manaTap;
+        public bool superVerdant;
+        
+        public int convection;
+
         public override void ResetEffects()
         {
-            if (player.FindBuffIndex(mod.BuffType("FenixBombBuildUp")) <= 0)
+            if (!player.HasBuff(mod.BuffType("FenixBombBuildUp")))
             {
                 fenixBombBuildUp = 0;
             }
-            if (player.FindBuffIndex(mod.BuffType("FenixRepeaterBuff")) <= 0)
+            if (!player.HasBuff(mod.BuffType("FenixRepeaterBuff")))
             {
                 fenixRepeaterBuff = 0;
             }
-            if (player.FindBuffIndex(mod.BuffType("PhotonCannon")) <= 0)
+            if (!player.HasBuff(mod.BuffType("PhotonCannon")))
             {
                 photonCannon = false;
+            }
+            if (!player.HasBuff(mod.BuffType("Convection")))
+            {
+                convection = 0;
             }
             
             if (phaseUseTime > 0)
@@ -47,8 +57,7 @@ namespace DoomBubblesMod
             {
                 shieldCapacitorDamageCounter--;
             }
-
-            if (shieldCapacitorDamageCounter == 0 && shieldCapacitor < shieldCapacitorMax && Main.time % 12 == 0)
+            if (shieldCapacitorDamageCounter == 0 && shieldCapacitor < shieldCapacitorMax && (int)Main.time % 12 == 0)
             {
                 if (shieldCapacitor == 0)
                 {
@@ -56,7 +65,6 @@ namespace DoomBubblesMod
                 }
                 shieldCapacitor++;
             }
-
             if (shieldCapacitor > 0)
             {
                 if (shieldCapacitorChosenTalent == 2 || shieldCapacitorChosenTalent == -1)
@@ -68,15 +76,16 @@ namespace DoomBubblesMod
                     player.allDamage += .15f;
                 }
             }
-
             if (shieldCapacitorMax < shieldCapacitor)
             {
                 shieldCapacitor = shieldCapacitorMax;
             }
-            
-
             shieldCapacitorChosenTalent = 0;
             shieldCapacitorMax = 0;
+
+            verdant = false;
+            manaTap = false;
+            superVerdant = false;
         }
 
 
@@ -87,7 +96,7 @@ namespace DoomBubblesMod
             {
                 damage = (int) Main.CalculatePlayerDamage(damage, player.statDefense);
                 if (damage > player.statLife && (shieldCapacitorChosenTalent == 1 || shieldCapacitorChosenTalent == -1) &&
-                    player.FindBuffIndex(mod.BuffType("UnconqueredSpiritCooldown")) <= 0)
+                    !player.HasBuff(mod.BuffType("UnconqueredSpiritCooldown")))
                 {
                     shieldCapacitor = shieldCapacitorMax;
                     player.AddBuff(mod.BuffType("UnconqueredSpiritCooldown"), 60 * 120);
@@ -133,7 +142,7 @@ namespace DoomBubblesMod
                     }
                 
                     CombatText.NewText(new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height), Color.Blue, startShields - shieldCapacitor, crit);
-
+                    Main.PlaySound(SoundLoader.customSoundType, (int) player.position.X, (int) player.position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/ShieldHit"));
                     if (damage == 0)
                     {
                         player.immune = true;
@@ -154,6 +163,19 @@ namespace DoomBubblesMod
                 return false;
             }
             return base.PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource);
+        }
+
+        public override void UpdateDead()
+        {
+            convection = 0;
+        }
+
+        public override void ModifyWeaponDamage(Item item, ref float add, ref float mult, ref float flat)
+        {
+            if (item.magic && manaTap && item.mana > 0)
+            {
+                flat += item.mana;
+            }
         }
     }
 }

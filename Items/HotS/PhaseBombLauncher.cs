@@ -42,7 +42,7 @@ namespace DoomBubblesMod.Items.HotS
             return new Vector2(-7, -3);
         }
 
-        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult)
+        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
         {
             if (ChosenTalent == 3 || ChosenTalent == -1)
             {

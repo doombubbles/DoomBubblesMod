@@ -62,9 +62,12 @@ namespace DoomBubblesMod.Items.HotS
 
             if ((ChosenTalent == 2 || ChosenTalent == -1) && npcs.Count > 1)
             {
-                NPC target = Main.npc[npcs[1].Key];
-                int proj = Projectile.NewProjectile(position, new Vector2((target.Center.X - position.X) / 200f, (target.Center.Y - position.Y) / 200f), type, damage, knockBack, player.whoAmI, target.whoAmI, ChosenTalent);
-                Main.projectile[proj].netUpdate = true;
+                for (int i = 1; i < (player.gravControl2 ? npcs.Count : 1); i++)
+                {
+                    NPC target = Main.npc[npcs[i].Key];
+                    int proj = Projectile.NewProjectile(position, new Vector2((target.Center.X - position.X) / 200f, (target.Center.Y - position.Y) / 200f), type, damage, knockBack, player.whoAmI, target.whoAmI, ChosenTalent);
+                    Main.projectile[proj].netUpdate = true;
+                }
             }
             return false;
         }

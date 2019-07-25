@@ -10,7 +10,7 @@ using NPC = Terraria.NPC;
 
 namespace DoomBubblesMod.Projectiles.HotS
 {
-    public class DiscordStrike : ModProjectile
+    public class DiscordStrike : HappyProjectile
     {
         private float Length => ChosenTalent == 2 || ChosenTalent == -1 ? 600f : 300f;
         private int ChosenTalent => (int) Math.Round(projectile.ai[0]);
@@ -54,20 +54,6 @@ namespace DoomBubblesMod.Projectiles.HotS
             {
                 projectile.damage = (int) (projectile.damage * 1.1);
             }
-        }
-
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
-        {
-            Texture2D texture2D = Main.projectileTexture[projectile.type];
-            int height = Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type];
-            int y = height * projectile.frame;
-            
-            
-            Vector2 pos = (projectile.position + new Vector2(projectile.width, projectile.height) / 2f +
-                           Vector2.UnitY * projectile.gfxOffY - Main.screenPosition).Floor();
-            
-            spriteBatch.Draw(Main.projectileTexture[projectile.type], pos, new Rectangle(0, y, texture2D.Width, height), projectile.GetAlpha(lightColor), projectile.rotation, new Vector2(texture2D.Width / 2f, (float) height / 2f), projectile.scale, SpriteEffects.None, 0f);
-            return false;
         }
 
         public override void AI()

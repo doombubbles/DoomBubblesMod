@@ -43,6 +43,11 @@ namespace DoomBubblesMod
             {
                 npc.GivenName = "Bitch";
             }
+
+            if (npc.boss)
+            {
+                npc.buffImmune[mod.BuffType("LivingBomb")] = false;
+            }
         }
         
         public override void DrawEffects(NPC npc, ref Color drawColor)
@@ -214,6 +219,43 @@ namespace DoomBubblesMod
                 List<ModItem> items = new List<ModItem>{mod.GetItem("LightningSurge"), mod.GetItem("DiscordBlade"),
                     mod.GetItem("RepeaterCannon"), mod.GetItem("PhaseBombLauncher"), mod.GetItem("ShieldCapacitor"),
                     mod.GetItem("PylonStaff"), mod.GetItem("PhotonCannonStaff")
+                };
+                
+                foreach (var modItem in items)
+                {
+                    shop.item[nextSlot].SetDefaults(modItem.item.type);
+                    nextSlot++;
+                }
+
+                var hash = Math.Abs(Main.LocalPlayer.name.GetHashCode());
+                
+                foreach (var modItem in items)
+                {
+                    TalentItem talentItem = (TalentItem) modItem;
+
+                    if (Main.LocalPlayer.HasItem(talentItem.item.type))
+                    {
+                        if (NPC.downedHalloweenKing && NPC.downedHalloweenTree)
+                        {
+                            addTalent(talentItem, hash % 3 + 1, shop, ref nextSlot);
+                        }
+                        if (NPC.downedChristmasIceQueen && NPC.downedChristmasSantank && NPC.downedChristmasTree)
+                        {
+                            addTalent(talentItem, (hash + 1) % 3 + 1, shop, ref nextSlot);
+                        }
+                        if (NPC.downedMartians)
+                        {
+                            addTalent(talentItem, (hash + 2) % 3 + 1, shop, ref nextSlot);
+                        }
+                    }
+                }
+
+            }
+            
+            if (type == NPCID.Wizard && NPC.downedPlantBoss)
+            {
+                List<ModItem> items = new List<ModItem>{mod.GetItem("FlamestrikeTome"), mod.GetItem("LivingBombWand"),
+                    mod.GetItem("VerdantSpheres")
                 };
                 
                 foreach (var modItem in items)

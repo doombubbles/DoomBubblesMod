@@ -27,6 +27,8 @@ namespace DoomBubblesMod.Projectiles.HotS
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
             projectile.alpha = 69;
+            projectile.usesLocalNPCImmunity = true;
+            projectile.localNPCHitCooldown = -1;
         }
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
@@ -53,23 +55,6 @@ namespace DoomBubblesMod.Projectiles.HotS
                     }
                 }
             }
-        }
-
-        public override bool? CanHitNPC(NPC target)
-        {
-            if (projectile.localAI[0] == target.whoAmI || projectile.localAI[1] == target.whoAmI)
-            {
-                return false;
-            }
-            return base.CanHitNPC(target);
-        }
-
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-            target.immune[projectile.owner] = 0;
-            projectile.localAI[1] = projectile.localAI[0];
-            projectile.localAI[0] = target.whoAmI;
-            base.OnHitNPC(target, damage, knockback, crit);
         }
 
         public override void AI()

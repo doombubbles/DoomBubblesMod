@@ -37,7 +37,7 @@ namespace DoomBubblesMod.Buffs
 
         public override bool ReApply(Player player, int time, int buffIndex)
         {
-            return true;
+            return !player.gravControl2;
         }
 
     }

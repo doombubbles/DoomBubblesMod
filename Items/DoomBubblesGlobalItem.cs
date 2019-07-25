@@ -70,7 +70,7 @@ namespace DoomBubblesMod.Items
 			base.GetWeaponCrit(item, player, ref crit);
 		}
 
-		public override void ModifyWeaponDamage(Item item, Player player, ref float add, ref float mult)
+		public override void ModifyWeaponDamage(Item item, Player player, ref float add, ref float mult, ref float flat)
 		{
 			if ((item.type == ItemID.ExplodingBullet || item.Name == "Endless Explosive Pouch") &&
 			    player.GetModPlayer<DoomBubblesPlayer>().explosionBulletBonus)
@@ -88,7 +88,7 @@ namespace DoomBubblesMod.Items
 				mult += (player.GetModPlayer<DoomBubblesPlayer>().customSymphonicDamage - 1f);
 			}
 
-			base.ModifyWeaponDamage(item, player, ref add, ref mult);
+			base.ModifyWeaponDamage(item, player, ref add, ref mult, ref flat);
 		}
 
 		public override void OpenVanillaBag(string context, Player player, int arg)
@@ -112,6 +112,20 @@ namespace DoomBubblesMod.Items
 			if (player.GetModPlayer<DoomBubblesPlayer>().noManaItems.Contains(item.type))
 			{
 				mult = 0f;
+			}
+		}
+
+		public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
+		{
+			if (item.type == ItemID.GravityGlobe)
+			{
+				tooltips.Add(new TooltipLine(mod, "Secret", "Now has certain special properties...")
+				{
+					overrideColor = Color.MediumPurple
+				});
+				tooltips.Add(new TooltipLine(mod, "Secret2", "	-doombubbles"){
+					overrideColor = Color.MediumPurple
+				});
 			}
 		}
 

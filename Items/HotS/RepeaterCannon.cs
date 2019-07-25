@@ -49,7 +49,7 @@ namespace DoomBubblesMod.Items.HotS
             return new Vector2(-10, 3);
         }
 
-        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult)
+        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
         {
             if (ChosenTalent == 1 || ChosenTalent == -1)
             {
@@ -62,8 +62,6 @@ namespace DoomBubblesMod.Items.HotS
             ref float knockBack)
         {
             m_Shot++;
-
-            float pitch = 0f;
             
             if ((ChosenTalent == 2 || ChosenTalent == -1) && m_Shot == 3)
             {
