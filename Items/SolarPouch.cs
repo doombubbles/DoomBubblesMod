@@ -9,7 +9,7 @@ namespace DoomBubblesMod.Items
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Endless Solar Pouch");
-            Tooltip.SetDefault("");
+            Tooltip.SetDefault("Deals bonus damage to airborne enemies");
         }
 
         public override void SetDefaults()
@@ -22,6 +22,7 @@ namespace DoomBubblesMod.Items
             item.ranged = true;
             item.rare = 10;
             item.damage = 17;
+            item.knockBack = 3;
         }
         public override void AddRecipes()
         {

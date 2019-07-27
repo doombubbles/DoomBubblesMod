@@ -9,7 +9,7 @@ namespace DoomBubblesMod.Items
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Endless Stardust Pouch");
-            Tooltip.SetDefault("");
+            Tooltip.SetDefault("Splits into smaller bullets on hit");
         }
 
         public override void SetDefaults()
@@ -22,6 +22,7 @@ namespace DoomBubblesMod.Items
             item.ranged = true;
             item.rare = 10;
             item.damage = 17;
+            item.knockBack = 3;
         }
         public override void AddRecipes()
         {

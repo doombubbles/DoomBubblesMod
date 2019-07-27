@@ -10,7 +10,7 @@ namespace DoomBubblesMod.Items
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Endless Super Lunar Pouch");
-            Tooltip.SetDefault("");
+            Tooltip.SetDefault("Effects of all Lunar Bullets combined");
             Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(15, 4));
         }
 
@@ -24,6 +24,7 @@ namespace DoomBubblesMod.Items
             item.ranged = true;
             item.rare = 10;
             item.damage = 20;
+            item.knockBack = 3;
         }
         
         public override void AddRecipes()

@@ -3,3 +3,12 @@ A tModLoader Terraria mod used primarily by myself and my friends
 Check the Home Page Wiki to see mod content
 
 Highlights include: An Infinity Gauntlet, League of Legends Items, Heroes of the Storm items (with a custom talent system), Rainbow Machine Gun etc.
+
+Since people actually are downloading this mod, guess here's patch notes
+Most Recent Major Update: v0.29
+-Added in new Lunar (Solar, Vortex, Nebula, Stardust) Bullets + Pouchs (+ a secret super pouch)
+-Migrated some content over to new mods: Prefixes+ and GottaGoFast
+-Fixed a dumb crash on Mac clients that was dumb
+-Bloodlust Talisman now is a post-Moon Lord sell because it's so broken I mean hilarious
+
+Check Releases on GitHub for more complete version history
