@@ -20,14 +20,14 @@ namespace DoomBubblesMod.Items.LoL
 
             item.rare = 8;
             item.useStyle = 5;
-            item.useAnimation = 15;
-            item.useTime = 5;
-            item.reuseDelay = 15;
+            item.useAnimation = 18;
+            item.useTime = 6;
+            item.reuseDelay = 18;
             item.width = 48;
             item.height = 24;
             item.shoot = 10;
             item.useAmmo = AmmoID.Bullet;
-            item.damage = 30;
+            item.damage = 29;
             item.shootSpeed = 8.0f;
             item.noMelee = true;
             item.ranged = true;

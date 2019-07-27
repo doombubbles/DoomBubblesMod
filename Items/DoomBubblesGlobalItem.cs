@@ -127,6 +127,18 @@ namespace DoomBubblesMod.Items
 					overrideColor = Color.MediumPurple
 				});
 			}
+			
+			if (item.owner != 255 && item.owner != -1 && Main.player[item.owner].GetModPlayer<DoomBubblesPlayer>().noManaItems.Contains(item.type))
+			{
+				for (var i = 0; i < tooltips.Count; i++)
+				{
+					if (tooltips[i].Name == "UseMana" && tooltips[i].mod.Equals("Terraria"))
+					{
+						tooltips.RemoveAt(i);
+						i--;
+					}
+				}
+			}
 		}
 
 		#region dumbLongList

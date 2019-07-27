@@ -2,7 +2,7 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace DoomBubblesMod.Items.Accessories
+namespace DoomBubblesMod.Items
 {
     class TheObservableUniverse : ModItem
     {

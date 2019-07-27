@@ -15,6 +15,12 @@ namespace DoomBubblesMod
 
     class DoomBubblesGlobalProjectile: GlobalProjectile
     {
+        public static List<int> newLocalNpcImmunity = new List<int>()
+        {
+            ProjectileID.LastPrismLaser, ProjectileID.ShadowBeamFriendly, ProjectileID.InfernoFriendlyBlast,
+            ProjectileID.LostSoulFriendly
+        };
+        
         public override bool InstancePerEntity
         {
             get
@@ -31,9 +37,13 @@ namespace DoomBubblesMod
 
         public override void SetDefaults(Projectile projectile)
         {
-            if (projectile.type == ProjectileID.LastPrismLaser)
+            if (newLocalNpcImmunity.Contains(projectile.type))
             {
                 projectile.usesLocalNPCImmunity = true;
+                projectile.localNPCHitCooldown = 10;
+            }
+            if (projectile.type == ProjectileID.LastPrismLaser)
+            {
                 projectile.localNPCHitCooldown = 30;
             }
         }

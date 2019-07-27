@@ -1,14 +1,18 @@
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.World.Generation;
 
 namespace DoomBubblesMod.Projectiles
 {
     public abstract class LunarBullet : ModProjectile
     {
         public abstract int DustType { get; }
+
+        private readonly float NebulaDistance = 75f;
         
         public override void SetDefaults()
         {
@@ -17,14 +21,6 @@ namespace DoomBubblesMod.Projectiles
             projectile.timeLeft = 200;
             projectile.penetrate = 1;
         }
-        
-        /*
-        public override void SetStaticDefaults()
-        {
-            base.SetStaticDefaults();
-            ProjectileID.Sets.TrailingMode[projectile.type] = 0;
-        }
-        */
 
         public override void AI()
         {
@@ -153,5 +149,116 @@ namespace DoomBubblesMod.Projectiles
         {
             return new Color(255, 255, 255, 100) * projectile.Opacity;
         }
+
+        public void SolarEffect(ref int damage)
+        {
+            if (!WorldUtils.Find(projectile.Center.ToTileCoordinates(),
+                Searches.Chain(new Searches.Down(12), new Conditions.IsSolid()), out Point _))
+            {
+                damage = (int) (damage * 1.5f);
+            
+                for (double theta = 0; theta < Math.PI * 2; theta += 2 * Math.PI / 5)
+                {
+                    int dust = Dust.NewDust(projectile.Center,0, 0, mod.DustType("Solar229"), (float) Math.Cos(theta), (float) Math.Sin(theta));
+                    Main.dust[dust].noGravity = true;
+                    Main.dust[dust].scale = 2f;
+                }
+            }
+        }
+
+        public void NebulaEffect()
+        {
+            int targetI = -1;
+            for (var i = 0; i < Main.npc.Length; i++)
+            {
+                NPC nPC = Main.npc[i];
+                if (nPC.active && nPC.immune[projectile.owner] == 0 && projectile.localNPCImmunity[i] == 0 && nPC.CanBeChasedBy(this) && nPC.Hitbox.Distance(projectile.Center) < NebulaDistance)
+                {
+                    targetI = nPC.whoAmI;
+                    break;
+                }
+            }
+
+            if (targetI != -1)
+            {
+                NPC target = Main.npc[targetI];
+                Vector2 newPos = new Vector2();
+
+                int dX = projectile.width / 4;
+                int dY = projectile.height / 4;
+                
+                bool leftLeft = target.Hitbox.Left < projectile.Center.X;
+                bool rightRight = target.Hitbox.Right > projectile.Center.X;
+                bool upUp = target.Hitbox.Top < projectile.Center.Y;
+                bool downDown = target.Hitbox.Bottom > projectile.Center.Y;
+
+                if (leftLeft && rightRight)
+                {
+                    newPos.X = projectile.Center.X;
+                } else if (leftLeft)
+                {
+                    newPos.X = target.Hitbox.Right - dX;
+                } else if (rightRight)
+                {
+                    newPos.X = target.Hitbox.Left + dX;
+                }
+                if (upUp && downDown)
+                {
+                    newPos.Y = projectile.Center.Y;
+                } else if (upUp)
+                {
+                    newPos.Y = target.Hitbox.Bottom - dY;
+                } else if (downDown)
+                {
+                    newPos.Y = target.Hitbox.Top + dY;
+                }
+
+                double newDX = projectile.velocity.Length() * Math.Cos((newPos - projectile.Center).ToRotation());
+                double newDY = projectile.velocity.Length() * Math.Sin((newPos - projectile.Center).ToRotation());
+
+                for (double theta = 0; theta < Math.PI * 2; theta += Math.PI / 12)
+                {
+                    int dust1 = Dust.NewDust(
+                        projectile.Center + new Vector2((float) (10 * Math.Cos(theta)), (float) (10 * Math.Sin(theta))),
+                        0, 0, mod.DustType("Nebula229"), (float) Math.Cos(theta + Math.PI), (float) Math.Sin(theta + Math.PI));
+                    Main.dust[dust1].noGravity = true;
+                    
+                    int dust2 = Dust.NewDust(newPos,0, 0, mod.DustType("Nebula229"), (float) Math.Cos(theta), (float) Math.Sin(theta));
+                    Main.dust[dust2].noGravity = true;
+                }
+
+                projectile.Center = newPos;
+                projectile.velocity = new Vector2((float) newDX, (float) newDY);
+            }
+            
+            
+        }
+
+        public void VortexEffect (NPC target)
+        {
+            Vector2 pos = Main.player[projectile.owner].Center +
+                          new Vector2(Main.rand.NextFloat(-20, 20), Main.rand.NextFloat(-30, 30));
+            Vector2 v = 7f * (target.Center - pos).ToRotation().ToRotationVector2();
+            
+            int proj = Projectile.NewProjectile(pos, v, mod.ProjectileType("VortexBullet2"), 
+                projectile.damage / 2, projectile.knockBack / 2, projectile.owner);
+            Main.projectile[proj].netUpdate = true;
+        }
+
+        public void StardustEffect(NPC target)
+        {
+            Vector2 newPos = projectile.position;
+            newPos += projectile.oldVelocity / 5f;
+            while (target.Hitbox.Contains(newPos.ToPoint()))
+            {
+                newPos += projectile.oldVelocity / 5f;
+            }
+            
+            Projectile.NewProjectile(newPos, projectile.oldVelocity.RotatedByRandom(Math.PI / 15) / 2,
+                mod.ProjectileType("StardustBullet2"), projectile.damage / 2, projectile.knockBack / 2, projectile.owner, 0, target.whoAmI);
+            Projectile.NewProjectile(newPos, projectile.oldVelocity.RotatedByRandom(Math.PI / 15) / 2,
+                mod.ProjectileType("StardustBullet2"), projectile.damage / 2, projectile.knockBack / 2, projectile.owner, 0, target.whoAmI);
+        }
+        
     }
 }

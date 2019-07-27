@@ -30,7 +30,7 @@ namespace DoomBubblesMod.Items.HotS
             item.useAnimation = 36;
             item.useStyle = 1;
             item.noMelee = true;
-            item.damage = 105;
+            item.damage = 96;
             item.shoot = mod.ProjectileType("PhotonCannon");
             item.value = Item.buyPrice(0, 69, 0, 0);
             item.rare = ItemRarityID.Yellow;
@@ -70,18 +70,13 @@ namespace DoomBubblesMod.Items.HotS
         }
         
         
-
+        
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            for (var i = 0; i < tooltips.Count; i++)
-            {
-                if (tooltips[i].Name == "BuffTime")
-                {
-                    tooltips.RemoveAt(i);
-                    i--;
-                }
-            }
+            tooltips.RemoveAll(line => line.Name == "BuffTime");
+            base.ModifyTooltips(tooltips);
         }
+        
         
     }
 }

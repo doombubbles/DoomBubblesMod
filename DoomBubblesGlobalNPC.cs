@@ -290,7 +290,7 @@ namespace DoomBubblesMod
             }
 
 
-            if (type == NPCID.WitchDoctor && Main.LocalPlayer.ZoneCrimson)
+            if (type == NPCID.WitchDoctor && Main.LocalPlayer.ZoneCrimson && NPC.downedMoonlord)
             {
                 shop.item[nextSlot].SetDefaults(mod.ItemType("BloodlustTalisman"));
                 nextSlot++;

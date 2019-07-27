@@ -1,29 +1,34 @@
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Items
 {
-    public class StardustBullet : ModItem
+    class StardustPouch : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Stardust Bullet");
-            Tooltip.SetDefault("Splits into smaller bullets on hit");
+            DisplayName.SetDefault("Endless Stardust Pouch");
+            Tooltip.SetDefault("");
         }
 
         public override void SetDefaults()
         {
-            item.CloneDefaults(ItemID.MoonlordBullet);
             item.shoot = mod.ProjectileType("StardustBullet");
-            item.shootSpeed = 1.5f;
+            item.width = 26;
+            item.height = 34;
+            item.ammo = AmmoID.Bullet;
+            item.value = Item.sellPrice(0, 4, 0, 0);
+            item.ranged = true;
+            item.rare = 10;
             item.damage = 17;
         }
-        
         public override void AddRecipes()
         {
+            
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.FragmentStardust);
-            recipe.SetResult(this, 111);
+            recipe.AddIngredient(mod.ItemType("StardustBullet"), 3996);
+            recipe.SetResult(this);
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.AddRecipe();
         }

@@ -12,6 +12,7 @@ namespace DoomBubblesMod.Projectiles
         {
             base.SetDefaults();
             projectile.tileCollide = false;
+            projectile.alpha = 155;
         }
     }
 }

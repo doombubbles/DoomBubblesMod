@@ -15,7 +15,8 @@ namespace DoomBubblesMod.Items.HotS
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Shield Capacitor");
-            Tooltip.SetDefault("Gives you a 50 HP Shield that recharges after not taking damage");
+            Tooltip.SetDefault("Gives you a 50 HP Shield that recharges after not taking damage\n" +
+                               "Due to a tModLoader bug this won't display for Mac users :(");
         }
 
         public override void SetDefaults()

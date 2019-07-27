@@ -22,21 +22,16 @@ namespace DoomBubblesMod
         private UserInterface m_InfinityGauntletUserInterface;
         private InfinityGauntletUI m_InfinityGauntletUi;
         
-        public static List<Color> rainbowColors = new List<Color>() {Color.Red, Color.Orange, Color.Yellow, Color.LimeGreen, Color.Blue, Color.Indigo, Color.Violet};
+        public static List<Color> rainbowColors;
         
         public DoomBubblesMod()
         {
-            Properties = new ModProperties()
-            {
-                Autoload = true,
-                AutoloadGores = true,
-                AutoloadSounds = true
-            };
         }
-
 
         public override void Load()
         {
+            rainbowColors = new List<Color>()
+                {Color.Red, Color.Orange, Color.Yellow, Color.LimeGreen, Color.Blue, Color.Indigo, Color.Violet};
             thoriumLoaded = ModLoader.GetMod("ThoriumMod") != null;
             
             if (!Main.dedServ)
@@ -52,7 +47,17 @@ namespace DoomBubblesMod
 
             Player.UpdateLifeRegen += PlayerOnUpdateLifeRegen;
             Player.UpdateManaRegen += PlayerOnUpdateManaRegen;
-            On.Terraria.Main.DrawInterface_Resources_Life += MainOnDrawInterfaceResourcesLife;
+            if (Environment.OSVersion.VersionString.Contains("Windows"))
+            {
+                On.Terraria.Main.DrawInterface_Resources_Life += MainOnDrawInterfaceResourcesLife;
+            }
+            
+        }
+
+        public override void Unload()
+        {
+            thoriumLoaded = false;
+            rainbowColors = null;
         }
 
         private void MainOnDrawInterfaceResourcesLife(On.Terraria.Main.orig_DrawInterface_Resources_Life orig)
@@ -81,7 +86,6 @@ namespace DoomBubblesMod
                 Main.LocalPlayer.statLifeMax2 = maxLife;
             }
             else orig();
-
         }
 
         private void PlayerOnUpdateManaRegen(Player.orig_UpdateManaRegen orig, Terraria.Player self)

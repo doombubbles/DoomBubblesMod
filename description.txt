@@ -1,1 +1,5 @@
-Nothing to see here; move along.
+A tModLoader Terraria mod used primarily by myself and my friends
+
+Check the Home Page Wiki to see mod content
+
+Highlights include: An Infinity Gauntlet, League of Legends Items, Heroes of the Storm items (with a custom talent system), Rainbow Machine Gun etc.

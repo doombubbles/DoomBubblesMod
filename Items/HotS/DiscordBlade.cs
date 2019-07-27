@@ -15,7 +15,7 @@ namespace DoomBubblesMod.Items.HotS
         
         private float Length => ChosenTalent == 2 || ChosenTalent == -1 ? 600f : 300f;
 
-        public override bool OnlyShootOnSwing => true;
+        public override bool OnlyShootOnSwing => false;
 
         public override void SetStaticDefaults()
         {
@@ -64,7 +64,7 @@ namespace DoomBubblesMod.Items.HotS
                 position = player.Center;
                 speedX = (float) Math.Cos(theta) * Length / 15f;
                 speedY = (float) Math.Sin(theta) * Length / 15f;
-                int proj = Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, ChosenTalent);
+                int proj = Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack * 2, player.whoAmI, ChosenTalent);
                 Main.projectile[proj].netUpdate = true;
             }
 

@@ -47,7 +47,7 @@ namespace DoomBubblesMod.Projectiles.HotS
             if (ChosenTalent == 3 || ChosenTalent == -1)
             {
                 int missingHp = target.lifeMax - target.life;
-                damage += (int) (damage * ((float) missingHp / target.lifeMax) + missingHp * .01);
+                damage += (int) (damage * ((float) missingHp / target.lifeMax) + missingHp * .02);
             }
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
             if (ChosenTalent == 1 || ChosenTalent == -1)
