@@ -20,7 +20,7 @@ namespace DoomBubblesMod.Items.Phase
         
         public override void AddRecipes()
         {
-            if (DoomBubblesMod.thoriumLoaded)
+            if (DoomBubblesMod.thoriumLoaded.HasValue && DoomBubblesMod.thoriumLoaded.Value)
             {
                 AddThoriumRecipe();
             }

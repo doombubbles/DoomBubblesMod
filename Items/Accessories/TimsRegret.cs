@@ -39,7 +39,7 @@ namespace DoomBubblesMod.Items.Accessories
             recipe.AddIngredient(ItemID.CelestialEmblem);
 
 
-            if (DoomBubblesMod.thoriumLoaded)
+            if (DoomBubblesMod.thoriumLoaded.HasValue && DoomBubblesMod.thoriumLoaded.Value)
             {
                 addThoriumRecipes(ref recipe);
             }

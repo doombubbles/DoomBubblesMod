@@ -38,7 +38,7 @@ namespace DoomBubblesMod.Items.Weapons
 
 		public override void AddRecipes()
 		{
-			if (DoomBubblesMod.thoriumLoaded)
+			if (DoomBubblesMod.thoriumLoaded.HasValue && DoomBubblesMod.thoriumLoaded.Value)
 			{
 				addThoriumRecipe();
 			}

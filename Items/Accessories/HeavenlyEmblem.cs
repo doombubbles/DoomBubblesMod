@@ -29,7 +29,7 @@ namespace DoomBubblesMod.Items.Accessories
 
         public override void AddRecipes()
         {
-            if (DoomBubblesMod.thoriumLoaded)
+            if (DoomBubblesMod.thoriumLoaded.HasValue && DoomBubblesMod.thoriumLoaded.Value)
             {
                 ModRecipe recipe = new ModRecipe(mod);
                 addThoriumRecipe(ref recipe);

@@ -169,10 +169,10 @@ namespace DoomBubblesMod.Projectiles
         public void NebulaEffect()
         {
             int targetI = -1;
-            for (var i = 0; i < Main.npc.Length; i++)
+            for (var i = 0; i < 200; i++)
             {
                 NPC nPC = Main.npc[i];
-                if (nPC.active && nPC.immune[projectile.owner] == 0 && projectile.localNPCImmunity[i] == 0 && nPC.CanBeChasedBy(this) && nPC.Hitbox.Distance(projectile.Center) < NebulaDistance)
+                if (nPC != null && nPC.active && nPC.immune[projectile.owner] == 0 && (!projectile.usesLocalNPCImmunity || projectile.localNPCImmunity[i] == 0) && nPC.CanBeChasedBy(projectile) && nPC.Hitbox.Distance(projectile.Center) < NebulaDistance)
                 {
                     targetI = nPC.whoAmI;
                     break;

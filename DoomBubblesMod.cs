@@ -17,15 +17,18 @@ namespace DoomBubblesMod
 {
     public class DoomBubblesMod : Mod
     {
-        public static bool thoriumLoaded;
+        public static bool? thoriumLoaded;
 
         private UserInterface m_InfinityGauntletUserInterface;
-        private InfinityGauntletUI m_InfinityGauntletUi;
+        internal InfinityGauntletUI infinityGauntletUi;
         
         public static List<Color> rainbowColors;
+
+        internal static DoomBubblesMod Instance;
         
         public DoomBubblesMod()
         {
+            Instance = this;
         }
 
         public override void Load()
@@ -36,10 +39,10 @@ namespace DoomBubblesMod
             
             if (!Main.dedServ)
             {
-                m_InfinityGauntletUi = new InfinityGauntletUI();
-                m_InfinityGauntletUi.Activate();
+                infinityGauntletUi = new InfinityGauntletUI();
+                infinityGauntletUi.Activate();
                 m_InfinityGauntletUserInterface = new UserInterface();
-                m_InfinityGauntletUserInterface.SetState(m_InfinityGauntletUi);
+                m_InfinityGauntletUserInterface.SetState(infinityGauntletUi);
 
                 Main.projectileTexture[ProjectileID.MoonlordBullet] = GetTexture("Projectiles/Projectile_638");
                 Main.dustTexture = GetTexture("Dusts/Dust");
@@ -56,8 +59,8 @@ namespace DoomBubblesMod
 
         public override void Unload()
         {
-            thoriumLoaded = false;
-            rainbowColors = null;
+            Instance = null;
+            InfinityGauntletUI.backgroundPanel = null;
         }
 
         private void MainOnDrawInterfaceResourcesLife(On.Terraria.Main.orig_DrawInterface_Resources_Life orig)
@@ -132,7 +135,7 @@ namespace DoomBubblesMod
                         if (InfinityGauntletUI.visible)
                         {
                             m_InfinityGauntletUserInterface.Update(Main._drawInterfaceGameTime);	//I don't understand
-                            m_InfinityGauntletUi.Draw(Main.spriteBatch);
+                            infinityGauntletUi.Draw(Main.spriteBatch);
                         }
                         return true;
                     },
@@ -179,7 +182,7 @@ namespace DoomBubblesMod
                 editor.AddIngredient(this.ItemType("HeartOfTerraria"));
             }
 
-            if (thoriumLoaded)
+            if (thoriumLoaded.HasValue && thoriumLoaded.Value)
             {
                 ModifyThoriumRecipes();
             }
