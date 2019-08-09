@@ -2,14 +2,14 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace DoomBubblesMod.Items.Accessories
+namespace DoomBubblesMod.Items.Accessories.Emblem
 {
-    class StardustEmblem : ModItem
+    class VortexEmblem : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Stardust Emblem");
-            Tooltip.SetDefault("25% increased summon damage");
+            DisplayName.SetDefault("Vortex Emblem");
+            Tooltip.SetDefault("25% increased ranged damage");
         }
 
         public override void SetDefaults()
@@ -24,14 +24,14 @@ namespace DoomBubblesMod.Items.Accessories
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.minionDamage += .25f;
+            player.rangedDamage += .25f;
         }
 
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.SummonerEmblem);
-            recipe.AddIngredient(ItemID.FragmentStardust, 5);
+            recipe.AddIngredient(ItemID.RangerEmblem);
+            recipe.AddIngredient(ItemID.FragmentVortex, 5);
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.SetResult(this);
             recipe.AddRecipe();

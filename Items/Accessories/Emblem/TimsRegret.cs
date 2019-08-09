@@ -2,7 +2,7 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace DoomBubblesMod.Items.Accessories
+namespace DoomBubblesMod.Items.Accessories.Emblem
 {
     class TimsRegret : ModItem
     {

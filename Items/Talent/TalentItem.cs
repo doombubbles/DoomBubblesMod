@@ -56,16 +56,31 @@ namespace DoomBubblesMod.Items
             Talent3 = reader.ReadBoolean();
             ChosenTalent = reader.ReadInt16();
         }
-        
+
         public override bool CanRightClick()
         {
             if (item.owner == Main.myPlayer)
             {
-                if (!Main.mouseRightRelease)
+                if (Main.mouseItem.type == mod.ItemType(Talent1Name) ||
+                    Main.mouseItem.type == mod.ItemType(Talent2Name) ||
+                    Main.mouseItem.type == mod.ItemType(Talent3Name))
                 {
-                    return false;
+                    return true;
                 }
-                
+
+                if ((Talent1 ? 1 : 0) + (Talent2 ? 1 : 0) + (Talent3 ? 1 : 0) > 1)
+                {
+                    return ChosenTalent >= 0;
+                }
+            }
+            
+            return false;
+        }
+
+        public override void RightClick(Player player)
+        {
+            if (item.owner == Main.myPlayer)
+            {
                 if (Main.mouseItem.type == mod.ItemType(Talent1Name) && !Talent1)
                 {
                     Talent1 = true;
@@ -118,18 +133,19 @@ namespace DoomBubblesMod.Items
                         }
                     }
 
-                    if (ChosenTalent != ogTalent && item.owner == Main.myPlayer)
+                    if (ChosenTalent != ogTalent)
                     {
                         Main.PlaySound(SoundLoader.customSoundType, (int)Main.player[item.owner].position.X, (int)Main.player[item.owner].position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/TalentChange"));
                     }
-                    
                 } 
             }
+        }
+
+        public override bool ConsumeItem(Player player)
+        {
             return false;
         }
-        
-        
-        
+
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {

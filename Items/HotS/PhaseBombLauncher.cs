@@ -80,7 +80,7 @@ namespace DoomBubblesMod.Items.HotS
             
                 Projectile.NewProjectile(position, speed, type, damage, knockBack, player.whoAmI, (float)time, ChosenTalent);
 
-                if (player.HasBuff(mod.BuffType("FenixBombBuildUp")))
+                if (player.HasBuff(mod.BuffType("FenixBombBuildUp")) && !player.gravControl2)
                 {
                     player.DelBuff(player.FindBuffIndex(mod.BuffType("FenixBombBuildUp")));
                 }

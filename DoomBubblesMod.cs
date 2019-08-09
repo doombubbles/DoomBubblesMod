@@ -146,7 +146,7 @@ namespace DoomBubblesMod
 
         public override void AddRecipes()
         {
-            
+            /*
             RecipeFinder finder = new RecipeFinder();
             finder.AddIngredient(ItemID.FrostsparkBoots);
             finder.AddIngredient(ItemID.LavaWaders);
@@ -162,6 +162,7 @@ namespace DoomBubblesMod
                 editor.AddIngredient(ItemID.SoulofLight);
                 editor.AddIngredient(ItemID.SoulofNight);
             }
+            */
             /*
             RecipeFinder finder2 = new RecipeFinder();
             finder2.AddIngredient(ItemID.FrostsparkBoots);
@@ -215,6 +216,30 @@ namespace DoomBubblesMod
                 RecipeEditor editor = new RecipeEditor(searchRecipe);
                 editor.AddIngredient(this.ItemType("HeartOfTerraria"));
             }
+            
+            List<int> brokenHeroItems = new List<int>();
+            brokenHeroItems.Add(ItemID.BrokenHeroSword);
+            brokenHeroItems.Add(ItemType("BrokenHeroGun"));
+            brokenHeroItems.Add(thoriumMod.ItemType("BrokenHeroStaff"));
+            brokenHeroItems.Add(thoriumMod.ItemType("BrokenHeroScythe"));
+            brokenHeroItems.Add(thoriumMod.ItemType("BrokenHeroHilt"));
+            brokenHeroItems.Add(thoriumMod.ItemType("BrokenHeroBow"));
+            foreach (var brokenHeroItem in brokenHeroItems)
+            {
+                foreach (var heroItem in brokenHeroItems)
+                {
+                    if (heroItem == brokenHeroItem)
+                    {
+                        continue;
+                    }
+                    ModRecipe recipe = new ModRecipe(this);
+                    recipe.AddIngredient(heroItem);
+                    recipe.AddTile(TileID.AlchemyTable);
+                    recipe.SetResult(brokenHeroItem);
+                    recipe.Create();
+                }
+            }
+            
         }
 
         public override void HandlePacket(BinaryReader reader, int whoAmI)

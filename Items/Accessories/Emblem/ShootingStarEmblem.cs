@@ -2,14 +2,14 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace DoomBubblesMod.Items.Accessories
+namespace DoomBubblesMod.Items.Accessories.Emblem
 {
-    class HeavenlyEmblem : ModItem
+    class ShootingStarEmblem : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Heavenly Emblem");
-            Tooltip.SetDefault("25% increased radiant damage");
+            DisplayName.SetDefault("Shooting Star Emblem");
+            Tooltip.SetDefault("25% increased symphonic damage");
         }
 
         public override void SetDefaults()
@@ -24,7 +24,7 @@ namespace DoomBubblesMod.Items.Accessories
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<DoomBubblesPlayer>().customRadiantDamage += .25f;
+            player.GetModPlayer<DoomBubblesPlayer>().customSymphonicDamage += .25f;
         }
 
         public override void AddRecipes()
@@ -42,8 +42,8 @@ namespace DoomBubblesMod.Items.Accessories
         public void addThoriumRecipe(ref ModRecipe recipe)
         {
             Mod thoriumMod = ModLoader.GetMod("ThoriumMod");
-            recipe.AddIngredient(thoriumMod.ItemType("ClericEmblem"));
-            recipe.AddIngredient(thoriumMod.ItemType("CelestialFragment"), 5);
+            recipe.AddIngredient(thoriumMod.ItemType("BardEmblem"));
+            recipe.AddIngredient(thoriumMod.ItemType("CometFragment"), 5);
         }
     }
 }

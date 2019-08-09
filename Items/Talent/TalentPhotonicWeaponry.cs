@@ -8,7 +8,7 @@ namespace DoomBubblesMod.Items.Talent
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Talent: Dampening Field");
+            DisplayName.SetDefault("Talent: Photonic Weaponry");
             Tooltip.SetDefault("Shield Capacitor Talent\n" +
                                "You deal 15% more damage while Shield Capacitor is active\n" +
                                "[Right Click on a Shield Capacitor with this to apply]");

@@ -18,7 +18,7 @@ namespace DoomBubblesMod
         public static List<int> newLocalNpcImmunity = new List<int>()
         {
             ProjectileID.LastPrismLaser, ProjectileID.ShadowBeamFriendly, ProjectileID.InfernoFriendlyBlast,
-            ProjectileID.LostSoulFriendly
+            ProjectileID.LostSoulFriendly, ProjectileID.FallingStar
         };
         
         public override bool InstancePerEntity

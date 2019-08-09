@@ -30,12 +30,12 @@ namespace DoomBubblesMod.Projectiles.HotS
 
         public override bool? CanHitNPC(NPC target)
         {
-            if (1000 - projectile.timeLeft <= projectile.ai[0])
+            if (1000 - projectile.timeLeft <= projectile.ai[0] && !(projectile.ai[1] == 1 || projectile.ai[1] == -1))
             {
-                return projectile.ai[1] == 1 || projectile.ai[1] == -1;
+                return false;
             }
 
-            if (1000 - projectile.timeLeft != (int) projectile.ai[0] + 1)
+            if (1000 - projectile.timeLeft > (int) projectile.ai[0] + 1)
             {
                 return false;
             }
@@ -115,8 +115,6 @@ namespace DoomBubblesMod.Projectiles.HotS
 
             }
 
-
-
         }
 
         public override void Kill(int timeLeft)
@@ -126,7 +124,13 @@ namespace DoomBubblesMod.Projectiles.HotS
                 Player player = Main.player[projectile.owner];
                 player.AddBuff(mod.BuffType("FenixRepeaterBuff"), 360);
                 player.GetModPlayer<HotSPlayer>().fenixRepeaterBuff += (int) projectile.localAI[0];
-                if (player.GetModPlayer<HotSPlayer>().fenixRepeaterBuff > 10)
+                if (player.gravControl2)
+                {
+                    if (player.GetModPlayer<HotSPlayer>().fenixRepeaterBuff > 15)
+                    {
+                        player.GetModPlayer<HotSPlayer>().fenixRepeaterBuff = 15;
+                    }
+                } else if (player.GetModPlayer<HotSPlayer>().fenixRepeaterBuff > 10)
                 {
                     player.GetModPlayer<HotSPlayer>().fenixRepeaterBuff = 10;
                 }

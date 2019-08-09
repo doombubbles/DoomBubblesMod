@@ -2,14 +2,14 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace DoomBubblesMod.Items.Accessories
+namespace DoomBubblesMod.Items.Accessories.Emblem
 {
-    class NebulaEmblem : ModItem
+    class SolarEmblem : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Nebula Emblem");
-            Tooltip.SetDefault("25% increased magic damage");
+            DisplayName.SetDefault("Solar Emblem");
+            Tooltip.SetDefault("25% increased melee damage");
         }
 
         public override void SetDefaults()
@@ -24,14 +24,14 @@ namespace DoomBubblesMod.Items.Accessories
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.magicDamage += .25f;
+            player.meleeDamage += .25f;
         }
 
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.SorcererEmblem);
-            recipe.AddIngredient(ItemID.FragmentNebula, 5);
+            recipe.AddIngredient(ItemID.WarriorEmblem);
+            recipe.AddIngredient(ItemID.FragmentSolar, 5);
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.SetResult(this);
             recipe.AddRecipe();

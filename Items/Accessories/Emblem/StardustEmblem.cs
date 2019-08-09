@@ -2,14 +2,14 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace DoomBubblesMod.Items.Accessories
+namespace DoomBubblesMod.Items.Accessories.Emblem
 {
-    class SolarEmblem : ModItem
+    class StardustEmblem : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Solar Emblem");
-            Tooltip.SetDefault("25% increased melee damage");
+            DisplayName.SetDefault("Stardust Emblem");
+            Tooltip.SetDefault("25% increased summon damage");
         }
 
         public override void SetDefaults()
@@ -24,14 +24,14 @@ namespace DoomBubblesMod.Items.Accessories
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.meleeDamage += .25f;
+            player.minionDamage += .25f;
         }
 
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.WarriorEmblem);
-            recipe.AddIngredient(ItemID.FragmentSolar, 5);
+            recipe.AddIngredient(ItemID.SummonerEmblem);
+            recipe.AddIngredient(ItemID.FragmentStardust, 5);
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.SetResult(this);
             recipe.AddRecipe();

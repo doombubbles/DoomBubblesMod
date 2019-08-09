@@ -30,7 +30,7 @@ namespace DoomBubblesMod.Items.Accessories
             recipe.AddIngredient(ItemID.GuideVoodooDoll);
             recipe.AddIngredient(ItemID.TissueSample, 5);
             recipe.AddIngredient(ItemID.CrimsonHelmet);
-            recipe.AddIngredient(ItemID.CrimsonChest);
+            recipe.AddIngredient(ItemID.CrimsonScalemail);
             recipe.AddIngredient(ItemID.CrimsonGreaves);
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

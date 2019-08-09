@@ -30,6 +30,7 @@ namespace DoomBubblesMod
         public bool rabadon;
         public bool bloodlust;
         public bool vampireKnifeBat;
+        public bool united;
 
         public List<int> noManaItems = new List<int>();
 
@@ -50,6 +51,7 @@ namespace DoomBubblesMod
             customRadiantCrit = 0;
             customSymphonicCrit = 0;
             vampireKnifeBat = false;
+            united = false;
             
             noManaItems = new List<int>();
         }
@@ -65,6 +67,21 @@ namespace DoomBubblesMod
                 player.AddBuff(mod.BuffType("Sterak"), 600, false);
             }
             return base.PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource);
+        }
+
+        public override void PostUpdateEquips()
+        {
+            int uniteds = -1;
+            for (var i = 0; i < Main.player.Length; i++)
+            {
+                Player player = Main.player[i];
+                if (player.active && !player.dead && player.GetModPlayer<DoomBubblesPlayer>().united)
+                {
+                    uniteds++;
+                }
+            }
+
+            player.allDamage += .1f * uniteds;
         }
 
         public override void PostUpdate()

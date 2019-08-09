@@ -92,6 +92,7 @@ namespace DoomBubblesMod.Projectiles
             {
                 num3 = 22;
             }
+            
             projectile.ai[1] += 1f;
             bool flag = false;
             if (projectile.ai[1] >= (float) (num3 - num4 * num2))
@@ -224,6 +225,15 @@ namespace DoomBubblesMod.Projectiles
                 }
             }
             */
+        }
+
+        public override void PostAI()
+        {
+            Player player = Main.player[projectile.owner];
+            Item item = player.inventory[player.selectedItem];
+            int time = (int)((float)item.useTime / PlayerHooks.TotalUseTimeMultiplier(player, item));
+            projectile.ai[0] += 20f / time - 1;
+            projectile.ai[1] += 20f / time - 1;
         }
     }
 }

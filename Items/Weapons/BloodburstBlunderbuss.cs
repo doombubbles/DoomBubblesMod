@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -5,12 +6,12 @@ using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Items.Weapons
 {
-	public class MidnightMaelstrom : ModItem
+	public class BloodburstBlunderbuss : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
 			//Tooltip.SetDefault("This is a modded gun.");
-			DisplayName.SetDefault("Midnight Maelstrom");
+			DisplayName.SetDefault("Bloodburst Blunderbuss");
 		}
 
 		public override void SetDefaults()
@@ -36,7 +37,7 @@ namespace DoomBubblesMod.Items.Weapons
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.Musket);
+			recipe.AddIngredient(ItemID.TheUndertaker);
 			recipe.AddIngredient(ItemID.Boomstick);
 			recipe.AddIngredient(ItemID.PhoenixBlaster);
 			recipe.AddTile(TileID.DemonAltar);
@@ -44,7 +45,7 @@ namespace DoomBubblesMod.Items.Weapons
 			recipe.AddRecipe();
 			
 			ModRecipe recipe2 = new ModRecipe(mod);
-			recipe2.AddIngredient(mod.GetItem("BloodburstBlunderbuss"));
+			recipe2.AddIngredient(mod.GetItem("MidnightMaelstrom"));
 			recipe2.AddTile(TileID.DemonAltar);
 			recipe2.SetResult(this);
 			recipe2.AddRecipe();
@@ -72,16 +73,19 @@ namespace DoomBubblesMod.Items.Weapons
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
 			Main.PlaySound(SoundID.Item36, position);
-			int numberProjectiles = 2 + Main.rand.Next(2); 
-			for (int i = 0; i < numberProjectiles; i++)
+			
+			int number = 3 + Main.rand.Next(2);
+
+			float d = (Main.MouseWorld - player.Center).ToRotation();
+
+			for (int i = 1; i <= number; i++)
 			{
-				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(10)); // 30 degree spread.
-				// If you want to randomize the speed to stagger the projectiles
-				float scale = 1f - (Main.rand.NextFloat() * .1f);
-				perturbedSpeed = perturbedSpeed * scale; 
-				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, (int) (damage / 2.0), knockBack, player.whoAmI);
+				var pos = position + (((float) (d + Math.PI / 2)).ToRotationVector2() * 10) + 
+				          (((float) (d - Math.PI / 2)).ToRotationVector2() * (20 / i));
+				Projectile.NewProjectile(pos, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI);
 			}
-			return true;
+			
+			return false;
 		}
 
 		// What if I wanted an inaccurate gun? (Chain Gun)

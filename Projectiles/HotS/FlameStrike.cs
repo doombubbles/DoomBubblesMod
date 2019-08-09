@@ -61,8 +61,15 @@ namespace DoomBubblesMod.Projectiles.HotS
         {
             if ((ChosenTalent == 2 || ChosenTalent == -1) && projectile.localAI[1] < .5)
             {
-                int ai = Main.player[projectile.owner].gravControl2 ? -1 : 0;
-                if (!target.HasBuff(mod.BuffType("LivingBomb")))
+                int ai = Main.player[projectile.owner].gravControl2 ? 1 : 0;
+                if (Main.player[projectile.owner].gravControl2)
+                {
+                    target.AddBuff(mod.BuffType("LivingBomb"), 152);
+                    int proj = Projectile.NewProjectile(target.Center, new Vector2(0, 0), mod.ProjectileType("LivingBomb"),
+                        (int) (damage / 115f * 160f), 0, projectile.owner, ai, target.whoAmI);
+                    Main.projectile[proj].netUpdate = true;
+                    Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/LivingBombWand2"), target.Center);
+                } else if (!target.HasBuff(mod.BuffType("LivingBomb")))
                 {
                     target.AddBuff(mod.BuffType("LivingBomb"), 150);
                     int proj = Projectile.NewProjectile(target.Center, new Vector2(0, 0), mod.ProjectileType("LivingBomb"),
@@ -71,13 +78,6 @@ namespace DoomBubblesMod.Projectiles.HotS
                     Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/LivingBombWand2"), target.Center);
 
                     projectile.localAI[1] += 2 + ai * 2;
-                } else if (Main.player[projectile.owner].gravControl2)
-                {
-                    target.AddBuff(mod.BuffType("LivingBomb"), 152);
-                    int proj = Projectile.NewProjectile(target.Center, new Vector2(0, 0), mod.ProjectileType("LivingBomb"),
-                        (int) (damage / 115f * 160f), 0, projectile.owner, ai, target.whoAmI);
-                    Main.projectile[proj].netUpdate = true;
-                    Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/LivingBombWand2"), target.Center);
                 }
             }
 
@@ -89,7 +89,7 @@ namespace DoomBubblesMod.Projectiles.HotS
             if ((ChosenTalent == 1 || ChosenTalent == -1) && Main.player[projectile.owner].GetModPlayer<HotSPlayer>().convection < 100)
             {
                 Main.player[projectile.owner].GetModPlayer<HotSPlayer>().convection++;
-                if (Main.player[projectile.owner].HasBuff(mod.BuffType("Convection")))
+                if (!Main.player[projectile.owner].HasBuff(mod.BuffType("Convection")))
                 {
                     Main.player[projectile.owner].AddBuff(mod.BuffType("Convection"), 10);
                 }
