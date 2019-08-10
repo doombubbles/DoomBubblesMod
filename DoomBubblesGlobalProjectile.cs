@@ -41,10 +41,10 @@ namespace DoomBubblesMod
                 projectile.localNPCHitCooldown = 30;
             }
 
-            if (projectile.Name == "Nebulash")
+            if (projectile.modProjectile != null && (projectile.modProjectile.Name == "Nebulash" || projectile.modProjectile.Name == "Nebudust"))
             {
                 projectile.usesLocalNPCImmunity = true;
-                projectile.localNPCHitCooldown = 10;
+                projectile.localNPCHitCooldown = 20;
             }
         }
 

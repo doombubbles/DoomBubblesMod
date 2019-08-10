@@ -12,7 +12,7 @@ namespace DoomBubblesMod.Projectiles
     {
         public abstract int DustType { get; }
 
-        private readonly float NebulaDistance = 75f;
+        private readonly float NebulaDistance = 100f;
         
         public override void SetDefaults()
         {
