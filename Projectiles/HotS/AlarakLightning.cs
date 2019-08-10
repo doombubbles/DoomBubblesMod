@@ -28,7 +28,7 @@ namespace DoomBubblesMod.Projectiles.HotS
             projectile.tileCollide = false;
             projectile.alpha = 69;
             projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = -1;
+            projectile.localNPCHitCooldown = 1000;
         }
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
@@ -55,6 +55,15 @@ namespace DoomBubblesMod.Projectiles.HotS
                     }
                 }
             }
+        }
+
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            if (Main.player[projectile.owner].gravControl2)
+            {
+                projectile.localNPCImmunity[target.whoAmI] = 10;
+            }
+            base.OnHitNPC(target, damage, knockback, crit);
         }
 
         public override void AI()

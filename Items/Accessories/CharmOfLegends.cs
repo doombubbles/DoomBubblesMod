@@ -30,6 +30,7 @@ namespace DoomBubblesMod.Items.Accessories
             player.statManaMax2 += 20;
             player.manaRegenDelayBonus++;
             player.manaRegenBonus += 25;
+            player.lifeRegen++;
             player.pStone = true;
         }
         

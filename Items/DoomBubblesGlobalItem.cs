@@ -141,6 +141,24 @@ namespace DoomBubblesMod.Items
 			}
 		}
 
+		public override void UpdateAccessory(Item item, Player player, bool hideVisual)
+		{
+			if (item.Name.Contains("Emblem") && item.Name != "Aquatic Emblem")
+			{
+				player.GetModPlayer<DoomBubblesPlayer>().emblem++;
+			}
+			base.UpdateAccessory(item, player, hideVisual);
+		}
+
+		public override bool CanEquipAccessory(Item item, Player player, int slot)
+		{
+			if (item.Name.Contains("Emblem") && player.GetModPlayer<DoomBubblesPlayer>().emblem == -1)
+			{
+				return false;
+			}
+			return base.CanEquipAccessory(item, player, slot);
+		}
+
 		#region dumbLongList
 		public static List<String> radiantWeapons = new List<String>()
 		{

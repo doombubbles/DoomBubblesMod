@@ -29,7 +29,7 @@ namespace DoomBubblesMod.Projectiles.LoL
         {
             var player = Main.player[projectile.owner];
             Vector2 targetPos;
-            if (projectile.ai[0] == 0f)
+            if (projectile.ai[0] == 0f && Main.myPlayer == projectile.owner)
             {
                 targetPos = Main.MouseWorld;
             }
@@ -40,7 +40,7 @@ namespace DoomBubblesMod.Projectiles.LoL
             }
             
             
-            if (projectile.localAI[0] == 0f)
+            if (projectile.ai[1] == 0f)
             {
                 if (projectile.ai[0] == 0f)
                 {
@@ -99,7 +99,7 @@ namespace DoomBubblesMod.Projectiles.LoL
                 
                 
             }
-            projectile.localAI[0] = 1f;
+            projectile.ai[1] = 1f;
 
         }
 

@@ -34,7 +34,7 @@ namespace DoomBubblesMod.Items.Accessories.Emblem
             recipe.AddIngredient(ItemID.AvengerEmblem);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);
-            recipe.Create();
+            recipe.AddRecipe();
         }
     }
 }

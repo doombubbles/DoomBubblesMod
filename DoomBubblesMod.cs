@@ -31,6 +31,12 @@ namespace DoomBubblesMod
             Instance = this;
         }
 
+        public override void AddRecipeGroups()
+        {
+            RecipeGroup recipeGroup = new RecipeGroup(() => "Any Palladium Helmet", ItemID.PalladiumHeadgear, ItemID.PalladiumHelmet, ItemID.PalladiumMask);
+            RecipeGroup.RegisterGroup("DoomBubblesMod:AnyPalladiumHelmet", recipeGroup);
+        }
+
         public override void Load()
         {
             rainbowColors = new List<Color>()

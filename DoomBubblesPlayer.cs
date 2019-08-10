@@ -31,6 +31,7 @@ namespace DoomBubblesMod
         public bool bloodlust;
         public bool vampireKnifeBat;
         public bool united;
+        public int emblem;
 
         public List<int> noManaItems = new List<int>();
 
@@ -47,7 +48,7 @@ namespace DoomBubblesMod
             critChanceMult = 1f;
             customRadiantDamage = 1f;
             customSymphonicDamage = 1f;
-            
+            emblem = 0;
             customRadiantCrit = 0;
             customSymphonicCrit = 0;
             vampireKnifeBat = false;
