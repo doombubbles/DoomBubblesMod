@@ -61,7 +61,7 @@ namespace DoomBubblesMod.Projectiles.HotS
         {
             if (Main.player[projectile.owner].gravControl2)
             {
-                projectile.localNPCImmunity[target.whoAmI] = 10;
+                projectile.localNPCImmunity[target.whoAmI] = 5;
             }
             base.OnHitNPC(target, damage, knockback, crit);
         }

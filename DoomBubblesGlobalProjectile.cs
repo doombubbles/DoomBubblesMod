@@ -18,16 +18,10 @@ namespace DoomBubblesMod
         public static List<int> newLocalNpcImmunity = new List<int>()
         {
             ProjectileID.LastPrismLaser, ProjectileID.ShadowBeamFriendly, ProjectileID.InfernoFriendlyBlast,
-            ProjectileID.LostSoulFriendly, ProjectileID.FallingStar
+            ProjectileID.LostSoulFriendly, ProjectileID.FallingStar, ProjectileID.SolarWhipSword
         };
         
-        public override bool InstancePerEntity
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public override bool InstancePerEntity => true;
 
         public List<int> cleaving = new List<int> { };
 
@@ -45,6 +39,12 @@ namespace DoomBubblesMod
             if (projectile.type == ProjectileID.LastPrismLaser)
             {
                 projectile.localNPCHitCooldown = 30;
+            }
+
+            if (projectile.Name == "Nebulash")
+            {
+                projectile.usesLocalNPCImmunity = true;
+                projectile.localNPCHitCooldown = 10;
             }
         }
 

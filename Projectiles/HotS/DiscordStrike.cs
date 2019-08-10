@@ -132,7 +132,8 @@ namespace DoomBubblesMod.Projectiles.HotS
             base.OnHitNPC(target, damage, knockback, crit);
             if (Main.player[projectile.owner].gravControl2)
             {
-                projectile.localNPCImmunity[target.whoAmI] = 2;
+                projectile.localNPCImmunity[target.whoAmI] = 0;
+                target.immune[projectile.owner] = 0;
             }
         }
     }
