@@ -30,8 +30,8 @@ namespace DoomBubblesMod.Items.HotS
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<HotSPlayer>().shieldCapacitorMax = 50;
-            player.GetModPlayer<HotSPlayer>().shieldCapacitorChosenTalent = ChosenTalent;
+            //player.GetModPlayer<HotSPlayer>().shieldCapacitorMax = 50;
+            //player.GetModPlayer<HotSPlayer>().shieldCapacitorChosenTalent = ChosenTalent;
         }
     }
 }

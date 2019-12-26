@@ -1,11 +1,7 @@
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
-using System;
 
-namespace DoomBubblesMod.Buffs
+namespace DoomBubblesMod.Buffs.LoL
 {
 	public class Cleaved : ModBuff
 	{
@@ -21,13 +17,13 @@ namespace DoomBubblesMod.Buffs
 
         public override void Update(NPC npc, ref int buffIndex)
 		{
-            DisplayName.SetDefault(npc.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).Cleaved * 5 + "% reduced armor");
+            DisplayName.SetDefault(npc.GetGlobalNPC<DoomBubblesGlobalNPC>().Cleaved * 5 + "% reduced armor");
 
-            npc.defense *= (1 - (int)(npc.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).Cleaved * .05));
+            npc.defense *= (1 - (int)(npc.GetGlobalNPC<DoomBubblesGlobalNPC>().Cleaved * .05));
 
             if (npc.buffTime[buffIndex] == 0)
             {
-                npc.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).Cleaved = 0;
+                npc.GetGlobalNPC<DoomBubblesGlobalNPC>().Cleaved = 0;
             }
             
         }

@@ -1,7 +1,7 @@
 using Terraria;
 using Terraria.ModLoader;
 
-namespace DoomBubblesMod.Buffs
+namespace DoomBubblesMod.Buffs.LoL
 {
 	public class Sterak : ModBuff
 	{

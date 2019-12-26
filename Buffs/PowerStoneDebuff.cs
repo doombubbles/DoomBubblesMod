@@ -22,7 +22,7 @@ namespace DoomBubblesMod.Buffs
 
 		public override void Update(NPC npc, ref int buffIndex)
 		{
-			npc.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).powerStoned = true;
+			npc.GetGlobalNPC<DoomBubblesGlobalNPC>().powerStoned = true;
 			
 			base.Update(npc, ref buffIndex);
 		}

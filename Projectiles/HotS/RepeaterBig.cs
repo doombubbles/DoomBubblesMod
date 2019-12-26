@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Terraria;
 
 namespace DoomBubblesMod.Projectiles.HotS
@@ -23,7 +24,8 @@ namespace DoomBubblesMod.Projectiles.HotS
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            damage += (int) (target.lifeMax * .06f);
+            int bonus = damage + (int) (target.lifeMax * .006);
+            damage += bonus;
         }
         
         

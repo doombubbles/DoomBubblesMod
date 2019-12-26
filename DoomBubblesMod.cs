@@ -5,10 +5,7 @@ using System.Collections.Generic;
 using DoomBubblesMod.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.Graphics.Effects;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
 using Player = On.Terraria.Player;
@@ -17,18 +14,27 @@ namespace DoomBubblesMod
 {
     public class DoomBubblesMod : Mod
     {
+        public static ModHotKey PredatorHotKey;
+        public static ModHotKey PowerStoneHotKey;
+        public static ModHotKey SpaceStoneHotKey;
+        public static ModHotKey RealityStoneHotKey;
+        public static ModHotKey SoulStoneHotKey;
+        public static ModHotKey TimeStoneHotKey;
+        public static ModHotKey MindStoneHotKey;
+        
         public static bool? thoriumLoaded;
+        public static bool calamityLoaded;
 
         private UserInterface m_InfinityGauntletUserInterface;
         internal InfinityGauntletUI infinityGauntletUi;
+
+        public UserInterface RunesUserInterface;
         
         public static List<Color> rainbowColors;
-
-        internal static DoomBubblesMod Instance;
         
         public DoomBubblesMod()
         {
-            Instance = this;
+            
         }
 
         public override void AddRecipeGroups()
@@ -39,9 +45,54 @@ namespace DoomBubblesMod
 
         public override void Load()
         {
+            PredatorHotKey = RegisterHotKey("Activate Predator", "P");
+            PowerStoneHotKey = RegisterHotKey("Power Stone", "F2");
+            SpaceStoneHotKey = RegisterHotKey("Space Stone", "F3");
+            RealityStoneHotKey = RegisterHotKey("Reality Stone", "F4");
+            SoulStoneHotKey = RegisterHotKey("Soul Stone", "F5");
+            TimeStoneHotKey = RegisterHotKey("Time Stone", "F6");
+            MindStoneHotKey = RegisterHotKey("Mind Stone", "OemTilde");
+            
             rainbowColors = new List<Color>()
                 {Color.Red, Color.Orange, Color.Yellow, Color.LimeGreen, Color.Blue, Color.Indigo, Color.Violet};
             thoriumLoaded = ModLoader.GetMod("ThoriumMod") != null;
+            calamityLoaded = ModLoader.GetMod("CalamityMod") != null;
+            /*
+            LoLPlayer.RUNES = new Dictionary<RunePath, List<Rune>[]>
+            {
+                {RunePath.Precision, new[]
+                {
+                    new List<Rune> {Rune.Overheal, Rune.Triumph, Rune.PresenceOfMind}, 
+                    new List<Rune> {Rune.LegendAlacrity, Rune.LegendTenacity, Rune.LegendBloodline}, 
+                    new List<Rune> {Rune.CoupDeGrace, Rune.CutDown, Rune.LastStand}
+                }},
+                {RunePath.Domination, new[]
+                {
+                    new List<Rune> {Rune.CheapShot, Rune.TasteOfBlood, Rune.SuddenImpact}, 
+                    new List<Rune> {Rune.ZombieWard, Rune.GhostPoro, Rune.EyeballCollection}, 
+                    new List<Rune> {Rune.RavenousHunter, Rune.IngeniousHunter, Rune.RelentlessHunter, Rune.UltimateHunter}
+                }},
+                {RunePath.Sorcery, new[]
+                {
+                    new List<Rune> {Rune.NullifyingOrb, Rune.ManaflowBand, Rune.NimbusCloak}, 
+                    new List<Rune> {Rune.Transendence, Rune.Celerity, Rune.AbsoluteFocus}, 
+                    new List<Rune> {Rune.Scorch, Rune.Waterwalking, Rune.GatheringStorm}
+                }},
+                {RunePath.Resolve, new[]
+                {
+                    new List<Rune> {Rune.Demolish, Rune.FontOfLife, Rune.ShieldBash}, 
+                    new List<Rune> {Rune.Conditioning, Rune.SecondWind, Rune.BonePlating}, 
+                    new List<Rune> {Rune.Overgrowth, Rune.Revitalize, Rune.Unflinching}
+                }},
+                {RunePath.Inspiration, new[]
+                {
+                    new List<Rune> {Rune.HextechFlashtraption, Rune.MagicalFootwear, Rune.PerfectingTiming}, 
+                    new List<Rune> {Rune.FuturesMarket, Rune.MinionDematerializer, Rune.BiscuitDelivery}, 
+                    new List<Rune> {Rune.CosmicInsight, Rune.ApproachVelocity, Rune.TimeWarpTonic}
+                }},
+                {RunePath.None, new List<Rune>[0]}
+            };
+            */
             
             if (!Main.dedServ)
             {
@@ -49,6 +100,8 @@ namespace DoomBubblesMod
                 infinityGauntletUi.Activate();
                 m_InfinityGauntletUserInterface = new UserInterface();
                 m_InfinityGauntletUserInterface.SetState(infinityGauntletUi);
+                
+                RunesUserInterface = new UserInterface();
 
                 Main.projectileTexture[ProjectileID.MoonlordBullet] = GetTexture("Projectiles/Projectile_638");
                 Main.dustTexture = GetTexture("Dusts/Dust");
@@ -56,17 +109,22 @@ namespace DoomBubblesMod
 
             Player.UpdateLifeRegen += PlayerOnUpdateLifeRegen;
             Player.UpdateManaRegen += PlayerOnUpdateManaRegen;
-            if (Environment.OSVersion.VersionString.Contains("Windows"))
-            {
-                On.Terraria.Main.DrawInterface_Resources_Life += MainOnDrawInterfaceResourcesLife;
-            }
+            //On.Terraria.Main.DrawInterface_Resources_Life += MainOnDrawInterfaceResourcesLife;
             
         }
 
         public override void Unload()
         {
-            Instance = null;
-            InfinityGauntletUI.backgroundPanel = null;
+            PredatorHotKey = null;
+            PowerStoneHotKey = null;
+            SpaceStoneHotKey = null;
+            RealityStoneHotKey = null;
+            SoulStoneHotKey = null;
+            TimeStoneHotKey = null;
+            MindStoneHotKey = null;
+            //LoLPlayer.RUNES = null;
+            infinityGauntletUi = null;
+            RunesUserInterface = null;
         }
 
         private void MainOnDrawInterfaceResourcesLife(On.Terraria.Main.orig_DrawInterface_Resources_Life orig)
@@ -135,7 +193,7 @@ namespace DoomBubblesMod
             if (mouseTextIndex != -1)
             {
                 layers.Insert(mouseTextIndex, new LegacyGameInterfaceLayer(
-                    "DoomBubblesMod",
+                    "DoomBubblesMod: Infinity Gauntlet",
                     delegate
                     {
                         if (InfinityGauntletUI.visible)
@@ -148,6 +206,24 @@ namespace DoomBubblesMod
                     InterfaceScaleType.UI)
                 );
             }
+            
+            int inventoryIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
+            if (inventoryIndex != -1) {
+                layers.Insert(inventoryIndex, new LegacyGameInterfaceLayer(
+                    "DoomBubblesMod: Runes",
+                    delegate {
+                        RunesUserInterface.Draw(Main.spriteBatch, new GameTime());
+                        return true;
+                    },
+                    InterfaceScaleType.UI)
+                );
+            }
+        }
+
+        public override void UpdateUI(GameTime gameTime)
+        {
+            base.UpdateUI(gameTime);
+            RunesUserInterface?.Update(gameTime);
         }
 
         public override void AddRecipes()
@@ -186,7 +262,7 @@ namespace DoomBubblesMod
             foreach (var searchRecipe in finder2.SearchRecipes())
             {
                 RecipeEditor editor = new RecipeEditor(searchRecipe);
-                editor.AddIngredient(this.ItemType("HeartOfTerraria"));
+                editor.AddIngredient(ItemType("HeartOfTerraria"));
             }
 
             if (thoriumLoaded.HasValue && thoriumLoaded.Value)
@@ -204,7 +280,7 @@ namespace DoomBubblesMod
             foreach (var searchRecipe in finder.SearchRecipes())
             {
                 RecipeEditor editor = new RecipeEditor(searchRecipe);
-                editor.AddIngredient(this.ItemType("HeartOfTerraria"));
+                editor.AddIngredient(ItemType("HeartOfTerraria"));
             }
             
             finder = new RecipeFinder();
@@ -212,7 +288,7 @@ namespace DoomBubblesMod
             foreach (var searchRecipe in finder.SearchRecipes())
             {
                 RecipeEditor editor = new RecipeEditor(searchRecipe);
-                editor.AddIngredient(this.ItemType("HeartOfTerraria"));
+                editor.AddIngredient(ItemType("HeartOfTerraria"));
             }
             
             finder = new RecipeFinder();
@@ -220,32 +296,9 @@ namespace DoomBubblesMod
             foreach (var searchRecipe in finder.SearchRecipes())
             {
                 RecipeEditor editor = new RecipeEditor(searchRecipe);
-                editor.AddIngredient(this.ItemType("HeartOfTerraria"));
+                editor.AddIngredient(ItemType("HeartOfTerraria"));
             }
-            
-            List<int> brokenHeroItems = new List<int>();
-            brokenHeroItems.Add(ItemID.BrokenHeroSword);
-            brokenHeroItems.Add(ItemType("BrokenHeroGun"));
-            brokenHeroItems.Add(thoriumMod.ItemType("BrokenHeroStaff"));
-            brokenHeroItems.Add(thoriumMod.ItemType("BrokenHeroScythe"));
-            brokenHeroItems.Add(thoriumMod.ItemType("BrokenHeroHilt"));
-            brokenHeroItems.Add(thoriumMod.ItemType("BrokenHeroBow"));
-            foreach (var brokenHeroItem in brokenHeroItems)
-            {
-                foreach (var heroItem in brokenHeroItems)
-                {
-                    if (heroItem == brokenHeroItem)
-                    {
-                        continue;
-                    }
-                    ModRecipe recipe = new ModRecipe(this);
-                    recipe.AddIngredient(heroItem);
-                    recipe.AddTile(TileID.AlchemyTable);
-                    recipe.SetResult(brokenHeroItem);
-                    recipe.Create();
-                }
-            }
-            
+
         }
 
         public override void HandlePacket(BinaryReader reader, int whoAmI)
@@ -255,12 +308,12 @@ namespace DoomBubblesMod
             {
                 case DoomBubblesModMessageType.cleaved:
                     int npc2 = reader.ReadInt32();
-                    Main.npc[npc2].GetGlobalNPC<DoomBubblesGlobalNPC>(this).Cleaved += 1;
+                    Main.npc[npc2].GetGlobalNPC<DoomBubblesGlobalNPC>().Cleaved += 1;
                     break;
                 case DoomBubblesModMessageType.cleaving:
                     int npc3 = reader.ReadInt32();
                     int projectile = reader.ReadInt32();
-                    Main.projectile[projectile].GetGlobalProjectile<DoomBubblesGlobalProjectile>(this).cleaving.Add(npc3);
+                    Main.projectile[projectile].GetGlobalProjectile<DoomBubblesGlobalProjectile>().cleaving.Add(npc3);
                     break;
                 case DoomBubblesModMessageType.infinityStone:
                     int id = reader.ReadInt32();
@@ -275,7 +328,7 @@ namespace DoomBubblesMod
                     else if (process == 2)
                     {
                         Main.npc[id].damage = 0;
-                        Main.npc[id].GetGlobalNPC<DoomBubblesGlobalNPC>(this).mindStoneFriendly = true;
+                        Main.npc[id].GetGlobalNPC<DoomBubblesGlobalNPC>().mindStoneFriendly = true;
                     }
                     else if (process == 3)
                     {

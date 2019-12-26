@@ -54,6 +54,26 @@ namespace DoomBubblesMod.Items
 			
 		}
 
+		public override void PostDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor,
+			Color itemColor, Vector2 origin, float scale)
+		{
+			LoLPlayer lolPlayer = Main.player[item.owner].GetModPlayer<LoLPlayer>();
+			if (lolPlayer.Predator && lolPlayer.keystoneCooldown == 0 && item.shoeSlot > 0)
+			{
+				spriteBatch.Draw(mod.GetTexture("UI/Keystones/Predator"), position + new Vector2(-5, 20),
+					new Rectangle(2, 2, 26, 26), drawColor, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 0f);
+			}
+		}
+
+		public override bool CanUseItem(Item item, Player player)
+		{
+			if (player.GetModPlayer<ThanosPlayer>().INfinityGauntlet && (DoomBubblesMod.PowerStoneHotKey.Current))
+			{
+				return false;
+			}
+			return base.CanUseItem(item, player);
+		}
+
 		public override void GetWeaponCrit(Item item, Player player, ref int crit)
 		{
 			if (radiantWeapons.Contains(item.Name))
@@ -138,6 +158,32 @@ namespace DoomBubblesMod.Items
 						i--;
 					}
 				}
+			}
+		}
+
+		public override void HoldItem(Item item, Player player)
+		{
+			List<int> spellBooks = new List<int>() {ItemID.WaterBolt, ItemID.BookofSkulls, ItemID.DemonScythe, ItemID.CursedFlames, 
+				ItemID.GoldenShower, ItemID.CrystalStorm, ItemID.MagnetSphere, ItemID.RazorbladeTyphoon, ItemID.LunarFlareBook, mod.ItemType("FlamestrikeTome")};
+			if (player.GetModPlayer<LoLPlayer>().UnsealedSpellbook && spellBooks.Contains(item.type) &&
+			    player.GetModPlayer<LoLPlayer>().keystoneCooldown == 0)
+			{
+				Vector2 vector = Main.OffsetsPlayerOnhand[player.bodyFrame.Y / 56] * 2f;
+				if (player.direction != 1)
+				{
+					vector.X = player.bodyFrame.Width - vector.X;
+				}
+				if (player.gravDir != 1f)
+				{
+					vector.Y = player.bodyFrame.Height - vector.Y;
+				}
+				vector -= new Vector2(player.bodyFrame.Width - player.width, player.bodyFrame.Height - 42) / 2f;
+				Vector2 position = player.RotatedRelativePoint(player.position + vector) - player.velocity;
+				Color color = Color.LightBlue;
+				Dust dust = Main.dust[Dust.NewDust(position, 0, 0, 212, 0, 0, 0, (Color) color, 1.5f)];
+				dust.velocity *= .1f;
+				dust.velocity += player.velocity;
+				dust.noGravity = true;
 			}
 		}
 

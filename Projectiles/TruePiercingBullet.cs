@@ -29,6 +29,8 @@ namespace DoomBubblesMod.Projectiles
             projectile.extraUpdates = 1;   
             projectile.light = 0.3f;
             aiType = ProjectileID.Bullet;
+            projectile.usesLocalNPCImmunity = true;
+            projectile.localNPCHitCooldown = 50;
         }
         
         public override void Kill(int timeLeft)

@@ -43,8 +43,15 @@ namespace DoomBubblesMod.Items.Thanos
             item.useAnimation = 10;
             item.useStyle = 4;
             item.useTurn = true;
+
+            item.accessory = true;
         }
 
+        public override void UpdateAccessory(Player player, bool hideVisual)
+        {
+            player.GetModPlayer<ThanosPlayer>().INfinityGauntlet = true;
+            UpdateInventory(player);
+        }
 
         public override bool AltFunctionUse(Player player)
         {
@@ -176,8 +183,6 @@ namespace DoomBubblesMod.Items.Thanos
                 player.GetModPlayer<ThanosPlayer>().tbMouseX = Main.mouseX;
                 player.GetModPlayer<ThanosPlayer>().tbMouseY = Main.mouseY;
                 InfinityGauntletUI.visible = true;
-                
-                
                 
                 return false;
             }
@@ -455,7 +460,7 @@ namespace DoomBubblesMod.Items.Thanos
                 if (npc.Distance(newPos) < 100f && !npc.friendly && npc.TypeName != "Target Dummy" && !npc.boss)
                 {
                     npc.damage = 0;
-                    npc.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).mindStoneFriendly = true;
+                    npc.GetGlobalNPC<DoomBubblesGlobalNPC>().mindStoneFriendly = true;
                     if (Main.netMode == 1)
                     {
                         ModPacket packet = mod.GetPacket();

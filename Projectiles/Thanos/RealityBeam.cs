@@ -78,7 +78,7 @@ namespace DoomBubblesMod.Projectiles.Thanos
 		{
 			foreach (Projectile otherProjectile in Main.projectile)
 			{
-				if (otherProjectile.Distance(projectile.Center) < 16f && !otherProjectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>(mod).realityStone
+				if (otherProjectile.Distance(projectile.Center) < 16f && !otherProjectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>().realityStone
 				    && otherProjectile.type != mod.ProjectileType("RealityBeam") && (!otherProjectile.friendly || otherProjectile.hostile))
 				{
 					otherProjectile.friendly = true;
@@ -87,7 +87,7 @@ namespace DoomBubblesMod.Projectiles.Thanos
 					double theta2 = Math.Atan2(mousePos.Y - gauntlet.Y , mousePos.X - gauntlet.X);
 					otherProjectile.Center = gauntlet;
 					double speed = Math.Sqrt(Math.Pow(otherProjectile.velocity.X, 2) + Math.Pow(otherProjectile.velocity.Y, 2));
-					otherProjectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>(mod).realityStone = true;
+					otherProjectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>().realityStone = true;
 					otherProjectile.velocity = new Vector2((float) (Math.Max(1.5 * speed, 5) * Math.Cos(theta2)), 
 						(float) (Math.Max(1.5 * speed, 5) * Math.Sin(theta2)));
 					
@@ -105,7 +105,11 @@ namespace DoomBubblesMod.Projectiles.Thanos
 			target.AddBuff(BuffID.OnFire, 60 * Main.rand.Next(5, 10), false);
 			target.AddBuff(BuffID.CursedInferno, 60 * Main.rand.Next(5, 10), false);
 			target.AddBuff(BuffID.Frostburn, 60 * Main.rand.Next(5, 10), false);
-			target.immune[projectile.owner] = 1;
+			if (Main.player[projectile.owner].gravControl2)
+			{
+				target.immune[projectile.owner] = 1;
+			}
+			else target.immune[projectile.owner] = 7;
 			base.OnHitNPC(target, damage, knockback, crit);
 		}
 	}

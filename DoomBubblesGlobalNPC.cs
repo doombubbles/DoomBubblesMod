@@ -36,7 +36,7 @@ namespace DoomBubblesMod
             powerStoned = false;
             if (npc.FindBuffIndex(mod.BuffType("Cleaved")) == -1)
             {
-                npc.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).Cleaved = 0;
+                npc.GetGlobalNPC<DoomBubblesGlobalNPC>().Cleaved = 0;
             }
 
             if (npc.FullName == "Hag")
@@ -52,18 +52,18 @@ namespace DoomBubblesMod
         
         public override void DrawEffects(NPC npc, ref Color drawColor)
         {
-            if(npc.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).Cleaved != 0)
+            if(npc.GetGlobalNPC<DoomBubblesGlobalNPC>().Cleaved != 0)
             {
-                drawColor.G = (byte)(drawColor.G * ((255f - (npc.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).Cleaved * 20f)) / 255f));
-                drawColor.B = (byte)(drawColor.G * ((255f - (npc.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).Cleaved * 20f)) / 255f));
+                drawColor.G = (byte)(drawColor.G * ((255f - (npc.GetGlobalNPC<DoomBubblesGlobalNPC>().Cleaved * 20f)) / 255f));
+                drawColor.B = (byte)(drawColor.G * ((255f - (npc.GetGlobalNPC<DoomBubblesGlobalNPC>().Cleaved * 20f)) / 255f));
             }
 
-            if (npc.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).mindStoneFriendly)
+            if (npc.GetGlobalNPC<DoomBubblesGlobalNPC>().mindStoneFriendly)
             {
                 drawColor.B = (byte) (drawColor.B * .7f);
             }
 
-            if (npc.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).powerStoned)
+            if (npc.GetGlobalNPC<DoomBubblesGlobalNPC>().powerStoned)
             {
                 drawColor.G = (byte) (drawColor.G * .7f);
                 Dust dust = Main.dust[Dust.NewDust(npc.position, npc.width, npc.height, 212, npc.velocity.X, npc.velocity.Y,
@@ -76,7 +76,7 @@ namespace DoomBubblesMod
 
         public override bool PreAI(NPC npc)
         {
-            if (npc.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).mindStoneFriendly)
+            if (npc.GetGlobalNPC<DoomBubblesGlobalNPC>().mindStoneFriendly)
             {
                 int projCount = 0;
                 int npcCount = 0;
@@ -97,15 +97,15 @@ namespace DoomBubblesMod
                     else break;
                 }
                 
-                npc.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).mindStoneProjCount = projCount;
-                npc.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).mindStoneNpcCount = npcCount;
+                npc.GetGlobalNPC<DoomBubblesGlobalNPC>().mindStoneProjCount = projCount;
+                npc.GetGlobalNPC<DoomBubblesGlobalNPC>().mindStoneNpcCount = npcCount;
             }
             return base.PreAI(npc);
         }
 
         public override void PostAI(NPC npc)
         {
-            if (npc.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).mindStoneFriendly)
+            if (npc.GetGlobalNPC<DoomBubblesGlobalNPC>().mindStoneFriendly)
             {
                 int projCount = 0;
                 int npcCount = 0;
@@ -126,9 +126,9 @@ namespace DoomBubblesMod
                     else break;
                 }
 
-                if (projCount > npc.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).mindStoneProjCount)
+                if (projCount > npc.GetGlobalNPC<DoomBubblesGlobalNPC>().mindStoneProjCount)
                 {
-                    for (int i = npc.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).mindStoneProjCount + 1; i <= projCount; i++)
+                    for (int i = npc.GetGlobalNPC<DoomBubblesGlobalNPC>().mindStoneProjCount + 1; i <= projCount; i++)
                     {
                         Projectile projectile = Main.projectile[i];
                         if (!projectile.friendly)
@@ -146,15 +146,15 @@ namespace DoomBubblesMod
                         
                     }
                 }
-                if (npcCount > npc.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).mindStoneNpcCount)
+                if (npcCount > npc.GetGlobalNPC<DoomBubblesGlobalNPC>().mindStoneNpcCount)
                 {
-                    for (int i = npc.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).mindStoneNpcCount + 1; i <= npcCount; i++)
+                    for (int i = npc.GetGlobalNPC<DoomBubblesGlobalNPC>().mindStoneNpcCount + 1; i <= npcCount; i++)
                     {
                         NPC n = Main.npc[i];
                         if (!n.friendly && !n.boss)
                         {
                             n.damage = 0;
-                            n.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).mindStoneFriendly = true;
+                            n.GetGlobalNPC<DoomBubblesGlobalNPC>().mindStoneFriendly = true;
                             if (Main.netMode == 1)
                             {
                                 ModPacket packet = mod.GetPacket();
@@ -168,7 +168,6 @@ namespace DoomBubblesMod
                     }
                 }
             }
-            base.PostAI(npc);
         }
 
         public override void NPCLoot(NPC npc)
@@ -208,6 +207,11 @@ namespace DoomBubblesMod
                     Item.NewItem(npc.position, mod.ItemType("Ultrashark"));
                 
                 }
+            }
+
+            if (npc.boss && Main.LocalPlayer.GetModPlayer<LoLPlayer>().DarkHarvest)
+            {
+                Main.LocalPlayer.GetModPlayer<LoLPlayer>().keystoneCooldown = 90;
             }
 
         }
@@ -297,6 +301,22 @@ namespace DoomBubblesMod
             }
         }
 
+        public override void ModifyHitByItem(NPC npc, Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        {
+            if (npc.HasBuff(mod.BuffType("Exposed")))
+            {
+                damage = (int) (damage * 1.1);
+            }
+        }
+
+        public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit,
+            ref int hitDirection)
+        {
+            if (npc.HasBuff(mod.BuffType("Exposed")))
+            {
+                damage = (int) (damage * 1.1);
+            }
+        }
 
         private void addTalent(TalentItem talentItem, int i, Chest shop, ref int nextSlot)
         {

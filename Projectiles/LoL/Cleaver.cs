@@ -58,17 +58,17 @@ namespace DoomBubblesMod.Projectiles.LoL
 
         public override void Kill(int timeLeft)
         {
-            projectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>(mod).cleaving.Clear();
+            projectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>().cleaving.Clear();
         }
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             target.AddBuff(mod.BuffType("Cleaved"), 300, false);
-            if (target.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).Cleaved < 6 && !projectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>(mod).cleaving.Contains(target.whoAmI))
+            if (target.GetGlobalNPC<DoomBubblesGlobalNPC>().Cleaved < 6 && !projectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>().cleaving.Contains(target.whoAmI))
             {
                 
-                target.GetGlobalNPC<DoomBubblesGlobalNPC>(mod).Cleaved += 1;
-                projectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>(mod).cleaving.Add(target.whoAmI);
+                target.GetGlobalNPC<DoomBubblesGlobalNPC>().Cleaved += 1;
+                projectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>().cleaving.Add(target.whoAmI);
                 
                 if (Main.netMode == 1)
                 {

@@ -94,7 +94,6 @@ namespace DoomBubblesMod
         {
             if (shieldCapacitorMax > 0 && !player.immune)
             {
-                damage = (int) Main.CalculatePlayerDamage(damage, player.statDefense);
                 if (damage > player.statLife && (shieldCapacitorChosenTalent == 1 || shieldCapacitorChosenTalent == -1) &&
                     !player.HasBuff(mod.BuffType("UnconqueredSpiritCooldown")))
                 {
@@ -155,7 +154,6 @@ namespace DoomBubblesMod
                 }
             
                 shieldCapacitorDamageCounter = 300;
-                customDamage = true;
             }
 
             if (player.immune)

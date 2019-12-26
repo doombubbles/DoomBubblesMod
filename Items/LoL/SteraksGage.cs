@@ -33,7 +33,7 @@ namespace DoomBubblesMod.Items.LoL
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.meleeSpeed += .10f;
-            player.GetModPlayer<DoomBubblesPlayer>(mod).sterak = true;
+            player.GetModPlayer<DoomBubblesPlayer>().sterak = true;
         }
 
         public override void AddRecipes()

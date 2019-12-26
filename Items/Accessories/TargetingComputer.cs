@@ -25,7 +25,7 @@ namespace DoomBubblesMod.Items.Accessories
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<DoomBubblesPlayer>(mod).homing = true;
+            player.GetModPlayer<DoomBubblesPlayer>().homing = true;
         }
     }
 }

@@ -50,7 +50,7 @@ namespace DoomBubblesMod
 
         public override bool PreAI(Projectile pProjectile)
         {
-            if (pProjectile.friendly && Main.player[pProjectile.owner].GetModPlayer<DoomBubblesPlayer>(mod).homing && (pProjectile.aiStyle == 1 || pProjectile.aiStyle == 2 || pProjectile.aiStyle == 5 || pProjectile.aiStyle == 27))
+            if (pProjectile.friendly && Main.player[pProjectile.owner].GetModPlayer<DoomBubblesPlayer>().homing && (pProjectile.aiStyle == 1 || pProjectile.aiStyle == 2 || pProjectile.aiStyle == 5 || pProjectile.aiStyle == 27))
             {
                 if (pProjectile.type == ProjectileID.LunarFlare) return base.PreAI(pProjectile);
                 if (pProjectile.type == ProjectileID.NebulaBlaze1) return base.PreAI(pProjectile);
@@ -110,12 +110,12 @@ namespace DoomBubblesMod
                 float homingDistance = 300f;
                 bool flag4 = false;
                 int num143 = 0;
-                if (pProjectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>(mod).db == 0f)
+                if (pProjectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>().db == 0f)
                 {
                     for (int n = 0; n < 200; n++)
                     {
-                        if (Main.npc[n].CanBeChasedBy(pProjectile, false) && (pProjectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>(mod).db == 0f 
-                                                                                   || pProjectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>(mod).db == (float)(n + 1)))
+                        if (Main.npc[n].CanBeChasedBy(pProjectile, false) && (pProjectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>().db == 0f 
+                                                                                   || pProjectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>().db == (float)(n + 1)))
                         {
                             float npcCenterX = Main.npc[n].position.X + (float)(Main.npc[n].width / 2);
                             float npcCenterY = Main.npc[n].position.Y + (float)(Main.npc[n].height / 2);
@@ -132,13 +132,13 @@ namespace DoomBubblesMod
                     }
                     if (flag4)
                     {
-                        pProjectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>(mod).db = (float)(num143 + 1);
+                        pProjectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>().db = (float)(num143 + 1);
                     }
                     flag4 = false;
                 }
-                if (pProjectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>(mod).db > 0f)
+                if (pProjectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>().db > 0f)
                 {
-                    int num148 = (int)(pProjectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>(mod).db - 1f);
+                    int num148 = (int)(pProjectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>().db - 1f);
                     if (Main.npc[num148].active && Main.npc[num148].CanBeChasedBy(pProjectile, true) && !Main.npc[num148].dontTakeDamage)
                     {
                         float num149 = Main.npc[num148].position.X + (float)(Main.npc[num148].width / 2);
@@ -153,7 +153,7 @@ namespace DoomBubblesMod
                     }
                     else
                     {
-                        pProjectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>(mod).db = 0f;
+                        pProjectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>().db = 0f;
                     }
                 }
                 if (!pProjectile.friendly)

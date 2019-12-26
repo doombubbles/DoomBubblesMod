@@ -22,12 +22,13 @@ namespace DoomBubblesMod
         public int customSymphonicCrit = 0;
         
         public bool sterak;
+        public bool rabadon;
+        
         public bool homing;
         public bool crystalBulletBonus;
         public bool explosionBulletBonus;
         public bool luminiteBulletBonus;
         public bool sStone;
-        public bool rabadon;
         public bool bloodlust;
         public bool vampireKnifeBat;
         public bool united;
@@ -97,7 +98,7 @@ namespace DoomBubblesMod
 
         public override bool ConsumeAmmo(Item weapon, Item ammo)
         {
-            if (player.GetModPlayer<DoomBubblesPlayer>(mod).homing)
+            if (player.GetModPlayer<DoomBubblesPlayer>().homing)
             {
                 return false;
             }

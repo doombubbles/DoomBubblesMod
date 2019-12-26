@@ -19,7 +19,7 @@ namespace DoomBubblesMod.Items
         private bool Talent1 { get; set; }
         private bool Talent2 { get; set; }
         private bool Talent3 { get; set; }
-        protected short ChosenTalent { get; private set; }
+        public short ChosenTalent { get; private set; }
         
         public override bool CloneNewInstances => true;
         
