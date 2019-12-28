@@ -59,6 +59,9 @@ namespace DoomBubblesMod
         public int aery;
         public double grasp;
         public Dictionary<int, int> spellbook;
+        public int stasis;
+        public int stasisLife;
+        public int stasisMana;
         
         public override void ResetEffects()
         {
@@ -81,13 +84,41 @@ namespace DoomBubblesMod
             if (tripleStacks < 0) tripleStacks = 0;
             if (tripleStacks == 240) tripleStacks = 0;
             if (tripleStacks == 0) lastHit = 0;
-        }
+            stasis--;
+            if (stasis < 0) stasis = 0;
+        } 
 
         public override void UpdateDead()
         {
             aery = 0;
             darkHarvestSouls = 0;
             grasp = 0;
+        }
+
+        public override void PreUpdate()
+        {
+            if (stasis > 0)
+            {
+                player.stoned = true;
+                player.velocity = Vector2.Zero;
+                player.immune = true;
+                player.aggro -= 10000;
+                player.statLife = stasisLife;
+                player.statMana = stasisMana;
+            }
+        }
+
+        public override void PostUpdate()
+        {
+            if (stasis > 0)
+            {
+                player.stoned = true;
+                player.velocity = Vector2.Zero;
+                player.immune = true;
+                player.aggro -= 10000;
+                player.statLife = stasisLife;
+                player.statMana = stasisMana;
+            }
         }
 
         public override void PostUpdateEquips()

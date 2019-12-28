@@ -40,7 +40,7 @@ namespace DoomBubblesMod.Items.LoL
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.TrueExcalibur, 1);
-            recipe.AddIngredient(ItemID.EyeoftheGolem, 1);
+            recipe.AddIngredient(mod.ItemType("CloakOfAgility"), 1);
             recipe.AddIngredient(mod.ItemType("RunicEssence"), 15);
             recipe.needWater = true;
 			recipe.SetResult(this);

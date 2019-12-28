@@ -96,6 +96,15 @@ namespace DoomBubblesMod
             }
         }
 
+        public override void SetupStartInventory(IList<Item> items, bool mediumcoreDeath)
+        {
+            Item item = new Item();
+            item.SetDefaults(3508);
+            item.Prefix(-1);
+            player.inventory[0].TurnToAir();
+            player.inventory[0] = item;
+        }
+
         public override bool ConsumeAmmo(Item weapon, Item ammo)
         {
             if (player.GetModPlayer<DoomBubblesPlayer>().homing)

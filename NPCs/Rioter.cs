@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using DoomBubblesMod.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -25,7 +26,7 @@ namespace DoomBubblesMod.NPCs
 		public override void SetStaticDefaults() {
 			// DisplayName automatically assigned from .lang files, but the commented line below is the normal approach.
 			DisplayName.SetDefault("Rioter");
-			Main.npcFrameCount[npc.type] = 25;
+			Main.npcFrameCount[npc.type] = 23;
 			NPCID.Sets.ExtraFramesCount[npc.type] = 9;
 			NPCID.Sets.AttackFrameCount[npc.type] = 4;
 			NPCID.Sets.DangerDetectRange[npc.type] = 700;
@@ -47,7 +48,7 @@ namespace DoomBubblesMod.NPCs
 			npc.HitSound = SoundID.NPCHit1;
 			npc.DeathSound = SoundID.NPCDeath1;
 			npc.knockBackResist = 0.5f;
-			animationType = NPCID.DyeTrader;
+			animationType = NPCID.Mechanic;
 		}
 
 		public override void HitEffect(int hitDirection, double damage) {
@@ -58,14 +59,8 @@ namespace DoomBubblesMod.NPCs
 		}
 
 		public override bool CanTownNPCSpawn(int numTownNPCs, int money) {
-			for (int k = 0; k < 255; k++) {
-				Player player = Main.player[k];
-				if (!player.active) {
-					continue;
-				}
-				
-			}
-			return false;
+			return System.IO.Directory.Exists(@"C:\Riot Games\League of Legends") ||
+				System.IO.File.Exists(@"/Applications/League of Legends.app");
 		}
 
 		public override string TownNPCName() {
@@ -98,9 +93,40 @@ namespace DoomBubblesMod.NPCs
 		public override string GetChat()
 		{
 			WeightedRandom<string> chat = new WeightedRandom<string>();
-			if (npc.GivenName == "Phreak") chat.Add("Tons of damage.");
-			chat.Add("Better nerf Irelia");
+			if (npc.GivenName == "Phreak") chat.Add("Tons of damage.", 3);
+			chat.Add("Better nerf Irelia.");
 			chat.Add("Welcome to Summoner's Rift! Oh, wait...");
+			chat.Add("Twisted Treeline? Never heard of it.");
+			chat.Add("The Crystal Scar? Never heard of it.");
+			chat.Add("Every third auto atta-Hey! Can't you see I'm designing here?");
+			chat.Add("Who even is Doran anyway?");
+			chat.Add("Hm, I've never been to this part of Runeterra.");
+			if (Main.LocalPlayer.coldDash || Main.LocalPlayer.eocDash != 0 || Main.LocalPlayer.sailDash ||
+			    Main.LocalPlayer.dash != 0 || Main.LocalPlayer.solarShields > 0)
+			{
+				chat.Add("That's a very nice dash you've got there...", 3);
+			}
+			if (NPC.FindFirstNPC(NPCID.Pirate) >= 0)
+			{
+				chat.Add("Watch out! It's Gangplank! Oh, no, wait, that's just " + Main.npc[NPC.FindFirstNPC(NPCID.Pirate)].GivenName + ".", 2);
+			}
+			if (NPC.FindFirstNPC(NPCID.Dryad) >= 0)
+			{
+				chat.Add("I think " + Main.npc[NPC.FindFirstNPC(NPCID.Dryad)].GivenName + " would really hit it off with my friend Ivern.", 2);
+			}
+			if (NPC.FindFirstNPC(NPCID.Truffle) >= 0)
+			{
+				chat.Add("I think " + Main.npc[NPC.FindFirstNPC(NPCID.Truffle)].GivenName + " would really hit it off with my friend Ivern.", 2);
+			}
+			if (NPC.FindFirstNPC(NPCID.Nurse) >= 0)
+			{
+				chat.Add("Why is " + Main.npc[NPC.FindFirstNPC(NPCID.Nurse)].GivenName + " here anyway? Do you guys not have Fountains?", 2);
+			}
+			if (NPC.FindFirstNPC(NPCID.TravellingMerchant) >= 0)
+			{
+				chat.Add("A Travelling Merchant! So that's how Ornn does it.", 2);
+			}
+			chat.Add("");
 			return chat; // chat is implicitly cast to a string. You can also do "return chat.Get();" if that makes you feel better
 		}
 		
@@ -125,11 +151,21 @@ namespace DoomBubblesMod.NPCs
 			}
 		}
 
-		public override void SetupShop(Chest shop, ref int nextSlot) {
-			shop.item[nextSlot].SetDefaults(mod.ItemType("RunicEssence"));
-			nextSlot++;
+		public override void SetupShop(Chest shop, ref int nextSlot)
+		{
+			List<String> basicItems = new List<string>
+			{
+				"FaerieCharm", "RejuvenationBead", "ClothArmor", "Dagger", "LongSword", "SapphireCrystal",
+				"RubyCrystal", "AmplifyingTome", "StopwatchOfLegends", "CloakOfAgility", "BlastingWand", "PickaxeOfLegends",
+				"NeedlesslyLargeRod", "BFSword"
+			};
 			shop.item[nextSlot].SetDefaults(mod.ItemType("RunePage"));
 			nextSlot++;
+			foreach (string basicItem in basicItems)
+			{
+				shop.item[nextSlot].SetDefaults(mod.ItemType(basicItem));
+				nextSlot++;
+			}
 		}
 
 		public override void NPCLoot() {

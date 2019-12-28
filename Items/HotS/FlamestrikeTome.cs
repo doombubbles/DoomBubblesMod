@@ -35,7 +35,6 @@ namespace DoomBubblesMod.Items.HotS
             item.value = Item.buyPrice(0, 69);
             item.shootSpeed = 1f;
             item.knockBack = 3f;
-            item.mana = 15;
             item.rare = ItemRarityID.Lime;
             item.autoReuse = true;
         }

@@ -277,7 +277,7 @@ namespace DoomBubblesMod
 
             timeHealth[0] = player.statLife;
 
-         `   base.PreUpdate();
+            base.PreUpdate();
         }
 
         public override void PostUpdate()

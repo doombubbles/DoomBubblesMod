@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Items.Accessories
 {
+    [AutoloadEquip(EquipType.Balloon)]
     class BigBadBundle : ModItem
     {
         public override void SetStaticDefaults()
