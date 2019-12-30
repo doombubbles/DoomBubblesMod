@@ -8,17 +8,15 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace DoomBubblesMod.Items.LoL
 {
-    public class VoidStaff : ModItem
+    public class DFG : ModItem
     {
         public override void SetDefaults()
         {
-
             item.damage = 63;
             item.magic = true;
             item.mana = 20;
-            item.width = 68;
-            item.height = 56;
-
+            item.width = 50;
+            item.height = 50;
             item.useTime = 22;
             item.useAnimation = 22;
             item.useStyle = 5;
@@ -35,7 +33,7 @@ namespace DoomBubblesMod.Items.LoL
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Void Staff");
+            DisplayName.SetDefault("Deathfire Grasp");
             Tooltip.SetDefault("Hi Oliver");
         }
 
@@ -43,11 +41,10 @@ namespace DoomBubblesMod.Items.LoL
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.ShadowbeamStaff, 1);
-            recipe.AddIngredient(ItemID.InfernoFork, 1);
-            recipe.AddIngredient(ItemID.SpectreStaff, 1);
-            recipe.AddIngredient(mod.ItemType("RunicEssence"), 15);
-            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.AddIngredient(ItemID.ShadowbeamStaff);
+            recipe.AddIngredient(ItemID.InfernoFork);
+            recipe.AddIngredient(ItemID.SpectreStaff);
+            recipe.AddTile(TileID.LunarCraftingStation);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

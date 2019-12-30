@@ -22,7 +22,7 @@ namespace DoomBubblesMod.Items.LoL.Basic
 			item.pick = 60;
 			item.useStyle = 1;
 			item.knockBack = 6;
-			item.value = Item.sellPrice(0, 8, 75);
+			item.value = Item.buyPrice(0, 8, 75);
 			item.rare = 1;
 			item.UseSound = SoundID.Item1;
 			item.autoReuse = true;

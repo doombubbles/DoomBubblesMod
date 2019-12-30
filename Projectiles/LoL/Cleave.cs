@@ -23,6 +23,8 @@ namespace DoomBubblesMod.Projectiles.LoL
             projectile.hide = true;
             projectile.penetrate = -1;
             projectile.tileCollide = false;
+            projectile.usesLocalNPCImmunity = true;
+            projectile.localNPCHitCooldown = 420;
         }
 
         public override void AI()

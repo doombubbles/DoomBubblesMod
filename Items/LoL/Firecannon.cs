@@ -14,40 +14,60 @@ namespace DoomBubblesMod.Items.LoL
     {
         public override void SetDefaults()
         {
-
-            item.value = 640000;
-
+            item.value = Item.buyPrice(0, 26);
 
             item.rare = 8;
             item.useStyle = 5;
-            item.useAnimation = 18;
-            item.useTime = 6;
-            item.reuseDelay = 18;
+            item.useAnimation = 30;
+            item.useTime = 10;
+            item.reuseDelay = 5;
             item.width = 48;
             item.height = 24;
             item.shoot = 10;
             item.useAmmo = AmmoID.Bullet;
-            item.damage = 29;
+            item.damage = 25;
             item.shootSpeed = 8.0f;
             item.noMelee = true;
             item.ranged = true;
             item.autoReuse = true;
         }
 
-        public override void SetStaticDefaults()
+        public override void UpdateInventory(Player player)
         {
-          DisplayName.SetDefault("Firecannon");
-          Tooltip.SetDefault("Three round burst\nFires a spread of bullets");
+            item.accessory = true;
+            base.UpdateInventory(player);
         }
 
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Firecannon");
+            Tooltip.SetDefault("Three round burst\nFires a spread of bullets\nEnergized - Sharpshooter\nYour bullets travel faster while fully Energized");
+        }
+        
+        public override void HoldItem(Player player)
+        {
+            player.GetModPlayer<LoLPlayer>().sharpshooter = true;
+            base.HoldItem(player);
+        }
+        
+        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat) {
+            // Here we use the multiplicative damage modifier because Terraria does this approach for Ammo damage bonuses. 
+            mult *= player.bulletDamage;
+        }
+
+        public override void UpdateAccessory(Player player, bool hideVisual)
+        {
+            base.UpdateAccessory(player, hideVisual);
+            player.GetModPlayer<LoLPlayer>().sharpshooter = true;
+        }
 
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.ClockworkAssaultRifle, 1);
-            recipe.AddIngredient(ItemID.Shotgun, 1);
-            recipe.AddIngredient(mod.ItemType("RunicEssence"), 15);
-            recipe.AddTile(TileID.AmmoBox);
+            recipe.AddIngredient(mod.ItemType("KircheisShard"));
+            recipe.AddIngredient(mod.ItemType("Zeal"));
+            recipe.AddIngredient(ItemID.GoldCoin, 5);
+            recipe.AddTile(TileID.Autohammer);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }
@@ -64,14 +84,9 @@ namespace DoomBubblesMod.Items.LoL
             }
         }
 
-        public override Vector2? HoldoutOffset()
+        public override bool Shoot(Player player, ref Microsoft.Xna.Framework.Vector2 position, ref float speedX,
+            ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            return new Vector2(0, 0);
-        }
-
-        public override bool Shoot(Player player, ref Microsoft.Xna.Framework.Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
-
             float posX = Main.screenWidth / 2;
             float posY = Main.screenHeight / 2;
             float buh = 1f;
@@ -95,11 +110,13 @@ namespace DoomBubblesMod.Items.LoL
             float spreadMult = 0.05f;
             for (int i = 0; i < 3; ++i)
             {
-                float vX = speedX + (float)Main.rand.Next(-spread, spread + 1) * spreadMult;
-                float vY = speedY + (float)Main.rand.Next(-spread, spread + 1) * spreadMult;
-                Projectile.NewProjectile(position.X + (float)numX * buh, position.Y + (float)numY * buh, vX, vY, type, damage, knockBack, Main.player[Main.myPlayer].whoAmI);
+                float vX = speedX + (float) Main.rand.Next(-spread, spread + 1) * spreadMult;
+                float vY = speedY + (float) Main.rand.Next(-spread, spread + 1) * spreadMult;
+                Projectile.NewProjectile(position.X + (float) numX * buh, position.Y + (float) numY * buh, vX, vY, type,
+                    damage, knockBack, Main.player[Main.myPlayer].whoAmI);
                 Main.PlaySound(2, position, 38);
             }
+
             return false;
         }
 

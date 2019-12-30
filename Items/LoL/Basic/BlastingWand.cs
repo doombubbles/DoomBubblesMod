@@ -11,8 +11,8 @@ namespace DoomBubblesMod.Items.LoL.Basic
             item.damage = 20;
             item.magic = true;
             item.mana = 20;
-            item.width = 32;
-            item.height = 32;
+            item.width = 34;
+            item.height = 34;
 
             item.useTime = 40;
             item.useAnimation = 40;

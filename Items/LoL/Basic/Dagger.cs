@@ -12,15 +12,15 @@ namespace DoomBubblesMod.Items.LoL.Basic
             item.melee = true;
             item.width = 32;
             item.height = 32;
-            item.useTime = 10;
-            item.useAnimation = 10;
+            item.useTime = 15;
+            item.useAnimation = 15;
             item.useStyle = 3;
             item.knockBack = 4;
             item.value = Item.buyPrice(0, 3);
             item.rare = 1;
             item.UseSound = SoundID.Item1;
             item.autoReuse = true;
-            item.useTurn = false;
+            item.useTurn = true;
         }
     }
 }

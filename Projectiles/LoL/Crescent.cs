@@ -20,9 +20,11 @@ namespace DoomBubblesMod.Projectiles.LoL
             projectile.friendly = true;
             projectile.melee = true;
             projectile.timeLeft = 420;
-            projectile.alpha = 255;
+            projectile.alpha = 69;
             //Main.projFrames[projectile.type] = 5;
             projectile.penetrate = -1;
+            projectile.usesLocalNPCImmunity = true;
+            projectile.localNPCHitCooldown = 420;
         }
 
         public override void AI()
@@ -35,7 +37,7 @@ namespace DoomBubblesMod.Projectiles.LoL
 
             Vector2 pos = projectile.ai[0] == 1 ? projectile.Center : player.Center;
             
-            if (projectile.localAI[0] == 0f)
+            if (projectile.alpha == 69)
             {
                 Main.PlaySound(SoundLoader.customSoundType, (int)projectile.position.X, (int)projectile.position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Crescent"));
                 projectile.timeLeft = (int)(Main.player[projectile.owner].HeldItem.useTime * .75f);
@@ -69,8 +71,17 @@ namespace DoomBubblesMod.Projectiles.LoL
                 }
             }
 
-            projectile.localAI[0] = 1f;
+            projectile.alpha = 255;
 
+        }
+
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            if (projectile.ai[1] > .1f)
+            {
+                Main.player[projectile.owner].GetModPlayer<LoLPlayer>().Lifesteal(damage * .12f, target, true);
+            }
+            base.OnHitNPC(target, damage, knockback, crit);
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)

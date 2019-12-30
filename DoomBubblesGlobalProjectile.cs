@@ -23,8 +23,6 @@ namespace DoomBubblesMod
         
         public override bool InstancePerEntity => true;
 
-        public List<int> cleaving = new List<int> { };
-
         public float db;
 
         public bool realityStone;

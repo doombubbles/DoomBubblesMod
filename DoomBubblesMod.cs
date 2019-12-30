@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using DoomBubblesMod.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoMod.Cil;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
-using Player = On.Terraria.Player;
 
 namespace DoomBubblesMod
 {
@@ -107,10 +107,24 @@ namespace DoomBubblesMod
                 Main.dustTexture = GetTexture("Dusts/Dust");
             }
 
-            Player.UpdateLifeRegen += PlayerOnUpdateLifeRegen;
-            Player.UpdateManaRegen += PlayerOnUpdateManaRegen;
+            On.Terraria.Player.UpdateLifeRegen += PlayerOnUpdateLifeRegen;
+            On.Terraria.Player.UpdateManaRegen += PlayerOnUpdateManaRegen;
+            IL.Terraria.Player.Update += PlayerOnUpdate;
             //On.Terraria.Main.DrawInterface_Resources_Life += MainOnDrawInterfaceResourcesLife;
             
+        }
+
+        private void PlayerOnUpdate(ILContext il)
+        {
+            var c = new ILCursor(il);
+            if (!c.TryGotoNext(i => i.MatchLdcI4(400)))
+                return;
+
+            c.Index -= 2;
+            for (int i = 0; i < 7; i++)
+            {
+                c.Remove();
+            }
         }
 
         public override void Unload()
@@ -155,7 +169,7 @@ namespace DoomBubblesMod
             else orig();
         }
 
-        private void PlayerOnUpdateManaRegen(Player.orig_UpdateManaRegen orig, Terraria.Player self)
+        private void PlayerOnUpdateManaRegen(On.Terraria.Player.orig_UpdateManaRegen orig, Terraria.Player self)
         {
             bool sStone = self.GetModPlayer<DoomBubblesPlayer>().sStone;
             if (sStone)
@@ -171,7 +185,7 @@ namespace DoomBubblesMod
             }
         }
 
-        private void PlayerOnUpdateLifeRegen(Player.orig_UpdateLifeRegen orig, Terraria.Player self)
+        private void PlayerOnUpdateLifeRegen(On.Terraria.Player.orig_UpdateLifeRegen orig, Terraria.Player self)
         {
             bool sStone = self.GetModPlayer<DoomBubblesPlayer>().sStone;
             if (sStone)
@@ -306,15 +320,6 @@ namespace DoomBubblesMod
             DoomBubblesModMessageType msgType = (DoomBubblesModMessageType)reader.ReadByte();
             switch (msgType)
             {
-                case DoomBubblesModMessageType.cleaved:
-                    int npc2 = reader.ReadInt32();
-                    Main.npc[npc2].GetGlobalNPC<DoomBubblesGlobalNPC>().Cleaved += 1;
-                    break;
-                case DoomBubblesModMessageType.cleaving:
-                    int npc3 = reader.ReadInt32();
-                    int projectile = reader.ReadInt32();
-                    Main.projectile[projectile].GetGlobalProjectile<DoomBubblesGlobalProjectile>().cleaving.Add(npc3);
-                    break;
                 case DoomBubblesModMessageType.infinityStone:
                     int id = reader.ReadInt32();
                     int process = reader.ReadInt32();
@@ -347,8 +352,6 @@ namespace DoomBubblesMod
 
     public enum DoomBubblesModMessageType : byte
     {
-        cleaved,
-        cleaving,
         infinityStone
     }
         

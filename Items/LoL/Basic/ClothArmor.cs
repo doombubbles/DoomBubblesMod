@@ -13,9 +13,9 @@ namespace DoomBubblesMod.Items.LoL.Basic
 
         public override void SetDefaults()
         {
-            item.value = Item.sellPrice(0, 3);
-            item.width = 34;
-            item.height = 22;
+            item.value = Item.buyPrice(0, 3);
+            item.width = 28;
+            item.height = 32;
             item.rare = 1;
             item.accessory = true;
         }

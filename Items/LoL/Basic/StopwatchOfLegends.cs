@@ -29,7 +29,9 @@ namespace DoomBubblesMod.Items.LoL.Basic
             player.GetModPlayer<LoLPlayer>().stasis = 30 * 5;
             player.GetModPlayer<LoLPlayer>().stasisLife = player.statLife;
             player.GetModPlayer<LoLPlayer>().stasisMana = player.statMana;
-            return base.UseItem(player);
+            player.GetModPlayer<LoLPlayer>().stasisX = player.position.X;
+            player.GetModPlayer<LoLPlayer>().stasisY = player.position.Y;
+            return true;
         }
     }
 }

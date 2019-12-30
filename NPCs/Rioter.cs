@@ -156,8 +156,8 @@ namespace DoomBubblesMod.NPCs
 			List<String> basicItems = new List<string>
 			{
 				"FaerieCharm", "RejuvenationBead", "ClothArmor", "Dagger", "LongSword", "SapphireCrystal",
-				"RubyCrystal", "AmplifyingTome", "StopwatchOfLegends", "CloakOfAgility", "BlastingWand", "PickaxeOfLegends",
-				"NeedlesslyLargeRod", "BFSword"
+				"RubyCrystal", "AmplifyingTome", "NullMagicMantle", "StopwatchOfLegends", "CloakOfAgility", 
+				"BlastingWand", "PickaxeOfLegends", "NeedlesslyLargeRod", "BFSword"
 			};
 			shop.item[nextSlot].SetDefaults(mod.ItemType("RunePage"));
 			nextSlot++;

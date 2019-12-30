@@ -56,36 +56,15 @@ namespace DoomBubblesMod.Projectiles.LoL
             }
         }
 
-        public override void Kill(int timeLeft)
-        {
-            projectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>().cleaving.Clear();
-        }
-
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            target.AddBuff(mod.BuffType("Cleaved"), 300, false);
-            if (target.GetGlobalNPC<DoomBubblesGlobalNPC>().Cleaved < 6 && !projectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>().cleaving.Contains(target.whoAmI))
+            if (projectile.ai[1] < 1)
             {
-                
-                target.GetGlobalNPC<DoomBubblesGlobalNPC>().Cleaved += 1;
-                projectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>().cleaving.Add(target.whoAmI);
-                
-                if (Main.netMode == 1)
-                {
-                    ModPacket packet = mod.GetPacket();
-                    packet.Write((byte)DoomBubblesModMessageType.cleaved);
-                    packet.Write(target.whoAmI);
-                    packet.Send();
-                    ModPacket packet2 = mod.GetPacket();
-                    packet2.Write((byte)DoomBubblesModMessageType.cleaving);
-                    packet2.Write(target.whoAmI);
-                    packet2.Write(projectile.whoAmI);
-                    packet2.Send();
-                }
-                
+                target.AddBuff(mod.BuffType("Cleaved"), 300);
+                projectile.ai[1] = 2;
             }
             
-            
+            Main.player[projectile.owner].AddBuff(mod.BuffType("Rage"), target.life <= 0 ? 180 : 60);
         }
     }
 }

@@ -12,46 +12,60 @@ namespace DoomBubblesMod.Items.LoL
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Black Cleaver");
-            Tooltip.SetDefault("Shoots an armor piercing axe");
+            Tooltip.SetDefault("Cleaves enemy armor, enraging you\n" +
+                               "Equipped - +20% cdr and 40 bonus life");
         }
 
         public override void SetDefaults()
 		{
-			item.damage = 125;
+			item.damage = 80;
 			item.melee = true;
 			item.width = 48;
 			item.height = 48;
-			item.useTime = 36;
-			item.useAnimation = 36;
+			item.useTime = 20;
+			item.useAnimation = 20;
 			item.useStyle = 1;
 			item.knockBack = 7;
-			item.value = 640000;
+			item.value = Item.buyPrice(0, 30);
 			item.rare = 8;
 			item.UseSound = SoundID.Item1;
 			item.autoReuse = true;
-            item.useTurn = false;
+            item.useTurn = true;
             item.shoot = mod.ProjectileType("Cleaver");
-            item.shootSpeed = 9f;
+            item.shootSpeed = 8f;
         }
 
+        public override void UpdateAccessory(Player player, bool hideVisual)
+        {
+	        player.GetModPlayer<LoLPlayer>().rage = true;
+	        player.GetModPlayer<LoLPlayer>().cleaving = true;
+	        player.GetModPlayer<LoLPlayer>().cdr += .2f;
+	        player.statLifeMax2 += 40;
+	        base.UpdateAccessory(player, hideVisual);
+        }
 
-		public override void AddRecipes()
-		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.TheBreaker, 1);
-            recipe.AddIngredient(ItemID.SharkToothNecklace, 1);
-            recipe.AddIngredient(mod.ItemType("RunicEssence"), 15);
-            recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+        public override void HoldItem(Player player)
+        {
+	        player.GetModPlayer<LoLPlayer>().rage = true;
+	        player.GetModPlayer<LoLPlayer>().cleaving = true;
+	        base.HoldItem(player);
+        }
 
-            ModRecipe recipe2 = new ModRecipe(mod);
-            recipe2.AddIngredient(ItemID.BloodLustCluster, 1);
-            recipe2.AddIngredient(ItemID.SharkToothNecklace, 1);
-            recipe2.AddIngredient(mod.ItemType("RunicEssence"), 15);
-            recipe2.AddTile(TileID.MythrilAnvil);
-            recipe2.SetResult(this);
-            recipe2.AddRecipe();
+        public override void UpdateInventory(Player player)
+        {
+	        item.accessory = true;
+	        base.UpdateInventory(player);
+        }  
+        
+        public override void AddRecipes()
+        {
+	        ModRecipe recipe = new ModRecipe(mod);
+	        recipe.AddIngredient(mod.ItemType("Phage"));
+	        recipe.AddIngredient(mod.ItemType("KindleGem"));
+	        recipe.AddIngredient(ItemID.GoldCoin, 4);
+	        recipe.AddTile(TileID.MythrilAnvil);
+	        recipe.SetResult(this);
+	        recipe.AddRecipe();
         }
 
     }

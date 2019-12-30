@@ -49,6 +49,11 @@ namespace DoomBubblesMod.Items.Weapons
             }
             return base.ConsumeAmmo(player);
         }
+        
+        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat) {
+            // Here we use the multiplicative damage modifier because Terraria does this approach for Ammo damage bonuses. 
+            mult *= player.bulletDamage;
+        }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage,
             ref float knockBack)

@@ -6,13 +6,18 @@ namespace DoomBubblesMod.Items.LoL.Basic
 {
     public class NeedlesslyLargeRod : ModItem
     {
+        public override void SetStaticDefaults()
+        {
+            Item.staff[item.type] = true;
+        }
+
         public override void SetDefaults()
         {
             item.damage = 30;
             item.magic = true;
             item.mana = 20;
-            item.width = 32;
-            item.height = 32;
+            item.width = 42;
+            item.height = 42;
 
             item.useTime = 40;
             item.useAnimation = 40;
@@ -25,7 +30,6 @@ namespace DoomBubblesMod.Items.LoL.Basic
             item.autoReuse = true;
             item.shootSpeed = 10f;
             item.shoot = ProjectileID.CrystalPulse;
-            Item.staff[item.type] = true;
         }
     }
 }

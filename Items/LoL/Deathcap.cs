@@ -20,9 +20,9 @@ namespace DoomBubblesMod.Items.LoL
 
         public override void SetDefaults()
         {
-            item.value = 100000;
-            item.width = 34;
-            item.height = 22;
+            item.value = Item.buyPrice(0, 36);
+            item.width = 40;
+            item.height = 36;
             item.rare = 8;
             item.accessory = true;
         }
@@ -31,27 +31,19 @@ namespace DoomBubblesMod.Items.LoL
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.magicDamage += .1f;
-            player.GetModPlayer<DoomBubblesPlayer>().rabadon = true;
+            player.GetModPlayer<LoLPlayer>().rabadon = true;
 
         }
 
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.WizardHat, 1);
-            recipe.AddIngredient(ItemID.SorcererEmblem, 1);
-            recipe.AddIngredient(mod.ItemType("RunicEssence"), 15);
-            recipe.AddTile(TileID.CrystalBall);
+            recipe.AddIngredient(mod.ItemType("NeedlesslyLargeRod"));
+            recipe.AddIngredient(mod.ItemType("NeedlesslyLargeRod"));
+            recipe.AddIngredient(ItemID.GoldCoin, 11);
+            recipe.AddTile(TileID.Autohammer);
             recipe.SetResult(this);
             recipe.AddRecipe();
-
-            ModRecipe recipe2 = new ModRecipe(mod);
-            recipe2.AddIngredient(ItemID.WizardsHat, 1);
-            recipe2.AddIngredient(ItemID.SorcererEmblem, 1);
-            recipe2.AddIngredient(mod.ItemType("RunicEssence"), 15);
-            recipe2.AddTile(TileID.CrystalBall);
-            recipe2.SetResult(this);
-            recipe2.AddRecipe();
         }
     }
 }

@@ -13,36 +13,37 @@ namespace DoomBubblesMod.Items.LoL
     {
         public override void SetDefaults()
         {
-
-            item.value = 100000;
-            item.width = 22;
-            item.height = 20;
+            item.value = Item.buyPrice(0, 32);
+            item.width = 34;
+            item.height = 36;
             item.rare = 8;
             item.accessory = true;
-
-
         }
 
-    public override void SetStaticDefaults()
-    {
-      DisplayName.SetDefault("Sterak's Gage");
-      Tooltip.SetDefault("Increased melee knockback and 10% increased melee speed\nTaking 25% of your current health activates Sterak's Fury");
-    }
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Sterak's Gage");
+            Tooltip.SetDefault( "Increases the base damage of your melee weapons by 10%\n" +
+                                "Increases max life by 45\n" +
+                                "Taking 25% of your current health activates Sterak's Fury");
+        }
 
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.meleeSpeed += .10f;
-            player.GetModPlayer<DoomBubblesPlayer>().sterak = true;
+            player.statLifeMax2 += 45;
+            player.GetModPlayer<LoLPlayer>().sterak = true;
         }
 
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.PowerGlove, 1);
-            recipe.AddIngredient(ItemID.WarriorEmblem, 1);
-            recipe.AddIngredient(mod.ItemType("RunicEssence"), 15);
-            recipe.AddTile(TileID.TinkerersWorkbench);
+            recipe.AddIngredient(mod.ItemType("JaurimsFist"));
+            recipe.AddIngredient(mod.ItemType("PickaxeOfLegends"));
+            recipe.AddIngredient(mod.ItemType("RubyCrystal"));
+            recipe.AddIngredient(ItemID.GoldCoin, 7);
+            recipe.AddIngredient(ItemID.SilverCoin, 25);
+            recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

@@ -2,12 +2,11 @@ A tModLoader Terraria mod used primarily by myself and my friends
 
 Check the Home Page Wiki to see mod content
 
-Highlights include: An Infinity Gauntlet, League of Legends Items, Heroes of the Storm items (with a custom talent system), Rainbow Machine Gun etc.
+Highlights include: An Infinity Gauntlet, League of Legends Items and Runes, Heroes of the Storm items and Talents, Rainbow Machine Gun etc.
 
 Since people actually are downloading this mod, here's some recent additions
 
--Chromatic Gauntlet and Chromatic Emblem
--Charm of Epics (alongside Palladium Voodoo Doll, Cardiopullmonary Magnet)
--Obsidian Tools
--Hampire Knives
--Bloodburst Blunderbuss (True version coming eventually)
+-League of Legends Runes (just key stones for now)
+-Rioter NPC to help with League of Legends item progression
+-Reworked all current LoL items to have their real recipes
+-Added a crap ton of new LoL Items

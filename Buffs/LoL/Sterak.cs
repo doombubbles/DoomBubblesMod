@@ -8,7 +8,7 @@ namespace DoomBubblesMod.Buffs.LoL
 		public override void SetDefaults()
 		{
 			DisplayName.SetDefault("Sterak's Fury");
-			Description.SetDefault("25% increased melee crit and defense");
+			Description.SetDefault("Increased defense based on bonus health (decaying)");
 			Main.debuff[Type] = false;
 			Main.pvpBuff[Type] = true;
 			Main.buffNoSave[Type] = true;
@@ -18,8 +18,12 @@ namespace DoomBubblesMod.Buffs.LoL
 
 		public override void Update(Player player, ref int buffIndex)
 		{
-            player.meleeCrit += 25;
-            player.statDefense = (int)(player.statDefense * 1.25);
+            player.statDefense += (int) ((player.statLifeMax2 - player.statLifeMax) * (player.buffTime[buffIndex] / 480f));
+		}
+
+		public override bool ReApply(Player player, int time, int buffIndex)
+		{
+			return true;
 		}
 	}
 }

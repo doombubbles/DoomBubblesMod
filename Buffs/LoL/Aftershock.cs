@@ -32,7 +32,7 @@ namespace DoomBubblesMod.Buffs.LoL
 			        var distance = npc.Distance(player.Center);
 			        if (npc.active && !npc.dontTakeDamage && !npc.townNPC && Main.myPlayer == player.whoAmI && distance <= 200)
 			        {
-				        player.ApplyDamageToNPC(npc, loLPlayer.Adapative(25 + 5 * loLPlayer.getLevel() + player.statDefense), 0f, 0, false);
+				        player.GetModPlayer<LoLPlayer>().JustDamage(npc, loLPlayer.Adapative(25 + 5 * loLPlayer.getLevel() + player.statDefense));
 			        }
 		        }
 		        

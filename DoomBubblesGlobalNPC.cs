@@ -18,8 +18,6 @@ namespace DoomBubblesMod
     {
         public override bool InstancePerEntity => true;
 
-        public int Cleaved = 0;
-
         //public List<int> cleavedby = new List<int> { };
 
         public bool mindStoneFriendly;
@@ -34,10 +32,6 @@ namespace DoomBubblesMod
         public override void ResetEffects(NPC npc)
         {
             powerStoned = false;
-            if (npc.FindBuffIndex(mod.BuffType("Cleaved")) == -1)
-            {
-                npc.GetGlobalNPC<DoomBubblesGlobalNPC>().Cleaved = 0;
-            }
 
             if (npc.FullName == "Hag")
             {
@@ -52,10 +46,11 @@ namespace DoomBubblesMod
         
         public override void DrawEffects(NPC npc, ref Color drawColor)
         {
-            if(npc.GetGlobalNPC<DoomBubblesGlobalNPC>().Cleaved != 0)
+            if(npc.HasBuff(mod.BuffType("Cleaved")))
             {
-                drawColor.G = (byte)(drawColor.G * ((255f - (npc.GetGlobalNPC<DoomBubblesGlobalNPC>().Cleaved * 20f)) / 255f));
-                drawColor.B = (byte)(drawColor.G * ((255f - (npc.GetGlobalNPC<DoomBubblesGlobalNPC>().Cleaved * 20f)) / 255f));
+                int stacks = 1 + npc.buffTime[npc.FindBuffIndex(mod.BuffType("Cleaved"))] % 10;
+                drawColor.G = (byte)(drawColor.G * ((255f - (stacks * 15)) / 255f));
+                drawColor.B = (byte)(drawColor.G * ((255f - (stacks * 15)) / 255f));
             }
 
             if (npc.GetGlobalNPC<DoomBubblesGlobalNPC>().mindStoneFriendly)
@@ -172,18 +167,6 @@ namespace DoomBubblesMod
 
         public override void NPCLoot(NPC npc)
         {
-            //Main.NewText("Name: " + npc.FullName + ", Damage: " + npc.damage + ", Golem: " + NPC.downedGolemBoss + ", Day: " + Main.dayTime);
-            //Spirit of Valoran Spawning
-            if (npc.damage == 0 && Main.dayTime && !npc.SpawnedFromStatue && Main.rand.Next(4) == 1 && Math.Abs(Main.time - 27000) < 15000
-                && NPC.downedGolemBoss && !Main.player[npc.target].ZoneMeteor && !Main.player[npc.target].ZoneGlowshroom && !Main.player[npc.target].ZoneDesert 
-                && !Main.player[npc.target].ZoneJungle && !Main.player[npc.target].ZoneDungeon && !Main.player[npc.target].ZoneCorrupt && !Main.player[npc.target].ZoneCrimson 
-                && !Main.player[npc.target].ZoneHoly && !Main.player[npc.target].ZoneSnow && !Main.player[npc.target].ZoneUndergroundDesert && !Main.player[npc.target].ZoneTowerNebula 
-                && !Main.player[npc.target].ZoneTowerSolar && !Main.player[npc.target].ZoneTowerStardust && !Main.player[npc.target].ZoneTowerVortex 
-                && Main.player[npc.target].ZoneOverworldHeight)
-            {
-                NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("ValoranSpirit"));
-            }
-
             if (Main.expertMode)
             {
                 if (npc.type == NPCID.Mothron && Main.rand.Next(1,3) == 1)

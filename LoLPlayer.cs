@@ -4,6 +4,7 @@ using System.Linq;
 using DoomBubblesMod.Items.HotS;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -62,9 +63,31 @@ namespace DoomBubblesMod
         public int stasis;
         public int stasisLife;
         public int stasisMana;
-        
+        public float stasisX;
+        public float stasisY;
+        public bool jolt;
+        public bool sharpshooter;
+        public Vector2 energizedOldPos;
+        public int jaurimStacks;
+        public bool crescent;
+        public bool cleave;
+        public bool crescentLifeSteal;
+        public bool sterak;
+        public bool rabadon;
+        public bool rage;
+        public bool cleaving;
+        public float cdr;
+        public bool iedge;
+        public bool botrk;
+        public bool runaan;
+        public int tearStacks;
+        public bool muramana;
+        public bool reaver;
+
         public override void ResetEffects()
         {
+            sterak = false;
+            rabadon = false;
             primaryPath = RunePath.None;
             //secondaryPath = RunePath.None;
             keystone = 0;
@@ -86,13 +109,39 @@ namespace DoomBubblesMod
             if (tripleStacks == 0) lastHit = 0;
             stasis--;
             if (stasis < 0) stasis = 0;
-        } 
+            jolt = false;
+            crescent = false;
+            crescentLifeSteal = false;
+            cleave = false;
+            rage = false;
+            cdr = 0;
+            cleaving = false;
+            iedge = false;
+            botrk = false;
+            runaan = false;
+            muramana = false;
+            reaver = false;
+        }
+
+        public override void DrawEffects(PlayerDrawInfo drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
+        {
+            if (stasis > 0)
+            {
+                fullBright = true;
+                r = 1f;
+                g = 1f;
+                b = 0f;
+            }
+            base.DrawEffects(drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
+        }
 
         public override void UpdateDead()
         {
             aery = 0;
             darkHarvestSouls = 0;
             grasp = 0;
+            jaurimStacks = 0;
+            tearStacks = 0;
         }
 
         public override void PreUpdate()
@@ -105,11 +154,14 @@ namespace DoomBubblesMod
                 player.aggro -= 10000;
                 player.statLife = stasisLife;
                 player.statMana = stasisMana;
+                player.position.X = stasisX;
+                player.position.Y = stasisY;
             }
         }
 
         public override void PostUpdate()
         {
+            base.PostUpdate();
             if (stasis > 0)
             {
                 player.stoned = true;
@@ -118,16 +170,61 @@ namespace DoomBubblesMod
                 player.aggro -= 10000;
                 player.statLife = stasisLife;
                 player.statMana = stasisMana;
+                player.position.X = stasisX;
+                player.position.Y = stasisY;
             }
+            if (energized >= 100 && (FleetFootwork || jolt)) player.AddBuff(mod.BuffType("Energized"), 2);
+            
+            if (keystoneCooldown > 0) player.AddBuff(mod.BuffType("KeystoneCooldown"), keystoneCooldown);
+            if (keystoneCooldown == 0 && player.HasBuff(mod.BuffType("KeystoneCooldown"))) player.DelBuff(player.FindBuffIndex(mod.BuffType("KeystoneCooldown")));
+
+            if (Main.rand.NextDouble() <= Math.Min(cdr, .4))
+            {
+                keystoneCooldown--;
+                List<int> cooldowns = new List<int>
+                {
+                    mod.BuffType("TimeStoneCooldown"), mod.BuffType("SpaceStoneCooldown"),
+                    mod.BuffType("UnconqueredSpiritCooldown"), mod.BuffType("MindStoneCooldown")
+                };
+                
+                foreach (int cooldown in cooldowns)
+                {
+                    if (player.HasBuff(cooldown)) player.buffTime[player.FindBuffIndex(cooldown)]--;
+                }
+            }
+
+            player.potionDelayTime = (int) (player.potionDelayTime * (1f - Math.Min(cdr, .4)));
+            player.restorationDelayTime = (int) (player.potionDelayTime * (1f - Math.Min(cdr, .4)));
+        }
+
+        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage,
+            ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
+        {
+            if (damage >= (player.statLife / 4) && sterak)
+            {
+                player.AddBuff(mod.BuffType("Sterak"), 800, false);
+            }
+            return base.PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource);
+        }
+
+        public override void OnConsumeMana(Item item, int manaConsumed)
+        {
+            if (manaConsumed > 4 || Main.rand.Next(1, 4) <= manaConsumed) tearStacks++;
         }
 
         public override void PostUpdateEquips()
         {
             player.allDamageMult += .01f * loLPlayer.conquererStacks;
-            if (energized == 100 && FleetFootwork) player.AddBuff(mod.BuffType("Energized"), 2);
             if (keystoneCooldown == 0 && Electrocute) player.AddBuff(mod.BuffType("Electrocute"), 2);
 
-            energized += Main.rand.NextDouble() < (player.velocity.Length() / 50f) ? 1 : 0;
+            float energizedDistance = (player.position - energizedOldPos).Length();
+            while (energizedDistance > 25f)
+            {
+                energized += 1;
+                energizedDistance -= 25f;
+            }
+            energized += (Main.rand.NextDouble() < energizedDistance / 25f) ? 1 : 0;
+            energizedOldPos = player.position;
 
             if (PressTheAttack && lastHit != 0)
             {
@@ -291,7 +388,7 @@ namespace DoomBubblesMod
                     tripleStacks = 0;
                     if (PressTheAttack)
                     {
-                        player.ApplyDamageToNPC(target, Adapative(40 + 10 * getLevel()), 0f, 0, false);
+                        JustDamage(target, Adapative(40 + 10 * getLevel()));
                         keystoneCooldown = 12 * 60;
                         target.AddBuff(mod.BuffType("Exposed"), 6 * 60);
                     } 
@@ -301,7 +398,7 @@ namespace DoomBubblesMod
                             (target.Center.Y - player.Center.Y) / 200f), mod.ProjectileType("AlarakLightning"), 0, 0f, player.whoAmI, 
                             target.whoAmI);
                         Main.projectile[newProjectile].netUpdate = true;
-                        player.ApplyDamageToNPC(target, Adapative(60 + 20 * getLevel()), 0f, 0, false);
+                        JustDamage(target, Adapative(60 + 20 * getLevel()));
                         keystoneCooldown = 60 * (25 - getLevel());
                     }
                     else if (PhaseRush)
@@ -327,6 +424,23 @@ namespace DoomBubblesMod
                     }
                 }
 
+                if (jolt)
+                {
+                    JustDamage(target, 80);
+                    for (int i = 0; i < 10; i++)
+                    {
+                        Dust.NewDust(target.position, target.width, target.height, 57);
+                    }
+                }
+                if (sharpshooter)
+                {
+                    JustDamage(target, 120);
+                    for (int i = 0; i < 20; i++)
+                    {
+                        Dust.NewDust(target.position, target.width, target.height, 57);
+                    }
+                }
+                
                 energized = 0;
             }
             energized += 3;
@@ -340,13 +454,13 @@ namespace DoomBubblesMod
             if (Predator && player.HasBuff(mod.BuffType("Predator")))
             {
                 player.DelBuff(player.FindBuffIndex(mod.BuffType("Predator")));
-                player.ApplyDamageToNPC(target, Adapative(200 + 25 * getLevel()), 0f, 0, false);
+                JustDamage(target, Adapative(200 + 25 * getLevel()));
             }
 
             if (DarkHarvest && player.HasBuff(mod.BuffType("DarkHarvest")) &&
                 target.life * 2 < target.lifeMax)
             {
-                player.ApplyDamageToNPC(target, Adapative(80 + 20 * getLevel() + darkHarvestSouls * (19 + getLevel())), 0f, 0, false);
+                JustDamage(target, Adapative(80 + 20 * getLevel() + darkHarvestSouls * (19 + getLevel())));
                 darkHarvestSouls++;
                 keystoneCooldown = 60 * 45;
 
@@ -384,7 +498,7 @@ namespace DoomBubblesMod
             {
                 player.DelBuff(player.FindBuffIndex(mod.BuffType("GraspOfTheUndying")));
                 grasp += .5;
-                player.ApplyDamageToNPC(target, Adapative((int) (target.lifeMax * .02)), 0f, 0, false);
+                JustDamage(target, Adapative((int) (target.lifeMax * .02)));
                 
                 player.statLife += (int) (player.statLifeMax2 * .02);
                 player.HealEffect((int) (player.statLifeMax2 * .02), false);
@@ -484,6 +598,49 @@ namespace DoomBubblesMod
                     }
                 }
             }
+            
+            if (target.life <= 0 && target.value > 0.1f) jaurimStacks++;
+
+            if (muramana && !proj.magic && player.CheckMana((int) (player.statMana * .03f * (player.manaCost / 2 + .5 )), true))
+            {
+                JustDamage(target, (int) (player.statMana * .3f * Math.Max(.1f, 1f/ proj.maxPenetrate)));
+                player.manaRegenDelay = (int)player.maxRegenDelay;
+                for (int i = 0; i < Math.Max(1, 6f / proj.maxPenetrate); i++)
+                {
+                    Dust.NewDustDirect(player.position, player.width, player.height, 59);
+                }
+                for (int i = 0; i < Math.Max(1, 6f / proj.maxPenetrate); i++)
+                {
+                    Dust.NewDust(target.position, target.width, target.height, 59);
+                }
+            }
+
+            if (reaver && !proj.magic && player.statMana < player.statManaMax2)
+            {
+                float raw = (int) ((player.statManaMax2 - player.statMana) * .015f * Math.Max(.1f, 1f/ proj.maxPenetrate));
+                int amount;
+                if (raw < 1)
+                {
+                    amount = Main.rand.NextDouble() <= raw ? 1 : 0;
+                }
+                else amount = (int)raw;
+
+                amount = Math.Min(amount, player.statManaMax2 - player.statMana);
+                if (amount > 0)
+                {
+                    player.statMana += amount;
+                    player.ManaEffect(amount);
+                    
+                    for (int i = 0; i < Math.Max(1, 6f / proj.maxPenetrate); i++)
+                    {
+                        Dust.NewDustDirect(player.position, player.width, player.height, 135);
+                    }
+                    for (int i = 0; i < Math.Max(1, 6f / proj.maxPenetrate); i++)
+                    {
+                        Dust.NewDust(target.position, target.width, target.height, 135);
+                    }
+                }
+            }
         }
 
         public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
@@ -527,7 +684,7 @@ namespace DoomBubblesMod
                     tripleStacks = 0;
                     if (PressTheAttack)
                     {
-                        player.ApplyDamageToNPC(target, Adapative(40 + 10 * getLevel()), 0f, 0, false);
+                        JustDamage(target, Adapative(40 + 10 * getLevel()));
                         keystoneCooldown = 12 * 60;
                         target.AddBuff(mod.BuffType("Exposed"), 6 * 60);
                     } 
@@ -537,7 +694,7 @@ namespace DoomBubblesMod
                                 (target.Center.Y - player.Center.Y) / 200f), mod.ProjectileType("AlarakLightning"), 0, 0f, player.whoAmI, 
                             target.whoAmI);
                         Main.projectile[newProjectile].netUpdate = true;
-                        player.ApplyDamageToNPC(target, Adapative(80 + 20 * getLevel()), 0f, 0, false);
+                        JustDamage(target, Adapative(80 + 20 * getLevel()));
                         keystoneCooldown = 60 * (25 - getLevel());
                     } 
                     else if (PhaseRush)
@@ -563,6 +720,23 @@ namespace DoomBubblesMod
                     }
                 }
 
+                if (jolt)
+                {
+                    JustDamage(target, 80);
+                    for (int i = 0; i < 10; i++)
+                    {
+                        Dust.NewDust(target.position, target.width, target.height, 57);
+                    }
+                }
+                if (sharpshooter)
+                {
+                    JustDamage(target, 120);
+                    for (int i = 0; i < 20; i++)
+                    {
+                        Dust.NewDust(target.position, target.width, target.height, 57);
+                    }
+                }
+
                 energized = 0;
             }
             else energized += 10;
@@ -576,13 +750,13 @@ namespace DoomBubblesMod
             if (Predator && player.HasBuff(mod.BuffType("Predator")))
             {
                 player.DelBuff(player.FindBuffIndex(mod.BuffType("Predator")));
-                player.ApplyDamageToNPC(target, Adapative(200 + 25 * getLevel()), 0f, 0, false);
+                JustDamage(target, Adapative(200 + 25 * getLevel()));
             }
             
             if (DarkHarvest && player.HasBuff(mod.BuffType("DarkHarvest")) &&
                 target.life * 2 < target.lifeMax)
             {
-                player.ApplyDamageToNPC(target, Adapative(80 + 20 * getLevel() + darkHarvestSouls * (19 + getLevel())), 0f, 0, false);
+                JustDamage(target, Adapative(80 + 20 * getLevel() + darkHarvestSouls * (19 + getLevel())));
                 darkHarvestSouls++;
                 keystoneCooldown = 60 * 45;
                 
@@ -605,7 +779,7 @@ namespace DoomBubblesMod
             {
                 player.DelBuff(player.FindBuffIndex(mod.BuffType("GraspOfTheUndying")));
                 grasp++;
-                player.ApplyDamageToNPC(target, Adapative((int) (target.lifeMax * .04)), 0f, 0, false);
+                JustDamage(target, Adapative((int) (target.lifeMax * .04)));
                 
                 player.statLife += (int) (player.statLifeMax2 * .04);
                 player.HealEffect((int) (player.statLifeMax2 * .04), false);
@@ -705,8 +879,78 @@ namespace DoomBubblesMod
                     }
                 }
             }
+
+            if (target.life <= 0 && target.value > 0.1f) jaurimStacks++;
+
+            if (crescent)
+            {
+                Projectile.NewProjectileDirect(target.Center, new Vector2(0,0), mod.ProjectileType("Crescent"), crescentLifeSteal ? 80 : 25, 1f, player.whoAmI, 1, crescentLifeSteal ? 1 : 0);
+            } else if (cleave)
+            {
+                Projectile.NewProjectileDirect(target.Center, new Vector2(0,0), mod.ProjectileType("Cleave"), 40 + player.statLifeMax2 - player.statLife, 1f, player.whoAmI, 1);
+            }
+            
+            if (rage) player.AddBuff(mod.BuffType("Rage"), target.life <= 0 ? 240 : 120);
+
+            if (cleaving) target.AddBuff(mod.BuffType("Cleaved"), 300);
+            
+            if (botrk) player.GetModPlayer<LoLPlayer>().JustDamage(target, Math.Max(15, target.life / 20));
+            
+            if (muramana && !item.magic && player.CheckMana((int) (player.statMana * .03f * (player.manaCost / 2 + .5 )), true))
+            {
+                JustDamage(target, (int) (player.statMana * .3f));
+                player.manaRegenDelay = (int)player.maxRegenDelay;
+                for (int i = 0; i < 6; i++)
+                {
+                    Dust.NewDust(player.position, player.width, player.height, 59);
+                }
+                for (int i = 0; i < 6; i++)
+                {
+                    Dust.NewDust(target.position, target.width, target.height, 59);
+                }
+            }
+            
+            if (reaver && !item.magic && player.statMana < player.statManaMax2)
+            {
+                float raw = ((player.statManaMax2 - player.statMana) * .015f);
+                int amount;
+                if (raw < 1)
+                {
+                    amount = Main.rand.NextDouble() <= raw ? 1 : 0;
+                }
+                else amount = (int)raw;
+
+                amount = Math.Min(amount, player.statManaMax2 - player.statMana);
+                if (amount > 0)
+                {
+                    player.statMana += amount;
+                    player.ManaEffect(amount);
+                    
+                    for (int i = 0; i < 6; i++)
+                    {
+                        Dust.NewDustDirect(player.position, player.width, player.height, 135);
+                    }
+                    for (int i = 0; i < 6; i++)
+                    {
+                        Dust.NewDust(target.position, target.width, target.height, 135);
+                    }
+                }
+            }
         }
-        
+
+        public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
+        {
+            if (iedge && crit) damage = (int) (damage * 1.25f);
+            base.ModifyHitNPC(item, target, ref damage, ref knockback, ref crit);
+        }
+
+        public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit,
+            ref int hitDirection)
+        {
+            if (iedge && crit) damage = (int) (damage * 1.25f);
+            base.ModifyHitNPCWithProj(proj, target, ref damage, ref knockback, ref crit, ref hitDirection);
+        }
+
         public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit)
         {
             if (damage > 0 && GraspOfTheUndying && keystoneCooldown == 0)
@@ -855,8 +1099,60 @@ namespace DoomBubblesMod
                     }
                 }
             }
+
+            if (sharpshooter && energized >= 100 && item.useAmmo == AmmoID.Bullet)
+            {
+                speedX *= 2f;
+                speedY *= 2f;
+            }
+
+            if (runaan && item.useAmmo == AmmoID.Arrow)
+            {
+                float posX = Main.screenWidth / 2;
+                float posY = Main.screenHeight / 2;
+
+                float slope = -1 / ((Main.mouseY - posY) / (Main.mouseX - posX));
+
+                double numX = 15 * Math.Cos(Math.Atan(slope));
+
+                double numY = 15 * Math.Sin(Math.Atan(slope));
+
+                Projectile.NewProjectile(position.X + (float) numX, position.Y + (float) numY, speedX, speedY,
+                    mod.ProjectileType("Hurricane"), (int)(damage * .4), 1f, player.whoAmI);
+                Projectile.NewProjectile(position.X - (float) numX, position.Y - (float) numY, speedX, speedY,
+                    mod.ProjectileType("Hurricane"), (int)(damage * .4), 1f, player.whoAmI);
+            }
             
             return base.Shoot(item, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
+        }
+
+        public override void ModifyWeaponDamage(Item item, ref float add, ref float mult, ref float flat)
+        {
+            base.ModifyWeaponDamage(item, ref add, ref mult, ref flat);
+            if (rabadon && item.magic)
+            {
+                add = 1f + (add - 1f) * 1.25f;
+            }
+
+            if (sterak && item.melee)
+            {
+                mult += .1f;
+            }
+        }
+
+        public void JustDamage(NPC target, int damage)
+        {
+            double dam = target.StrikeNPC(damage, 0f, 0);
+            if (Main.netMode != 0)
+            {
+                NetMessage.SendData(28, -1, -1, null, target.whoAmI, damage);
+            }
+            int num = Item.NPCtoBanner(target.BannerID());
+            if (num >= 0)
+            {
+                player.lastCreatureHit = num;
+            }
+            player.addDPS((int)dam); 
         }
         
         

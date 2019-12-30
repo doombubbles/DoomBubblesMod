@@ -366,8 +366,8 @@ namespace DoomBubblesMod
             if (combatText != -1 && Main.combatText[combatText].active)
             {
                 Main.combatText[combatText].color = InfinityGauntlet.power;
-                Main.combatText[combatText].crit = multiplier > .5f;
-                Main.combatText[combatText].dot = multiplier > .5f;
+                Main.combatText[combatText].crit = multiplier > .05f;
+                Main.combatText[combatText].dot = multiplier > .05f;
             }
         }
     }

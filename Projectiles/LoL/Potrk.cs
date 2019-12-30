@@ -91,6 +91,11 @@ namespace DoomBubblesMod.Projectiles.LoL
                 Main.dust[num692].noGravity = true;
                 num9 = num689;
             }
+            
+            Main.player[projectile.owner].GetModPlayer<LoLPlayer>().Lifesteal(damage * .12f, target, true);
+            
+            Main.player[projectile.owner].GetModPlayer<LoLPlayer>().JustDamage(target, Math.Max(15, target.life / 40));
+            
             base.OnHitNPC(target, damage, knockback, crit);
         }
 
@@ -113,30 +118,6 @@ namespace DoomBubblesMod.Projectiles.LoL
                 num9 = num689;
             }
             base.OnHitPvp(target, damage, crit);
-        }
-
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
-        {
-            if (target.FullName != "Target Dummy" && Main.player[Main.myPlayer].statLife != Main.player[Main.myPlayer].statLifeMax2)
-            {
-                float num = damage / 20;
-                if ((int)num == 0)
-                {
-                    return;
-                }
-                if (Main.player[Main.myPlayer].lifeSteal <= 0f)
-                {
-                    return;
-                }
-                Main.player[Main.myPlayer].lifeSteal -= num;
-                int num2 = projectile.owner;
-                Projectile.NewProjectile(projectile.position.X, projectile.position.Y, 0f, 0f, 305, 0, 0f, projectile.owner, (float)num2, num);
-            }
-            if (crit == true)
-            {
-                damage += Math.Min(1000, target.lifeMax / 20);
-            }
-            else damage += Math.Min(500, target.lifeMax / 40);
         }
     }
 }

@@ -21,9 +21,6 @@ namespace DoomBubblesMod
         public int customRadiantCrit = 0;
         public int customSymphonicCrit = 0;
         
-        public bool sterak;
-        public bool rabadon;
-        
         public bool homing;
         public bool crystalBulletBonus;
         public bool explosionBulletBonus;
@@ -38,13 +35,11 @@ namespace DoomBubblesMod
 
         public override void ResetEffects()
         {
-            sterak = false;
             homing = false;
             crystalBulletBonus = false;
             explosionBulletBonus = false;
             luminiteBulletBonus = false;
             sStone = false;
-            rabadon = false;
             bloodlust = false;
             critChanceMult = 1f;
             customRadiantDamage = 1f;
@@ -63,10 +58,6 @@ namespace DoomBubblesMod
             if (explosionBulletBonus && damageSource.SourceProjectileType == 286 && damageSource.SourcePlayerIndex == player.whoAmI)
             {
                 return false;
-            }
-            if (damage >= (player.statLife / 4) && sterak)
-            {
-                player.AddBuff(mod.BuffType("Sterak"), 600, false);
             }
             return base.PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource);
         }
@@ -112,15 +103,6 @@ namespace DoomBubblesMod
                 return false;
             }
             return base.ConsumeAmmo(weapon, ammo);
-        }
-
-        public override void ModifyWeaponDamage(Item item, ref float add, ref float mult, ref float flat)
-        {
-            base.ModifyWeaponDamage(item, ref add, ref mult, ref flat);
-            if (player.GetModPlayer<DoomBubblesPlayer>().rabadon && item.magic)
-            {
-                add = 1f + (add - 1f) * 1.25f;
-            }
         }
     }
 }
