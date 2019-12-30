@@ -155,7 +155,7 @@ namespace DoomBubblesMod.NPCs
 		{
 			List<String> basicItems = new List<string>
 			{
-				"FaerieCharm", "RejuvenationBead", "ClothArmor", "Dagger", "LongSword", "SapphireCrystal",
+				"FaerieCharm", "RejuvenationBead", "ClothArmor", "Dagger", "DarkSeal", "LongSword", "SapphireCrystal",
 				"RubyCrystal", "AmplifyingTome", "NullMagicMantle", "StopwatchOfLegends", "CloakOfAgility", 
 				"BlastingWand", "PickaxeOfLegends", "NeedlesslyLargeRod", "BFSword"
 			};

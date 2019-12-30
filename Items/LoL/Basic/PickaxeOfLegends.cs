@@ -9,7 +9,7 @@ namespace DoomBubblesMod.Items.LoL.Basic
 	{
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Pickaxe of Legends");
-			Tooltip.SetDefault("Legends told of pickaxe that was somehow sharp enough\nthat it could be used for its attack damage.");
+			Tooltip.SetDefault("Legends told of a pickaxe that was somehow sharp enough\nthat it could be used for its attack damage.");
 		}
 
 		public override void SetDefaults() {

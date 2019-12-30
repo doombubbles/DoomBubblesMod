@@ -83,6 +83,7 @@ namespace DoomBubblesMod
         public int tearStacks;
         public bool muramana;
         public bool reaver;
+        public int dread;
 
         public override void ResetEffects()
         {
@@ -142,6 +143,7 @@ namespace DoomBubblesMod
             grasp = 0;
             jaurimStacks = 0;
             tearStacks = 0;
+            dread = 0;
         }
 
         public override void PreUpdate()
@@ -600,6 +602,7 @@ namespace DoomBubblesMod
             }
             
             if (target.life <= 0 && target.value > 0.1f) jaurimStacks++;
+            if (target.life <= 0 && target.value > 0.1f) dread++;
 
             if (muramana && !proj.magic && player.CheckMana((int) (player.statMana * .03f * (player.manaCost / 2 + .5 )), true))
             {
@@ -881,6 +884,7 @@ namespace DoomBubblesMod
             }
 
             if (target.life <= 0 && target.value > 0.1f) jaurimStacks++;
+            if (target.life <= 0 && target.value > 0.1f) dread++;
 
             if (crescent)
             {

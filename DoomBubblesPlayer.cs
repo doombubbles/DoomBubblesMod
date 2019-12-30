@@ -30,6 +30,7 @@ namespace DoomBubblesMod
         public bool vampireKnifeBat;
         public bool united;
         public int emblem;
+        public float potionHealing;
 
         public List<int> noManaItems = new List<int>();
 
@@ -51,6 +52,7 @@ namespace DoomBubblesMod
             united = false;
             
             noManaItems = new List<int>();
+            potionHealing = 1f;
         }
 
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
@@ -104,5 +106,7 @@ namespace DoomBubblesMod
             }
             return base.ConsumeAmmo(weapon, ammo);
         }
+        
+        
     }
 }

@@ -205,6 +205,12 @@ namespace DoomBubblesMod.Items
 			return base.CanEquipAccessory(item, player, slot);
 		}
 
+		public override void GetHealLife(Item item, Player player, bool quickHeal, ref int healValue)
+		{
+			healValue = (int) (healValue * player.GetModPlayer<DoomBubblesPlayer>().potionHealing);
+			base.GetHealLife(item, player, quickHeal, ref healValue);
+		}
+
 		#region dumbLongList
 		public static List<String> radiantWeapons = new List<String>()
 		{

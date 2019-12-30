@@ -13,14 +13,14 @@ namespace DoomBubblesMod.Items.LoL.Basic
 
         public override void SetDefaults()
         {
-            item.damage = 30;
+            item.damage = 15;
             item.magic = true;
             item.mana = 20;
             item.width = 42;
             item.height = 42;
 
-            item.useTime = 40;
-            item.useAnimation = 40;
+            item.useTime = 30;
+            item.useAnimation = 30;
             item.useStyle = 5;
             item.noMelee = true;
             item.knockBack = 5;

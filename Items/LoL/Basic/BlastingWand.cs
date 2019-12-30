@@ -6,14 +6,18 @@ namespace DoomBubblesMod.Items.LoL.Basic
 {
     public class BlastingWand : ModItem
     {
+        public override void SetStaticDefaults()
+        {
+            Item.staff[item.type] = true;
+        }
+        
         public override void SetDefaults()
         {
-            item.damage = 20;
+            item.damage = 10;
             item.magic = true;
             item.mana = 20;
             item.width = 34;
             item.height = 34;
-
             item.useTime = 40;
             item.useAnimation = 40;
             item.useStyle = 5;
@@ -25,7 +29,6 @@ namespace DoomBubblesMod.Items.LoL.Basic
             item.autoReuse = true;
             item.shootSpeed = 7f;
             item.shoot = ProjectileID.InfernoFriendlyBlast;
-            Item.staff[item.type] = true;
         }
     }
 }

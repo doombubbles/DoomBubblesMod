@@ -1,4 +1,5 @@
-﻿using IL.Terraria.ID;
+﻿using System.Collections.Generic;
+using IL.Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
 using ItemID = Terraria.ID.ItemID;
@@ -34,6 +35,11 @@ namespace DoomBubblesMod.Items.LoL.Advanced
         {
             Main.LocalPlayer.GetModPlayer<LoLPlayer>().jaurimStacks = 0;
             base.OnCraft(recipe);
+        }
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            base.ModifyTooltips(tooltips);
+            tooltips.Add(new TooltipLine(mod, "Jaurim", "Current: " + (Main.player[item.owner].GetModPlayer<LoLPlayer>().jaurimStacks)));
         }
 
         public override void AddRecipes()
