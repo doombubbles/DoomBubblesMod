@@ -92,7 +92,7 @@ namespace DoomBubblesMod.Projectiles.LoL
                 num9 = num689;
             }
             
-            Main.player[projectile.owner].GetModPlayer<LoLPlayer>().Lifesteal(damage * .12f, target, true);
+            Main.player[projectile.owner].GetModPlayer<LoLPlayer>().Lifesteal(damage * .04f, target);
             
             Main.player[projectile.owner].GetModPlayer<LoLPlayer>().JustDamage(target, Math.Max(15, target.life / 40));
             

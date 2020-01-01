@@ -45,7 +45,7 @@ namespace DoomBubblesMod.Items.LoL
             player.thrownDamage += player.statManaMax2 * .05f;
             player.minionDamage += player.statManaMax2 * .05f;
             player.manaCost -= .15f;
-            player.statManaMax2 += 25 + player.GetModPlayer<LoLPlayer>().tearStacks;
+            player.statManaMax2 += 25 + Math.Min(player.GetModPlayer<LoLPlayer>().tearStacks, 75);
             base.UpdateAccessory(player, hideVisual);
         }
 

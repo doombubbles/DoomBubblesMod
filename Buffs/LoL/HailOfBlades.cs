@@ -20,7 +20,7 @@ namespace DoomBubblesMod.Buffs.LoL
         public override void Update(Player player, ref int buffIndex)
         {
             Mod gottaGoFast = ModLoader.GetMod("GottaGoFast");
-            float speed = 1.0f;
+            float speed = .5f;
             if(gottaGoFast != null)
             {
                 //First Argument is a string for the type; either "magicSpeed", "rangedSpeed" or "attackSpeed"

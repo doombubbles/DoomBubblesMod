@@ -312,7 +312,15 @@ namespace DoomBubblesMod
                 RecipeEditor editor = new RecipeEditor(searchRecipe);
                 editor.AddIngredient(ItemType("HeartOfTerraria"));
             }
-
+            
+            
+            ModRecipe recipe = new ModRecipe(this);
+            recipe.SetResult(ItemID.LightningBoots);
+            recipe.AddIngredient(ItemID.SpectreBoots);
+            recipe.AddIngredient(thoriumMod.ItemType("Zephyr"));
+            recipe.AddIngredient(thoriumMod.ItemType("ZephyrsFeather"));
+            recipe.AddTile(TileID.TinkerersWorkbench);
+            recipe.AddRecipe();
         }
 
         public override void HandlePacket(BinaryReader reader, int whoAmI)

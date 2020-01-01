@@ -32,7 +32,7 @@ namespace DoomBubblesMod.Items.LoL.Advanced
             item.autoReuse = true;
             item.useTurn = true;
             item.shoot = mod.ProjectileType("Crescent");
-            
+            item.scale = 1.2f;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

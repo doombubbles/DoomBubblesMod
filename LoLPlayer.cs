@@ -69,6 +69,7 @@ namespace DoomBubblesMod
         public bool sharpshooter;
         public Vector2 energizedOldPos;
         public int jaurimStacks;
+        public int seekerStacks;
         public bool crescent;
         public bool cleave;
         public bool crescentLifeSteal;
@@ -84,6 +85,14 @@ namespace DoomBubblesMod
         public bool muramana;
         public bool reaver;
         public int dread;
+        public bool eternity;
+        public bool harmony;
+        public bool sheen;
+        public float omnivamp;
+        public float lifesteal;
+        public bool coldSteel;
+        public int magicPenetration;
+        public int haunting = 0;
 
         public override void ResetEffects()
         {
@@ -122,6 +131,16 @@ namespace DoomBubblesMod
             runaan = false;
             muramana = false;
             reaver = false;
+            eternity = false;
+            harmony = false;
+            sheen = false;
+            omnivamp = 0f;
+            lifesteal = 0f;
+            coldSteel = false;
+            magicPenetration = 0;
+            haunting--;
+            if (haunting > 1 && !player.HasBuff(mod.BuffType("Haunting"))) haunting--;
+            if (haunting < 0) haunting = 0;
         }
 
         public override void DrawEffects(PlayerDrawInfo drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
@@ -142,6 +161,7 @@ namespace DoomBubblesMod
             darkHarvestSouls = 0;
             grasp = 0;
             jaurimStacks = 0;
+            seekerStacks = 0;
             tearStacks = 0;
             dread = 0;
         }
@@ -211,7 +231,8 @@ namespace DoomBubblesMod
 
         public override void OnConsumeMana(Item item, int manaConsumed)
         {
-            if (manaConsumed > 4 || Main.rand.Next(1, 4) <= manaConsumed) tearStacks++;
+            if (manaConsumed > 40 || Main.rand.Next(1, 40) <= manaConsumed) tearStacks++;
+            if (eternity) player.AddBuff(BuffID.Regeneration, 120);
         }
 
         public override void PostUpdateEquips()
@@ -293,7 +314,7 @@ namespace DoomBubblesMod
                 } player.AddBuff(mod.BuffType("Aery"), 2);
             }
 
-            player.statDefense += (int) grasp;
+            player.statDefense += (int) Math.Pow(Math.Log(grasp+1), 2.5);
 
             if (player.HasBuff(mod.BuffType("Aftershock")))
             {
@@ -320,7 +341,11 @@ namespace DoomBubblesMod
 
                 }
             }
-            
+
+
+            if (harmony) player.manaRegenBonus += player.lifeRegen * 5;
+
+            if (player.HasBuff(mod.BuffType("Haunting")) && (int) Main.time % 60 == 0) haunting++;
         }
 
         /*
@@ -353,7 +378,7 @@ namespace DoomBubblesMod
         {
             if (Conquerer)
             {
-                if (conquererStacks == 10) Lifesteal(damage * .08f, target, false);
+                if (conquererStacks == 10) Lifesteal(damage * .08f, target);
                 if (conquererStacks == 9)
                 {
                     for (int i = 0; i < 360; i += 3)
@@ -428,7 +453,7 @@ namespace DoomBubblesMod
 
                 if (jolt)
                 {
-                    JustDamage(target, 80);
+                    JustDamage(target, 180);
                     for (int i = 0; i < 10; i++)
                     {
                         Dust.NewDust(target.position, target.width, target.height, 57);
@@ -460,9 +485,9 @@ namespace DoomBubblesMod
             }
 
             if (DarkHarvest && player.HasBuff(mod.BuffType("DarkHarvest")) &&
-                target.life * 2 < target.lifeMax)
+                target.life * 2 < target.lifeMax && target.lifeMax > 5)
             {
-                JustDamage(target, Adapative(80 + 20 * getLevel() + darkHarvestSouls * (19 + getLevel())));
+                JustDamage(target, Adapative(80 + 20 * getLevel() + (int)(Math.Pow(Math.Log(darkHarvestSouls+1), 2.5) * (19 + getLevel()))));
                 darkHarvestSouls++;
                 keystoneCooldown = 60 * 45;
 
@@ -602,11 +627,12 @@ namespace DoomBubblesMod
             }
             
             if (target.life <= 0 && target.value > 0.1f) jaurimStacks++;
+            if (target.life <= 0 && target.value > 0.1f) seekerStacks++;
             if (target.life <= 0 && target.value > 0.1f) dread++;
 
             if (muramana && !proj.magic && player.CheckMana((int) (player.statMana * .03f * (player.manaCost / 2 + .5 )), true))
             {
-                JustDamage(target, (int) (player.statMana * .3f * Math.Max(.1f, 1f/ proj.maxPenetrate)));
+                JustDamage(target, (int) (player.statMana * .3f * Math.Max(.1f, 1f / proj.maxPenetrate)));
                 player.manaRegenDelay = (int)player.maxRegenDelay;
                 for (int i = 0; i < Math.Max(1, 6f / proj.maxPenetrate); i++)
                 {
@@ -644,13 +670,19 @@ namespace DoomBubblesMod
                     }
                 }
             }
+            
+            if (sheen && proj.magic) player.AddBuff(mod.BuffType("Sheen"), 90);
+            
+            if (omnivamp > 0) Lifesteal(damage * omnivamp * Math.Max(.1f, .5f / proj.maxPenetrate), target);
+            
+            if (haunting > 0) player.AddBuff(mod.BuffType("Haunting"), 3 * 60);
         }
 
         public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
         {
             if (loLPlayer.Conquerer)
             {
-                if (conquererStacks == 10) Lifesteal(damage * .15f, target, false);
+                if (conquererStacks == 10) Lifesteal(damage * .15f, target);
                 if (conquererStacks == 8 || conquererStacks == 9)
                 {
                     for (int i = 0; i < 360; i += 3)
@@ -725,7 +757,7 @@ namespace DoomBubblesMod
 
                 if (jolt)
                 {
-                    JustDamage(target, 80);
+                    JustDamage(target, 180);
                     for (int i = 0; i < 10; i++)
                     {
                         Dust.NewDust(target.position, target.width, target.height, 57);
@@ -757,9 +789,9 @@ namespace DoomBubblesMod
             }
             
             if (DarkHarvest && player.HasBuff(mod.BuffType("DarkHarvest")) &&
-                target.life * 2 < target.lifeMax)
+                target.life * 2 < target.lifeMax && target.lifeMax > 5)
             {
-                JustDamage(target, Adapative(80 + 20 * getLevel() + darkHarvestSouls * (19 + getLevel())));
+                JustDamage(target, Adapative(80 + 20 * getLevel() + (int)(Math.Pow(Math.Log(darkHarvestSouls+1), 2.5) * (19 + getLevel()))));
                 darkHarvestSouls++;
                 keystoneCooldown = 60 * 45;
                 
@@ -884,6 +916,7 @@ namespace DoomBubblesMod
             }
 
             if (target.life <= 0 && target.value > 0.1f) jaurimStacks++;
+            if (target.life <= 0 && target.value > 0.1f) seekerStacks++;
             if (target.life <= 0 && target.value > 0.1f) dread++;
 
             if (crescent)
@@ -940,11 +973,19 @@ namespace DoomBubblesMod
                     }
                 }
             }
+            
+            if (sheen && item.magic) player.AddBuff(mod.BuffType("Sheen"), 90);
+            
+            if (omnivamp > 0) Lifesteal(damage * omnivamp, target);
+            if (lifesteal > 0) Lifesteal(damage * lifesteal, target);
+            
+            if (haunting > 0) player.AddBuff(mod.BuffType("Haunting"), 3 * 60);
         }
 
         public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
         {
             if (iedge && crit) damage = (int) (damage * 1.25f);
+            if (magicPenetration > 0 && item.magic) damage += target.checkArmorPenetration(magicPenetration);
             base.ModifyHitNPC(item, target, ref damage, ref knockback, ref crit);
         }
 
@@ -952,6 +993,7 @@ namespace DoomBubblesMod
             ref int hitDirection)
         {
             if (iedge && crit) damage = (int) (damage * 1.25f);
+            if (magicPenetration > 0 && proj.magic) damage += target.checkArmorPenetration(magicPenetration);
             base.ModifyHitNPCWithProj(proj, target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
 
@@ -968,6 +1010,12 @@ namespace DoomBubblesMod
                 player.AddBuff(mod.BuffType("Aftershock"), 5 * 60);
                 loLPlayer.keystoneCooldown = 60 * 20;
             }
+        }
+
+        public override void OnHitByNPC(NPC npc, int damage, bool crit)
+        {
+            if (damage > 0 && coldSteel) player.immuneTime += 20;
+            base.OnHitByNPC(npc, damage, crit);
         }
 
         public override void ProcessTriggers(TriggersSet triggersSet)
@@ -1160,12 +1208,11 @@ namespace DoomBubblesMod
         }
         
         
-        public void Lifesteal(float healAmount, NPC npc, bool aoe)
+        public void Lifesteal(float healAmount, NPC npc)
         {
             if (!npc.immortal && npc.lifeMax > 5 && !player.moonLeech && npc.FullName != "Target Dummy" &&
                 player.lifeSteal > 0f && player.statLife < player.statLifeMax2)
             {
-                if (aoe) healAmount /= 3f;
                 player.lifeSteal -= healAmount;
                 Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0f, 0f, ProjectileID.VampireHeal,
                     0, 0f, player.whoAmI, player.whoAmI, healAmount);

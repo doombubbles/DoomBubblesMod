@@ -36,6 +36,7 @@ namespace DoomBubblesMod.Items.LoL
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<LoLPlayer>().botrk = true;
+            player.GetModPlayer<LoLPlayer>().lifesteal += .12f;
             base.UpdateAccessory(player, hideVisual);
         }
 
@@ -48,13 +49,8 @@ namespace DoomBubblesMod.Items.LoL
         public override void HoldItem(Player player)
         {
             player.GetModPlayer<LoLPlayer>().botrk = true;
+            player.GetModPlayer<LoLPlayer>().lifesteal += .12f;
             base.HoldItem(player);
-        }
-
-        public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
-        {
-            base.OnHitNPC(player, target, damage, knockBack, crit);
-            player.GetModPlayer<LoLPlayer>().Lifesteal(damage * .12f, target, false);
         }
 
         public override void AddRecipes()

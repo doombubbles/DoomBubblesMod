@@ -8,7 +8,6 @@ namespace DoomBubblesMod.Items.LoL.Basic
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Cloth Armor");
-            Tooltip.SetDefault("+2 Defense");
         }
 
         public override void SetDefaults()
@@ -18,12 +17,7 @@ namespace DoomBubblesMod.Items.LoL.Basic
             item.height = 32;
             item.rare = 1;
             item.accessory = true;
-        }
-
-
-        public override void UpdateAccessory(Player player, bool hideVisual)
-        {
-            player.statDefense += 2;
+            item.defense = 2;
         }
     }
 }

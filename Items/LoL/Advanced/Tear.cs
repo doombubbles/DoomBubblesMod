@@ -1,4 +1,5 @@
-﻿using IL.Terraria.ID;
+﻿using System;
+using IL.Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
 using ItemID = Terraria.ID.ItemID;
@@ -27,7 +28,7 @@ namespace DoomBubblesMod.Items.LoL.Advanced
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.statManaMax2 += 25 + player.GetModPlayer<LoLPlayer>().tearStacks;
+            player.statManaMax2 += 25 + Math.Min(player.GetModPlayer<LoLPlayer>().tearStacks, 75);
         }
 
         public override void OnCraft(Recipe recipe)
@@ -40,7 +41,7 @@ namespace DoomBubblesMod.Items.LoL.Advanced
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(mod.ItemType("SapphireCrystal"));
-            recipe.AddIngredient(mod.ItemType("FaerieCharn"));
+            recipe.AddIngredient(mod.ItemType("FaerieCharm"));
             recipe.AddIngredient(ItemID.GoldCoin, 3);
             recipe.AddIngredient(ItemID.SilverCoin, 75);
             recipe.AddTile(TileID.MythrilAnvil);

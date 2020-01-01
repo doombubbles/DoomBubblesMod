@@ -8,7 +8,7 @@ namespace DoomBubblesMod.Items.LoL.Advanced
     {
         public override void SetStaticDefaults()
         {   
-            Tooltip.SetDefault("Energized - Jolt\nEnergized attacks deal 80 bonus damage");
+            Tooltip.SetDefault("Energized - Jolt\nEnergized attacks deal 180 bonus damage");
         }
         
         public override void SetDefaults()

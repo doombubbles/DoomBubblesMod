@@ -13,7 +13,7 @@ namespace DoomBubblesMod.Items.Accessories.Emblem
                                "25% increased crit chance\n" +
                                "25% increased attack speed\n" +
                                "25% reduced damage taken\n" +
-                               "+25 armor penetration\n" +
+                               "Increases armor penetration by 25\n" +
                                "Gravity Globe benefits ;)\n" +
                                "Can't be equipped with any other 'Emblems'");
         }

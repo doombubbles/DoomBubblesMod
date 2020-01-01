@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using IL.Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
@@ -28,7 +29,7 @@ namespace DoomBubblesMod.Items.LoL.Advanced
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.statLifeMax2 += 20 + player.GetModPlayer<LoLPlayer>().jaurimStacks;
+            player.statLifeMax2 += 20 + Math.Min(player.GetModPlayer<LoLPlayer>().jaurimStacks, 20);
         }
 
         public override void OnCraft(Recipe recipe)
@@ -39,7 +40,7 @@ namespace DoomBubblesMod.Items.LoL.Advanced
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             base.ModifyTooltips(tooltips);
-            tooltips.Add(new TooltipLine(mod, "Jaurim", "Current: " + (Main.player[item.owner].GetModPlayer<LoLPlayer>().jaurimStacks)));
+            tooltips.Add(new TooltipLine(mod, "Jaurim", "Current: +" + Math.Min(Main.LocalPlayer.GetModPlayer<LoLPlayer>().jaurimStacks, 20)));
         }
 
         public override void AddRecipes()

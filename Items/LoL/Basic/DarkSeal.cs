@@ -9,7 +9,7 @@ namespace DoomBubblesMod.Items.LoL.Basic
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Increases maximum mana by 10\n" +
-                               "+10% increased healing from potions\n" +
+                               "10% increased healing from potions\n" +
                                "Increases magic damage by up to 10% from killing enemies");
         }
 
@@ -25,7 +25,9 @@ namespace DoomBubblesMod.Items.LoL.Basic
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             base.ModifyTooltips(tooltips);
-            tooltips.Add(new TooltipLine(mod, "Dread", "Current: " + (Main.player[item.owner].GetModPlayer<LoLPlayer>().dread / 2) + "%"));
+            if (item.owner != 255 && item.owner != -1)
+                tooltips.Add(new TooltipLine(mod, "Dread",
+                    "Current: " + Math.Min(Main.LocalPlayer.GetModPlayer<LoLPlayer>().dread / 2, 10) + "%"));
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

@@ -25,7 +25,7 @@ namespace DoomBubblesMod.Items.LoL.Basic
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.manaRegen += 1;
+            player.manaRegenBonus += 10;
         }
     }
 }

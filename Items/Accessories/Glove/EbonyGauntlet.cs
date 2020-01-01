@@ -9,7 +9,7 @@ namespace DoomBubblesMod.Items.Accessories.Glove
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ebony Gauntlet");
-            Tooltip.SetDefault("+7 armor penetration");
+            Tooltip.SetDefault("Increases armor penetration by 7");
         }
 
         public override void SetDefaults()

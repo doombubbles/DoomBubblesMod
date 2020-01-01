@@ -43,6 +43,7 @@ namespace DoomBubblesMod.Items.LoL
         {
             player.GetModPlayer<LoLPlayer>().crescent = true;
             player.GetModPlayer<LoLPlayer>().crescentLifeSteal = true;
+            player.GetModPlayer<LoLPlayer>().lifesteal += .12f;
             base.UpdateAccessory(player, hideVisual);
         }
 
@@ -58,18 +59,19 @@ namespace DoomBubblesMod.Items.LoL
             recipe.AddRecipe();
         }
 
+        public override void HoldItem(Player player)
+        {
+            base.HoldItem(player);
+            player.GetModPlayer<LoLPlayer>().crescent = true;
+            player.GetModPlayer<LoLPlayer>().crescentLifeSteal = true;
+            player.GetModPlayer<LoLPlayer>().lifesteal += .12f;
+        }
+
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage,
             ref float knockBack)
         {
             Projectile.NewProjectileDirect(position, new Vector2(0,0), mod.ProjectileType("Crescent"), damage, knockBack, player.whoAmI, 0, 1);
             return false;
-        }
-
-        public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
-        {
-            Projectile.NewProjectileDirect(target.Center, new Vector2(0,0), mod.ProjectileType("Crescent"), damage, knockBack, player.whoAmI, 1, 1);
-            player.GetModPlayer<LoLPlayer>().Lifesteal(damage * .12f, target, false);
-            base.OnHitNPC(player, target, damage, knockBack, crit);
         }
     }
 }

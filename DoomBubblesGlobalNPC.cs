@@ -192,11 +192,19 @@ namespace DoomBubblesMod
                 }
             }
 
-            if (npc.boss && Main.LocalPlayer.GetModPlayer<LoLPlayer>().DarkHarvest)
+            if (npc.boss)
             {
-                Main.LocalPlayer.GetModPlayer<LoLPlayer>().keystoneCooldown = 90;
-            }
+                for (var i = 0; i < Main.player.Length; i++)
+                {
+                    var player1 = Main.player[i];
+                    if (player1.active && player1.GetModPlayer<LoLPlayer>().DarkHarvest)
+                    {
+                        player1.GetModPlayer<LoLPlayer>().keystoneCooldown = 90;
+                    }
 
+                }
+
+            }
         }
 
         public override void SetupShop(int type, Chest shop, ref int nextSlot)

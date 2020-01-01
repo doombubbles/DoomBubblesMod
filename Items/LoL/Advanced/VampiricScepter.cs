@@ -27,10 +27,22 @@ namespace DoomBubblesMod.Items.LoL.Advanced
             item.autoReuse = false;
         }
         
-        public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
+        public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            base.OnHitNPC(player, target, damage, knockBack, crit);
-            player.GetModPlayer<LoLPlayer>().Lifesteal(damage * .1f, target, false);
+            player.GetModPlayer<LoLPlayer>().lifesteal += .1f;
+            base.UpdateAccessory(player, hideVisual);
+        }
+
+        public override void UpdateInventory(Player player)
+        {
+            item.accessory = true;
+            base.UpdateInventory(player);
+        }
+
+        public override void HoldItem(Player player)
+        {
+            player.GetModPlayer<LoLPlayer>().lifesteal += .1f;
+            base.HoldItem(player);
         }
 
         public override void AddRecipes()

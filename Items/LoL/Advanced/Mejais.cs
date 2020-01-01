@@ -12,7 +12,7 @@ namespace DoomBubblesMod.Items.LoL.Advanced
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Increases maximum mana by 20\n" +
-                               "+25% increased healing from potions\n" +
+                               "25% increased healing from potions\n" +
                                "Increases magic damage by up to 20% from killing enemies");
         }
 
@@ -28,7 +28,9 @@ namespace DoomBubblesMod.Items.LoL.Advanced
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             base.ModifyTooltips(tooltips);
-            tooltips.Add(new TooltipLine(mod, "Dread", "Current: " + Main.player[item.owner].GetModPlayer<LoLPlayer>().dread + "%"));
+            if (item.owner != 255 && item.owner != -1)
+                tooltips.Add(new TooltipLine(mod, "Dread",
+                    "Current: " + Math.Min(Main.LocalPlayer.GetModPlayer<LoLPlayer>().dread / 2, 20) + "%"));
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -42,7 +44,7 @@ namespace DoomBubblesMod.Items.LoL.Advanced
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(mod.ItemType("DarkSeal"));
-            recipe.AddIngredient(ItemID.GoldCoin, 19);
+            recipe.AddIngredient(ItemID.GoldCoin, 10);
             recipe.AddIngredient(ItemID.SilverCoin, 50);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);

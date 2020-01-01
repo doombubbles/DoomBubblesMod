@@ -27,14 +27,14 @@ Path1.Keystone4.Desc=Stack up to 10% total increased damage (2 from melee attack
 
 Path2.Keystone1.Desc=After attacking the same enemy 3 times in a row, they take 60 + 20 per Level Adaptive damage.\nCooldown: 25 seconds - 1 second per level
 Path2.Keystone2.Desc=If you have boots, press P to gain 50+% move speed bonus for 30 seconds,\nor until your next attack which deals a bonus 200 + 25 per level Adapative damage.\nCooldown: 120 seconds - 5 seconds per level
-Path2.Keystone3.Desc=Damaging an enemy who's below 50% health harvests a Soul and deals\n80 + 20 per level + 20 + level per Soul harvested since your last Death.\nCooldown: 45 seconds. Killing all or part of a boss resets the cooldown.
-Path2.Keystone4.Desc=Gain 100% increased attack speed for the first 30 seconds of a boss fight.
+Path2.Keystone3.Desc=Damaging an enemy who's below 50% health harvests a Soul and deals\n80 + 20 per level + 20 + level per ln(Soul+1)^2.5 harvested since your last Death.\nCooldown: 45 seconds. Killing all or part of a boss resets the cooldown.
+Path2.Keystone4.Desc=Gain 50% increased attack speed for the first 30 seconds of a boss fight.
 
 Path3.Keystone1.Desc=Summons an Aery pet that follows you around.\nAttacking an enemy sends Aery on them, dealing 20 + 5 per Level Summon damage.\nCooldown: As soon as Aery comes back, which won't ever take longer than 10 seconds but could take a lot less.
 Path3.Keystone2.Desc=Hitting an enemy with a projectile hurls an Arcane Comet at their location that\ndeals 60 + 15 per Level Adapative damage in an area.\nCooldown: 20 seconds - .5 seconds per level.\nHitting projectiles also slightly reduces the cooldown, effective inversely proportional to their pierce.
 Path3.Keystone3.Desc=After attacking the same enemy 3 times in a row, gain 40+% move speed for 5 seconds.\nCooldown: 15 seconds
 
-Path4.Keystone1.Desc=After you take damage, your next attack within 4 seconds will deal\nan extra 4%/2% of the targets max life in Adaptive damage, heal you\nfor 4%/2% of your life and grant you 1/.5 defense until your next death.\nCooldown: 20 seconds.
+Path4.Keystone1.Desc=After you take damage, your next attack within 4 seconds will deal\nan extra 4%/2% of the targets max life in Adaptive damage, heal you\nfor 4%/2% of your life and grant you 1/.5 stacks until your next death.\nYou gain ln(Stacks + Level)^2.5 defense\nCooldown: 20 seconds.
 Path4.Keystone2.Desc=After you take damage, your defense is doubled for 5 seconds.\nWhen that expires, deal a shockwave of 25 + 5 per Level + current defense damage in an area.\nCooldown: 20 seconds.
 Path4.Keystone3.Desc=For each player of the same team near you, both of you gain 1 per Level bonus defense.
 

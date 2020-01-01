@@ -13,7 +13,7 @@ namespace DoomBubblesMod.Items.Accessories.Glove
                                "7% increased crit chance\n" +
                                "7% increased attack speed\n" +
                                "7% reduced damage taken\n" +
-                               "+7 armor penetration");
+                               "Increases armor penetration by 7");
         }
 
         public override void SetDefaults()

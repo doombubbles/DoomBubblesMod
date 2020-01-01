@@ -79,7 +79,7 @@ namespace DoomBubblesMod.Projectiles.LoL
         {
             if (projectile.ai[1] > .1f)
             {
-                Main.player[projectile.owner].GetModPlayer<LoLPlayer>().Lifesteal(damage * .12f, target, true);
+                Main.player[projectile.owner].GetModPlayer<LoLPlayer>().Lifesteal(damage * Main.player[projectile.owner].GetModPlayer<LoLPlayer>().lifesteal * .15f, target);
             }
             base.OnHitNPC(target, damage, knockback, crit);
         }
