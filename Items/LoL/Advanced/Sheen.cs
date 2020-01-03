@@ -8,8 +8,8 @@ namespace DoomBubblesMod.Items.LoL.Advanced
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("100% increased melee damage if you've dealt\n" +
-                               "magic damage in the last 1.5 seconds\n" +
+            Tooltip.SetDefault("If you've hit with a magic attack in the last 2 seconds,\n" +
+                               "your melee damage is increased by 100%.\n" +
                                "Equipped - 25 mana and 10% cdr");
         }
 

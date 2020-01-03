@@ -21,7 +21,7 @@ namespace DoomBubblesMod.Items.LoL.Advanced
             item.height = 30;
             item.rare = 4;
             item.accessory = true;
-            item.defense = 3;
+            item.defense = 4;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

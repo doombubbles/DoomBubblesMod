@@ -11,7 +11,7 @@ namespace DoomBubblesMod.Items.LoL.Advanced
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Increases maximum life by 20\n" +
-                               "Increases maximum life by 30\n" +
+                               "Increases maximum mana by 30\n" +
                                "Restores mana when taking damage\n" +
                                "Restores health when expending mana");
         }

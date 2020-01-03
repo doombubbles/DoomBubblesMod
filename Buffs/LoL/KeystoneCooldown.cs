@@ -18,8 +18,15 @@ namespace DoomBubblesMod.Buffs.LoL
 			Main.buffNoSave[Type] = true;
 			longerExpertDebuff = false;
 		}
-		
-        public override bool ReApply(Player player, int time, int buffIndex)
+
+		public override void ModifyBuffTip(ref string tip, ref int rare)
+		{
+			LoLPlayer loLPlayer = Main.LocalPlayer.GetModPlayer<LoLPlayer>();
+			if (loLPlayer.GraspOfTheUndying) tip = "Stacks: " + loLPlayer.grasp;
+			if (loLPlayer.DarkHarvest) tip = "Stacks: " + loLPlayer.darkHarvestSouls;
+		}
+
+		public override bool ReApply(Player player, int time, int buffIndex)
         {
 	        player.buffTime[buffIndex] = time;
             return true;

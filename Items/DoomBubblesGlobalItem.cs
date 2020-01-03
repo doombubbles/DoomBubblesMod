@@ -27,7 +27,8 @@ namespace DoomBubblesMod.Items
 				{"Celestial Burst Staff", "Heavenly Burst Staff"},
 				{"Waifu in a Bottle", "Weeaboo in a Bottle"},
 				{"Rare Waifu in a Bottle", "Rare Weeaboo in a Bottle"},
-				{"Twin's Ire", "Twin's Aiur"}
+				{"Twin's Ire", "Twin's Aiur"},
+				{"Crystal Ball", "Krystal Ball"}
 			};
 
 			foreach ( KeyValuePair<string, string> kvp in itemNameOverrides)

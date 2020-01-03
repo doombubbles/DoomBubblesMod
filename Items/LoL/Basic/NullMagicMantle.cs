@@ -9,7 +9,7 @@ namespace DoomBubblesMod.Items.LoL.Basic
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Null-Magic Mantle");
-            Tooltip.SetDefault("Reduces damage taken by 2.5%");
+            Tooltip.SetDefault("Reduces damage taken by 5%");
         }
 
         public override void SetDefaults()
@@ -24,7 +24,7 @@ namespace DoomBubblesMod.Items.LoL.Basic
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.endurance += .025f;
+            player.endurance += .05f;
         }
     }
 }

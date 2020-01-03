@@ -52,7 +52,7 @@ namespace DoomBubblesMod.Items.LoL
 
 		public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Nonmagic attacks restore up to 1.5% of missing mana\n" +
+            Tooltip.SetDefault("Nonmagic attacks restore missing mana\n" +
                                "20% increased cooldown reduction");
         }
 

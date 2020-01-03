@@ -109,9 +109,63 @@ namespace DoomBubblesMod
 
             On.Terraria.Player.UpdateLifeRegen += PlayerOnUpdateLifeRegen;
             On.Terraria.Player.UpdateManaRegen += PlayerOnUpdateManaRegen;
+            On.Terraria.Player.Update += PlayerOnUpdate;
+            On.Terraria.Player.HealEffect += PlayerOnHealEffect;
             IL.Terraria.Player.Update += PlayerOnUpdate;
             //On.Terraria.Main.DrawInterface_Resources_Life += MainOnDrawInterfaceResourcesLife;
             
+        }
+
+        private void PlayerOnHealEffect(On.Terraria.Player.orig_HealEffect orig, Player self, int healamount, bool broadcast)
+        {
+            if (self.active)
+            {
+                int bonus = (int) (healamount * self.GetModPlayer<LoLPlayer>().healingBonus);
+                if (bonus > 0)
+                {
+                    self.statLife += bonus;
+                    if (self.statLife > self.statLifeMax2) self.statLife = self.statLifeMax2;
+                    healamount += bonus;
+                }
+            }
+            orig(self, healamount, broadcast);
+        }
+
+        private void PlayerOnUpdate(On.Terraria.Player.orig_Update orig, Player self, int i)
+        {
+            if (self.active)
+            {
+                float lifesteal = self.lifeSteal;
+                orig(self, i);
+                self.lifeSteal = lifesteal;
+            
+                if (Main.expertMode)
+                {
+                    if (self.lifeSteal < self.GetModPlayer<DoomBubblesPlayer>().lifestealCapX)
+                    {
+                        self.lifeSteal += 0.0075f * self.GetModPlayer<DoomBubblesPlayer>().lifestealCapX;
+                    }
+                    if (self.lifeSteal > self.GetModPlayer<DoomBubblesPlayer>().lifestealCapX)
+                    {
+                        self.lifeSteal = self.GetModPlayer<DoomBubblesPlayer>().lifestealCapX;
+                    }
+                }
+                else
+                {
+                    if (self.lifeSteal < self.GetModPlayer<DoomBubblesPlayer>().lifestealCap)
+                    {
+                        self.lifeSteal += 0.0075f * self.GetModPlayer<DoomBubblesPlayer>().lifestealCap;
+                    }
+                    if (self.lifeSteal > self.GetModPlayer<DoomBubblesPlayer>().lifestealCap)
+                    {
+                        self.lifeSteal = self.GetModPlayer<DoomBubblesPlayer>().lifestealCap;
+                    }
+                }
+            }
+            else
+            {
+                orig(self, i);
+            }
         }
 
         private void PlayerOnUpdate(ILContext il)
@@ -143,7 +197,7 @@ namespace DoomBubblesMod
 
         private void MainOnDrawInterfaceResourcesLife(On.Terraria.Main.orig_DrawInterface_Resources_Life orig)
         {
-            if (Main.LocalPlayer.GetModPlayer<HotSPlayer>().shieldCapacitor > 0)
+            if (Main.LocalPlayer.active && Main.LocalPlayer.GetModPlayer<HotSPlayer>().shieldCapacitor > 0)
             {
                 Texture2D heart = Main.heartTexture;
                 Texture2D heart2 = Main.heart2Texture;
@@ -169,36 +223,38 @@ namespace DoomBubblesMod
             else orig();
         }
 
-        private void PlayerOnUpdateManaRegen(On.Terraria.Player.orig_UpdateManaRegen orig, Terraria.Player self)
+        private void PlayerOnUpdateManaRegen(On.Terraria.Player.orig_UpdateManaRegen orig, Player self)
         {
-            bool sStone = self.GetModPlayer<DoomBubblesPlayer>().sStone;
-            if (sStone)
+            if (self.active)
             {
-                Vector2 v = self.velocity;
-                self.velocity = new Vector2(0,0);
-                orig(self);
-                self.velocity = v;
+                bool sStone = self.GetModPlayer<DoomBubblesPlayer>().sStone;
+                if (sStone)
+                {
+                    Vector2 v = self.velocity;
+                    self.velocity = new Vector2(0,0);
+                    orig(self);
+                    self.velocity = v;
+                    return;
+                }
             }
-            else
-            {
-                orig(self);
-            }
+            orig(self);
         }
 
-        private void PlayerOnUpdateLifeRegen(On.Terraria.Player.orig_UpdateLifeRegen orig, Terraria.Player self)
+        private void PlayerOnUpdateLifeRegen(On.Terraria.Player.orig_UpdateLifeRegen orig, Player self)
         {
-            bool sStone = self.GetModPlayer<DoomBubblesPlayer>().sStone;
-            if (sStone)
+            if (self.active)
             {
-                Vector2 v = self.velocity;
-                self.velocity = new Vector2(0,0);
-                orig(self);
-                self.velocity = v;
+                bool sStone = self.GetModPlayer<DoomBubblesPlayer>().sStone;
+                if (sStone)
+                {
+                    Vector2 v = self.velocity;
+                    self.velocity = new Vector2(0,0);
+                    orig(self);
+                    self.velocity = v;
+                    return;
+                }
             }
-            else
-            {
-                orig(self);
-            }
+            orig(self);
         }
 
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)

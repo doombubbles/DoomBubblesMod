@@ -31,6 +31,8 @@ namespace DoomBubblesMod
         public bool united;
         public int emblem;
         public float potionHealing;
+        public float lifestealCap;
+        public float lifestealCapX;
 
         public List<int> noManaItems = new List<int>();
 
@@ -50,6 +52,8 @@ namespace DoomBubblesMod
             customSymphonicCrit = 0;
             vampireKnifeBat = false;
             united = false;
+            lifestealCap = 80f;
+            lifestealCapX = 70f;
             
             noManaItems = new List<int>();
             potionHealing = 1f;

@@ -36,7 +36,7 @@ Path3.Keystone3.Desc=After attacking the same enemy 3 times in a row, gain 40+% 
 
 Path4.Keystone1.Desc=After you take damage, your next attack within 4 seconds will deal\nan extra 4%/2% of the targets max life in Adaptive damage, heal you\nfor 4%/2% of your life and grant you 1/.5 stacks until your next death.\nYou gain ln(Stacks + Level)^2.5 defense\nCooldown: 20 seconds.
 Path4.Keystone2.Desc=After you take damage, your defense is doubled for 5 seconds.\nWhen that expires, deal a shockwave of 25 + 5 per Level + current defense damage in an area.\nCooldown: 20 seconds.
-Path4.Keystone3.Desc=For each player of the same team near you, both of you gain 1 per Level bonus defense.
+Path4.Keystone3.Desc=For each player on the same team, both of you gain 1 per Level bonus defense.
 
 Path5.Keystone1.Desc=After you attack an enemy, send a random Icy projectile at them that deals 40 + 15 per level Adaptive damage.\nCooldown: 10 seconds - .5 per level
 Path5.Keystone2.Desc=Using a Spellbook also uses all other Spellbooks in your inventory.\nCooldown: 10 seconds - .5 per level

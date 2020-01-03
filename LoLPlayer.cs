@@ -93,6 +93,14 @@ namespace DoomBubblesMod
         public bool coldSteel;
         public int magicPenetration;
         public int haunting = 0;
+        public bool cowl;
+        public bool seraph;
+        public bool warmogs;
+        public int ticksSinceDamage;
+        public bool nashor;
+        public bool lichBane;
+        public float healingBonus;
+        public int roa;
 
         public override void ResetEffects()
         {
@@ -141,6 +149,13 @@ namespace DoomBubblesMod
             haunting--;
             if (haunting > 1 && !player.HasBuff(mod.BuffType("Haunting"))) haunting--;
             if (haunting < 0) haunting = 0;
+            cowl = false;
+            seraph = false;
+            warmogs = false;
+            ticksSinceDamage++;
+            nashor = false;
+            lichBane = false;
+            healingBonus = 0f;
         }
 
         public override void DrawEffects(PlayerDrawInfo drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
@@ -164,6 +179,8 @@ namespace DoomBubblesMod
             seekerStacks = 0;
             tearStacks = 0;
             dread = 0;
+            ticksSinceDamage = 0;
+            roa = 0;
         }
 
         public override void PreUpdate()
@@ -195,7 +212,8 @@ namespace DoomBubblesMod
                 player.position.X = stasisX;
                 player.position.Y = stasisY;
             }
-            if (energized >= 100 && (FleetFootwork || jolt)) player.AddBuff(mod.BuffType("Energized"), 2);
+            if (energized >= 100 && (FleetFootwork || jolt || sharpshooter)) player.AddBuff(mod.BuffType("Energized"), 2);
+            if (energized >= 100 && sharpshooter) player.rangedCrit = 100;
             
             if (keystoneCooldown > 0) player.AddBuff(mod.BuffType("KeystoneCooldown"), keystoneCooldown);
             if (keystoneCooldown == 0 && player.HasBuff(mod.BuffType("KeystoneCooldown"))) player.DelBuff(player.FindBuffIndex(mod.BuffType("KeystoneCooldown")));
@@ -232,13 +250,15 @@ namespace DoomBubblesMod
         public override void OnConsumeMana(Item item, int manaConsumed)
         {
             if (manaConsumed > 40 || Main.rand.Next(1, 40) <= manaConsumed) tearStacks++;
-            if (eternity) player.AddBuff(BuffID.Regeneration, 120);
+            if (eternity)
+            {
+                player.AddBuff(BuffID.Regeneration, 120);
+            }
         }
 
         public override void PostUpdateEquips()
         {
             player.allDamageMult += .01f * loLPlayer.conquererStacks;
-            if (keystoneCooldown == 0 && Electrocute) player.AddBuff(mod.BuffType("Electrocute"), 2);
 
             float energizedDistance = (player.position - energizedOldPos).Length();
             while (energizedDistance > 25f)
@@ -326,11 +346,11 @@ namespace DoomBubblesMod
                 for (var i = 0; i < Main.player.Length; i++)
                 {
                     var player1 = Main.player[i];
-                    if (player1.active)
+                    if (player1.active && !player1.dead)
                     {
                         if (player1.whoAmI == player.whoAmI) continue;
 
-                        if (player1.Distance(player.Center) < 300 && player1.team == player.team)
+                        if (player1.team == player.team)
                         {
                             player1.statDefense += getLevel();
                             player1.AddBuff(mod.BuffType("Guardian"), 2);
@@ -346,6 +366,15 @@ namespace DoomBubblesMod
             if (harmony) player.manaRegenBonus += player.lifeRegen * 5;
 
             if (player.HasBuff(mod.BuffType("Haunting")) && (int) Main.time % 60 == 0) haunting++;
+
+            if (seraph) player.statLifeMax2 += 5 * (int)Math.Round(player.statManaMax2 / 25f);
+
+            if (warmogs && player.statLifeMax2 > 600 && ticksSinceDamage > 300)
+            {
+                player.AddBuff(mod.BuffType("WarmogsHeart"), 2);
+            }
+            
+            
         }
 
         /*
@@ -378,7 +407,7 @@ namespace DoomBubblesMod
         {
             if (Conquerer)
             {
-                if (conquererStacks == 10) Lifesteal(damage * .08f, target);
+                if (conquererStacks == 10) Lifesteal(damage * .04f, target);
                 if (conquererStacks == 9)
                 {
                     for (int i = 0; i < 360; i += 3)
@@ -393,7 +422,7 @@ namespace DoomBubblesMod
                     }
                 }
                 conquererStacks++;
-                player.AddBuff(mod.BuffType("Conquerer"), 5 * 60);
+                player.AddBuff(mod.BuffType("Conquerer"), 3 * 60);
                 if (conquererStacks > 10) conquererStacks = 10;
             }
             if (LethalTempo && !player.HasBuff(mod.BuffType("LethalTempoWindUp")) &&
@@ -455,14 +484,6 @@ namespace DoomBubblesMod
                 {
                     JustDamage(target, 180);
                     for (int i = 0; i < 10; i++)
-                    {
-                        Dust.NewDust(target.position, target.width, target.height, 57);
-                    }
-                }
-                if (sharpshooter)
-                {
-                    JustDamage(target, 120);
-                    for (int i = 0; i < 20; i++)
                     {
                         Dust.NewDust(target.position, target.width, target.height, 57);
                     }
@@ -671,18 +692,24 @@ namespace DoomBubblesMod
                 }
             }
             
-            if (sheen && proj.magic) player.AddBuff(mod.BuffType("Sheen"), 90);
+            if (lichBane && proj.magic && proj.type != mod.ProjectileType("MagicDamage")) player.AddBuff(mod.BuffType("LichBane"), 120);
+            else if (sheen && proj.magic) player.AddBuff(mod.BuffType("Sheen"), 120);
             
-            if (omnivamp > 0) Lifesteal(damage * omnivamp * Math.Max(.1f, .5f / proj.maxPenetrate), target);
+            if (omnivamp > 0) Lifesteal(damage * omnivamp * Math.Max(.01f, .33333333f / proj.maxPenetrate), target);
             
             if (haunting > 0) player.AddBuff(mod.BuffType("Haunting"), 3 * 60);
+
+            if (nashor && proj.melee)
+                Projectile.NewProjectile(target.Center, Vector2.Zero, mod.ProjectileType("MagicDamage"),
+                    (int) (15 * player.magicDamage * player.magicDamageMult), 0f,
+                    player.whoAmI, target.whoAmI);
         }
 
         public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
         {
             if (loLPlayer.Conquerer)
             {
-                if (conquererStacks == 10) Lifesteal(damage * .15f, target);
+                if (conquererStacks == 10) Lifesteal(damage * .08f, target);
                 if (conquererStacks == 8 || conquererStacks == 9)
                 {
                     for (int i = 0; i < 360; i += 3)
@@ -759,14 +786,6 @@ namespace DoomBubblesMod
                 {
                     JustDamage(target, 180);
                     for (int i = 0; i < 10; i++)
-                    {
-                        Dust.NewDust(target.position, target.width, target.height, 57);
-                    }
-                }
-                if (sharpshooter)
-                {
-                    JustDamage(target, 120);
-                    for (int i = 0; i < 20; i++)
                     {
                         Dust.NewDust(target.position, target.width, target.height, 57);
                     }
@@ -949,7 +968,7 @@ namespace DoomBubblesMod
             
             if (reaver && !item.magic && player.statMana < player.statManaMax2)
             {
-                float raw = ((player.statManaMax2 - player.statMana) * .015f);
+                float raw = ((player.statManaMax2 - player.statMana) * .15f);
                 int amount;
                 if (raw < 1)
                 {
@@ -974,12 +993,18 @@ namespace DoomBubblesMod
                 }
             }
             
-            if (sheen && item.magic) player.AddBuff(mod.BuffType("Sheen"), 90);
+            if (lichBane && item.magic) player.AddBuff(mod.BuffType("LichBane"), 120);
+            else if (sheen && item.magic) player.AddBuff(mod.BuffType("Sheen"), 120);
             
             if (omnivamp > 0) Lifesteal(damage * omnivamp, target);
             if (lifesteal > 0) Lifesteal(damage * lifesteal, target);
             
             if (haunting > 0) player.AddBuff(mod.BuffType("Haunting"), 3 * 60);
+            
+            if (nashor && item.melee)
+                Projectile.NewProjectile(target.Center, Vector2.Zero, mod.ProjectileType("MagicDamage"),
+                    (int) (15 * player.magicDamage * player.magicDamageMult), 0f,
+                    player.whoAmI, target.whoAmI);
         }
 
         public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
@@ -1010,6 +1035,10 @@ namespace DoomBubblesMod
                 player.AddBuff(mod.BuffType("Aftershock"), 5 * 60);
                 loLPlayer.keystoneCooldown = 60 * 20;
             }
+            
+            if (cowl) player.AddBuff(BuffID.Regeneration, 10 * 60);
+
+            ticksSinceDamage = 0;
         }
 
         public override void OnHitByNPC(NPC npc, int damage, bool crit)
@@ -1232,25 +1261,24 @@ namespace DoomBubblesMod
         public int getLevel()
         {
             int level = 1;
+            level += NPC.downedSlimeKing ? 1 : 0;
+            level += NPC.downedQueenBee ? 1 : 0;
             level += NPC.downedBoss1 ? 1 : 0;
             level += NPC.downedBoss2 ? 1 : 0;
             level += NPC.downedBoss3 ? 1 : 0;
-            level += NPC.downedMoonlord ? 1 : 0;
-            level += NPC.downedFishron ? 1 : 0;
-            level += NPC.downedGolemBoss ? 1 : 0;
-            level += NPC.downedSlimeKing ? 1 : 0;
+            level += NPC.downedGoblins ? 1 : 0;
+            level += Main.hardMode ? 1 : 0;
             level += NPC.downedMechBoss1 ? 1 : 0;
             level += NPC.downedMechBoss2 ? 1 : 0;
             level += NPC.downedMechBoss3 ? 1 : 0;
+            level += NPC.downedPirates ? 1 : 0;
             level += NPC.downedPlantBoss ? 1 : 0;
-            level += NPC.downedQueenBee ? 1 : 0;
-            level += NPC.downedAncientCultist ? 1 : 0;
             level += NPC.downedHalloweenKing ? 1 : 0;
             level += NPC.downedChristmasIceQueen ? 1 : 0;
-            level += Main.hardMode ? 1 : 0;
+            level += NPC.downedGolemBoss ? 1 : 0;
+            level += NPC.downedFishron ? 1 : 0;
             level += NPC.downedMartians ? 1 : 0;
-            level += NPC.downedGoblins ? 1 : 0;
-            level += NPC.downedPirates ? 1 : 0;
+            level += NPC.downedAncientCultist ? 1 : 0;
             return level;
         }
 

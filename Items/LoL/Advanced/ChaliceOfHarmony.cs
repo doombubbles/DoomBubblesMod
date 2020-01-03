@@ -11,7 +11,7 @@ namespace DoomBubblesMod.Items.LoL.Advanced
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Increased mana regen\n" +
-                               "3% reduced damage taken\n" +
+                               "Reduces damage taken by 6%\n" +
                                "Gain mana regen from your increased health regen");
         }
 
@@ -27,7 +27,7 @@ namespace DoomBubblesMod.Items.LoL.Advanced
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.manaRegenBonus += 20;
-            player.endurance += .03f;
+            player.endurance += .06f;
             player.GetModPlayer<LoLPlayer>().harmony = true;
         }
         

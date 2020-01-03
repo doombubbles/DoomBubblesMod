@@ -8,7 +8,7 @@ namespace DoomBubblesMod.Buffs.LoL
 		public override void SetDefaults()
 		{
 			DisplayName.SetDefault("Aegis of the Legion");
-			Description.SetDefault("I'm not good at NPC sprites, ok?");
+			Description.SetDefault("Increased resistances");
 			Main.debuff[Type] = false;
 			Main.pvpBuff[Type] = true;
 			Main.buffNoSave[Type] = true;

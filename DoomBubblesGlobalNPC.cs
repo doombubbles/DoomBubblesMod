@@ -285,11 +285,13 @@ namespace DoomBubblesMod
             }
 
 
+            /*
             if (type == NPCID.WitchDoctor && Main.LocalPlayer.ZoneCrimson && NPC.downedMoonlord)
             {
                 shop.item[nextSlot].SetDefaults(mod.ItemType("BloodlustTalisman"));
                 nextSlot++;
             }
+            */
         }
 
         public override void ModifyHitByItem(NPC npc, Player player, Item item, ref int damage, ref float knockback, ref bool crit)

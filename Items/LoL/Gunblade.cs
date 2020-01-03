@@ -11,7 +11,7 @@ namespace DoomBubblesMod.Items.LoL
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hextech Gunblade");
-            Tooltip.SetDefault("15% omnivamp\n" +
+            Tooltip.SetDefault("15% Omnivamp\n" +
                                "Also scales with melee and magic bonuses");
         }
 
@@ -21,8 +21,8 @@ namespace DoomBubblesMod.Items.LoL
             item.ranged = true;
             item.width = 54;
             item.height = 54;
-            item.useTime = 15;
-            item.useAnimation = 15;
+            item.useTime = 10;
+            item.useAnimation = 10;
             item.useStyle = 1;
             item.knockBack = 5;
             item.value = Item.buyPrice(0, 34);
@@ -31,6 +31,7 @@ namespace DoomBubblesMod.Items.LoL
             item.useAmmo = AmmoID.Bullet;
             item.autoReuse = true;
             item.useTurn = true;
+            item.shoot = 10;
             item.shootSpeed = 10f;
         }
         
@@ -57,6 +58,13 @@ namespace DoomBubblesMod.Items.LoL
             add += player.magicDamage + player.meleeDamage - 2;
             mult *= player.magicDamageMult * player.meleeDamageMult;
             base.ModifyWeaponDamage(player, ref add, ref mult, ref flat);
+        }
+
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage,
+            ref float knockBack)
+        {
+            Main.PlaySound(SoundID.Item40, position);
+            return base.Shoot(player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
         }
 
         public override void GetWeaponCrit(Player player, ref int crit)

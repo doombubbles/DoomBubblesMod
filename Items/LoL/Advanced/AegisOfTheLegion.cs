@@ -11,7 +11,7 @@ namespace DoomBubblesMod.Items.LoL.Advanced
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Aegis of the Legion");
-            Tooltip.SetDefault("3% reduced damage\n" +
+            Tooltip.SetDefault("Reduces damage taken by 3%\n" +
                                "All players on your team gain also get these bonuses");
         }
 
@@ -32,7 +32,7 @@ namespace DoomBubblesMod.Items.LoL.Advanced
             for (var i = 0; i < Main.player.Length; i++)
             {
                 var playir = Main.player[i];
-                if (playir != null && playir.active && player.team == playir.team)
+                if (playir != null && playir.active && !player.dead && player.team == playir.team)
                 {
                     playir.AddBuff(mod.BuffType("Aegis"), 2);
                 }

@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -25,7 +26,31 @@ namespace DoomBubblesMod.Items.LoL.Advanced
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.statLifeMax2 += 20;
-            player.inferno = true;
+            if (!hideVisual) player.inferno = true;
+            
+            Lighting.AddLight((int)(player.Center.X / 16f), (int)(player.Center.Y / 16f), 0.65f, 0.4f, 0.1f);
+            int num2 = 24;
+            float num3 = 200f;
+            bool flag = player.infernoCounter % 60 == 0;
+            int damage = 20;
+            if (player.whoAmI == Main.myPlayer)
+            {
+                for (int l = 0; l < 200; l++)
+                {
+                    NPC nPC = Main.npc[l];
+                    if (nPC.active && !nPC.friendly && nPC.damage > 0 && !nPC.dontTakeDamage && !nPC.buffImmune[num2] && Vector2.Distance(player.Center, nPC.Center) <= num3)
+                    {
+                        if (nPC.FindBuffIndex(num2) == -1)
+                        {
+                            nPC.AddBuff(num2, 120);
+                        }
+                        if (flag)
+                        {
+                            player.GetModPlayer<LoLPlayer>().JustDamage(nPC, damage);
+                        }
+                    }
+                }
+            }
         }
         
         public override void AddRecipes()

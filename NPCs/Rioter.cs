@@ -101,6 +101,7 @@ namespace DoomBubblesMod.NPCs
 			chat.Add("Every third auto atta-Hey! Can't you see I'm designing here?");
 			chat.Add("Who even is Doran anyway?");
 			chat.Add("Hm, I've never been to this part of Runeterra.");
+			chat.Add("Is Kassadin banned here?");
 			if (Main.LocalPlayer.coldDash || Main.LocalPlayer.eocDash != 0 || Main.LocalPlayer.sailDash ||
 			    Main.LocalPlayer.dash != 0 || Main.LocalPlayer.solarShields > 0)
 			{

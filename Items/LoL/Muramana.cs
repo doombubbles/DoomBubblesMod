@@ -30,12 +30,12 @@ namespace DoomBubblesMod.Items.LoL
             item.UseSound = SoundID.Item1;
             item.autoReuse = true;
             item.useTurn = true;
-            item.scale = 1.1f;
+            item.scale = 1.2f;
         }
 
         public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
         {
-            flat += (int) (player.statManaMax2 * .2);
+            flat += (int) (player.statManaMax2 * .3);
             base.ModifyWeaponDamage(player, ref add, ref mult, ref flat);
         }
 

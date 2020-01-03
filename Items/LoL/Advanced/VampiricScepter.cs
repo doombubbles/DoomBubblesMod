@@ -25,6 +25,7 @@ namespace DoomBubblesMod.Items.LoL.Advanced
             item.rare = 3;
             item.UseSound = SoundID.Item1;
             item.autoReuse = false;
+            item.scale = 1.1f;
         }
         
         public override void UpdateAccessory(Player player, bool hideVisual)

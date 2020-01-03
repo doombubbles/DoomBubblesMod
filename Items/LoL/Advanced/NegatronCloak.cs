@@ -10,7 +10,7 @@ namespace DoomBubblesMod.Items.LoL.Advanced
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Negatron Cloak");
-            Tooltip.SetDefault("Reduces damage taken by 4%");
+            Tooltip.SetDefault("Reduces damage taken by 8%");
         }
 
         public override void SetDefaults()
@@ -25,7 +25,7 @@ namespace DoomBubblesMod.Items.LoL.Advanced
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.endurance += .04f;
+            player.endurance += .08f;
         }
         
         public override void AddRecipes()

@@ -9,7 +9,7 @@ namespace DoomBubblesMod.Buffs.LoL
 	{
 		public override void SetDefaults()
 		{
-			DisplayName.SetDefault("Grasp of the Undying");
+			DisplayName.SetDefault("Aftershock");
 			Description.SetDefault("");
 			Main.debuff[Type] = false;
 			Main.pvpBuff[Type] = true;
@@ -30,7 +30,7 @@ namespace DoomBubblesMod.Buffs.LoL
 			        var npc = Main.npc[i];
 
 			        var distance = npc.Distance(player.Center);
-			        if (npc.active && !npc.dontTakeDamage && !npc.townNPC && Main.myPlayer == player.whoAmI && distance <= 200)
+			        if (npc.active && !npc.dontTakeDamage && !npc.townNPC && Main.myPlayer == player.whoAmI && distance <= 200 && !npc.friendly)
 			        {
 				        player.GetModPlayer<LoLPlayer>().JustDamage(npc, loLPlayer.Adapative(25 + 5 * loLPlayer.getLevel() + player.statDefense));
 			        }

@@ -20,11 +20,6 @@ namespace DoomBubblesMod.Items.LoL
             item.accessory = true;
         }
 
-        public override bool NewPreReforge()
-        {
-            return false;
-        }
-
         public override TagCompound Save()
         {
             TagCompound tag = new TagCompound();

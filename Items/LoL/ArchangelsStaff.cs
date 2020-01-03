@@ -14,34 +14,38 @@ namespace DoomBubblesMod.Items.LoL
             Tooltip.SetDefault("Increased damage based on your max mana\n" +
                                "Equipped - 25% reduced mana usage and 50-125 bonus mana\n" +
                                "and 20% cooldown reduction");
+            
+            Item.staff[item.type] = true;
         }
 
         public override void SetDefaults()
         {
             item.damage = 50;
-            item.melee = true;
-            item.width = 46;
-            item.height = 46;
-            item.useTime = 25;
-            item.useAnimation = 25;
-            item.useStyle = 1;
+            item.magic = true;
+            item.width = 42;
+            item.useStyle = 5;
+            item.height = 44;
+            item.useTime = 10;
+            item.useAnimation = 10;
+            item.mana = 6;
             item.knockBack = 5;
             item.value = Item.buyPrice(0, 32);
             item.rare = 8;
-            item.UseSound = SoundID.Item1;
+            item.UseSound = SoundID.Item20;
             item.autoReuse = true;
-            item.useTurn = true;
+            item.shoot = ProjectileID.StarWrath;
+            item.shootSpeed = 8f;
         }
 
         public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
         {
-            flat += (int) (player.statManaMax2 * .2);
+            flat += (int) (player.statManaMax2 * .1);
             base.ModifyWeaponDamage(player, ref add, ref mult, ref flat);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.magicDamage += player.statManaMax2 * .05f;
+            player.magicDamage += player.statManaMax2 * .0003f;
             player.manaCost -= .25f;
             player.statManaMax2 += 50 + Math.Min(player.GetModPlayer<LoLPlayer>().tearStacks, 75);
             base.UpdateAccessory(player, hideVisual);
@@ -51,6 +55,15 @@ namespace DoomBubblesMod.Items.LoL
         {
             item.accessory = true;
             base.UpdateInventory(player);
+        }
+
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage,
+            ref float knockBack)
+        {
+            Projectile proj = Projectile.NewProjectileDirect(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI);
+            proj.melee = false;
+            proj.magic = true;
+            return false;
         }
 
         public override void AddRecipes()

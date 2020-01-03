@@ -21,7 +21,7 @@ namespace DoomBubblesMod.Items.LoL
             item.width = 52;
             item.height = 52;
             item.useTime = 40;
-            item.scale = 1.0f;
+            item.scale = 1.1f;
             item.useAnimation = 40;
             item.useStyle = 1;
             item.knockBack = 4;

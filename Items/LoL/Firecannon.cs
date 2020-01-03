@@ -41,7 +41,7 @@ namespace DoomBubblesMod.Items.LoL
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Firecannon");
-            Tooltip.SetDefault("Three round burst\nFires a spread of bullets\nEnergized - Sharpshooter\nYour bullets travel faster while fully Energized");
+            Tooltip.SetDefault("Three round burst\nFires a spread of bullets\nEnergized - Sharpshooter\nEnergized bullets travel faster and always crit");
         }
         
         public override void HoldItem(Player player)
@@ -117,6 +117,7 @@ namespace DoomBubblesMod.Items.LoL
                 Main.PlaySound(2, position, 38);
             }
 
+            player.GetModPlayer<LoLPlayer>().energized += 3;
             return false;
         }
 

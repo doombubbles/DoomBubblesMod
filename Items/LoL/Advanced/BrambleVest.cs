@@ -19,7 +19,7 @@ namespace DoomBubblesMod.Items.LoL.Advanced
             item.height = 30;
             item.rare = 4;
             item.accessory = true;
-            item.defense = 5;
+            item.defense = 7;
         }
 
 

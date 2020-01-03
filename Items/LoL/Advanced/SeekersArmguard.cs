@@ -38,6 +38,7 @@ namespace DoomBubblesMod.Items.LoL.Advanced
             Main.LocalPlayer.GetModPlayer<LoLPlayer>().seekerStacks = 0;
             base.OnCraft(recipe);
         }
+        
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             base.ModifyTooltips(tooltips);
