@@ -9,7 +9,8 @@ namespace DoomBubblesMod.Items.LoL.Advanced
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Restores 20 mana and increases mana regeneration breifly");
+            Tooltip.SetDefault("Restores 20 mana and increases mana regeneration breifly\n" +
+                               "Equipped - 30 maximum mana, 10% cooldown reduction and magic damage");
         }
 
         public override void SetDefaults()
@@ -24,6 +25,20 @@ namespace DoomBubblesMod.Items.LoL.Advanced
             item.rare = 1;
             item.buffTime = 60 * 20;
             item.buffType = BuffID.ManaRegeneration;
+        }
+
+        public override void UpdateAccessory(Player player, bool hideVisual)
+        {
+            base.UpdateAccessory(player, hideVisual);
+            player.GetModPlayer<LoLPlayer>().cdr += .1f;
+            player.statManaMax2 += 30;
+            player.magicDamage += .1f;
+        }
+
+        public override void UpdateInventory(Player player)
+        {
+            base.UpdateInventory(player);
+            item.accessory = true;
         }
 
         public override bool UseItem(Player player)

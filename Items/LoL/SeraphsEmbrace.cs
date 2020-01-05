@@ -47,7 +47,6 @@ namespace DoomBubblesMod.Items.LoL
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.magicDamage += player.statManaMax2 * .0006f;
             player.manaCost -= .25f;
             player.statManaMax2 += 125;
             player.GetModPlayer<LoLPlayer>().seraph = true;
@@ -96,11 +95,8 @@ namespace DoomBubblesMod.Items.LoL
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(mod.ItemType("Tear"));
-            recipe.AddIngredient(mod.ItemType("LostChapter"));
-            recipe.AddIngredient(ItemID.GoldCoin, 10);
-            recipe.AddIngredient(ItemID.SilverCoin, 50);
-            recipe.AddTile(TileID.Autohammer);
+            recipe.AddIngredient(mod.ItemType("ArchangelsStaff"));
+            recipe.AddTile(TileID.LunarCraftingStation);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

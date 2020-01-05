@@ -34,6 +34,10 @@ namespace DoomBubblesMod.Items.LoL
 		{
 			player.GetModPlayer<LoLPlayer>().reaver = true;
 			player.GetModPlayer<LoLPlayer>().cdr += .2f;
+			player.meleeCrit += 10;
+			player.magicCrit += 10;
+			player.rangedCrit += 10;
+			player.thrownCrit += 10;
 			base.UpdateAccessory(player, hideVisual);
 		}
 
@@ -53,7 +57,8 @@ namespace DoomBubblesMod.Items.LoL
 		public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Nonmagic attacks restore missing mana\n" +
-                               "20% increased cooldown reduction");
+                               "20% increased cooldown reduction\n" +
+                               "10% increased critical strike chance");
         }
 
 		public override void AddRecipes()

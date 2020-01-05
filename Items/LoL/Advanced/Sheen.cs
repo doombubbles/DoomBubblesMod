@@ -8,8 +8,7 @@ namespace DoomBubblesMod.Items.LoL.Advanced
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("If you've hit with a magic attack in the last 2 seconds,\n" +
-                               "your melee damage is increased by 100%.\n" +
+            Tooltip.SetDefault("After hitting with a projectile, your next swing deals bonus melee damage\n" +
                                "Equipped - 25 mana and 10% cdr");
         }
 
@@ -33,22 +32,17 @@ namespace DoomBubblesMod.Items.LoL.Advanced
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<LoLPlayer>().sheen = true;
+            player.GetModPlayer<LoLPlayer>().sheen2 = true;
             player.statManaMax2 += 25;
             player.GetModPlayer<LoLPlayer>().cdr += .1f;
-            if (player.HasBuff(mod.BuffType("Sheen"))) player.meleeDamage += 1f;
             base.UpdateAccessory(player, hideVisual);
         }
 
         public override void HoldItem(Player player)
         {
             player.GetModPlayer<LoLPlayer>().cdr += .1f;
+            player.GetModPlayer<LoLPlayer>().sheen2 = true;
             base.HoldItem(player);
-        }
-
-        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
-        {
-            if (player.HasBuff(mod.BuffType("Sheen"))) add += 1f;
-            base.ModifyWeaponDamage(player, ref add, ref mult, ref flat);
         }
 
         public override void UpdateInventory(Player player)

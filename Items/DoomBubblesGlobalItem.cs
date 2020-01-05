@@ -28,7 +28,8 @@ namespace DoomBubblesMod.Items
 				{"Waifu in a Bottle", "Weeaboo in a Bottle"},
 				{"Rare Waifu in a Bottle", "Rare Weeaboo in a Bottle"},
 				{"Twin's Ire", "Twin's Aiur"},
-				{"Crystal Ball", "Krystal Ball"}
+				{"Crystal Ball", "Krystal Ball"},
+				{"Omega Core", "Varp Kore"}
 			};
 
 			foreach ( KeyValuePair<string, string> kvp in itemNameOverrides)

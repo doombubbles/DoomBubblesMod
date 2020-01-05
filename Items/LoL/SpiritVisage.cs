@@ -39,7 +39,7 @@ namespace DoomBubblesMod.Items.LoL
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(mod.ItemType("RubyCrystal"));
             recipe.AddIngredient(ItemID.GoldCoin, 4);
-            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.AddTile(TileID.Autohammer);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

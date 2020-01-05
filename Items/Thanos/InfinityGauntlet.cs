@@ -44,7 +44,6 @@ namespace DoomBubblesMod.Items.Thanos
             item.useStyle = 4;
             item.useTurn = true;
 
-            item.accessory = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -60,6 +59,7 @@ namespace DoomBubblesMod.Items.Thanos
 
         public override void UpdateInventory(Player player)
         {
+            item.accessory = true;
             switch (player.GetModPlayer<ThanosPlayer>().gem)
             {
                 case 0:

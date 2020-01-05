@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
@@ -32,6 +33,12 @@ namespace DoomBubblesMod.Projectiles.LoL
                 int dust1 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 62, projectile.velocity.X, projectile.velocity.Y);
             }
             projectile.velocity.Y += .2f;
+        }
+
+        public override bool? CanHitNPC(NPC target)
+        {
+            if (projectile.timeLeft > 50 && target.whoAmI == (int)Math.Round(projectile.ai[0])) return false;
+            return base.CanHitNPC(target);
         }
     }
 }

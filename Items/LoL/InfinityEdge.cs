@@ -25,11 +25,17 @@ namespace DoomBubblesMod.Items.LoL
             item.useTurn = true;
             item.crit = 21;
             item.scale = 1.2f;
+            item.shoot = mod.ProjectileType("Edge");
+            item.shootSpeed = 13f;
 		}
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			player.GetModPlayer<LoLPlayer>().rage = true;
+			player.GetModPlayer<LoLPlayer>().iedge = true;
+			player.meleeCrit += 10;
+			player.magicCrit += 10;
+			player.rangedCrit += 10;
+			player.thrownCrit += 10;
 			base.UpdateAccessory(player, hideVisual);
 		}
 
@@ -42,7 +48,8 @@ namespace DoomBubblesMod.Items.LoL
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Infinity Edge");
-            Tooltip.SetDefault("Increased critical strike power");
+            Tooltip.SetDefault("Increased critical strike power\n" +
+                               "Equipped - 10% increased critical strike chance");
         }
 
 		public override void AddRecipes()
@@ -66,7 +73,31 @@ namespace DoomBubblesMod.Items.LoL
 			}
         }
 
-        public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
+		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage,
+			ref float knockBack)
+		{
+			Vector2 delta = (Main.MouseWorld - position).SafeNormalize(new Vector2(speedX, speedY).SafeNormalize(new Vector2(0, 0.1f)));
+
+			Vector2 i = Main.MouseWorld;
+			while (Main.screenPosition.X < i.X && Main.screenPosition.Y < i.Y &&
+			       Main.screenPosition.X + Main.screenWidth > i.X && Main.screenPosition.Y + Main.screenHeight > i.Y)
+			{
+				i += delta;
+			}
+
+			i += delta * 10;
+
+			Vector2 actualSpawn = i;
+			
+			Vector2 velocity =
+				(Main.MouseWorld - actualSpawn).SafeNormalize(
+					(Main.MouseWorld - position).SafeNormalize(Vector2.Zero)) * new Vector2(speedX, speedY).Length();
+
+			Projectile.NewProjectile(actualSpawn, velocity, type, damage, knockBack, player.whoAmI, (Main.MouseWorld - actualSpawn).Length() / velocity.Length());
+			return false;
+		}
+
+		public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
         {
             if (crit)
             {

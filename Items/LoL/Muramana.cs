@@ -31,6 +31,8 @@ namespace DoomBubblesMod.Items.LoL
             item.autoReuse = true;
             item.useTurn = true;
             item.scale = 1.2f;
+            item.shoot = mod.ProjectileType("Manamura");
+            item.shootSpeed = 11f;
         }
 
         public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
@@ -41,10 +43,6 @@ namespace DoomBubblesMod.Items.LoL
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.meleeDamage += player.statManaMax2 * .0005f;
-            player.rangedDamage += player.statManaMax2 * .0005f;
-            player.thrownDamage += player.statManaMax2 * .0005f;
-            player.minionDamage += player.statManaMax2 * .0005f;
             player.manaCost -= .15f;
             player.statManaMax2 += 100;
             player.GetModPlayer<LoLPlayer>().muramana = true;

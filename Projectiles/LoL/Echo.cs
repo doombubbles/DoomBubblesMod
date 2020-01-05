@@ -71,14 +71,14 @@ namespace DoomBubblesMod.Projectiles.LoL
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            Projectile.NewProjectile(projectile.position.X, projectile.position.Y, 0f, 4f, mod.ProjectileType("Echo2"), projectile.damage / 3, projectile.knockBack / 3, Main.player[Main.myPlayer].whoAmI); // /\
-            Projectile.NewProjectile(projectile.position.X, projectile.position.Y, 0f, -4f, mod.ProjectileType("Echo2"), projectile.damage / 3, projectile.knockBack / 3, Main.player[Main.myPlayer].whoAmI); // \/
-            Projectile.NewProjectile(projectile.position.X, projectile.position.Y, 4f, 0f, mod.ProjectileType("Echo2"), projectile.damage / 3, projectile.knockBack / 3, Main.player[Main.myPlayer].whoAmI); // >
-            Projectile.NewProjectile(projectile.position.X, projectile.position.Y, -4f, 0f, mod.ProjectileType("Echo2"), projectile.damage / 3, projectile.knockBack / 3, Main.player[Main.myPlayer].whoAmI); // <
-            Projectile.NewProjectile(projectile.position.X, projectile.position.Y, 2 * (float)Math.Sqrt(2), 2 * (float)Math.Sqrt(2), mod.ProjectileType("Echo2"), projectile.damage / 3, projectile.knockBack / 3, Main.player[Main.myPlayer].whoAmI);
-            Projectile.NewProjectile(projectile.position.X, projectile.position.Y, -2 * (float)Math.Sqrt(2), -2 * (float)Math.Sqrt(2), mod.ProjectileType("Echo2"), projectile.damage / 3, projectile.knockBack / 3, Main.player[Main.myPlayer].whoAmI);
-            Projectile.NewProjectile(projectile.position.X, projectile.position.Y, 2 * (float)Math.Sqrt(2), -2 * (float)Math.Sqrt(2), mod.ProjectileType("Echo2"), projectile.damage / 3, projectile.knockBack / 3, Main.player[Main.myPlayer].whoAmI);
-            Projectile.NewProjectile(projectile.position.X, projectile.position.Y, -2 * (float)Math.Sqrt(2), 2 * (float)Math.Sqrt(2), mod.ProjectileType("Echo2"), projectile.damage / 3, projectile.knockBack / 3, Main.player[Main.myPlayer].whoAmI);
+            Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, 4f, mod.ProjectileType("Echo2"), projectile.damage / 3, projectile.knockBack / 3, Main.player[Main.myPlayer].whoAmI, target.whoAmI); // /\
+            Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, -4f, mod.ProjectileType("Echo2"), projectile.damage / 3, projectile.knockBack / 3, Main.player[Main.myPlayer].whoAmI, target.whoAmI); // \/
+            Projectile.NewProjectile(target.Center.X, target.Center.Y, 4f, 0f, mod.ProjectileType("Echo2"), projectile.damage / 3, projectile.knockBack / 3, Main.player[Main.myPlayer].whoAmI, target.whoAmI); // >
+            Projectile.NewProjectile(target.Center.X, target.Center.Y, -4f, 0f, mod.ProjectileType("Echo2"), projectile.damage / 3, projectile.knockBack / 3, Main.player[Main.myPlayer].whoAmI, target.whoAmI); // <
+            Projectile.NewProjectile(target.Center.X, target.Center.Y, 2 * (float)Math.Sqrt(2), 2 * (float)Math.Sqrt(2), mod.ProjectileType("Echo2"), projectile.damage / 3, projectile.knockBack / 3, Main.player[Main.myPlayer].whoAmI, target.whoAmI);
+            Projectile.NewProjectile(target.Center.X, target.Center.Y, -2 * (float)Math.Sqrt(2), -2 * (float)Math.Sqrt(2), mod.ProjectileType("Echo2"), projectile.damage / 3, projectile.knockBack / 3, Main.player[Main.myPlayer].whoAmI, target.whoAmI);
+            Projectile.NewProjectile(target.Center.X, target.Center.Y, 2 * (float)Math.Sqrt(2), -2 * (float)Math.Sqrt(2), mod.ProjectileType("Echo2"), projectile.damage / 3, projectile.knockBack / 3, Main.player[Main.myPlayer].whoAmI, target.whoAmI);
+            Projectile.NewProjectile(target.Center.X, target.Center.Y, -2 * (float)Math.Sqrt(2), 2 * (float)Math.Sqrt(2), mod.ProjectileType("Echo2"), projectile.damage / 3, projectile.knockBack / 3, Main.player[Main.myPlayer].whoAmI, target.whoAmI);
         }
     }
 }

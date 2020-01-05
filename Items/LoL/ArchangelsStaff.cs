@@ -45,7 +45,7 @@ namespace DoomBubblesMod.Items.LoL
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.magicDamage += player.statManaMax2 * .0003f;
+            player.GetModPlayer<LoLPlayer>().archangel = true;
             player.manaCost -= .25f;
             player.statManaMax2 += 50 + Math.Min(player.GetModPlayer<LoLPlayer>().tearStacks, 75);
             base.UpdateAccessory(player, hideVisual);

@@ -41,16 +41,19 @@ namespace DoomBubblesMod.Items.LoL
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Firecannon");
-            Tooltip.SetDefault("Three round burst\nFires a spread of bullets\nEnergized - Sharpshooter\nEnergized bullets travel faster and always crit");
+            Tooltip.SetDefault("Energized - Sharpshooter\n" +
+                               "Energized bullets travel faster and always crit\n" +
+                               "Equipped - 10% crit chance, attack speed, and move speed");
         }
-        
+
         public override void HoldItem(Player player)
         {
             player.GetModPlayer<LoLPlayer>().sharpshooter = true;
             base.HoldItem(player);
         }
-        
-        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat) {
+
+        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
+        {
             // Here we use the multiplicative damage modifier because Terraria does this approach for Ammo damage bonuses. 
             mult *= player.bulletDamage;
         }
@@ -59,6 +62,25 @@ namespace DoomBubblesMod.Items.LoL
         {
             base.UpdateAccessory(player, hideVisual);
             player.GetModPlayer<LoLPlayer>().sharpshooter = true;
+            player.meleeCrit += 10;
+            player.magicCrit += 10;
+            player.rangedCrit += 10;
+            player.thrownCrit += 10;
+            Mod gottaGoFast = ModLoader.GetMod("GottaGoFast");
+            float speed = .1f;
+            if(gottaGoFast != null)
+            {
+                //First Argument is a string for the type; either "magicSpeed", "rangedSpeed" or "attackSpeed"
+                //Second Argument is an int for the index of the player in question; You can get that using player.whoAmI
+                //Third argument is a float for the value to add; e.g. .1f for 10% increase, -.05f for 5% decrease
+                gottaGoFast.Call("attackSpeed", player.whoAmI, speed);
+            } else {
+                //If the player doesn't have the mod, just increase melee speed
+                player.meleeSpeed += speed;
+            }
+
+            player.moveSpeed += .1f;
+            player.maxRunSpeed += 1f;
         }
 
         public override void AddRecipes()
@@ -117,7 +139,7 @@ namespace DoomBubblesMod.Items.LoL
                 Main.PlaySound(2, position, 38);
             }
 
-            player.GetModPlayer<LoLPlayer>().energized += 3;
+            player.GetModPlayer<LoLPlayer>().energized += 1;
             return false;
         }
 

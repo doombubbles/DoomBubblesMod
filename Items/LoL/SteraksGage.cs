@@ -23,7 +23,7 @@ namespace DoomBubblesMod.Items.LoL
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sterak's Gage");
-            Tooltip.SetDefault( "Increases the base damage of your melee weapons by 10%\n" +
+            Tooltip.SetDefault( "Increases the base damage of your melee weapons by 15%\n" +
                                 "Increases max life by 45\n" +
                                 "Taking 25% of your current health activates Sterak's Fury");
         }

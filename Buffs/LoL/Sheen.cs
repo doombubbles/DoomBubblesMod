@@ -8,7 +8,7 @@ namespace DoomBubblesMod.Buffs.LoL
 		public override void SetDefaults()
 		{
 			DisplayName.SetDefault("Spellblade");
-			Description.SetDefault("Bonus melee damage");
+			Description.SetDefault("Bonus swing damage");
 			Main.debuff[Type] = false;
 			Main.pvpBuff[Type] = true;
 			Main.buffNoSave[Type] = true;

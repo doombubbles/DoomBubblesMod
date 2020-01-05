@@ -172,7 +172,7 @@ namespace DoomBubblesMod
         {
             if (item.magic && manaTap && item.mana > 0)
             {
-                flat += item.mana;
+                flat += item.mana * add * mult;
             }
         }
     }

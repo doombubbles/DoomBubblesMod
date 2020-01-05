@@ -8,7 +8,9 @@ namespace DoomBubblesMod.Items.LoL.Advanced
     {
         public override void SetStaticDefaults()
         {   
-            Tooltip.SetDefault("Energized - Jolt\nEnergized attacks deal 180 bonus damage");
+            Tooltip.SetDefault("Energized - Jolt\n" +
+                               "Energized attacks deal 180 bonus damage\n" +
+                               "Equipped - 5% increased attack speed");
         }
         
         public override void SetDefaults()
@@ -44,6 +46,18 @@ namespace DoomBubblesMod.Items.LoL.Advanced
         {
             base.UpdateAccessory(player, hideVisual);
             player.GetModPlayer<LoLPlayer>().jolt = true;
+            Mod gottaGoFast = ModLoader.GetMod("GottaGoFast");
+            float speed = .05f;
+            if(gottaGoFast != null)
+            {
+                //First Argument is a string for the type; either "magicSpeed", "rangedSpeed" or "attackSpeed"
+                //Second Argument is an int for the index of the player in question; You can get that using player.whoAmI
+                //Third argument is a float for the value to add; e.g. .1f for 10% increase, -.05f for 5% decrease
+                gottaGoFast.Call("attackSpeed", player.whoAmI, speed);
+            } else {
+                //If the player doesn't have the mod, just increase melee speed
+                player.meleeSpeed += speed;
+            }
         }
 
         public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)

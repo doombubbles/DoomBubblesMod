@@ -14,15 +14,15 @@ namespace DoomBubblesMod.Items.LoL
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Rabadon's Deathcap");
-            Tooltip.SetDefault("10% increased magic damage\n" +
+            Tooltip.SetDefault("12% increased magic damage\n" +
                                "Magic damage increases are 25% more effective");
         }
 
         public override void SetDefaults()
         {
             item.value = Item.buyPrice(0, 36);
-            item.width = 40;
-            item.height = 36;
+            item.width = 44;
+            item.height = 40;
             item.rare = 8;
             item.accessory = true;
         }
@@ -30,7 +30,7 @@ namespace DoomBubblesMod.Items.LoL
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.magicDamage += .1f;
+            player.magicDamage += .12f;
             player.GetModPlayer<LoLPlayer>().rabadon = true;
 
         }

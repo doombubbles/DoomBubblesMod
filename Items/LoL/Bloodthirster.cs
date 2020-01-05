@@ -10,7 +10,8 @@ namespace DoomBubblesMod.Items.LoL
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("20% Lifesteal\nYour Lifesteal limit is doubled");
+            Tooltip.SetDefault("20% Lifesteal\n" +
+                               "Your Lifesteal limit is doubled\n");
         }
 
         public override void SetDefaults()
@@ -38,6 +39,7 @@ namespace DoomBubblesMod.Items.LoL
             player.GetModPlayer<LoLPlayer>().lifesteal += .2f;
             player.GetModPlayer<DoomBubblesPlayer>().lifestealCap += 80f;
             player.GetModPlayer<DoomBubblesPlayer>().lifestealCapX += 70f;
+            player.meleeDamage += .08f;
             base.UpdateAccessory(player, hideVisual);
         }
 

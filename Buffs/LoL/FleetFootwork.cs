@@ -17,13 +17,15 @@ namespace DoomBubblesMod.Buffs.LoL
 
         public override void Update(Player player, ref int buffIndex)
         {
-	        
 	        player.moveSpeed *= 1.3f;
 	        player.maxFallSpeed *= 1.3f;
 	        player.maxRunSpeed *= 1.3f;
-	        player.wingTime += .3f;
-	        
-	        if (player.buffTime[buffIndex] < 120 && player.buffTime[buffIndex] > 115) player.velocity *= 1.3f;
+
+	        if (player.buffTime[buffIndex] == 119)
+	        {
+		        player.velocity.X *= 1.5f;
+		        player.velocity.Y *= 2f;
+	        }
         }
 
     }

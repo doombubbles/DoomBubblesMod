@@ -8,6 +8,11 @@ namespace DoomBubblesMod.Items.LoL.Advanced
 {
     public class Zeal : ModItem
     {
+        public override void SetStaticDefaults()
+        {
+            Tooltip.SetDefault("Equipped - 5% crit chance, attack speed, and move speed");
+        }
+
         public override void SetDefaults()
         {
             item.damage = 37;
@@ -25,6 +30,36 @@ namespace DoomBubblesMod.Items.LoL.Advanced
             item.useTurn = true;
             item.scale = 1.2f;
             item.crit = 21;
+        }
+
+        public override void UpdateAccessory(Player player, bool hideVisual)
+        {
+            base.UpdateAccessory(player, hideVisual);
+            player.meleeCrit += 5;
+            player.magicCrit += 5;
+            player.rangedCrit += 5;
+            player.thrownCrit += 5;
+            Mod gottaGoFast = ModLoader.GetMod("GottaGoFast");
+            float speed = .05f;
+            if(gottaGoFast != null)
+            {
+                //First Argument is a string for the type; either "magicSpeed", "rangedSpeed" or "attackSpeed"
+                //Second Argument is an int for the index of the player in question; You can get that using player.whoAmI
+                //Third argument is a float for the value to add; e.g. .1f for 10% increase, -.05f for 5% decrease
+                gottaGoFast.Call("attackSpeed", player.whoAmI, speed);
+            } else {
+                //If the player doesn't have the mod, just increase melee speed
+                player.meleeSpeed += speed;
+            }
+
+            player.moveSpeed += .05f;
+            player.maxRunSpeed += .5f;
+        }
+
+        public override void UpdateInventory(Player player)
+        {
+            base.UpdateInventory(player);
+            item.accessory = true;
         }
 
         public override bool UseItem(Player player)

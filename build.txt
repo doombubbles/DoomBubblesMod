@@ -1,5 +1,5 @@
 author = doombubbles
-version = 0.33.7
+version = 0.33.9
 displayName = Doom Bubbles' Mod
 includeSource = false
 buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*
