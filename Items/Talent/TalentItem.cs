@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using Color = Microsoft.Xna.Framework.Color;
 
 namespace DoomBubblesMod.Items
 {
@@ -20,12 +19,12 @@ namespace DoomBubblesMod.Items
         private bool Talent2 { get; set; }
         private bool Talent3 { get; set; }
         public short ChosenTalent { get; private set; }
-        
+
         public override bool CloneNewInstances => true;
-        
+
         public override TagCompound Save()
         {
-            TagCompound tag = new TagCompound();
+            var tag = new TagCompound();
             tag.Set("talent1", Talent1);
             tag.Set("talent2", Talent2);
             tag.Set("talent3", Talent3);
@@ -73,7 +72,7 @@ namespace DoomBubblesMod.Items
                     return ChosenTalent >= 0;
                 }
             }
-            
+
             return false;
         }
 
@@ -98,10 +97,13 @@ namespace DoomBubblesMod.Items
                     Talent3 = true;
                     ChosenTalent = 3;
                     Main.mouseItem = new Item();
-                } else if (Main.mouseItem.type == ItemID.GravityGlobe && ChosenTalent != -1 && Talent1 && Talent2 && Talent3)
+                }
+                else if (Main.mouseItem.type == ItemID.GravityGlobe && ChosenTalent != -1 && Talent1 && Talent2 &&
+                         Talent3)
                 {
                     ChosenTalent = -1;
-                } else if (Main.mouseItem.type == 0)
+                }
+                else if (Main.mouseItem.type == 0)
                 {
                     int ogTalent = ChosenTalent;
                     if (ChosenTalent == 1)
@@ -109,25 +111,30 @@ namespace DoomBubblesMod.Items
                         if (Talent2)
                         {
                             ChosenTalent = 2;
-                        } else if (Talent3)
+                        }
+                        else if (Talent3)
                         {
                             ChosenTalent = 3;
                         }
-                    } else if (ChosenTalent == 2)
+                    }
+                    else if (ChosenTalent == 2)
                     {
                         if (Talent3)
                         {
                             ChosenTalent = 3;
-                        } else if (Talent1)
+                        }
+                        else if (Talent1)
                         {
                             ChosenTalent = 1;
                         }
-                    } else if (ChosenTalent == 3)
+                    }
+                    else if (ChosenTalent == 3)
                     {
                         if (Talent1)
                         {
                             ChosenTalent = 1;
-                        } else if (Talent2)
+                        }
+                        else if (Talent2)
                         {
                             ChosenTalent = 2;
                         }
@@ -135,9 +142,11 @@ namespace DoomBubblesMod.Items
 
                     if (ChosenTalent != ogTalent)
                     {
-                        Main.PlaySound(SoundLoader.customSoundType, (int)Main.player[item.owner].position.X, (int)Main.player[item.owner].position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/TalentChange"));
+                        Main.PlaySound(SoundLoader.customSoundType, (int) Main.player[item.owner].position.X,
+                            (int) Main.player[item.owner].position.Y,
+                            mod.GetSoundSlot(SoundType.Custom, "Sounds/TalentChange"));
                     }
-                } 
+                }
             }
         }
 
@@ -151,30 +160,35 @@ namespace DoomBubblesMod.Items
         {
             if (ChosenTalent == 1 || ChosenTalent == -1)
             {
-                tooltips.Add(new TooltipLine(mod, "talent1", mod.GetItem(Talent1Name).DisplayName.GetDefault().Replace("Talent: ", "") + ":")
+                tooltips.Add(new TooltipLine(mod, "talent1",
+                    mod.GetItem(Talent1Name).DisplayName.GetDefault().Replace("Talent: ", "") + ":")
                 {
                     overrideColor = TalentColor
                 });
                 tooltips.Add(new TooltipLine(mod, "1", mod.GetItem(Talent1Name).Tooltip.GetDefault().Split('\n')[1]));
             }
+
             if (ChosenTalent == 2 || ChosenTalent == -1)
             {
-                tooltips.Add(new TooltipLine(mod, "talent2", mod.GetItem(Talent2Name).DisplayName.GetDefault().Replace("Talent: ", "") + ":")
+                tooltips.Add(new TooltipLine(mod, "talent2",
+                    mod.GetItem(Talent2Name).DisplayName.GetDefault().Replace("Talent: ", "") + ":")
                 {
                     overrideColor = TalentColor
                 });
                 tooltips.Add(new TooltipLine(mod, "2", mod.GetItem(Talent2Name).Tooltip.GetDefault().Split('\n')[1]));
             }
+
             if (ChosenTalent == 3 || ChosenTalent == -1)
             {
-                tooltips.Add(new TooltipLine(mod, "talent3", mod.GetItem(Talent3Name).DisplayName.GetDefault().Replace("Talent: ", "") + ":")
+                tooltips.Add(new TooltipLine(mod, "talent3",
+                    mod.GetItem(Talent3Name).DisplayName.GetDefault().Replace("Talent: ", "") + ":")
                 {
                     overrideColor = TalentColor
                 });
                 tooltips.Add(new TooltipLine(mod, "3", mod.GetItem(Talent3Name).Tooltip.GetDefault().Split('\n')[1]));
             }
 
-            if (ChosenTalent > 0 && (Talent1 && Talent2) || (Talent1 && Talent3 || (Talent2 && Talent3)))
+            if (ChosenTalent > 0 && Talent1 && Talent2 || Talent1 && Talent3 || Talent2 && Talent3)
             {
                 tooltips.Add(new TooltipLine(mod, "talents", "[Right click to swap talent]"));
             }

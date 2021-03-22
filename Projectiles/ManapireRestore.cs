@@ -21,23 +21,23 @@ namespace DoomBubblesMod.Projectiles
 
         public override void AI()
         {
-            int healTarget = (int) projectile.ai[0];
-            float speed = 4f;
-            Vector2 vector31 = new Vector2(projectile.position.X + (float) projectile.width * 0.5f,
-                projectile.position.Y + (float) projectile.height * 0.5f);
-            float dX = Main.player[healTarget].Center.X - vector31.X;
-            float dY = Main.player[healTarget].Center.Y - vector31.Y;
-            float distance = (float) Math.Sqrt(dX * dX + dY * dY);
+            var healTarget = (int) projectile.ai[0];
+            var speed = 4f;
+            var vector31 = new Vector2(projectile.position.X + projectile.width * 0.5f,
+                projectile.position.Y + projectile.height * 0.5f);
+            var dX = Main.player[healTarget].Center.X - vector31.X;
+            var dY = Main.player[healTarget].Center.Y - vector31.Y;
+            var distance = (float) Math.Sqrt(dX * dX + dY * dY);
             if (distance < 50f &&
-                projectile.position.X < Main.player[healTarget].position.X + (float) Main.player[healTarget].width &&
-                projectile.position.X + (float) projectile.width > Main.player[healTarget].position.X &&
-                projectile.position.Y < Main.player[healTarget].position.Y + (float) Main.player[healTarget].height &&
-                projectile.position.Y + (float) projectile.height > Main.player[healTarget].position.Y)
+                projectile.position.X < Main.player[healTarget].position.X + Main.player[healTarget].width &&
+                projectile.position.X + projectile.width > Main.player[healTarget].position.X &&
+                projectile.position.Y < Main.player[healTarget].position.Y + Main.player[healTarget].height &&
+                projectile.position.Y + projectile.height > Main.player[healTarget].position.Y)
             {
                 if (projectile.owner == Main.myPlayer)
                 {
-                    Player player = Main.player[healTarget];
-                    int amount = (int) projectile.ai[1];
+                    var player = Main.player[healTarget];
+                    var amount = (int) projectile.ai[1];
 
                     if (player.statMana < player.statManaMax2)
                     {
@@ -55,7 +55,7 @@ namespace DoomBubblesMod.Projectiles
                         if (amount != 0)
                         {
                             player.lifeSteal -= amount;
-                            player.HealEffect(amount, broadcast: false);
+                            player.HealEffect(amount, false);
                             player.statLife += amount;
                             if (Main.player[healTarget].statLife > Main.player[healTarget].statLifeMax2)
                             {
@@ -77,18 +77,18 @@ namespace DoomBubblesMod.Projectiles
             projectile.velocity.Y = (projectile.velocity.Y * 15f + dY) / 16f;
 
             int num4;
-            for (int num500 = 0; num500 < 3; num500 = num4 + 1)
+            for (var num500 = 0; num500 < 3; num500 = num4 + 1)
             {
-                float num501 = projectile.velocity.X * 0.334f * (float) num500;
-                float num502 = (0f - projectile.velocity.Y * 0.334f) * (float) num500;
-                int num503 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width,
-                    projectile.height, mod.DustType("ManapireDust2"), 0f, 0f, 100, default(Color), 1.1f);
+                var num501 = projectile.velocity.X * 0.334f * num500;
+                var num502 = (0f - projectile.velocity.Y * 0.334f) * num500;
+                var num503 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width,
+                    projectile.height, mod.DustType("ManapireDust2"), 0f, 0f, 100, default, 1.1f);
                 Main.dust[num503].noGravity = true;
-                Dust dust3 = Main.dust[num503];
+                var dust3 = Main.dust[num503];
                 dust3.velocity *= 0f;
-                Dust dust70 = Main.dust[num503];
+                var dust70 = Main.dust[num503];
                 dust70.position.X = dust70.position.X - num501;
-                Dust dust71 = Main.dust[num503];
+                var dust71 = Main.dust[num503];
                 dust71.position.Y = dust71.position.Y - num502;
                 num4 = num500;
             }

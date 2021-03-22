@@ -30,7 +30,7 @@ namespace DoomBubblesMod.Projectiles.HotS
 
         public override void AI()
         {
-            Dust dust = Dust.NewDustPerfect(new Vector2((float) (projectile.position.X), (float) (projectile.position.Y)), 180);
+            var dust = Dust.NewDustPerfect(new Vector2(projectile.position.X, projectile.position.Y), 180);
             dust.noGravity = true;
         }
     }

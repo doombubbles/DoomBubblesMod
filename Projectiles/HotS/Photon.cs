@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,7 +9,7 @@ namespace DoomBubblesMod.Projectiles.HotS
     public class Photon : HappyProjectile
     {
         public int ChosenTalent => (int) Math.Round(projectile.ai[0]);
-        
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Photon");
@@ -32,13 +31,16 @@ namespace DoomBubblesMod.Projectiles.HotS
             projectile.aiStyle = -1;
         }
 
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit,
+            ref int hitDirection)
         {
             if (target.whoAmI == (int) projectile.ai[1])
             {
                 projectile.penetrate = 1;
-                Main.PlaySound(SoundLoader.customSoundType, (int) projectile.position.X, (int) projectile.position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/PhotonHit"));
+                Main.PlaySound(SoundLoader.customSoundType, (int) projectile.position.X, (int) projectile.position.Y,
+                    mod.GetSoundSlot(SoundType.Custom, "Sounds/PhotonHit"));
             }
+
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
 
@@ -62,16 +64,17 @@ namespace DoomBubblesMod.Projectiles.HotS
 
         public void Homing()
         {
-            NPC target = Main.npc[(int) projectile.ai[1]];
+            var target = Main.npc[(int) projectile.ai[1]];
             if (!target.active)
             {
                 projectile.Kill();
             }
-            float x = projectile.Center.X;
-            float y = projectile.Center.Y - 6;
-            double theta = Math.Atan2(target.Center.Y - y, target.Center.X - x);
-            double dX = projectile.localAI[0] * Math.Cos(theta);
-            double dY = projectile.localAI[0] * Math.Sin(theta);
+
+            var x = projectile.Center.X;
+            var y = projectile.Center.Y - 6;
+            var theta = Math.Atan2(target.Center.Y - y, target.Center.X - x);
+            var dX = projectile.localAI[0] * Math.Cos(theta);
+            var dY = projectile.localAI[0] * Math.Sin(theta);
             projectile.velocity = new Vector2((float) dX, (float) dY);
         }
     }

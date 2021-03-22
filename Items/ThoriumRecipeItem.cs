@@ -1,4 +1,3 @@
-using Terraria;
 using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Items
@@ -7,7 +6,7 @@ namespace DoomBubblesMod.Items
     {
         public override void AddRecipes()
         {
-            if (DoomBubblesMod.thoriumLoaded.HasValue && DoomBubblesMod.thoriumLoaded.Value)
+            if (DoomBubblesMod.thoriumMod != null)
             {
                 AddThoriumRecipe(ModLoader.GetMod("ThoriumMod"));
             }

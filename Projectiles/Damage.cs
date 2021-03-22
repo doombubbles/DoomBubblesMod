@@ -25,7 +25,8 @@ namespace DoomBubblesMod.Projectiles
             return false;
         }
 
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit,
+            ref int hitDirection)
         {
             crit = (int) Math.Round(projectile.ai[1]) == 1;
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);

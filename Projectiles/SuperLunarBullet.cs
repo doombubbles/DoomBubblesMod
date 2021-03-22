@@ -1,7 +1,4 @@
-using System;
-using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.World.Generation;
 
 namespace DoomBubblesMod.Projectiles
 {
@@ -15,14 +12,17 @@ namespace DoomBubblesMod.Projectiles
                 {
                     return mod.DustType("Solar229");
                 }
+
                 if (projectile.frame == 1)
                 {
                     return mod.DustType("Vortex229");
                 }
+
                 if (projectile.frame == 2)
                 {
                     return mod.DustType("Nebula229");
                 }
+
                 if (projectile.frame == 3)
                 {
                     return mod.DustType("Stardust229");
@@ -43,6 +43,7 @@ namespace DoomBubblesMod.Projectiles
             {
                 projectile.frame = Main.rand.Next(0, 3);
             }
+
             base.AI();
 
             projectile.frameCounter++;
@@ -55,11 +56,12 @@ namespace DoomBubblesMod.Projectiles
                     projectile.frame = 0;
                 }
             }
-            
+
             NebulaEffect();
         }
 
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit,
+            ref int hitDirection)
         {
             SolarEffect(ref damage);
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);

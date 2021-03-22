@@ -1,7 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Items.HotS
@@ -12,7 +11,7 @@ namespace DoomBubblesMod.Items.HotS
         public override string Talent2Name => "TalentDissonance";
         public override string Talent3Name => "TalentLethalOnslaught";
         protected override Color? TalentColor => Color.Red;
-        
+
         private float Length => ChosenTalent == 2 || ChosenTalent == -1 ? 600f : 300f;
 
         public override bool OnlyShootOnSwing => false;
@@ -43,31 +42,53 @@ namespace DoomBubblesMod.Items.HotS
             item.shootSpeed = 10f;
             item.scale = 1.2f;
         }
-        
-        public override void MeleeEffects(Player player, Rectangle hitbox) {
-            if (Main.rand.NextBool(5)) {
+
+        public override void MeleeEffects(Player player, Rectangle hitbox)
+        {
+            if (Main.rand.NextBool(5))
+            {
                 //Emit dusts when swing the sword
-                int dust = Dust.NewDust(new Vector2(hitbox.X, hitbox.Y), hitbox.Width, hitbox.Height, 182);
+                var dust = Dust.NewDust(new Vector2(hitbox.X, hitbox.Y), hitbox.Width, hitbox.Height, 182);
                 Main.dust[dust].noGravity = true;
                 Main.dust[dust].noLight = false;
             }
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage,
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY,
+            ref int type, ref int damage,
             ref float knockBack)
         {
             if (player == Main.LocalPlayer)
             {
                 var dX = Main.MouseWorld.X - player.Center.X;
                 var dY = Main.MouseWorld.Y - player.Center.Y;
-                float theta = new Vector2(dX, dY).ToRotation();
-                position = player.Center;
-                speedX = (float) Math.Cos(theta) * Length / 15f;
-                speedY = (float) Math.Sin(theta) * Length / 15f;
-                int proj = Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack * 2, player.whoAmI, ChosenTalent);
-                Main.projectile[proj].netUpdate = true;
+                var theta = new Vector2(dX, dY).ToRotation();
+
+                for (var i = -1; i <= 1; i++)
+                {
+                    position = player.Center;
+                    speedX = (float) Math.Cos(theta + i * (Math.PI / 2)) * Length / 15f;
+                    speedY = (float) Math.Sin(theta + i * (Math.PI / 2)) * Length / 15f;
+                    if (i != 0)
+                    {
+                        speedX /= 3f;
+                        speedY /= 3f;
+                        position += 1200f / Length * new Vector2(speedX, speedY);
+                    }
+                    else
+                    {
+                        position += 300f / Length * new Vector2(speedX, speedY);
+                    }
+                    
+                    var proj = Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, 
+                        knockBack * 2, player.whoAmI, ChosenTalent);
+                    Main.projectile[proj].netUpdate = true;
+                }
             }
 
+            Main.PlaySound(SoundLoader.customSoundType, (int) position.X, (int) position.Y,
+                mod.GetSoundSlot(SoundType.Custom, "Sounds/DiscordStrike"));
+            
             return false;
         }
     }

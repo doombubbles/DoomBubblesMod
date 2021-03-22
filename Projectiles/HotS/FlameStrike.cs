@@ -1,11 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.Audio;
-using Terraria.ID;
 using Terraria.ModLoader;
-using SoundType = Terraria.ModLoader.SoundType;
 
 namespace DoomBubblesMod.Projectiles.HotS
 {
@@ -52,27 +48,31 @@ namespace DoomBubblesMod.Projectiles.HotS
             {
                 return false;
             }
-            
+
             return base.CanHitNPC(target);
         }
 
 
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit,
+            ref int hitDirection)
         {
             if ((ChosenTalent == 2 || ChosenTalent == -1) && projectile.localAI[1] < .5)
             {
-                int ai = Main.player[projectile.owner].gravControl2 ? 1 : 0;
+                var ai = Main.player[projectile.owner].gravControl2 ? 1 : 0;
                 if (Main.player[projectile.owner].gravControl2)
                 {
                     target.AddBuff(mod.BuffType("LivingBomb"), 152);
-                    int proj = Projectile.NewProjectile(target.Center, new Vector2(0, 0), mod.ProjectileType("LivingBomb"),
+                    var proj = Projectile.NewProjectile(target.Center, new Vector2(0, 0),
+                        mod.ProjectileType("LivingBomb"),
                         (int) (damage / 115f * 160f), 0, projectile.owner, ai, target.whoAmI);
                     Main.projectile[proj].netUpdate = true;
                     Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/LivingBombWand2"), target.Center);
-                } else if (!target.HasBuff(mod.BuffType("LivingBomb")))
+                }
+                else if (!target.HasBuff(mod.BuffType("LivingBomb")))
                 {
                     target.AddBuff(mod.BuffType("LivingBomb"), 150);
-                    int proj = Projectile.NewProjectile(target.Center, new Vector2(0, 0), mod.ProjectileType("LivingBomb"),
+                    var proj = Projectile.NewProjectile(target.Center, new Vector2(0, 0),
+                        mod.ProjectileType("LivingBomb"),
                         (int) (damage / 115f * 160f), 0, projectile.owner, ai, target.whoAmI);
                     Main.projectile[proj].netUpdate = true;
                     Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/LivingBombWand2"), target.Center);
@@ -86,7 +86,8 @@ namespace DoomBubblesMod.Projectiles.HotS
                 damage += target.defDefense * Verdant;
             }
 
-            if ((ChosenTalent == 1 || ChosenTalent == -1) && Main.player[projectile.owner].GetModPlayer<HotSPlayer>().convection < 100)
+            if ((ChosenTalent == 1 || ChosenTalent == -1) &&
+                Main.player[projectile.owner].GetModPlayer<HotSPlayer>().convection < 100)
             {
                 Main.player[projectile.owner].GetModPlayer<HotSPlayer>().convection++;
                 if (!Main.player[projectile.owner].HasBuff(mod.BuffType("Convection")))
@@ -94,9 +95,10 @@ namespace DoomBubblesMod.Projectiles.HotS
                     Main.player[projectile.owner].AddBuff(mod.BuffType("Convection"), 10);
                 }
             }
+
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
-        
+
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             base.OnHitNPC(target, damage, knockback, crit);
@@ -120,7 +122,8 @@ namespace DoomBubblesMod.Projectiles.HotS
                 {
                     Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Flame"), projectile.position);
                 }
-            } else if (projectile.timeLeft == Visible)
+            }
+            else if (projectile.timeLeft == Visible)
             {
                 projectile.alpha = 0;
                 if (Verdant > 0)
@@ -131,7 +134,8 @@ namespace DoomBubblesMod.Projectiles.HotS
                 {
                     Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Strike"), projectile.position);
                 }
-            } else if (projectile.timeLeft < Visible)
+            }
+            else if (projectile.timeLeft < Visible)
             {
                 projectile.alpha = 0;
                 projectile.frameCounter++;
@@ -143,13 +147,13 @@ namespace DoomBubblesMod.Projectiles.HotS
             }
             else
             {
-                for (int i = 0; i < 12 * (1 -(projectile.timeLeft - Visible) / (float) Delay); i++)
+                for (var i = 0; i < 12 * (1 - (projectile.timeLeft - Visible) / (float) Delay); i++)
                 {
-                    foreach (var z in new []{0, 120, 240})
+                    foreach (var z in new[] {0, 120, 240})
                     {
-                        double x = projectile.Center.X + Size * Math.Cos((z + 10 * i) * Math.PI / 180);
-                        double y = projectile.Center.Y + Size * Math.Sin((z + 10 * i) * Math.PI / 180);
-                        int d = Dust.NewDust(new Vector2((float) x, (float) y), 0, 0, 75);
+                        var x = projectile.Center.X + Size * Math.Cos((z + 10 * i) * Math.PI / 180);
+                        var y = projectile.Center.Y + Size * Math.Sin((z + 10 * i) * Math.PI / 180);
+                        var d = Dust.NewDust(new Vector2((float) x, (float) y), 0, 0, 75);
                         Main.dust[d].noGravity = true;
                     }
                 }
@@ -162,9 +166,7 @@ namespace DoomBubblesMod.Projectiles.HotS
                 projectile.localAI[0]++;
                 projectile.frame = 0;
                 projectile.localAI[1] = 0;
-            } 
-            
+            }
         }
-        
     }
 }

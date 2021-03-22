@@ -5,11 +5,10 @@ using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Items.Weapons
 {
-    class SpikyBallBlaster : ModItem
+    internal class SpikyBallBlaster : ModItem
     {
         public override void SetDefaults()
         {
-
             item.value = 100;
 
             item.rare = 0;
@@ -31,8 +30,8 @@ namespace DoomBubblesMod.Items.Weapons
 
         public override void SetStaticDefaults()
         {
-              DisplayName.SetDefault("Spiky Ball Blaster");
-              Tooltip.SetDefault("33% chance not to consume Spiky Balls");
+            DisplayName.SetDefault("Spiky Ball Blaster");
+            Tooltip.SetDefault("33% chance not to consume Spiky Balls");
         }
 
 
@@ -43,10 +42,10 @@ namespace DoomBubblesMod.Items.Weapons
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            var recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.SpikyBall, 100);
             recipe.AddIngredient(ItemID.MeteoriteBar, 10);
-            recipe.AddIngredient(ItemID.FlintlockPistol, 1);
+            recipe.AddIngredient(ItemID.FlintlockPistol);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
@@ -54,12 +53,12 @@ namespace DoomBubblesMod.Items.Weapons
 
         public override bool ConsumeAmmo(Player player)
         {
-            if (Main.rand.Next(1,3) == 1)
+            if (Main.rand.Next(1, 3) == 1)
             {
                 return false;
             }
+
             return base.ConsumeAmmo(player);
-            
         }
     }
 }

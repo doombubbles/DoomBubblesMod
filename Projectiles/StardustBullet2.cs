@@ -1,7 +1,5 @@
 using System;
-using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.World.Generation;
 
 namespace DoomBubblesMod.Projectiles
 {
@@ -15,6 +13,7 @@ namespace DoomBubblesMod.Projectiles
             {
                 return false;
             }
+
             return base.CanHitNPC(target);
         }
     }

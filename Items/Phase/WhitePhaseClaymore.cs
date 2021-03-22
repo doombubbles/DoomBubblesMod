@@ -20,7 +20,7 @@ namespace DoomBubblesMod.Items.Phase
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            var recipe = new ModRecipe(mod);
             recipe.AddIngredient(mod.ItemType("WhitePhaseSword"));
             recipe.AddIngredient(ItemID.FragmentNebula, 5);
             recipe.AddIngredient(ItemID.FragmentSolar, 5);

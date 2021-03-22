@@ -4,12 +4,12 @@ using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Items.Accessories.Emblem
 {
-    class TimsRegret : ModItem
+    internal class TimsRegret : ModItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Tim's Regret");
-            Tooltip.SetDefault("25% increased damage\n100% increased n00b regret");
+            Tooltip.SetDefault("20% increased damage\n100% increased n00b regret");
         }
 
         public override void SetDefaults()
@@ -24,12 +24,12 @@ namespace DoomBubblesMod.Items.Accessories.Emblem
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.allDamage += .25f;
+            player.allDamage += .20f;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            var recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.WarriorEmblem);
             recipe.AddIngredient(ItemID.SorcererEmblem);
             recipe.AddIngredient(ItemID.RangerEmblem);
@@ -39,7 +39,7 @@ namespace DoomBubblesMod.Items.Accessories.Emblem
             recipe.AddIngredient(ItemID.CelestialEmblem);
 
 
-            if (DoomBubblesMod.thoriumLoaded.HasValue && DoomBubblesMod.thoriumLoaded.Value)
+            if (DoomBubblesMod.thoriumMod != null)
             {
                 addThoriumRecipes(ref recipe);
             }
@@ -51,7 +51,7 @@ namespace DoomBubblesMod.Items.Accessories.Emblem
 
         public void addThoriumRecipes(ref ModRecipe recipe)
         {
-            Mod thoriumMod = ModLoader.GetMod("ThoriumMod");
+            var thoriumMod = ModLoader.GetMod("ThoriumMod");
             recipe.AddIngredient(thoriumMod.ItemType("BardEmblem"));
             recipe.AddIngredient(thoriumMod.ItemType("NinjaEmblem"));
             recipe.AddIngredient(thoriumMod.ItemType("ClericEmblem"));

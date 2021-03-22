@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
@@ -13,7 +11,7 @@ namespace DoomBubblesMod.Projectiles.HotS
         {
             DisplayName.SetDefault("Alarak Lightning");
         }
-        
+
         public override void SetDefaults()
         {
             projectile.width = 8;
@@ -31,24 +29,28 @@ namespace DoomBubblesMod.Projectiles.HotS
             projectile.localNPCHitCooldown = 1000;
         }
 
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit,
+            ref int hitDirection)
         {
             if (target.whoAmI != projectile.ai[0])
             {
                 if (projectile.ai[1] == 3 || projectile.ai[1] == -1)
                 {
                     damage = (int) (damage * 2.5);
-                } else damage *= 2;
+                }
+                else damage *= 2;
+
                 if (projectile.ai[1] == 1 || projectile.ai[1] == -1)
                 {
-                    Player player = Main.player[projectile.owner];
+                    var player = Main.player[projectile.owner];
                     if (damage != 0 && player.lifeSteal > 0f && !player.moonLeech)
                     {
-                        int amount = Math.Min(4, player.statLifeMax2 - player.statLife);
+                        var amount = Math.Min(4, player.statLifeMax2 - player.statLife);
                         if (amount == 0)
                         {
                             return;
                         }
+
                         player.lifeSteal -= amount;
                         player.HealEffect(amount);
                         player.statLife += amount;
@@ -63,6 +65,7 @@ namespace DoomBubblesMod.Projectiles.HotS
             {
                 projectile.localNPCImmunity[target.whoAmI] = 5;
             }
+
             base.OnHitNPC(target, damage, knockback, crit);
         }
 
@@ -70,22 +73,24 @@ namespace DoomBubblesMod.Projectiles.HotS
         {
             if (projectile.alpha == 69)
             {
-                Main.PlaySound(SoundLoader.customSoundType, (int)projectile.position.X, (int)projectile.position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/LightningSurge2"), 1f, Main.rand.NextFloat(-.1f, .1f));
+                Main.PlaySound(SoundLoader.customSoundType, (int) projectile.position.X, (int) projectile.position.Y,
+                    mod.GetSoundSlot(SoundType.Custom, "Sounds/LightningSurge2"), 1f, Main.rand.NextFloat(-.1f, .1f));
                 projectile.alpha = 255;
             }
-            
+
             if (Main.rand.NextFloat(projectile.velocity.Length(), 10) > 5.5f)
             {
                 var slopeX = (Main.rand.NextDouble() - .5) * 5f;
                 var slopeY = (Main.rand.NextDouble() - .5) * 5f;
-                for (int i = -5; i <= 5; i++)
+                for (var i = -5; i <= 5; i++)
                 {
-                    Dust dust = Dust.NewDustPerfect(new Vector2((float) (projectile.position.X + (slopeX * i)), (float) (projectile.position.Y + slopeY * i)), 182);
+                    var dust = Dust.NewDustPerfect(
+                        new Vector2((float) (projectile.position.X + slopeX * i),
+                            (float) (projectile.position.Y + slopeY * i)), 182);
                     dust.noGravity = true;
-                    dust.velocity = new Vector2(0,0);
+                    dust.velocity = new Vector2(0, 0);
                 }
             }
-            
         }
     }
 }

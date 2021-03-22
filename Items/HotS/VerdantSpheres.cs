@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Items.HotS
 {
@@ -11,7 +10,7 @@ namespace DoomBubblesMod.Items.HotS
         public override string Talent2Name => "TalentManaTap";
         public override string Talent3Name => "TalentTwinSpheres";
         protected override Color? TalentColor => Color.Lime;
-        
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Verdant Spheres");
@@ -46,6 +45,7 @@ namespace DoomBubblesMod.Items.HotS
             {
                 player.GetModPlayer<HotSPlayer>().superVerdant = true;
             }
+
             player.GetModPlayer<DoomBubblesPlayer>().noManaItems.Add(mod.ItemType("LivingBombWand"));
         }
     }

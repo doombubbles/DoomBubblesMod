@@ -1,10 +1,6 @@
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.ID;
-using System;
-using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
-using Microsoft.Xna.Framework.Graphics;
+using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Items.Weapons
 {
@@ -22,7 +18,7 @@ namespace DoomBubblesMod.Items.Weapons
             item.useStyle = 5;
             item.noMelee = true;
             item.knockBack = 2f;
-            item.value = Item.sellPrice(0, 15, 0, 0);
+            item.value = Item.sellPrice(0, 15);
             item.rare = 8;
             item.autoReuse = true;
             item.shootSpeed = 20f;
@@ -39,9 +35,9 @@ namespace DoomBubblesMod.Items.Weapons
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.LaserMachinegun, 1);
-            recipe.AddIngredient(ItemID.RainbowGun, 1);
+            var recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ItemID.LaserMachinegun);
+            recipe.AddIngredient(ItemID.RainbowGun);
             recipe.AddIngredient(ItemID.LunarBar, 20);
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.SetResult(this);

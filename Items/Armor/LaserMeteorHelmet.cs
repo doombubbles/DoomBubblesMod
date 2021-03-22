@@ -15,10 +15,10 @@ namespace DoomBubblesMod.Items.Armor
 
         public override void SetDefaults()
         {
-            int realSlot = item.headSlot;
+            var realSlot = item.headSlot;
             item.CloneDefaults(ItemID.MeteorHelmet);
             item.rare = ItemRarityID.LightRed;
-            item.value = Item.sellPrice(0, 6, 75, 0);
+            item.value = Item.sellPrice(0, 6, 75);
             item.defense = 10;
             item.headSlot = realSlot;
         }
@@ -41,7 +41,7 @@ namespace DoomBubblesMod.Items.Armor
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            var recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.MeteorHelmet);
             recipe.AddIngredient(ItemID.CrystalShard, 10);
             recipe.AddTile(TileID.MythrilAnvil);

@@ -15,10 +15,10 @@ namespace DoomBubblesMod.Items.Armor
 
         public override void SetDefaults()
         {
-            int realSlot = item.legSlot;
+            var realSlot = item.legSlot;
             item.CloneDefaults(ItemID.MeteorLeggings);
             item.rare = ItemRarityID.LightRed;
-            item.value = Item.sellPrice(0, 4, 50, 0);
+            item.value = Item.sellPrice(0, 4, 50);
             item.defense = 10;
             item.legSlot = realSlot;
         }
@@ -32,10 +32,10 @@ namespace DoomBubblesMod.Items.Armor
         {
             player.magicDamage += .11f;
         }
-        
+
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            var recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.MeteorLeggings);
             recipe.AddIngredient(ItemID.CrystalShard, 15);
             recipe.AddTile(TileID.MythrilAnvil);

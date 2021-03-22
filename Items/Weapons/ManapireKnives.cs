@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -23,7 +22,8 @@ namespace DoomBubblesMod.Items.Weapons
             item.shoot = mod.ProjectileType("ManapireKnife");
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage,
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY,
+            ref int type, ref int damage,
             ref float knockBack)
         {
             /*
@@ -36,23 +36,26 @@ namespace DoomBubblesMod.Items.Weapons
                 float dY = Main.mouseY - Main.screenHeight / 2;
                 float distance = (float)Math.Sqrt(dX * dX + dY * dY);
                 */
-                int numKnives = 4;
-                if (Main.rand.Next(2) == 0)
-                {
-                    numKnives++;
-                }
-                if (Main.rand.Next(4) == 0)
-                {
-                    numKnives++;
-                }
-                if (Main.rand.Next(8) == 0)
-                {
-                    numKnives++;
-                }
-                if (Main.rand.Next(16) == 0)
-                {
-                    numKnives++;
-                }
+            var numKnives = 4;
+            if (Main.rand.Next(2) == 0)
+            {
+                numKnives++;
+            }
+
+            if (Main.rand.Next(4) == 0)
+            {
+                numKnives++;
+            }
+
+            if (Main.rand.Next(8) == 0)
+            {
+                numKnives++;
+            }
+
+            if (Main.rand.Next(16) == 0)
+            {
+                numKnives++;
+            }
             /*
                 for (int i = 0; i < numKnives; i++)
                 {
@@ -72,29 +75,31 @@ namespace DoomBubblesMod.Items.Weapons
                 
             }
             */
-           
-            for (int i = 0; i < numKnives; i++)
+
+            for (var i = 0; i < numKnives; i++)
             {
-                Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(35)); // 30 degree spread.
+                var perturbedSpeed =
+                    new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(35)); // 30 degree spread.
                 // If you want to randomize the speed to stagger the projectiles
                 // float scale = 1f - (Main.rand.NextFloat() * .3f);
                 // perturbedSpeed = perturbedSpeed * scale; 
-                Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
+                Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage,
+                    knockBack, player.whoAmI);
             }
-            
+
             return base.Shoot(player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            var recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.VampireKnives);
             recipe.AddIngredient(ItemID.ManaCrystal, 7);
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
             recipe.AddRecipe();
-            
-            ModRecipe recipe2 = new ModRecipe(mod);
+
+            var recipe2 = new ModRecipe(mod);
             recipe2.AddIngredient(ItemID.VampireKnives);
             recipe2.AddIngredient(ItemID.BlueDye);
             recipe2.AddTile(TileID.CrystalBall);

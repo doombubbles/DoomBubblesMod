@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -9,7 +8,6 @@ namespace DoomBubblesMod.Projectiles.HotS
 {
     public class Repeater : ModProjectile
     {
-        
         public override void SetDefaults()
         {
             projectile.width = 5;
@@ -28,13 +26,17 @@ namespace DoomBubblesMod.Projectiles.HotS
         {
             if (projectile.owner == Main.myPlayer)
             {
-                Player player = Main.player[projectile.owner];
+                var player = Main.player[projectile.owner];
                 player.AddBuff(mod.BuffType("FenixBombBuildUp"), 360);
-                if (((projectile.ai[1] == 3 || projectile.ai[1] == -1) && player.GetModPlayer<HotSPlayer>().fenixBombBuildUp == 14)
-                    || !(projectile.ai[1] == 3 || projectile.ai[1] == -1) && player.GetModPlayer<HotSPlayer>().fenixBombBuildUp == 9)
+                if ((projectile.ai[1] == 3 || projectile.ai[1] == -1) &&
+                    player.GetModPlayer<HotSPlayer>().fenixBombBuildUp == 14
+                    || !(projectile.ai[1] == 3 || projectile.ai[1] == -1) &&
+                    player.GetModPlayer<HotSPlayer>().fenixBombBuildUp == 9)
                 {
-                    Main.PlaySound(SoundLoader.customSoundType, (int)projectile.position.X, (int)projectile.position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Boung"));
+                    Main.PlaySound(SoundLoader.customSoundType, (int) projectile.position.X,
+                        (int) projectile.position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Boung"));
                 }
+
                 player.GetModPlayer<HotSPlayer>().fenixBombBuildUp++;
                 if (projectile.ai[1] == 3 || projectile.ai[1] == -1)
                 {
@@ -42,7 +44,8 @@ namespace DoomBubblesMod.Projectiles.HotS
                     {
                         player.GetModPlayer<HotSPlayer>().fenixBombBuildUp = 15;
                     }
-                } else if (player.GetModPlayer<HotSPlayer>().fenixBombBuildUp > 10)
+                }
+                else if (player.GetModPlayer<HotSPlayer>().fenixBombBuildUp > 10)
                 {
                     player.GetModPlayer<HotSPlayer>().fenixBombBuildUp = 10;
                 }
@@ -51,27 +54,34 @@ namespace DoomBubblesMod.Projectiles.HotS
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            float originX = (float)(Main.projectileTexture[projectile.type].Width - projectile.width) * 0.5f + (float)projectile.width * 0.5f;
-            int offsetX = 0;
-            int offsetY = 0;
-            SpriteEffects spriteEffects = SpriteEffects.None;
-            Color color25 = Lighting.GetColor((int)((double)projectile.position.X + (double)projectile.width * 0.5) / 16, (int)(((double)projectile.position.Y + (double)projectile.height * 0.5) / 16.0));
-            
-            Rectangle value11 = new Rectangle((int)Main.screenPosition.X - 500, (int)Main.screenPosition.Y - 500, Main.screenWidth + 1000, Main.screenHeight + 1000);
+            var originX = (Main.projectileTexture[projectile.type].Width - projectile.width) * 0.5f +
+                          projectile.width * 0.5f;
+            var offsetX = 0;
+            var offsetY = 0;
+            var spriteEffects = SpriteEffects.None;
+            var color25 = Lighting.GetColor((int) (projectile.position.X + projectile.width * 0.5) / 16,
+                (int) ((projectile.position.Y + projectile.height * 0.5) / 16.0));
+
+            var value11 = new Rectangle((int) Main.screenPosition.X - 500, (int) Main.screenPosition.Y - 500,
+                Main.screenWidth + 1000, Main.screenHeight + 1000);
             if (projectile.getRect().Intersects(value11))
             {
-                Vector2 value12 = new Vector2(projectile.position.X - Main.screenPosition.X + originX + (float)offsetX, projectile.position.Y - Main.screenPosition.Y + (float)(projectile.height / 2) + projectile.gfxOffY);
-                float num152 = 100f;
-                float scaleFactor = 3f;
-                for (int num153 = 1; num153 <= (int)projectile.localAI[0]; num153++)
+                var value12 = new Vector2(projectile.position.X - Main.screenPosition.X + originX + offsetX,
+                    projectile.position.Y - Main.screenPosition.Y + projectile.height / 2 + projectile.gfxOffY);
+                var num152 = 100f;
+                var scaleFactor = 3f;
+                for (var num153 = 1; num153 <= (int) projectile.localAI[0]; num153++)
                 {
-                    Vector2 value13 = Vector2.Normalize(projectile.velocity) * num153 * scaleFactor;
-                    Color alpha2 = projectile.GetAlpha(lightColor);
-                    alpha2 *= (num152 - (float)num153) / num152;
+                    var value13 = Vector2.Normalize(projectile.velocity) * num153 * scaleFactor;
+                    var alpha2 = projectile.GetAlpha(lightColor);
+                    alpha2 *= (num152 - num153) / num152;
                     alpha2.A = 0;
-                    spriteBatch.Draw(Main.projectileTexture[projectile.type], value12 - value13, null, alpha2, projectile.rotation, new Vector2(originX, projectile.height / 2 + offsetY), projectile.scale, spriteEffects, 0f);
+                    spriteBatch.Draw(Main.projectileTexture[projectile.type], value12 - value13, null, alpha2,
+                        projectile.rotation, new Vector2(originX, projectile.height / 2 + offsetY), projectile.scale,
+                        spriteEffects, 0f);
                 }
             }
+
             return false;
         }
 
@@ -80,24 +90,28 @@ namespace DoomBubblesMod.Projectiles.HotS
             if (projectile.alpha == 69)
             {
                 projectile.alpha = 255;
-                Main.PlaySound(SoundLoader.customSoundType, (int)projectile.position.X, (int)projectile.position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Repeater" + Math.Min(3, projectile.ai[0])), 1f, projectile.ai[0] == 4 ? -.25f : 0f);
+                Main.PlaySound(SoundLoader.customSoundType, (int) projectile.position.X, (int) projectile.position.Y,
+                    mod.GetSoundSlot(SoundType.Custom, "Sounds/Repeater" + Math.Min(3, projectile.ai[0])), 1f,
+                    projectile.ai[0] == 4 ? -.25f : 0f);
             }
-            
+
             projectile.ai[0] = 0;
-            
+
             if (projectile.alpha > 0)
             {
                 projectile.alpha -= 25;
             }
+
             if (projectile.alpha < 0)
             {
                 projectile.alpha = 0;
             }
-            Lighting.AddLight((int)projectile.Center.X / 16, (int)projectile.Center.Y / 16, 0.2f, 0.2f, 0.25f);
-            
-            float num55 = 50f;
-            float num56 = 3f;
-            
+
+            Lighting.AddLight((int) projectile.Center.X / 16, (int) projectile.Center.Y / 16, 0.2f, 0.2f, 0.25f);
+
+            var num55 = 50f;
+            var num56 = 3f;
+
             projectile.localAI[0] += num56;
             if (projectile.localAI[0] > num55)
             {
@@ -107,15 +121,18 @@ namespace DoomBubblesMod.Projectiles.HotS
 
         public override void Kill(int timeLeft)
         {
-            int num293 = Main.rand.Next(3, 7);
-            for (int num294 = 0; num294 < num293; num294++)
+            var num293 = Main.rand.Next(3, 7);
+            for (var num294 = 0; num294 < num293; num294++)
             {
-                int num295 = Dust.NewDust(projectile.Center - projectile.velocity / 2f, 0, 0, 63, 0f, 0f, 100, Color.Lavender, 2.1f);
-                Dust dust = Main.dust[num295];
+                var num295 = Dust.NewDust(projectile.Center - projectile.velocity / 2f, 0, 0, 63, 0f, 0f, 100,
+                    Color.Lavender, 2.1f);
+                var dust = Main.dust[num295];
                 dust.velocity *= 2f;
                 Main.dust[num295].noGravity = true;
             }
-            Main.PlaySound(SoundLoader.customSoundType, (int)projectile.position.X, (int)projectile.position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Hit"), .5f);
+
+            Main.PlaySound(SoundLoader.customSoundType, (int) projectile.position.X, (int) projectile.position.Y,
+                mod.GetSoundSlot(SoundType.Custom, "Sounds/Hit"), .5f);
             base.Kill(timeLeft);
         }
     }

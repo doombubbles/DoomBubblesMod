@@ -1,11 +1,10 @@
 ﻿using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Items.Accessories
 {
-    class SorcerersStone : ModItem
+    internal class SorcerersStone : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -27,13 +26,13 @@ namespace DoomBubblesMod.Items.Accessories
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            var recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.PhilosophersStone);
             recipe.AddTile(TileID.AlchemyTable);
             recipe.SetResult(this);
             recipe.AddRecipe();
-            
-            ModRecipe recipe2 = new ModRecipe(mod);
+
+            var recipe2 = new ModRecipe(mod);
             recipe2.AddIngredient(this);
             recipe2.AddTile(TileID.AlchemyTable);
             recipe2.SetResult(ItemID.PhilosophersStone);

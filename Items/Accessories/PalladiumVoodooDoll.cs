@@ -1,8 +1,6 @@
-﻿using IL.Terraria.ID;
-using Terraria;
+﻿using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
-using ItemID = Terraria.ID.ItemID;
-using TileID = Terraria.ID.TileID;
 
 namespace DoomBubblesMod.Items.Accessories
 {
@@ -27,7 +25,7 @@ namespace DoomBubblesMod.Items.Accessories
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            var recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.GuideVoodooDoll);
             recipe.AddIngredient(ItemID.TissueSample, 5);
             recipe.AddRecipeGroup("DoomBubblesMod:AnyPalladiumHelmet");

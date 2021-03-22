@@ -5,13 +5,13 @@ using Terraria.ModLoader;
 namespace DoomBubblesMod.Items.Accessories
 {
     [AutoloadEquip(EquipType.HandsOn)]
-    class CharmOfEpics : ModItem
+    internal class CharmOfEpics : ModItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Charm of Epics");
-            Tooltip.SetDefault("Reduces the cooldown of healing potions\n" + 
-                               "Incrases maximum mana by 20\n" + 
+            Tooltip.SetDefault("Reduces the cooldown of healing potions\n" +
+                               "Incrases maximum mana by 20\n" +
                                "Improves life/mana regen in many ways\n" +
                                "Increases heart/star pickup range\n" +
                                "Regenerate mana on taking damage; health on dealing");
@@ -41,10 +41,10 @@ namespace DoomBubblesMod.Items.Accessories
             player.magicCuffs = true;
             player.onHitRegen = true;
         }
-        
+
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            var recipe = new ModRecipe(mod);
             recipe.AddIngredient(mod.ItemType("CharmOfLegends"));
             recipe.AddIngredient(ItemID.ShinyStone);
             recipe.AddIngredient(mod.ItemType("CrimsonVoodooDoll"));

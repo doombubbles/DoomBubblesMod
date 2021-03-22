@@ -9,7 +9,7 @@ namespace DoomBubblesMod.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("SDLMFAOMFGMG");
+            DisplayName.SetDefault("S.D.L.M.F.A.O.M.F.G.M.G.");
             Tooltip.SetDefault("It came from the edge of Calamity\n" +
                                "75% chance to not consume ammo");
         }
@@ -26,7 +26,7 @@ namespace DoomBubblesMod.Items.Weapons
             item.useStyle = 5;
             item.noMelee = true; //so the item's animation doesn't do damage
             item.knockBack = 4;
-            item.value = Item.sellPrice(0, 50, 0, 0);
+            item.value = Item.sellPrice(0, 50);
             item.rare = 11;
             item.expert = true;
             item.UseSound = SoundID.Item40;
@@ -35,96 +35,105 @@ namespace DoomBubblesMod.Items.Weapons
             item.shootSpeed = 11f;
             item.useAmmo = AmmoID.Bullet;
         }
-        
+
         public override Vector2? HoldoutOffset()
         {
             return new Vector2(0, -5);
         }
-        
+
         public override bool ConsumeAmmo(Player player)
         {
             if (Main.rand.NextDouble() <= .75)
             {
                 return false;
             }
+
             return base.ConsumeAmmo(player);
         }
-        
-        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat) {
+
+        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
+        {
             // Here we use the multiplicative damage modifier because Terraria does this approach for Ammo damage bonuses. 
             mult *= player.bulletDamage;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage,
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY,
+            ref int type, ref int damage,
             ref float knockBack)
         {
-            Vector2 velocity = new Vector2(speedX, speedY);
+            var velocity = new Vector2(speedX, speedY);
 
-            double dub = Main.rand.NextDouble();
+            var dub = Main.rand.NextDouble();
             if (dub > .66)
             {
-                Projectile projecitle = Projectile.NewProjectileDirect(position, velocity * 1.5f, mod.ProjectileType("TerraBullet"),
+                var projecitle = Projectile.NewProjectileDirect(position, velocity * 1.5f,
+                    mod.ProjectileType("TerraBullet"),
                     damage, knockBack, player.whoAmI);
                 projecitle.netUpdate = true;
-            } else if (dub < .33)
+            }
+            else if (dub < .33)
             {
-                Projectile projecitle = Projectile.NewProjectileDirect(position, velocity * 1.5f, mod.ProjectileType("TrueHomingBullet"),
+                var projecitle = Projectile.NewProjectileDirect(position, velocity * 1.5f,
+                    mod.ProjectileType("TrueHomingBullet"),
                     damage, knockBack, player.whoAmI);
                 projecitle.netUpdate = true;
             }
             else
             {
-                Projectile projecitle = Projectile.NewProjectileDirect(position, velocity * 1.5f, mod.ProjectileType("TruePiercingBullet"),
+                var projecitle = Projectile.NewProjectileDirect(position, velocity * 1.5f,
+                    mod.ProjectileType("TruePiercingBullet"),
                     damage, knockBack, player.whoAmI);
                 projecitle.netUpdate = true;
             }
-            
-            
-            
-            if (DoomBubblesMod.calamityLoaded)
+
+
+            if (DoomBubblesMod.calamityMod != null)
             {
                 FireCalamityProjectiles(position, velocity, damage, knockBack, player);
             }
-            
+
             return base.Shoot(player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
         }
 
-        private void FireCalamityProjectiles(Vector2 position, Vector2 velocity, int damage, float knockBack, Player player)
+        private void FireCalamityProjectiles(Vector2 position, Vector2 velocity, int damage, float knockBack,
+            Player player)
         {
-            Mod CalamityMod = ModLoader.GetMod("CalamityMod");
-            double dub = Main.rand.NextDouble();
+            var dub = Main.rand.NextDouble();
             if (dub > .66)
             {
-                Projectile projecitle = Projectile.NewProjectileDirect(position, velocity * 3, CalamityMod.ProjectileType("FishronRPG"),
+                var projecitle = Projectile.NewProjectileDirect(position, velocity * 3,
+                    DoomBubblesMod.calamityMod.ProjectileType("FishronRPG"),
                     damage, knockBack, player.whoAmI);
                 projecitle.netUpdate = true;
-            } else if (dub < .33)
+            }
+            else if (dub < .33)
             {
-                Projectile projecitle = Projectile.NewProjectileDirect(position, velocity * 2, CalamityMod.ProjectileType("BloodfireBullet"),
+                var projecitle = Projectile.NewProjectileDirect(position, velocity * 2,
+                    DoomBubblesMod.calamityMod.ProjectileType("BloodfireBullet"),
                     damage, knockBack, player.whoAmI);
                 projecitle.netUpdate = true;
             }
             else
             {
-               Projectile projecitle = Projectile.NewProjectileDirect(position, velocity * 2, CalamityMod.ProjectileType("AstralRound"),
-                   damage, knockBack, player.whoAmI);
-               projecitle.netUpdate = true; 
+                var projecitle = Projectile.NewProjectileDirect(position, velocity * 2,
+                    DoomBubblesMod.calamityMod.ProjectileType("AstralRound"),
+                    damage, knockBack, player.whoAmI);
+                projecitle.netUpdate = true;
             }
         }
 
         public override void AddRecipes()
         {
-            if (DoomBubblesMod.calamityLoaded)
+            if (DoomBubblesMod.calamityMod != null)
             {
                 AddCalamityRecipe();
             }
-            
         }
 
         private void AddCalamityRecipe()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            Mod CalamityMod = ModLoader.GetMod("CalamityMod");
+            var recipe = new ModRecipe(mod);
+            var CalamityMod = ModLoader.GetMod("CalamityMod");
             recipe.AddIngredient(CalamityMod.ItemType("SDFMG"));
             recipe.AddIngredient(CalamityMod.ItemType("ClaretCannon"));
             recipe.AddIngredient(CalamityMod.ItemType("StormDragoon"));

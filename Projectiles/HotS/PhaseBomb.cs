@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -24,7 +23,7 @@ namespace DoomBubblesMod.Projectiles.HotS
             projectile.tileCollide = false;
             projectile.timeLeft = 1000;
             projectile.ranged = true;
-            projectile.penetrate = -1; 
+            projectile.penetrate = -1;
             projectile.alpha = 69;
         }
 
@@ -39,6 +38,7 @@ namespace DoomBubblesMod.Projectiles.HotS
             {
                 return false;
             }
+
             return base.CanHitNPC(target);
         }
 
@@ -51,8 +51,10 @@ namespace DoomBubblesMod.Projectiles.HotS
         {
             if (projectile.alpha == 69)
             {
-                Main.PlaySound(SoundLoader.customSoundType, (int)projectile.position.X, (int)projectile.position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Phase"));
+                Main.PlaySound(SoundLoader.customSoundType, (int) projectile.position.X, (int) projectile.position.Y,
+                    mod.GetSoundSlot(SoundType.Custom, "Sounds/Phase"));
             }
+
             if (projectile.alpha > 0)
             {
                 projectile.alpha -= 15;
@@ -61,15 +63,15 @@ namespace DoomBubblesMod.Projectiles.HotS
             {
                 projectile.alpha = 0;
             }
-            
-            
-            Lighting.AddLight((int)projectile.Center.X / 16, (int)projectile.Center.Y / 16, 0.4f, 0.4f, 0.5f);
+
+
+            Lighting.AddLight((int) projectile.Center.X / 16, (int) projectile.Center.Y / 16, 0.4f, 0.4f, 0.5f);
 
             var center = projectile.Center;
-            
+
             if (1000 - projectile.timeLeft <= projectile.ai[0])
             {
-                projectile.frame = (projectile.timeLeft / 10) % 2;
+                projectile.frame = projectile.timeLeft / 10 % 2;
                 projectile.velocity *= 1.015f;
             }
             else
@@ -80,14 +82,15 @@ namespace DoomBubblesMod.Projectiles.HotS
                 projectile.Center = center;
                 if (projectile.velocity != new Vector2(0, 0))
                 {
-                    int npcs = 0;
+                    var npcs = 0;
                     for (var i = 0; i < Main.npc.Length; i++)
                     {
-                        NPC npc = Main.npc[i];
+                        var npc = Main.npc[i];
                         if (!npc.active || npc.friendly)
                         {
                             continue;
                         }
+
                         if (projectile.Hitbox.Intersects(npc.getRect()))
                         {
                             npcs++;
@@ -99,29 +102,29 @@ namespace DoomBubblesMod.Projectiles.HotS
                     {
                         projectile.damage = (int) (projectile.damage * 2 * projectile.knockBack / 5f);
                     }
-                    
-                    Main.PlaySound(SoundLoader.customSoundType, (int)projectile.position.X, (int)projectile.position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Bomb"), projectile.knockBack / 5f);
+
+                    Main.PlaySound(SoundLoader.customSoundType, (int) projectile.position.X,
+                        (int) projectile.position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Bomb"),
+                        projectile.knockBack / 5f);
                 }
-                
-                projectile.velocity = new Vector2(0,0);
+
+                projectile.velocity = new Vector2(0, 0);
 
                 projectile.frame++;
-                
+
 
                 if (projectile.frame == 9)
                 {
                     projectile.Kill();
                 }
-
             }
-
         }
 
         public override void Kill(int timeLeft)
         {
             if (projectile.localAI[0] > 0)
             {
-                Player player = Main.player[projectile.owner];
+                var player = Main.player[projectile.owner];
                 player.AddBuff(mod.BuffType("FenixRepeaterBuff"), 360);
                 player.GetModPlayer<HotSPlayer>().fenixRepeaterBuff += (int) projectile.localAI[0];
                 if (player.gravControl2)
@@ -130,11 +133,13 @@ namespace DoomBubblesMod.Projectiles.HotS
                     {
                         player.GetModPlayer<HotSPlayer>().fenixRepeaterBuff = 15;
                     }
-                } else if (player.GetModPlayer<HotSPlayer>().fenixRepeaterBuff > 10)
+                }
+                else if (player.GetModPlayer<HotSPlayer>().fenixRepeaterBuff > 10)
                 {
                     player.GetModPlayer<HotSPlayer>().fenixRepeaterBuff = 10;
                 }
             }
+
             base.Kill(timeLeft);
         }
     }

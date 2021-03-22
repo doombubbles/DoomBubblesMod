@@ -15,8 +15,7 @@ namespace DoomBubblesMod.Items.HotS
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Shield Capacitor");
-            Tooltip.SetDefault("Gives you a 50 HP Shield that recharges after not taking damage\n" +
-                               "Due to a tModLoader bug this won't display for Mac users :(");
+            Tooltip.SetDefault("You quickly and constantly generate a 50 life shield.");
         }
 
         public override void SetDefaults()
@@ -30,8 +29,9 @@ namespace DoomBubblesMod.Items.HotS
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            //player.GetModPlayer<HotSPlayer>().shieldCapacitorMax = 50;
-            //player.GetModPlayer<HotSPlayer>().shieldCapacitorChosenTalent = ChosenTalent;
+            player.GetModPlayer<HotSPlayer>().shieldCapacitorChosenTalent = ChosenTalent;
+            player.SetThoriumProperty<int>("metalShieldMax", i => i + 100);
+            player.GetModPlayer<HotSPlayer>().newShieldCapactior = true;
         }
     }
 }

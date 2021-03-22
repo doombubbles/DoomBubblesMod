@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using On.Terraria.ObjectData;
 using Terraria;
 using Terraria.ID;
 
@@ -11,8 +10,9 @@ namespace DoomBubblesMod.Items.HotS
         public override string Talent2Name => "TalentIgnite";
         public override string Talent3Name => "TalentFuryOfTheSunwell";
         protected override Color? TalentColor => Color.LimeGreen;
-        
-        public int Verdant => Main.player[item.owner].GetModPlayer<HotSPlayer>().superVerdant ? 2 : Main.player[item.owner].GetModPlayer<HotSPlayer>().verdant ? 1 : 0;
+
+        public int Verdant => Main.player[item.owner].GetModPlayer<HotSPlayer>().superVerdant ? 2 :
+            Main.player[item.owner].GetModPlayer<HotSPlayer>().verdant ? 1 : 0;
 
         public override void SetStaticDefaults()
         {
@@ -39,12 +39,14 @@ namespace DoomBubblesMod.Items.HotS
             item.autoReuse = true;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage,
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY,
+            ref int type, ref int damage,
             ref float knockBack)
         {
             position.X = Main.MouseWorld.X;
             position.Y = Main.MouseWorld.Y;
-            int proj = Projectile.NewProjectile(position, new Vector2(0, 0), type, damage, knockBack, player.whoAmI, ChosenTalent, Verdant);
+            var proj = Projectile.NewProjectile(position, new Vector2(0, 0), type, damage, knockBack, player.whoAmI,
+                ChosenTalent, Verdant);
             Main.projectile[proj].netUpdate = true;
             return false;
         }

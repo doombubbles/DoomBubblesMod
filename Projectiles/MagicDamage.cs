@@ -1,7 +1,3 @@
-using System;
-using Terraria;
-using Terraria.ModLoader;
-
 namespace DoomBubblesMod.Projectiles
 {
     public class MagicDamage : Damage

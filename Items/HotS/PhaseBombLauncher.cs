@@ -1,4 +1,5 @@
 ﻿using System;
+using DoomBubblesMod.Buffs;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
@@ -34,9 +35,9 @@ namespace DoomBubblesMod.Items.HotS
             item.useStyle = 5;
             item.rare = 10;
             item.autoReuse = true;
-            item.value = Item.buyPrice(0, 69, 0, 0);
+            item.value = Item.buyPrice(0, 69);
         }
-        
+
         public override Vector2? HoldoutOffset()
         {
             return new Vector2(-7, -3);
@@ -48,19 +49,20 @@ namespace DoomBubblesMod.Items.HotS
             {
                 add += .5f;
             }
-
         }
-        
+
         public override float UseTimeMultiplier(Player player)
         {
             if (ChosenTalent == 3 || ChosenTalent == -1)
             {
                 return base.UseTimeMultiplier(player) * .666f;
             }
+
             return base.UseTimeMultiplier(player);
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage,
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY,
+            ref int type, ref int damage,
             ref float knockBack)
         {
             if (player == Main.LocalPlayer)
@@ -68,26 +70,29 @@ namespace DoomBubblesMod.Items.HotS
                 var dX = position.X - Main.MouseWorld.X;
                 var dY = position.Y - Main.MouseWorld.Y;
                 var distance = Math.Sqrt(dX * dX + dY * dY);
-                Vector2 speed = new Vector2(speedX, speedY);
+                var speed = new Vector2(speedX, speedY);
                 speed *= 1f + player.GetModPlayer<HotSPlayer>().fenixBombBuildUp * .1f;
                 knockBack *= 1f + player.GetModPlayer<HotSPlayer>().fenixBombBuildUp * .1f;
-                damage = (int)(damage * Math.Pow(1.1f, player.GetModPlayer<HotSPlayer>().fenixBombBuildUp));
-            
-            
+                damage = (int) (damage * Math.Pow(1.1f, player.GetModPlayer<HotSPlayer>().fenixBombBuildUp));
+
+
                 var speedFactor = 1.015;
 
-                var time = Math.Log((distance / speed.Length()) * Math.Log(speedFactor) + 1) / Math.Log(speedFactor);
-            
-                Projectile.NewProjectile(position, speed, type, damage, knockBack, player.whoAmI, (float)time, ChosenTalent);
+                var time = Math.Log(distance / speed.Length() * Math.Log(speedFactor) + 1) / Math.Log(speedFactor);
 
-                if (player.HasBuff(mod.BuffType("FenixBombBuildUp")))
+                Projectile.NewProjectile(position, speed, type, damage, knockBack, player.whoAmI, (float) time,
+                    ChosenTalent);
+
+                if (player.HasBuff(ModContent.BuffType<FenixBombBuildUp>()))
                 {
-                    player.DelBuff(player.FindBuffIndex(mod.BuffType("FenixBombBuildUp")));
+                    player.DelBuff(player.FindBuffIndex(ModContent.BuffType<FenixBombBuildUp>()));
                 }
+
                 player.GetModPlayer<HotSPlayer>().phaseUseTime = item.useTime;
                 player.itemAnimation = 10;
                 player.itemTime = 10;
             }
+
             return false;
         }
 

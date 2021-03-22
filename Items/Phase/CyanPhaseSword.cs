@@ -17,10 +17,10 @@ namespace DoomBubblesMod.Items.Phase
             item.scale = 1.3f;
             item.rare = 7;
         }
-        
+
         public override void AddRecipes()
         {
-            if (DoomBubblesMod.thoriumLoaded.HasValue && DoomBubblesMod.thoriumLoaded.Value)
+            if (DoomBubblesMod.thoriumMod != null)
             {
                 AddThoriumRecipe();
             }
@@ -28,7 +28,7 @@ namespace DoomBubblesMod.Items.Phase
 
         private void AddThoriumRecipe()
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            var recipe = new ModRecipe(mod);
             recipe.AddIngredient(ModLoader.GetMod("ThoriumMod").ItemType("CyanPhasesaber"));
             recipe.AddIngredient(ItemID.Ectoplasm, 25);
             recipe.AddTile(TileID.MythrilAnvil);

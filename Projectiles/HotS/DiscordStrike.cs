@@ -1,34 +1,33 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using On.Terraria;
 using Terraria;
 using Terraria.ModLoader;
-using Dust = Terraria.Dust;
-using Main = Terraria.Main;
-using NPC = Terraria.NPC;
 
 namespace DoomBubblesMod.Projectiles.HotS
 {
     public class DiscordStrike : HappyProjectile
     {
-        private float Length => ChosenTalent == 2 || ChosenTalent == -1 ? 600f : 300f;
+        private int Size => (int) (Math.Sqrt(projectile.velocity.Length() * (ChosenTalent == 2 || ChosenTalent == -1 ? 1.5f : 3f)) * Math.Sqrt(60));
+        private float Length => projectile.velocity.Length() * 15f;
         private int ChosenTalent => (int) Math.Round(projectile.ai[0]);
         private float DistanceFactor => (Origin - projectile.Center).Length() / Length;
-        
-        public static readonly int Size = 60;
 
         private Vector2 Origin
         {
             get => new Vector2(projectile.localAI[0], projectile.localAI[1]);
-            set {projectile.localAI[0] = value.X; projectile.localAI[1] = value.Y; }
+            set
+            {
+                projectile.localAI[0] = value.X;
+                projectile.localAI[1] = value.Y;
+            }
         }
+
         private float Theta
         {
             get => projectile.ai[1];
             set => projectile.ai[1] = value;
         }
-        
+
         public override void SetDefaults()
         {
             projectile.width = Size;
@@ -44,18 +43,21 @@ namespace DoomBubblesMod.Projectiles.HotS
             projectile.penetrate = -1;
         }
 
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit,
+            ref int hitDirection)
         {
             if (ChosenTalent == 3 || ChosenTalent == -1)
             {
-                int missingHp = target.lifeMax - target.life;
+                var missingHp = target.lifeMax - target.life;
                 damage += (int) (damage * ((float) missingHp / target.lifeMax) + missingHp * .02);
             }
+
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
             if (ChosenTalent == 1 || ChosenTalent == -1)
             {
                 projectile.damage = (int) (projectile.damage * 1.1);
             }
+            
         }
 
         public override void AI()
@@ -65,7 +67,6 @@ namespace DoomBubblesMod.Projectiles.HotS
                 projectile.alpha = 255;
                 Origin = projectile.Center;
                 Theta = projectile.velocity.ToRotation();
-                Main.PlaySound(SoundLoader.customSoundType, (int)projectile.position.X, (int)projectile.position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/DiscordStrike"));
             }
 
             HandlePosition();
@@ -78,10 +79,10 @@ namespace DoomBubblesMod.Projectiles.HotS
             //projectile.position += Main.player[projectile.owner].velocity;
             //Origin += Main.player[projectile.owner].velocity;
         }
-        
+
         private void HandleSize()
         {
-            Vector2 center = projectile.Center;
+            var center = projectile.Center;
             projectile.width = (int) (Size * (1 - DistanceFactor));
             projectile.height = (int) (Size * (1 - DistanceFactor));
             projectile.scale = 1 - DistanceFactor;
@@ -95,12 +96,12 @@ namespace DoomBubblesMod.Projectiles.HotS
 
         private void CreateDust()
         {
-            Vector2 line1Start = new Vector2((float) (Origin.X + Size * Math.Cos(Theta + Math.PI / 2) / 2), 
+            var line1Start = new Vector2((float) (Origin.X + Size * Math.Cos(Theta + Math.PI / 2) / 2),
                 (float) (Origin.Y + Size * Math.Sin(Theta + Math.PI / 2) / 2));
-            Vector2 line2Start = new Vector2((float) (Origin.X + Size * Math.Cos(Theta - Math.PI / 2) / 2), 
+            var line2Start = new Vector2((float) (Origin.X + Size * Math.Cos(Theta - Math.PI / 2) / 2),
                 (float) (Origin.Y + Size * Math.Sin(Theta - Math.PI / 2) / 2));
 
-            Vector2 dot = line1Start;
+            var dot = line1Start;
             float previousDistance;
             do
             {
@@ -110,9 +111,8 @@ namespace DoomBubblesMod.Projectiles.HotS
                 dust.velocity = new Vector2(0, 0);
                 dot.X += (float) Math.Cos((projectile.Center - dot).ToRotation()) * 2f;
                 dot.Y += (float) Math.Sin((projectile.Center - dot).ToRotation()) * 2f;
-
             } while ((dot - projectile.Center).Length() < previousDistance);
-            
+
             dot = line2Start;
             do
             {
@@ -122,9 +122,7 @@ namespace DoomBubblesMod.Projectiles.HotS
                 dust.velocity = new Vector2(0, 0);
                 dot.X += (float) Math.Cos((projectile.Center - dot).ToRotation()) * 2f;
                 dot.Y += (float) Math.Sin((projectile.Center - dot).ToRotation()) * 2f;
-
             } while ((dot - projectile.Center).Length() < previousDistance);
-
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

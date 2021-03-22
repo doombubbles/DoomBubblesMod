@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Items.Accessories
 {
-    class FredericksGift : ModItem
+    internal class FredericksGift : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -29,7 +29,7 @@ namespace DoomBubblesMod.Items.Accessories
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            var recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.NaturesGift, 7);
             recipe.AddTile(TileID.TinkerersWorkbench);
             recipe.SetResult(this);

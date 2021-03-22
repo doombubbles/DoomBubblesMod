@@ -4,17 +4,17 @@ using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Items.Accessories.Emblem
 {
-    class StardustEmblem : ModItem
+    internal class StardustEmblem : ModItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Stardust Emblem");
-            Tooltip.SetDefault("25% increased summon damage");
+            Tooltip.SetDefault("20% increased summon damage");
         }
 
         public override void SetDefaults()
         {
-            item.value = Item.sellPrice(0, 5, 0, 0);
+            item.value = Item.sellPrice(0, 5);
             item.width = 28;
             item.height = 28;
             item.rare = 10;
@@ -24,12 +24,12 @@ namespace DoomBubblesMod.Items.Accessories.Emblem
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.minionDamage += .25f;
+            player.minionDamage += .2f;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            var recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.SummonerEmblem);
             recipe.AddIngredient(ItemID.FragmentStardust, 5);
             recipe.AddTile(TileID.LunarCraftingStation);

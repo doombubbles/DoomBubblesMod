@@ -17,8 +17,8 @@ namespace DoomBubblesMod.Items.Accessories.Emblem
             item.width = 28;
             item.height = 28;
             item.accessory = true;
-            item.rare = 6;
-            item.value = Item.sellPrice(0, 8, 0, 0);
+            item.rare = ItemRarityID.LightPurple;
+            item.value = Item.sellPrice(0, 8);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -29,7 +29,7 @@ namespace DoomBubblesMod.Items.Accessories.Emblem
 
         public override void AddThoriumRecipe(Mod thoriumMod)
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            var recipe = new ModRecipe(mod);
             recipe.AddIngredient(thoriumMod.ItemType("RingofUnity"));
             recipe.AddIngredient(ItemID.AvengerEmblem);
             recipe.AddTile(TileID.MythrilAnvil);

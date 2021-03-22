@@ -1,11 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
 
 namespace DoomBubblesMod.Items.HotS
 {
@@ -40,7 +36,7 @@ namespace DoomBubblesMod.Items.HotS
             item.rare = 10;
             item.mana = 12;
             item.autoReuse = false;
-            item.value = Item.buyPrice(0, 69, 0, 0);
+            item.value = Item.buyPrice(0, 69);
         }
 
         public override bool CanUseItem(Player player)
@@ -48,27 +44,37 @@ namespace DoomBubblesMod.Items.HotS
             return FindNpcs(player) != null;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage,
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY,
+            ref int type, ref int damage,
             ref float knockBack)
         {
             var npcs = FindNpcs(player);
+            if (npcs == null)
+            {
+                return false;
+            }
             var npc = npcs[0].Key;
             if (npc != -1)
             {
-                NPC target = Main.npc[npc];
-                int proj = Projectile.NewProjectile(position, new Vector2((target.Center.X - position.X) / 200f, (target.Center.Y - position.Y) / 200f), type, damage, knockBack, player.whoAmI, npc, ChosenTalent);
+                var target = Main.npc[npc];
+                var proj = Projectile.NewProjectile(position,
+                    new Vector2((target.Center.X - position.X) / 200f, (target.Center.Y - position.Y) / 200f), type,
+                    damage, knockBack, player.whoAmI, npc, ChosenTalent);
                 Main.projectile[proj].netUpdate = true;
             }
 
             if ((ChosenTalent == 2 || ChosenTalent == -1) && npcs.Count > 1)
             {
-                for (int i = 1; i < (player.gravControl2 ? npcs.Count : 1); i++)
+                for (var i = 1; i < (player.gravControl2 ? npcs.Count : 1); i++)
                 {
-                    NPC target = Main.npc[npcs[i].Key];
-                    int proj = Projectile.NewProjectile(position, new Vector2((target.Center.X - position.X) / 200f, (target.Center.Y - position.Y) / 200f), type, damage, knockBack, player.whoAmI, target.whoAmI, ChosenTalent);
+                    var target = Main.npc[npcs[i].Key];
+                    var proj = Projectile.NewProjectile(position,
+                        new Vector2((target.Center.X - position.X) / 200f, (target.Center.Y - position.Y) / 200f), type,
+                        damage, knockBack, player.whoAmI, target.whoAmI, ChosenTalent);
                     Main.projectile[proj].netUpdate = true;
                 }
             }
+
             return false;
         }
 
@@ -76,24 +82,27 @@ namespace DoomBubblesMod.Items.HotS
         {
             //Try to find an enemy by the mouse cursor
             var maxDistance = 75f;
-            
+
             var potentialTargets = new Dictionary<int, float>();
-            
+
             for (var i = 0; i < Main.npc.Length; i++)
             {
                 var npc = Main.npc[i];
 
                 var distance = npc.Distance(Main.MouseWorld);
-                if (npc.active && !npc.dontTakeDamage && !npc.townNPC && npc.immune[player.whoAmI] == 0 && Main.myPlayer == player.whoAmI && distance <= maxDistance)
+                if (npc.active && !npc.dontTakeDamage && !npc.townNPC && npc.immune[player.whoAmI] == 0 &&
+                    Main.myPlayer == player.whoAmI && distance <= maxDistance)
                 {
                     potentialTargets.Add(npc.whoAmI, distance);
                 }
             }
+
             var list = potentialTargets.ToList();
             if (list.Count == 0)
             {
                 return null;
             }
+
             list.Sort((pair, valuePair) => pair.Value.CompareTo(valuePair.Value));
 
             return list;

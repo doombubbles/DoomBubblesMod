@@ -1,6 +1,4 @@
-using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.World.Generation;
 
 namespace DoomBubblesMod.Projectiles
 {

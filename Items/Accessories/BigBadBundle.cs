@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 namespace DoomBubblesMod.Items.Accessories
 {
     [AutoloadEquip(EquipType.Balloon)]
-    class BigBadBundle : ModItem
+    internal class BigBadBundle : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -32,17 +32,16 @@ namespace DoomBubblesMod.Items.Accessories
             player.doubleJumpSail = true;
             player.doubleJumpUnicorn = true;
             player.bee = true;
-            
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.BundleofBalloons, 1);
-            recipe.AddIngredient(ItemID.FartInABalloon, 1);
-            recipe.AddIngredient(ItemID.HoneyBalloon, 1);
-            recipe.AddIngredient(ItemID.SharkronBalloon, 1);
-            recipe.AddIngredient(ItemID.BlessedApple, 1);
+            var recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ItemID.BundleofBalloons);
+            recipe.AddIngredient(ItemID.FartInABalloon);
+            recipe.AddIngredient(ItemID.HoneyBalloon);
+            recipe.AddIngredient(ItemID.SharkronBalloon);
+            recipe.AddIngredient(ItemID.BlessedApple);
             recipe.AddTile(TileID.TinkerersWorkbench);
             recipe.SetResult(this);
             recipe.AddRecipe();

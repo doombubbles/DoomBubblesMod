@@ -9,8 +9,9 @@ namespace DoomBubblesMod.Projectiles
         {
             projectile.CloneDefaults(ProjectileID.CrystalShard);
         }
-        
-        public override void SetStaticDefaults() {
+
+        public override void SetStaticDefaults()
+        {
             DisplayName.SetDefault("Terra Shard");
         }
     }

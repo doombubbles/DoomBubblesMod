@@ -25,7 +25,7 @@ namespace DoomBubblesMod.Items.Weapons
             item.useStyle = 1;
             item.noMelee = true;
             item.knockBack = 3;
-            item.value = Item.buyPrice(0, 30, 0, 0);
+            item.value = Item.buyPrice(0, 30);
             item.rare = ItemRarityID.Yellow;
             item.damage = 29;
             item.UseSound = SoundID.Item44;
@@ -34,19 +34,25 @@ namespace DoomBubblesMod.Items.Weapons
             item.buffType = mod.BuffType("VampireKnifeBat");
             item.buffTime = 3600;
         }
-        
-        public override bool AltFunctionUse(Player player) {
+
+        public override bool AltFunctionUse(Player player)
+        {
             return true;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY,
+            ref int type, ref int damage, ref float knockBack)
+        {
             return player.altFunctionUse != 2;
         }
 
-        public override bool UseItem(Player player) {
-            if (player.altFunctionUse == 2) {
+        public override bool UseItem(Player player)
+        {
+            if (player.altFunctionUse == 2)
+            {
                 player.MinionNPCTargetAim();
             }
+
             return base.UseItem(player);
         }
 
@@ -66,7 +72,7 @@ namespace DoomBubblesMod.Items.Weapons
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            var recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.BatScepter);
             recipe.AddIngredient(ItemID.VampireKnives);
             recipe.AddIngredient(ItemID.BrokenBatWing, 2);

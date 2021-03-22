@@ -1,7 +1,4 @@
-using System;
-using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.World.Generation;
 
 namespace DoomBubblesMod.Projectiles
 {
@@ -9,11 +6,11 @@ namespace DoomBubblesMod.Projectiles
     {
         public override int DustType => mod.DustType("Solar229");
 
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit,
+            ref int hitDirection)
         {
             SolarEffect(ref damage);
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
-        
     }
 }

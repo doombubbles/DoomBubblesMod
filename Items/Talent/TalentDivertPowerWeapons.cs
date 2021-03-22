@@ -19,7 +19,7 @@ namespace DoomBubblesMod.Items.Talent
             item.width = 44;
             item.height = 44;
             item.maxStack = 1;
-            item.value = Item.buyPrice(0, 42, 0, 0);
+            item.value = Item.buyPrice(0, 42);
             item.rare = ItemRarityID.Orange;
         }
     }

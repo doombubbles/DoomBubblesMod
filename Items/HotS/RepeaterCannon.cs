@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
 
 namespace DoomBubblesMod.Items.HotS
 {
     public class RepeaterCannon : TalentItem
     {
-        private short m_Shot = 0;
-        
+        private short m_Shot;
+
         public override string Talent1Name => "TalentMobileOffense";
         public override string Talent2Name => "TalentOffensiveCadence";
         public override string Talent3Name => "TalentArsenalOvercharge";
@@ -41,9 +34,9 @@ namespace DoomBubblesMod.Items.HotS
             item.useStyle = 5;
             item.rare = 10;
             item.autoReuse = true;
-            item.value = Item.buyPrice(0, 69, 0, 0);
+            item.value = Item.buyPrice(0, 69);
         }
-        
+
         public override Vector2? HoldoutOffset()
         {
             return new Vector2(-10, 3);
@@ -55,26 +48,30 @@ namespace DoomBubblesMod.Items.HotS
             {
                 add += player.velocity.Length() / 50f;
             }
-
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage,
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY,
+            ref int type, ref int damage,
             ref float knockBack)
         {
             m_Shot++;
-            
+
             if ((ChosenTalent == 2 || ChosenTalent == -1) && m_Shot == 3)
             {
-                Projectile.NewProjectile(position, new Vector2(speedX, speedY), mod.ProjectileType("RepeaterBig"), damage * 2, knockBack * 2f, player.whoAmI, 4, ChosenTalent);
+                Projectile.NewProjectile(position, new Vector2(speedX, speedY), mod.ProjectileType("RepeaterBig"),
+                    damage * 2, knockBack * 2f, player.whoAmI, 4, ChosenTalent);
             }
             else
             {
-                Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, m_Shot, ChosenTalent);
+                Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI,
+                    m_Shot, ChosenTalent);
             }
+
             if (m_Shot >= 3)
             {
                 m_Shot = 0;
             }
+
             return false;
         }
 

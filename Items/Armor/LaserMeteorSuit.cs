@@ -15,15 +15,14 @@ namespace DoomBubblesMod.Items.Armor
 
         public override void SetDefaults()
         {
-            int realSlot = item.bodySlot;
+            var realSlot = item.bodySlot;
             item.CloneDefaults(ItemID.MeteorSuit);
             item.rare = ItemRarityID.LightRed;
-            item.value = Item.sellPrice(0, 4, 50, 0);
+            item.value = Item.sellPrice(0, 4, 50);
             item.defense = 12;
             item.bodySlot = realSlot;
         }
-        
-        
+
 
         public override bool IsArmorSet(Item head, Item body, Item legs)
         {
@@ -34,10 +33,10 @@ namespace DoomBubblesMod.Items.Armor
         {
             player.magicDamage += .11f;
         }
-        
+
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            var recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.MeteorSuit);
             recipe.AddIngredient(ItemID.CrystalShard, 20);
             recipe.AddTile(TileID.MythrilAnvil);

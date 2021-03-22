@@ -1,10 +1,6 @@
-﻿using IL.Terraria.ID;
-using On.Terraria.GameContent.UI;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ItemID = Terraria.ID.ItemID;
-using TileID = Terraria.ID.TileID;
 
 namespace DoomBubblesMod.Items.Accessories
 {

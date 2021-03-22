@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Items.Accessories
 {
-    class CrystalCore : ModItem
+    internal class CrystalCore : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -14,7 +14,7 @@ namespace DoomBubblesMod.Items.Accessories
 
         public override void SetDefaults()
         {
-            item.value = Item.sellPrice(0, 2, 0 ,0);
+            item.value = Item.sellPrice(0, 2);
             item.width = 26;
             item.height = 26;
             item.rare = 4;
@@ -29,7 +29,7 @@ namespace DoomBubblesMod.Items.Accessories
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            var recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.CrystalShard, 100);
             recipe.AddIngredient(ItemID.SoulofNight, 10);
             recipe.AddTile(TileID.MythrilAnvil);

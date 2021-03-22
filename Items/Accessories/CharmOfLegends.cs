@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 namespace DoomBubblesMod.Items.Accessories
 {
     [AutoloadEquip(EquipType.HandsOn)]
-    class CharmOfLegends : ModItem
+    internal class CharmOfLegends : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -33,10 +33,10 @@ namespace DoomBubblesMod.Items.Accessories
             player.lifeRegen++;
             player.pStone = true;
         }
-        
+
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
+            var recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.CharmofMyths);
             recipe.AddIngredient(mod.ItemType("CharmOfFables"));
             recipe.AddTile(TileID.TinkerersWorkbench);

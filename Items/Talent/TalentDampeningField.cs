@@ -10,7 +10,7 @@ namespace DoomBubblesMod.Items.Talent
         {
             DisplayName.SetDefault("Talent: Dampening Field");
             Tooltip.SetDefault("Shield Capacitor Talent\n" +
-                               "You take 25% less damage while Shield Capacitor is active\n" +
+                               "You take 25% less damage while Shield Capacitor is above half charge\n" +
                                "[Right Click on a Shield Capacitor with this to apply]");
         }
 
@@ -19,7 +19,7 @@ namespace DoomBubblesMod.Items.Talent
             item.width = 44;
             item.height = 44;
             item.maxStack = 1;
-            item.value = Item.buyPrice(0, 42, 0, 0);
+            item.value = Item.buyPrice(0, 42);
             item.rare = ItemRarityID.Orange;
         }
     }

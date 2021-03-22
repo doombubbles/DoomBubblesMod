@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -8,12 +7,8 @@ using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Projectiles
 {
-    
     public class RainbowMachineGun : ModProjectile
     {
-        
-        
-        
         public override void SetStaticDefaults()
         {
             Main.projFrames[projectile.type] = 6;
@@ -35,27 +30,27 @@ namespace DoomBubblesMod.Projectiles
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            SpriteEffects spriteEffects = SpriteEffects.None;
-            
-            Texture2D texture2D14 = Main.projectileTexture[projectile.type];
-            int num192 = Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type];
-            int y16 = num192 * projectile.frame;
-            Vector2 vector27 = (projectile.position + new Vector2(projectile.width, projectile.height) / 2f +
-                                Vector2.UnitY * projectile.gfxOffY - Main.screenPosition).Floor();
-            float scale5 = 1f;
+            var spriteEffects = SpriteEffects.None;
+
+            var texture2D14 = Main.projectileTexture[projectile.type];
+            var num192 = Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type];
+            var y16 = num192 * projectile.frame;
+            var vector27 = (projectile.position + new Vector2(projectile.width, projectile.height) / 2f +
+                Vector2.UnitY * projectile.gfxOffY - Main.screenPosition).Floor();
+            var scale5 = 1f;
 
             spriteBatch.Draw(texture2D14, vector27,
-                new Microsoft.Xna.Framework.Rectangle(0, y16, texture2D14.Width, num192), projectile.GetAlpha(lightColor),
-                projectile.rotation, new Vector2((float) texture2D14.Width / 2f, (float) num192 / 2f), projectile.scale,
+                new Rectangle(0, y16, texture2D14.Width, num192), projectile.GetAlpha(lightColor),
+                projectile.rotation, new Vector2(texture2D14.Width / 2f, num192 / 2f), projectile.scale,
                 spriteEffects, 0f);
-            
-            
+
+
             spriteBatch.Draw(mod.GetTexture("Projectiles/RainbowMachineGun_Glow"), vector27,
-                new Microsoft.Xna.Framework.Rectangle(0, y16, texture2D14.Width, num192),
-                new Microsoft.Xna.Framework.Color(255, 255, 255, 0) * scale5, projectile.rotation,
-                new Vector2((float) texture2D14.Width / 2f, (float) num192 / 2f), projectile.scale, spriteEffects,
+                new Rectangle(0, y16, texture2D14.Width, num192),
+                new Color(255, 255, 255, 0) * scale5, projectile.rotation,
+                new Vector2(texture2D14.Width / 2f, num192 / 2f), projectile.scale, spriteEffects,
                 0f);
-            
+
             return false;
         }
 
@@ -66,13 +61,13 @@ namespace DoomBubblesMod.Projectiles
 
         public override void AI()
         {
-            Player player = Main.player[projectile.owner];
-            float num = (float) Math.PI / 2f;
-            Vector2 vector = player.RotatedRelativePoint(player.MountedCenter);
+            var player = Main.player[projectile.owner];
+            var num = (float) Math.PI / 2f;
+            var vector = player.RotatedRelativePoint(player.MountedCenter);
             projectile.ai[0] += 1f;
-            int num2 = 0;
-            int num3 = 24;
-            int num4 = 6;
+            var num2 = 0;
+            var num3 = 24;
+            var num4 = 6;
             if (projectile.ai[0] >= 40f)
             {
                 num2++;
@@ -87,15 +82,15 @@ namespace DoomBubblesMod.Projectiles
             {
                 num2++;
             }
-            
+
             if (projectile.ai[0] >= 180f)
             {
                 num3 = 22;
             }
-            
+
             projectile.ai[1] += 1f;
-            bool flag = false;
-            if (projectile.ai[1] >= (float) (num3 - num4 * num2))
+            var flag = false;
+            if (projectile.ai[1] >= num3 - num4 * num2)
             {
                 projectile.ai[1] = 0f;
                 flag = true;
@@ -121,15 +116,15 @@ namespace DoomBubblesMod.Projectiles
                 }
             }
 
-            
+
             if (projectile.ai[1] == 1f && projectile.ai[0] != 1f)
             {
-                Vector2 spinningpoint = Vector2.UnitX * 24f;
+                var spinningpoint = Vector2.UnitX * 24f;
                 spinningpoint = spinningpoint.RotatedBy(projectile.rotation - (float) Math.PI / 2f);
-                Vector2 value = projectile.Center + spinningpoint;
-                for (int i = 0; i < 2; i++)
+                var value = projectile.Center + spinningpoint;
+                for (var i = 0; i < 2; i++)
                 {
-                    int num5 = Dust.NewDust(value - Vector2.One * 8f, 16, 16, 63, projectile.velocity.X / 2f,
+                    var num5 = Dust.NewDust(value - Vector2.One * 8f, 16, 16, 63, projectile.velocity.X / 2f,
                         projectile.velocity.Y / 2f,
                         100, DoomBubblesMod.rainbowColors[Main.rand.Next(0, 6)]);
                     Main.dust[num5].velocity *= 0.66f;
@@ -140,18 +135,18 @@ namespace DoomBubblesMod.Projectiles
 
             if (flag && Main.myPlayer == projectile.owner)
             {
-                if (player.channel && player.CheckMana(player.inventory[player.selectedItem], -1, pay: true) &&
+                if (player.channel && player.CheckMana(player.inventory[player.selectedItem], -1, true) &&
                     !player.noItems && !player.CCed)
                 {
-                    float scaleFactor = player.inventory[player.selectedItem].shootSpeed * projectile.scale;
-                    Vector2 vector2 = vector;
-                    Vector2 value2 = Main.screenPosition + new Vector2(Main.mouseX, Main.mouseY) - vector2;
+                    var scaleFactor = player.inventory[player.selectedItem].shootSpeed * projectile.scale;
+                    var vector2 = vector;
+                    var value2 = Main.screenPosition + new Vector2(Main.mouseX, Main.mouseY) - vector2;
                     if (player.gravDir == -1f)
                     {
-                        value2.Y = (float) (Main.screenHeight - Main.mouseY) + Main.screenPosition.Y - vector2.Y;
+                        value2.Y = Main.screenHeight - Main.mouseY + Main.screenPosition.Y - vector2.Y;
                     }
 
-                    Vector2 vector3 = Vector2.Normalize(value2);
+                    var vector3 = Vector2.Normalize(value2);
                     if (float.IsNaN(vector3.X) || float.IsNaN(vector3.Y))
                     {
                         vector3 = -Vector2.UnitY;
@@ -164,13 +159,13 @@ namespace DoomBubblesMod.Projectiles
                     }
 
                     projectile.velocity = vector3;
-                    float scaleFactor2 = 14f;
-                    int num7 = 7;
-                    for (int j = 0; j < 2; j++)
+                    var scaleFactor2 = 14f;
+                    var num7 = 7;
+                    for (var j = 0; j < 2; j++)
                     {
                         vector2 = projectile.Center + new Vector2(Main.rand.Next(-num7, num7 + 1),
-                                      Main.rand.Next(-num7, num7 + 1));
-                        Vector2 spinningpoint2 = Vector2.Normalize(projectile.velocity) * scaleFactor2;
+                            Main.rand.Next(-num7, num7 + 1));
+                        var spinningpoint2 = Vector2.Normalize(projectile.velocity) * scaleFactor2;
                         spinningpoint2 =
                             spinningpoint2.RotatedBy(
                                 Main.rand.NextDouble() * 0.19634954631328583 - 0.098174773156642914);
@@ -179,7 +174,7 @@ namespace DoomBubblesMod.Projectiles
                             spinningpoint2 = -Vector2.UnitY;
                         }
 
-                        int proj = Projectile.NewProjectile(vector2.X, vector2.Y, spinningpoint2.X, spinningpoint2.Y,
+                        var proj = Projectile.NewProjectile(vector2.X, vector2.Y, spinningpoint2.X, spinningpoint2.Y,
                             mod.ProjectileType("Rainbow"), projectile.damage, projectile.knockBack, projectile.owner);
                         Main.projectile[proj].netUpdate = true;
                     }
@@ -198,8 +193,8 @@ namespace DoomBubblesMod.Projectiles
             player.heldProj = projectile.whoAmI;
             player.itemTime = 2;
             player.itemAnimation = 2;
-            player.itemRotation = (float) Math.Atan2(projectile.velocity.Y * (float) projectile.direction,
-                projectile.velocity.X * (float) projectile.direction);
+            player.itemRotation = (float) Math.Atan2(projectile.velocity.Y * projectile.direction,
+                projectile.velocity.X * projectile.direction);
             /*for (int num46 = 0; num46 < 2; num46++)
             {
                 Dust obj = Main.dust[Dust.NewDust(projectile.position + projectile.velocity * 2f, projectile.width, projectile.height, 6, 0f, 0f, 100, Color.Transparent, 2f)];
@@ -229,9 +224,9 @@ namespace DoomBubblesMod.Projectiles
 
         public override void PostAI()
         {
-            Player player = Main.player[projectile.owner];
-            Item item = player.inventory[player.selectedItem];
-            int time = (int)((float)item.useTime / PlayerHooks.TotalUseTimeMultiplier(player, item));
+            var player = Main.player[projectile.owner];
+            var item = player.inventory[player.selectedItem];
+            var time = (int) (item.useTime / PlayerHooks.TotalUseTimeMultiplier(player, item));
             projectile.ai[0] += 20f / time - 1;
             projectile.ai[1] += 20f / time - 1;
         }

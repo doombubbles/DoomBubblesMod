@@ -12,7 +12,8 @@ namespace DoomBubblesMod.Items.HotS
         public override string Talent3Name => "TalentMasterOfFlame";
         protected override Color? TalentColor => Color.LimeGreen;
 
-        public int Verdant => Main.player[item.owner].GetModPlayer<HotSPlayer>().superVerdant ? 2 : Main.player[item.owner].GetModPlayer<HotSPlayer>().verdant ? 1 : 0;
+        public int Verdant => Main.player[item.owner].GetModPlayer<HotSPlayer>().superVerdant ? 2 :
+            Main.player[item.owner].GetModPlayer<HotSPlayer>().verdant ? 1 : 0;
 
         public override void SetStaticDefaults()
         {
@@ -40,11 +41,12 @@ namespace DoomBubblesMod.Items.HotS
             Item.staff[item.type] = true;
             item.rare = ItemRarityID.Lime;
         }
-        
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage,
+
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY,
+            ref int type, ref int damage,
             ref float knockBack)
         {
-            int proj = Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack,
+            var proj = Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack,
                 player.whoAmI, ChosenTalent, Verdant);
             Main.projectile[proj].netUpdate = true;
             return false;

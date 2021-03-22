@@ -1,6 +1,5 @@
 using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -11,7 +10,8 @@ namespace DoomBubblesMod.Projectiles.HotS
         public int ChosenTalent => (int) Math.Round(projectile.ai[0]);
         public NPC Target => Main.npc[(int) Math.Round(projectile.ai[1])];
 
-        public int Damage => (int) (ChosenTalent == 2 || ChosenTalent == -1 ? projectile.damage * 1.35 : projectile.damage);
+        public int Damage =>
+            (int) (ChosenTalent == 2 || ChosenTalent == -1 ? projectile.damage * 1.35 : projectile.damage);
 
         public override void SetStaticDefaults()
         {
@@ -41,25 +41,31 @@ namespace DoomBubblesMod.Projectiles.HotS
             {
                 return false;
             }
+
             return base.CanHitNPC(target);
         }
 
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit,
+            ref int hitDirection)
         {
-            if (target.whoAmI != Target.whoAmI && (knockback <.5 || ChosenTalent == 3 || ChosenTalent == -1))
+            if (target.whoAmI != Target.whoAmI && (knockback < .5 || ChosenTalent == 3 || ChosenTalent == -1))
             {
                 target.buffImmune[mod.BuffType("LivingBomb")] = false;
                 if (!target.HasBuff(mod.BuffType("LivingBomb")))
                 {
                     target.AddBuff(mod.BuffType("LivingBomb"), 150);
-                    int proj = Projectile.NewProjectile(target.Center, new Vector2(0, 0), mod.ProjectileType("LivingBomb"),
+                    var proj = Projectile.NewProjectile(target.Center, new Vector2(0, 0),
+                        mod.ProjectileType("LivingBomb"),
                         Damage, ++projectile.knockBack, projectile.owner, ChosenTalent, target.whoAmI);
                     Main.projectile[proj].netUpdate = true;
                     Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/LivingBombWand2"), target.Center);
-                } else if ((ChosenTalent == 1 || ChosenTalent == -1) && target.buffTime[target.FindBuffIndex(mod.BuffType("LivingBomb"))] < 150)
+                }
+                else if ((ChosenTalent == 1 || ChosenTalent == -1) &&
+                         target.buffTime[target.FindBuffIndex(mod.BuffType("LivingBomb"))] < 150)
                 {
                     target.buffTime[target.FindBuffIndex(mod.BuffType("LivingBomb"))] = 152;
-                    int proj = Projectile.NewProjectile(target.Center, new Vector2(0, 0), mod.ProjectileType("LivingBomb"),
+                    var proj = Projectile.NewProjectile(target.Center, new Vector2(0, 0),
+                        mod.ProjectileType("LivingBomb"),
                         Damage, ++projectile.knockBack, projectile.owner, ChosenTalent, target.whoAmI);
                     Main.projectile[proj].netUpdate = true;
                     Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/LivingBombWand2"), target.Center);
@@ -76,6 +82,7 @@ namespace DoomBubblesMod.Projectiles.HotS
             {
                 projectile.Kill();
             }
+
             projectile.Center = Target.Center;
             if (Target.HasBuff(mod.BuffType("LivingBomb")) && projectile.timeLeft > 10 && projectile.timeLeft < 295 &&
                 (Target.buffTime[Target.FindBuffIndex(mod.BuffType("LivingBomb"))] == 1 ||
