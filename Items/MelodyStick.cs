@@ -2,8 +2,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-using DoomBubblesMod.Sounds;
-
 namespace DoomBubblesMod.Items
 {
     public class MelodyStick : ModItem
