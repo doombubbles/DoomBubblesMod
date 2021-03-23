@@ -7,3 +7,4 @@ DoomBubblesMod.sln
 *.dll
 bin/
 obj/
+.vscode/
