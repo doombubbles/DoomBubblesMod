@@ -26,6 +26,16 @@ namespace DoomBubblesMod.Items
             item.autoReuse = true;
         }
 
+        public override void AddRecipes()
+        {
+            var recipe = new ModRecipe(mod);
+            recipe.AddIngredient(mod, "RhythmStick", 1);
+            recipe.AddIngredient(ItemID.MusicBox);
+            recipe.AddTile(TileID.CrystalBall);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
+        }
+
         public override bool UseItem(Player player) {
             if (player.itemAnimation == player.itemAnimationMax - 1)
             {
