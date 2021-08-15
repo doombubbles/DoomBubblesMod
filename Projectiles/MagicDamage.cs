@@ -1,10 +1,12 @@
+using Terraria.ModLoader;
+
 namespace DoomBubblesMod.Projectiles
 {
     public class MagicDamage : Damage
     {
         public override void SetDefaults()
         {
-            projectile.magic = true;
+            Projectile.DamageType = DamageClass.Magic;
         }
     }
 }

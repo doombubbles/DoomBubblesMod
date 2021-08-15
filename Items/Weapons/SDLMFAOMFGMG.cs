@@ -1,5 +1,7 @@
+using DoomBubblesMod.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -12,28 +14,29 @@ namespace DoomBubblesMod.Items.Weapons
             DisplayName.SetDefault("S.D.L.M.F.A.O.M.F.G.M.G.");
             Tooltip.SetDefault("It came from the edge of Calamity\n" +
                                "75% chance to not consume ammo");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            item.damage = 640;
-            item.ranged = true;
-            item.width = 108;
-            item.height = 42;
-            item.useTime = 3;
-            item.useAnimation = 3;
-            item.crit = 25;
-            item.useStyle = 5;
-            item.noMelee = true; //so the item's animation doesn't do damage
-            item.knockBack = 4;
-            item.value = Item.sellPrice(0, 50);
-            item.rare = 11;
-            item.expert = true;
-            item.UseSound = SoundID.Item40;
-            item.autoReuse = true;
-            item.shoot = 10; //idk why but all the guns in the vanilla source have this
-            item.shootSpeed = 11f;
-            item.useAmmo = AmmoID.Bullet;
+            Item.damage = 640;
+            Item.DamageType = DamageClass.Ranged;
+            Item.width = 108;
+            Item.height = 42;
+            Item.useTime = 3;
+            Item.useAnimation = 3;
+            Item.crit = 25;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true; //so the item's animation doesn't do damage
+            Item.knockBack = 4;
+            Item.value = Item.sellPrice(0, 50);
+            Item.rare = ItemRarityID.Purple;
+            Item.expert = true;
+            Item.UseSound = SoundID.Item40;
+            Item.autoReuse = true;
+            Item.shoot = ProjectileID.PurificationPowder; //idk why but all the guns in the vanilla source have this
+            Item.shootSpeed = 11f;
+            Item.useAmmo = AmmoID.Bullet;
         }
 
         public override Vector2? HoldoutOffset()
@@ -43,80 +46,77 @@ namespace DoomBubblesMod.Items.Weapons
 
         public override bool ConsumeAmmo(Player player)
         {
-            if (Main.rand.NextDouble() <= .75)
-            {
-                return false;
-            }
-
-            return base.ConsumeAmmo(player);
+            return !(Main.rand.NextDouble() <= .75) && base.ConsumeAmmo(player);
         }
 
-        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
+        /*public override void ModifyWeaponDamage(Player player, ref StatModifier damage, ref float flat)
         {
-            // Here we use the multiplicative damage modifier because Terraria does this approach for Ammo damage bonuses. 
-            mult *= player.bulletDamage;
-        }
+            damage.Scale(player.bulletDamage);
+        }*/
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY,
-            ref int type, ref int damage,
-            ref float knockBack)
+        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type,
+            int damage, float knockback)
         {
-            var velocity = new Vector2(speedX, speedY);
-
             var dub = Main.rand.NextDouble();
-            if (dub > .66)
+            switch (dub)
             {
-                var projecitle = Projectile.NewProjectileDirect(position, velocity * 1.5f,
-                    mod.ProjectileType("TerraBullet"),
-                    damage, knockBack, player.whoAmI);
-                projecitle.netUpdate = true;
-            }
-            else if (dub < .33)
-            {
-                var projecitle = Projectile.NewProjectileDirect(position, velocity * 1.5f,
-                    mod.ProjectileType("TrueHomingBullet"),
-                    damage, knockBack, player.whoAmI);
-                projecitle.netUpdate = true;
-            }
-            else
-            {
-                var projecitle = Projectile.NewProjectileDirect(position, velocity * 1.5f,
-                    mod.ProjectileType("TruePiercingBullet"),
-                    damage, knockBack, player.whoAmI);
-                projecitle.netUpdate = true;
+                case > .66:
+                {
+                    var projecitle = Projectile.NewProjectileDirect(source, position, velocity * 1.5f,
+                        ModContent.ProjectileType<TerraBullet>(),
+                        damage, knockback, player.whoAmI);
+                    projecitle.netUpdate = true;
+                    break;
+                }
+                case < .33:
+                {
+                    var projecitle = Projectile.NewProjectileDirect(source, position, velocity * 1.5f,
+                        ModContent.ProjectileType<TrueHomingBullet>(),
+                        damage, knockback, player.whoAmI);
+                    projecitle.netUpdate = true;
+                    break;
+                }
+                default:
+                {
+                    var projecitle = Projectile.NewProjectileDirect(source, position, velocity * 1.5f,
+                        ModContent.ProjectileType<TruePiercingBullet>(),
+                        damage, knockback, player.whoAmI);
+                    projecitle.netUpdate = true;
+                    break;
+                }
             }
 
 
             if (DoomBubblesMod.calamityMod != null)
             {
-                FireCalamityProjectiles(position, velocity, damage, knockBack, player);
+                FireCalamityProjectiles(source, position, velocity, damage, knockback, player);
             }
 
-            return base.Shoot(player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
+            return base.Shoot(player, source, position, velocity, type, damage, knockback);
         }
 
-        private void FireCalamityProjectiles(Vector2 position, Vector2 velocity, int damage, float knockBack,
+        private void FireCalamityProjectiles(ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int damage, float knockBack,
             Player player)
         {
             var dub = Main.rand.NextDouble();
             if (dub > .66)
             {
-                var projecitle = Projectile.NewProjectileDirect(position, velocity * 3,
-                    DoomBubblesMod.calamityMod.ProjectileType("FishronRPG"),
+                var projecitle = Projectile.NewProjectileDirect(source, position, velocity * 3,
+                    DoomBubblesMod.calamityMod.Find<ModProjectile>("FishronRPG").Type,
                     damage, knockBack, player.whoAmI);
                 projecitle.netUpdate = true;
             }
             else if (dub < .33)
             {
-                var projecitle = Projectile.NewProjectileDirect(position, velocity * 2,
-                    DoomBubblesMod.calamityMod.ProjectileType("BloodfireBullet"),
+                var projecitle = Projectile.NewProjectileDirect(source, position, velocity * 2,
+                    DoomBubblesMod.calamityMod.Find<ModProjectile>("BloodfireBullet").Type,
                     damage, knockBack, player.whoAmI);
                 projecitle.netUpdate = true;
             }
             else
             {
-                var projecitle = Projectile.NewProjectileDirect(position, velocity * 2,
-                    DoomBubblesMod.calamityMod.ProjectileType("AstralRound"),
+                var projecitle = Projectile.NewProjectileDirect(source, position, velocity * 2,
+                    DoomBubblesMod.calamityMod.Find<ModProjectile>("AstralRound").Type,
                     damage, knockBack, player.whoAmI);
                 projecitle.netUpdate = true;
             }
@@ -132,24 +132,22 @@ namespace DoomBubblesMod.Items.Weapons
 
         private void AddCalamityRecipe()
         {
-            var recipe = new ModRecipe(mod);
-            var CalamityMod = ModLoader.GetMod("CalamityMod");
-            recipe.AddIngredient(CalamityMod.ItemType("SDFMG"));
-            recipe.AddIngredient(CalamityMod.ItemType("ClaretCannon"));
-            recipe.AddIngredient(CalamityMod.ItemType("StormDragoon"));
-            recipe.AddIngredient(CalamityMod.ItemType("AstralBlaster"));
-            recipe.AddIngredient(mod.ItemType("TerraRifle"));
-            recipe.AddIngredient(mod.ItemType("Ultrashark"));
-            recipe.AddIngredient(CalamityMod.ItemType("NightmareFuel"), 5);
-            recipe.AddIngredient(CalamityMod.ItemType("EndothermicEnergy"), 5);
-            recipe.AddIngredient(CalamityMod.ItemType("CosmiliteBar"), 5);
-            recipe.AddIngredient(CalamityMod.ItemType("Phantoplasm"), 5);
-            recipe.AddIngredient(CalamityMod.ItemType("HellcasterFragment"), 3);
-            recipe.AddIngredient(CalamityMod.ItemType("DarksunFragment"), 5);
-            recipe.AddIngredient(CalamityMod.ItemType("AuricOre"), 25);
-            recipe.AddTile(CalamityMod.TileType("DraedonsForge"));
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            var recipe = CreateRecipe();
+            recipe.AddIngredient(DoomBubblesMod.calamityMod.Find<ModItem>("SDFMG"));
+            recipe.AddIngredient(DoomBubblesMod.calamityMod.Find<ModItem>("ClaretCannon"));
+            recipe.AddIngredient(DoomBubblesMod.calamityMod.Find<ModItem>("StormDragoon"));
+            recipe.AddIngredient(DoomBubblesMod.calamityMod.Find<ModItem>("AstralBlaster"));
+            recipe.AddIngredient(ModContent.ItemType<TerraRifle>());
+            recipe.AddIngredient(ModContent.ItemType<Ultrashark>());
+            recipe.AddIngredient(DoomBubblesMod.calamityMod.Find<ModItem>("NightmareFuel"), 5);
+            recipe.AddIngredient(DoomBubblesMod.calamityMod.Find<ModItem>("EndothermicEnergy"), 5);
+            recipe.AddIngredient(DoomBubblesMod.calamityMod.Find<ModItem>("CosmiliteBar"), 5);
+            recipe.AddIngredient(DoomBubblesMod.calamityMod.Find<ModItem>("Phantoplasm"), 5);
+            recipe.AddIngredient(DoomBubblesMod.calamityMod.Find<ModItem>("HellcasterFragment"), 3);
+            recipe.AddIngredient(DoomBubblesMod.calamityMod.Find<ModItem>("DarksunFragment"), 5);
+            recipe.AddIngredient(DoomBubblesMod.calamityMod.Find<ModItem>("AuricOre"), 25);
+            recipe.AddTile(DoomBubblesMod.calamityMod.Find<ModTile>("DraedonsForge").Type);
+            recipe.Register();
         }
     }
 }

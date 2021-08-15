@@ -9,17 +9,26 @@ namespace DoomBubblesMod.Items.Thanos
 {
     internal class PowerStone : ModItem
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
-            item.value = Item.sellPrice(5);
-            ;
-            item.rare = 11;
-            item.height = 20;
-            item.width = 14;
-            item.useStyle = 4;
+            DisplayName.SetDefault("Power Stone");
+            Tooltip.SetDefault("\"The stone reacts to anything organic, the bigger\n" +
+                               "the target, the bigger the power surge.\"\n" +
+                               "-Gamora");
+            
+            Item.SetResearchAmount(1);
         }
 
-        public override bool UseItem(Player player)
+        public override void SetDefaults()
+        {
+            Item.value = Item.sellPrice(5);
+            Item.rare = ItemRarityID.Purple;
+            Item.height = 20;
+            Item.width = 14;
+            Item.useStyle = 4;
+        }
+
+        public override bool? UseItem(Player player)
         {
             player.KillMe(
                 PlayerDeathReason.ByCustomReason(player.name + " wielded power beyond " +
@@ -37,26 +46,17 @@ namespace DoomBubblesMod.Items.Thanos
 
             return base.UseItem(player);
         }
-
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Power Stone");
-            Tooltip.SetDefault("\"The stone reacts to anything organic, the bigger\n" +
-                               "the target, the bigger the power surge.\"\n" +
-                               "-Gamora");
-        }
-
+        
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(mod);
+            var recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.Amethyst);
             recipe.AddIngredient(ItemID.FragmentNebula, 5);
             recipe.AddIngredient(ItemID.FragmentSolar, 5);
             recipe.AddIngredient(ItemID.FragmentStardust, 5);
             recipe.AddIngredient(ItemID.FragmentVortex, 5);
             recipe.AddTile(TileID.LunarCraftingStation);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
 }

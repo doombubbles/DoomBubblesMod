@@ -2,11 +2,13 @@
 using System.IO;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using SoundType = Terraria.ModLoader.SoundType;
 
-namespace DoomBubblesMod.Items
+namespace DoomBubblesMod.Items.Talent
 {
     public abstract class TalentItem : ModItem
     {
@@ -19,8 +21,6 @@ namespace DoomBubblesMod.Items
         private bool Talent2 { get; set; }
         private bool Talent3 { get; set; }
         public short ChosenTalent { get; private set; }
-
-        public override bool CloneNewInstances => true;
 
         public override TagCompound Save()
         {
@@ -48,7 +48,7 @@ namespace DoomBubblesMod.Items
             writer.Write(ChosenTalent);
         }
 
-        public override void NetRecieve(BinaryReader reader)
+        public override void NetReceive(BinaryReader reader)
         {
             Talent1 = reader.ReadBoolean();
             Talent2 = reader.ReadBoolean();
@@ -58,11 +58,11 @@ namespace DoomBubblesMod.Items
 
         public override bool CanRightClick()
         {
-            if (item.owner == Main.myPlayer)
+            if (Item.playerIndexTheItemIsReservedFor == Main.myPlayer)
             {
-                if (Main.mouseItem.type == mod.ItemType(Talent1Name) ||
-                    Main.mouseItem.type == mod.ItemType(Talent2Name) ||
-                    Main.mouseItem.type == mod.ItemType(Talent3Name))
+                if (Main.mouseItem.type == ModContent.Find<ModItem>(Talent1Name).Type ||
+                    Main.mouseItem.type == ModContent.Find<ModItem>(Talent2Name).Type ||
+                    Main.mouseItem.type == ModContent.Find<ModItem>(Talent3Name).Type)
                 {
                     return true;
                 }
@@ -78,21 +78,21 @@ namespace DoomBubblesMod.Items
 
         public override void RightClick(Player player)
         {
-            if (item.owner == Main.myPlayer)
+            if (Item.playerIndexTheItemIsReservedFor == Main.myPlayer)
             {
-                if (Main.mouseItem.type == mod.ItemType(Talent1Name) && !Talent1)
+                if (Main.mouseItem.type == ModContent.Find<ModItem>(Talent1Name).Type && !Talent1)
                 {
                     Talent1 = true;
                     ChosenTalent = 1;
                     Main.mouseItem = new Item();
                 }
-                else if (Main.mouseItem.type == mod.ItemType(Talent2Name) && !Talent2)
+                else if (Main.mouseItem.type == ModContent.Find<ModItem>(Talent2Name).Type && !Talent2)
                 {
                     Talent2 = true;
                     ChosenTalent = 2;
                     Main.mouseItem = new Item();
                 }
-                else if (Main.mouseItem.type == mod.ItemType(Talent3Name) && !Talent3)
+                else if (Main.mouseItem.type == ModContent.Find<ModItem>(Talent3Name).Type && !Talent3)
                 {
                     Talent3 = true;
                     ChosenTalent = 3;
@@ -142,9 +142,9 @@ namespace DoomBubblesMod.Items
 
                     if (ChosenTalent != ogTalent)
                     {
-                        Main.PlaySound(SoundLoader.customSoundType, (int) Main.player[item.owner].position.X,
-                            (int) Main.player[item.owner].position.Y,
-                            mod.GetSoundSlot(SoundType.Custom, "Sounds/TalentChange"));
+                        SoundEngine.PlaySound(SoundLoader.customSoundType, (int) Main.player[Item.playerIndexTheItemIsReservedFor].position.X,
+                            (int) Main.player[Item.playerIndexTheItemIsReservedFor].position.Y,
+                            Mod.GetSoundSlot(SoundType.Custom, "Sounds/TalentChange"));
                     }
                 }
             }
@@ -160,37 +160,37 @@ namespace DoomBubblesMod.Items
         {
             if (ChosenTalent == 1 || ChosenTalent == -1)
             {
-                tooltips.Add(new TooltipLine(mod, "talent1",
-                    mod.GetItem(Talent1Name).DisplayName.GetDefault().Replace("Talent: ", "") + ":")
+                tooltips.Add(new TooltipLine(Mod, "talent1",
+                    ModContent.Find<ModItem>(Talent1Name).DisplayName.GetDefault().Replace("Talent: ", "") + ":")
                 {
                     overrideColor = TalentColor
                 });
-                tooltips.Add(new TooltipLine(mod, "1", mod.GetItem(Talent1Name).Tooltip.GetDefault().Split('\n')[1]));
+                tooltips.Add(new TooltipLine(Mod, "1", ModContent.Find<ModItem>(Talent1Name).Tooltip.GetDefault().Split('\n')[1]));
             }
 
             if (ChosenTalent == 2 || ChosenTalent == -1)
             {
-                tooltips.Add(new TooltipLine(mod, "talent2",
-                    mod.GetItem(Talent2Name).DisplayName.GetDefault().Replace("Talent: ", "") + ":")
+                tooltips.Add(new TooltipLine(Mod, "talent2",
+                    ModContent.Find<ModItem>(Talent2Name).DisplayName.GetDefault().Replace("Talent: ", "") + ":")
                 {
                     overrideColor = TalentColor
                 });
-                tooltips.Add(new TooltipLine(mod, "2", mod.GetItem(Talent2Name).Tooltip.GetDefault().Split('\n')[1]));
+                tooltips.Add(new TooltipLine(Mod, "2", ModContent.Find<ModItem>(Talent2Name).Tooltip.GetDefault().Split('\n')[1]));
             }
 
             if (ChosenTalent == 3 || ChosenTalent == -1)
             {
-                tooltips.Add(new TooltipLine(mod, "talent3",
-                    mod.GetItem(Talent3Name).DisplayName.GetDefault().Replace("Talent: ", "") + ":")
+                tooltips.Add(new TooltipLine(Mod, "talent3",
+                    ModContent.Find<ModItem>(Talent3Name).DisplayName.GetDefault().Replace("Talent: ", "") + ":")
                 {
                     overrideColor = TalentColor
                 });
-                tooltips.Add(new TooltipLine(mod, "3", mod.GetItem(Talent3Name).Tooltip.GetDefault().Split('\n')[1]));
+                tooltips.Add(new TooltipLine(Mod, "3", ModContent.Find<ModItem>(Talent3Name).Tooltip.GetDefault().Split('\n')[1]));
             }
 
             if (ChosenTalent > 0 && Talent1 && Talent2 || Talent1 && Talent3 || Talent2 && Talent3)
             {
-                tooltips.Add(new TooltipLine(mod, "talents", "[Right click to swap talent]"));
+                tooltips.Add(new TooltipLine(Mod, "talents", "[Right click to swap talent]"));
             }
         }
     }

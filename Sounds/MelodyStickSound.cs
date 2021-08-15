@@ -12,7 +12,6 @@ namespace DoomBubblesMod.Sounds
             float note = (float) Main.mouseX / (float) Main.screenWidth;
             float dynamic = (float) Main.mouseY / (float) Main.screenHeight;
 
-            soundInstance = sound.CreateInstance();
             soundInstance.Volume = volume * dynamic * 1.0f;
             soundInstance.Pan = pan;
             soundInstance.Pitch = note;

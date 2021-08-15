@@ -11,40 +11,40 @@ namespace DoomBubblesMod.Items.Accessories
         {
             DisplayName.SetDefault("Big Bad Blessed Bundle of Balloons");
             Tooltip.SetDefault("Allows the holder to septuple jump\nReleases bees when damaged");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            item.value = 100000;
-            item.width = 42;
-            item.height = 42;
-            item.rare = 6;
-            item.accessory = true;
+            Item.value = 100000;
+            Item.width = 42;
+            Item.height = 42;
+            Item.rare = ItemRarityID.LightPurple;
+            Item.accessory = true;
         }
 
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.doubleJumpBlizzard = true;
-            player.doubleJumpCloud = true;
-            player.doubleJumpFart = true;
-            player.doubleJumpSandstorm = true;
-            player.doubleJumpSail = true;
-            player.doubleJumpUnicorn = true;
-            player.bee = true;
+            player.hasJumpOption_Blizzard = true;
+            player.hasJumpOption_Cloud = true;
+            player.hasJumpOption_Fart = true;
+            player.hasJumpOption_Sandstorm = true;
+            player.hasJumpOption_Sail = true;
+            player.hasJumpOption_Unicorn = true;
+            player.honeyCombItem = Item;
         }
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(mod);
+            var recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.BundleofBalloons);
             recipe.AddIngredient(ItemID.FartInABalloon);
             recipe.AddIngredient(ItemID.HoneyBalloon);
             recipe.AddIngredient(ItemID.SharkronBalloon);
             recipe.AddIngredient(ItemID.BlessedApple);
             recipe.AddTile(TileID.TinkerersWorkbench);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
 }

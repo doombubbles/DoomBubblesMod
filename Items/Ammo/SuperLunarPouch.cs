@@ -11,33 +11,34 @@ namespace DoomBubblesMod.Items.Ammo
         {
             DisplayName.SetDefault("Endless Super Lunar Pouch");
             Tooltip.SetDefault("Effects of all Lunar Bullets combined");
-            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(15, 4));
+            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(15, 4));
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            item.shoot = mod.ProjectileType("SuperLunarBullet");
-            item.width = 26;
-            item.height = 34;
-            item.ammo = AmmoID.Bullet;
-            item.value = Item.sellPrice(0, 20);
-            item.ranged = true;
-            item.rare = 10;
-            item.damage = 20;
-            item.knockBack = 3;
+            Item.shoot = ModContent.ProjectileType<Projectiles.SuperLunarBullet>();
+            Item.width = 26;
+            Item.height = 34;
+            Item.ammo = AmmoID.Bullet;
+            Item.value = Item.sellPrice(0, 20);
+            Item.DamageType = DamageClass.Ranged;
+            Item.rare = 10;
+            Item.damage = 20;
+            Item.knockBack = 3;
         }
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(mod);
-            recipe.AddIngredient(mod.ItemType("SolarPouch"));
-            recipe.AddIngredient(mod.ItemType("NebulaPouch"));
-            recipe.AddIngredient(mod.ItemType("VortexPouch"));
-            recipe.AddIngredient(mod.ItemType("StardustPouch"));
+            var recipe = CreateRecipe();
+            recipe.AddIngredient(ModContent.ItemType<SolarPouch>());
+            recipe.AddIngredient(ModContent.ItemType<NebulaPouch>());
+            recipe.AddIngredient(ModContent.ItemType<VortexPouch>());
+            recipe.AddIngredient(ModContent.ItemType<StardustPouch>());
             recipe.AddIngredient(ItemID.GravityGlobe);
-            recipe.SetResult(this);
+            recipe.ReplaceResult(this);
             recipe.AddTile(TileID.LunarCraftingStation);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
 }

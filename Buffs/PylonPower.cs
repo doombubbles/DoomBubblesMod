@@ -5,14 +5,14 @@ namespace DoomBubblesMod.Buffs
 {
     public class PylonPower : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Pylon Power");
             Description.SetDefault("Increased Life/Mana Regen");
             Main.debuff[Type] = false;
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;
-            longerExpertDebuff = false;
+            LongerExpertDebuff = false;
             Main.buffNoTimeDisplay[Type] = true;
         }
 

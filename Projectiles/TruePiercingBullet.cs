@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -13,31 +14,31 @@ namespace DoomBubblesMod.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 8;
-            projectile.height = 8;
-            projectile.aiStyle = 1;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.ranged = true;
-            projectile.penetrate = 3;
-            projectile.timeLeft = 600;
-            projectile.alpha = 255;
-            projectile.light = 0.5f;
-            projectile.ignoreWater = true;
-            projectile.tileCollide = true;
-            projectile.extraUpdates = 1;
-            projectile.light = 0.3f;
-            aiType = ProjectileID.Bullet;
-            projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = 50;
+            Projectile.width = 8;
+            Projectile.height = 8;
+            Projectile.aiStyle = 1;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.penetrate = 3;
+            Projectile.timeLeft = 600;
+            Projectile.alpha = 255;
+            Projectile.light = 0.5f;
+            Projectile.ignoreWater = true;
+            Projectile.tileCollide = true;
+            Projectile.extraUpdates = 1;
+            Projectile.light = 0.3f;
+            AIType = ProjectileID.Bullet;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 50;
         }
 
         public override void Kill(int timeLeft)
         {
             // This code and the similar code above in OnTileCollide spawn dust from the tiles collided with. SoundID.Item10 is the bounce sound you hear.
-            Collision.HitTiles(projectile.position + projectile.velocity, projectile.velocity, projectile.width,
-                projectile.height);
-            Main.PlaySound(SoundID.Item10, projectile.position);
+            Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width,
+                Projectile.height);
+            SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
         }
     }
 }

@@ -9,18 +9,19 @@ namespace DoomBubblesMod.Items.Accessories
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Charm of Legends");
+            DisplayName.SetDefault("Charm of Epics");
             Tooltip.SetDefault("Reduces the cooldown of healing potions\n"
                                + "Health/mana always regenerates as if you weren't moving\n"
                                + "Incrases maximum mana by 20\n"
                                + "Increases mana and life regeneration rate");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            var real = item.handOnSlot;
-            item.CloneDefaults(ItemID.CharmofMyths);
-            item.handOnSlot = real;
+            var real = Item.handOnSlot;
+            Item.CloneDefaults(ItemID.CharmofMyths);
+            Item.handOnSlot = real;
         }
 
 
@@ -36,12 +37,11 @@ namespace DoomBubblesMod.Items.Accessories
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(mod);
+            var recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.CharmofMyths);
-            recipe.AddIngredient(mod.ItemType("CharmOfFables"));
+            recipe.AddIngredient(ModContent.ItemType<CharmOfFables>());
             recipe.AddTile(TileID.TinkerersWorkbench);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
 }

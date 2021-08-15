@@ -9,20 +9,21 @@ namespace DoomBubblesMod.Items.Accessories
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Charm of Epics");
+            DisplayName.SetDefault("Charm of Legends");
             Tooltip.SetDefault("Reduces the cooldown of healing potions\n" +
                                "Incrases maximum mana by 20\n" +
                                "Improves life/mana regen in many ways\n" +
                                "Increases heart/star pickup range\n" +
                                "Regenerate mana on taking damage; health on dealing");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            var real = item.handOnSlot;
-            item.CloneDefaults(ItemID.CharmofMyths);
-            item.handOnSlot = real;
-            item.value = Item.sellPrice(1);
+            var real = Item.handOnSlot;
+            Item.CloneDefaults(ItemID.CharmofMyths);
+            Item.handOnSlot = real;
+            Item.value = Item.sellPrice(1);
         }
 
 
@@ -44,16 +45,16 @@ namespace DoomBubblesMod.Items.Accessories
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(mod);
-            recipe.AddIngredient(mod.ItemType("CharmOfLegends"));
+            var recipe = CreateRecipe();
+            recipe.AddIngredient(ModContent.ItemType<CharmOfLegends>());
             recipe.AddIngredient(ItemID.ShinyStone);
-            recipe.AddIngredient(mod.ItemType("CrimsonVoodooDoll"));
-            recipe.AddIngredient(mod.ItemType("PalladiumVoodooDoll"));
+            recipe.AddIngredient(ModContent.ItemType<CrimsonVoodooDoll>());
+            recipe.AddIngredient(ModContent.ItemType<PalladiumVoodooDoll>());
             recipe.AddIngredient(ItemID.CelestialCuffs);
-            recipe.AddIngredient(mod.GetItem("CardiopulmonaryMagnet"));
-            recipe.AddTile(TileID.TinkerersWorkbench);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.AddIngredient(ModContent.ItemType<CardiopulmonaryMagnet>());
+            recipe.AddIngredient(ItemID.GravityGlobe);
+            recipe.AddTile(TileID.LunarCraftingStation);
+            recipe.Register();
         }
     }
 }

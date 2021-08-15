@@ -8,40 +8,40 @@ namespace DoomBubblesMod.Items.Weapons
     {
         public override void SetDefaults()
         {
-            item.damage = 105;
-            item.magic = true;
-            item.mana = 5;
-            item.width = 20;
-            item.height = 12;
-            item.useTime = 20;
-            item.useAnimation = 20;
-            item.useStyle = 5;
-            item.noMelee = true;
-            item.knockBack = 2f;
-            item.value = Item.sellPrice(0, 15);
-            item.rare = 8;
-            item.autoReuse = true;
-            item.shootSpeed = 20f;
-            item.shoot = mod.ProjectileType("RainbowMachineGun");
-            item.channel = true;
-            item.noUseGraphic = true;
+            Item.damage = 105;
+            Item.DamageType = DamageClass.Magic;
+            Item.mana = 5;
+            Item.width = 20;
+            Item.height = 12;
+            Item.useTime = 20;
+            Item.useAnimation = 20;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true;
+            Item.knockBack = 2f;
+            Item.value = Item.sellPrice(0, 15);
+            Item.rare = ItemRarityID.Yellow;
+            Item.autoReuse = true;
+            Item.shootSpeed = 20f;
+            Item.shoot = ModContent.ProjectileType<Projectiles.RainbowMachineGun>();
+            Item.channel = true;
+            Item.noUseGraphic = true;
         }
 
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Rainbow Machinegun");
+            Item.SetResearchAmount(1);
         }
 
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(mod);
+            var recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.LaserMachinegun);
             recipe.AddIngredient(ItemID.RainbowGun);
             recipe.AddIngredient(ItemID.LunarBar, 20);
             recipe.AddTile(TileID.LunarCraftingStation);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
 }

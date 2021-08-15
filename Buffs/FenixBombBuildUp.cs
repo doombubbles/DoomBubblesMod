@@ -5,14 +5,14 @@ namespace DoomBubblesMod.Buffs
 {
     public class FenixBombBuildUp : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Phase Bomb Build Up");
             Description.SetDefault("");
             Main.debuff[Type] = false;
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;
-            longerExpertDebuff = false;
+            LongerExpertDebuff = false;
         }
 
         public override void Update(NPC npc, ref int buffIndex)

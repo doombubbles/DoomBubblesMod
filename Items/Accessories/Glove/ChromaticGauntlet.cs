@@ -14,21 +14,22 @@ namespace DoomBubblesMod.Items.Accessories.Glove
                                "5% increased attack speed\n" +
                                "5% reduced damage taken\n" +
                                "Increases armor penetration by 5");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            item.value = Item.sellPrice(0, 1);
-            item.width = 36;
-            item.height = 40;
-            item.rare = ItemRarityID.Orange;
-            item.accessory = true;
+            Item.value = Item.sellPrice(0, 1);
+            Item.width = 36;
+            Item.height = 40;
+            Item.rare = ItemRarityID.Orange;
+            Item.accessory = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.allDamage += .15f;
-            player.AllCrit(i => i + 5);
+            player.GetDamage(DamageClass.Generic) += .05f;
+            player.GetCritChance(DamageClass.Generic) += 5;
             player.endurance += .05f;
             player.armorPenetration += 5;
             player.AttackSpeed(f => f + .05f);
@@ -36,21 +37,20 @@ namespace DoomBubblesMod.Items.Accessories.Glove
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(mod);
-            recipe.AddIngredient(mod.GetItem("CrimsonGauntlet"));
-            recipe.AddIngredient(mod.GetItem("AzureGauntlet"));
-            recipe.AddIngredient(mod.GetItem("JadeGauntlet"));
-            recipe.AddIngredient(mod.GetItem("SaffronGauntlet"));
-            recipe.AddIngredient(mod.GetItem("MeteorGauntlet"));
-            recipe.AddIngredient(mod.GetItem("SepiaGauntlet"));
-            recipe.AddIngredient(mod.GetItem("IndigoGauntlet"));
-            recipe.AddIngredient(mod.GetItem("QuartzGauntlet"));
-            recipe.AddIngredient(mod.GetItem("EbonyGauntlet"));
-            recipe.AddIngredient(mod.GetItem("RoseGauntlet"));
-            recipe.AddIngredient(mod.GetItem("AquamarineGauntlet"));
+            var recipe = CreateRecipe();
+            recipe.AddIngredient(ModContent.ItemType<CrimsonGauntlet>());
+            recipe.AddIngredient(ModContent.ItemType<AzureGauntlet>());
+            recipe.AddIngredient(ModContent.ItemType<JadeGauntlet>());
+            recipe.AddIngredient(ModContent.ItemType<SaffronGauntlet>());
+            recipe.AddIngredient(ModContent.ItemType<MeteorGauntlet>());
+            recipe.AddIngredient(ModContent.ItemType<SepiaGauntlet>());
+            recipe.AddIngredient(ModContent.ItemType<IndigoGauntlet>());
+            recipe.AddIngredient(ModContent.ItemType<QuartzGauntlet>());
+            recipe.AddIngredient(ModContent.ItemType<EbonyGauntlet>());
+            recipe.AddIngredient(ModContent.ItemType<RoseGauntlet>());
+            recipe.AddIngredient(ModContent.ItemType<AquamarineGauntlet>());
             recipe.AddTile(TileID.WorkBenches);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
 }

@@ -10,12 +10,13 @@ namespace DoomBubblesMod.Items.Accessories
         {
             DisplayName.SetDefault("Palladium Voodoo Doll");
             Tooltip.SetDefault("Your life regenerates palladiumly");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            item.CloneDefaults(ItemID.GuideVoodooDoll);
-            item.rare += 2;
+            Item.CloneDefaults(ItemID.GuideVoodooDoll);
+            Item.rare += 2;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -25,15 +26,14 @@ namespace DoomBubblesMod.Items.Accessories
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(mod);
+            var recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.GuideVoodooDoll);
             recipe.AddIngredient(ItemID.TissueSample, 5);
             recipe.AddRecipeGroup("DoomBubblesMod:AnyPalladiumHelmet");
             recipe.AddIngredient(ItemID.PalladiumBreastplate);
             recipe.AddIngredient(ItemID.PalladiumLeggings);
             recipe.AddTile(TileID.DemonAltar);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
 }

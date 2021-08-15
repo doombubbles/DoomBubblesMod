@@ -5,14 +5,14 @@ namespace DoomBubblesMod.Buffs
 {
     public class UnconqueredSpiritCooldown : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Unconquered Spirit Cooldown");
             Description.SetDefault("");
             Main.debuff[Type] = true;
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;
-            longerExpertDebuff = false;
+            LongerExpertDebuff = false;
         }
 
         public override void Update(NPC npc, ref int buffIndex)

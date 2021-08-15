@@ -4,9 +4,9 @@ namespace DoomBubblesMod.Dusts
 {
     public class Vortex229 : ModDust
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
-            updateType = 229;
+            UpdateType = 229;
         }
     }
 }

@@ -10,11 +10,12 @@ namespace DoomBubblesMod.Items.Accessories
         {
             DisplayName.SetDefault("Cardiopullmonary Magnet");
             Tooltip.SetDefault("Increases pickup range for life hearts");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            item.CloneDefaults(ItemID.CelestialMagnet);
+            Item.CloneDefaults(ItemID.CelestialMagnet);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -24,13 +25,12 @@ namespace DoomBubblesMod.Items.Accessories
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(mod);
+            var recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.CelestialMagnet);
             recipe.AddIngredient(ItemID.HeartreachPotion, 5);
             recipe.AddIngredient(ItemID.LifeCrystal);
             recipe.AddTile(TileID.TinkerersWorkbench);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
 }

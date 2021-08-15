@@ -9,23 +9,24 @@ namespace DoomBubblesMod.Items.Ammo
         {
             DisplayName.SetDefault("Stardust Bullet");
             Tooltip.SetDefault("Splits into smaller bullets on hit");
+            Item.SetResearchAmount(99);
         }
 
         public override void SetDefaults()
         {
-            item.CloneDefaults(ItemID.MoonlordBullet);
-            item.shoot = mod.ProjectileType("StardustBullet");
-            item.shootSpeed = 1.5f;
-            item.damage = 17;
+            Item.CloneDefaults(ItemID.MoonlordBullet);
+            Item.shoot = ModContent.ProjectileType<Projectiles.StardustBullet>();
+            Item.shootSpeed = 1.5f;
+            Item.damage = 17;
         }
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(mod);
+            var recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.FragmentStardust);
-            recipe.SetResult(this, 111);
+            recipe.ReplaceResult(this, 111);
             recipe.AddTile(TileID.LunarCraftingStation);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
 }

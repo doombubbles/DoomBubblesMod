@@ -1,13 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace DoomBubblesMod
 {
-    internal class DoomBubblesPlayer : ModPlayer
+    public class DoomBubblesPlayer : ModPlayer
     {
-        public bool bloodlust;
+        public bool noManaFlower;
         public float critChanceMult = 1f;
         public bool crystalBulletBonus;
         public int emblem;
@@ -28,7 +30,7 @@ namespace DoomBubblesMod
             explosionBulletBonus = false;
             luminiteBulletBonus = false;
             sStone = false;
-            bloodlust = false;
+            noManaFlower = false;
             critChanceMult = 1f;
             emblem = 0;
             vampireKnifeBat = false;
@@ -41,7 +43,7 @@ namespace DoomBubblesMod
             ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
             if (explosionBulletBonus && damageSource.SourceProjectileType == 286 &&
-                damageSource.SourcePlayerIndex == player.whoAmI)
+                damageSource.SourcePlayerIndex == Player.whoAmI)
             {
                 return false;
             }
@@ -52,46 +54,28 @@ namespace DoomBubblesMod
 
         public override void PostUpdateEquips()
         {
-            var uniteds = -1;
-            for (var i = 0; i < Main.player.Length; i++)
-            {
-                var player = Main.player[i];
-                if (player.active && !player.dead && player.GetModPlayer<DoomBubblesPlayer>().united)
-                {
-                    uniteds++;
-                }
-            }
+            var uniteds = Main.player.Count(p => p.active && !p.dead && p.GetModPlayer<DoomBubblesPlayer>().united);
 
-            player.allDamage += .1f * uniteds;
+            Player.GetDamage(DamageClass.Generic) += .1f * uniteds;
+            if (noManaFlower)
+            {
+                Player.manaFlower = false;
+            }
+            
         }
 
-        public override void PostUpdate()
-        {
-            base.PostUpdate();
-
-            if (bloodlust)
-            {
-                player.lifeSteal = 1000f;
-            }
-        }
-
-        public override void SetupStartInventory(IList<Item> items, bool mediumcoreDeath)
+        public override void ModifyStartingInventory(IReadOnlyDictionary<string, List<Item>> itemsByMod, bool mediumCoreDeath)
         {
             var item = new Item();
-            item.SetDefaults(3508);
+            item.SetDefaults(ItemID.CopperBroadsword);
             item.Prefix(-1);
-            player.inventory[0].TurnToAir();
-            player.inventory[0] = item;
+            itemsByMod["Terraria"][0].TurnToAir();
+            itemsByMod["Terraria"][0] = item;
         }
 
         public override bool ConsumeAmmo(Item weapon, Item ammo)
         {
-            if (player.GetModPlayer<DoomBubblesPlayer>().homing)
-            {
-                return false;
-            }
-
-            return base.ConsumeAmmo(weapon, ammo);
+            return !Player.GetModPlayer<DoomBubblesPlayer>().homing && base.ConsumeAmmo(weapon, ammo);
         }
     }
 }

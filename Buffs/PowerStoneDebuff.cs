@@ -5,14 +5,14 @@ namespace DoomBubblesMod.Buffs
 {
     public class PowerStoneDebuff : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Compassion");
             Description.SetDefault("At least that's what he calls it");
             Main.debuff[Type] = true;
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;
-            longerExpertDebuff = false;
+            LongerExpertDebuff = false;
         }
 
         public override void Update(Player player, ref int buffIndex)

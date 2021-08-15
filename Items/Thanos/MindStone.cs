@@ -11,15 +11,15 @@ namespace DoomBubblesMod.Items.Thanos
     {
         public override void SetDefaults()
         {
-            item.value = Item.sellPrice(5);
+            Item.value = Item.sellPrice(5);
             ;
-            item.rare = 8;
-            item.height = 20;
-            item.width = 14;
-            item.useStyle = 4;
+            Item.rare = 8;
+            Item.height = 20;
+            Item.width = 14;
+            Item.useStyle = 4;
         }
 
-        public override bool UseItem(Player player)
+        public override bool? UseItem(Player player)
         {
             player.KillMe(
                 PlayerDeathReason.ByCustomReason(player.name + " wielded power beyond " +
@@ -45,19 +45,19 @@ namespace DoomBubblesMod.Items.Thanos
                                "few years. It's not a coincidence. Someone has been playing an intricate\n" +
                                "game and has made pawns of us.\"\n" +
                                "-Thor");
+            Item.SetResearchAmount(1);
         }
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(mod);
+            var recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.Topaz);
             recipe.AddIngredient(ItemID.FragmentNebula, 5);
             recipe.AddIngredient(ItemID.FragmentSolar, 5);
             recipe.AddIngredient(ItemID.FragmentStardust, 5);
             recipe.AddIngredient(ItemID.FragmentVortex, 5);
             recipe.AddTile(TileID.LunarCraftingStation);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
 }

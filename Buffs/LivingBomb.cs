@@ -5,11 +5,11 @@ namespace DoomBubblesMod.Buffs
 {
     public class LivingBomb : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             Main.buffNoSave[Type] = true;
             Main.debuff[Type] = true;
-            canBeCleared = false;
+            CanBeCleared = false;
         }
 
         public override void Update(NPC npc, ref int buffIndex)

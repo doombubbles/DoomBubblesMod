@@ -1,9 +1,15 @@
 ﻿using System;
+using DoomBubblesMod.Buffs;
+using DoomBubblesMod.Projectiles.Thanos;
 using DoomBubblesMod.UI;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using SoundType = Terraria.ModLoader.SoundType;
 
 namespace DoomBubblesMod.Items.Thanos
 {
@@ -23,24 +29,26 @@ namespace DoomBubblesMod.Items.Thanos
                                "\"Perfectly balanced...\n" +
                                "...as all things should be.\"\n" +
                                "-Thanos");
+            
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            item.value = Item.sellPrice(50);
-            item.width = 22;
-            item.height = 30;
-            item.rare = 11;
-            item.expert = true;
-            item.useTime = 10;
-            item.useAnimation = 10;
-            item.useStyle = 4;
-            item.useTurn = true;
+            Item.value = Item.sellPrice(50);
+            Item.width = 22;
+            Item.height = 30;
+            Item.rare = 11;
+            Item.expert = true;
+            Item.useTime = 10;
+            Item.useAnimation = 10;
+            Item.useStyle = 4;
+            Item.useTurn = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<ThanosPlayer>().InfinityGauntlet = true;
+            player.GetModPlayer<ThanosPlayer>().InfinityGauntlet = Item;
             UpdateInventory(player);
         }
 
@@ -51,44 +59,44 @@ namespace DoomBubblesMod.Items.Thanos
 
         public override void UpdateInventory(Player player)
         {
-            item.accessory = true;
+            Item.accessory = true;
             switch (player.GetModPlayer<ThanosPlayer>().gem)
             {
                 case 0:
-                    item.SetNameOverride("Infinity Gauntlet (Power)");
-                    item.rare = 11;
-                    item.expert = false;
-                    item.channel = true;
+                    Item.SetNameOverride("Infinity Gauntlet (Power)");
+                    Item.rare = 11;
+                    Item.expert = false;
+                    Item.channel = true;
                     break;
                 case 1:
-                    item.SetNameOverride("Infinity Gauntlet (Space)");
-                    item.rare = 1;
-                    item.expert = false;
-                    item.channel = false;
+                    Item.SetNameOverride("Infinity Gauntlet (Space)");
+                    Item.rare = 1;
+                    Item.expert = false;
+                    Item.channel = false;
                     break;
                 case 2:
-                    item.SetNameOverride("Infinity Gauntlet (Reality)");
-                    item.rare = 10;
-                    item.expert = false;
-                    item.channel = true;
+                    Item.SetNameOverride("Infinity Gauntlet (Reality)");
+                    Item.rare = 10;
+                    Item.expert = false;
+                    Item.channel = true;
                     break;
                 case 3:
-                    item.SetNameOverride("Infinity Gauntlet (Soul)");
-                    item.rare = -11;
-                    item.expert = false;
-                    item.channel = false;
+                    Item.SetNameOverride("Infinity Gauntlet (Soul)");
+                    Item.rare = -11;
+                    Item.expert = false;
+                    Item.channel = false;
                     break;
                 case 4:
-                    item.SetNameOverride("Infinity Gauntlet (Time)");
-                    item.rare = 2;
-                    item.expert = false;
-                    item.channel = false;
+                    Item.SetNameOverride("Infinity Gauntlet (Time)");
+                    Item.rare = 2;
+                    Item.expert = false;
+                    Item.channel = false;
                     break;
                 case 5:
-                    item.SetNameOverride("Infinity Gauntlet (Mind)");
-                    item.rare = 8;
-                    item.expert = false;
-                    item.channel = false;
+                    Item.SetNameOverride("Infinity Gauntlet (Mind)");
+                    Item.rare = 8;
+                    Item.expert = false;
+                    Item.channel = false;
                     break;
             }
         }
@@ -97,10 +105,10 @@ namespace DoomBubblesMod.Items.Thanos
         {
             if (player.altFunctionUse != 2)
             {
-                if (item.Name.Contains("(Space)"))
+                if (Item.Name.Contains("(Space)"))
                 {
                     var newPos = Main.MouseWorld;
-                    if (player.HasBuff(mod.BuffType("SpaceStoneCooldown")) || Collision.SolidCollision(newPos,
+                    if (player.HasBuff(ModContent.BuffType<SpaceStoneCooldown>()) || Collision.SolidCollision(newPos,
                                                                                player.width, player.height)
                                                                            || !(newPos.X > 50f &&
                                                                                newPos.X < Main.maxTilesX * 16 - 50 &&
@@ -111,17 +119,17 @@ namespace DoomBubblesMod.Items.Thanos
                     }
                 }
 
-                if (item.Name.Contains("(Time)"))
+                if (Item.Name.Contains("(Time)"))
                 {
                     var previousHp = player.GetModPlayer<ThanosPlayer>().timeHealth[300];
-                    if (previousHp == 0 || player.HasBuff(mod.BuffType("TimeStoneCooldown")) ||
+                    if (previousHp == 0 || player.HasBuff(ModContent.BuffType<TimeStoneCooldown>()) ||
                         previousHp <= player.statLife)
                     {
                         return false;
                     }
                 }
 
-                if (item.Name.Contains("(Mind)") && player.HasBuff(mod.BuffType("MindStoneCooldown")))
+                if (Item.Name.Contains("(Mind)") && player.HasBuff(ModContent.BuffType<MindStoneCooldown>()))
                 {
                     return false;
                 }
@@ -130,46 +138,39 @@ namespace DoomBubblesMod.Items.Thanos
             return base.CanUseItem(player);
         }
 
-        public override void UseStyle(Player player)
+        public override void UseStyle(Player player, Rectangle heldItemFrame)
         {
-            if (player.altFunctionUse == 2)
-            {
-                item.useStyle = 1;
-            }
-            else
-            {
-                item.useStyle = 4;
-            }
+            Item.useStyle = player.altFunctionUse == 2 ? 1 : 4;
 
-            base.UseStyle(player);
+            base.UseStyle(player, heldItemFrame);
         }
 
-        public override bool UseItem(Player player)
+        public override bool? UseItem(Player player)
         {
             if (player.altFunctionUse != 2 && player.itemAnimation == player.itemAnimationMax - 1)
             {
-                if (item.Name.Contains("(Power)"))
+                if (Item.Name.Contains("(Power)"))
                 {
                     powerAbility(player);
                 }
-                else if (item.Name.Contains("(Space)"))
+                else if (Item.Name.Contains("(Space)"))
                 {
                     spaceAbility(player);
                 }
-                else if (item.Name.Contains("(Reality)"))
+                else if (Item.Name.Contains("(Reality)"))
                 {
                     realityAbility(player);
                 }
-                else if (item.Name.Contains("(Soul)"))
+                else if (Item.Name.Contains("(Soul)"))
                 {
                     soulAbility(player);
                 }
-                else if (item.Name.Contains("(Time)"))
+                else if (Item.Name.Contains("(Time)"))
                 {
                     timeAbility(player);
                 }
 
-                if (item.Name.Contains("(Mind)"))
+                if (Item.Name.Contains("(Mind)"))
                 {
                     mindAbility(player);
                 }
@@ -207,15 +208,15 @@ namespace DoomBubblesMod.Items.Thanos
 
             Color? color = null;
 
-            if (item.Name.Contains("(Power)"))
+            if (Item.Name.Contains("(Power)"))
             {
                 color = power;
             }
-            else if (item.Name.Contains("(Space)"))
+            else if (Item.Name.Contains("(Space)"))
             {
                 color = space;
             }
-            else if (item.Name.Contains("(Reality)"))
+            else if (Item.Name.Contains("(Reality)"))
             {
                 color = reality;
 
@@ -233,15 +234,15 @@ namespace DoomBubblesMod.Items.Thanos
                     }
                 }
             }
-            else if (item.Name.Contains("(Soul)"))
+            else if (Item.Name.Contains("(Soul)"))
             {
                 color = soul;
             }
-            else if (item.Name.Contains("(Time)"))
+            else if (Item.Name.Contains("(Time)"))
             {
                 color = time;
             }
-            else if (item.Name.Contains("(Mind)"))
+            else if (Item.Name.Contains("(Mind)"))
             {
                 color = mind;
             }
@@ -264,7 +265,7 @@ namespace DoomBubblesMod.Items.Thanos
             {
                 if (Main.time % 15 == 0)
                 {
-                    Main.PlaySound(2, (int) player.Center.X, (int) player.Center.Y, 103);
+                    SoundEngine.PlaySound(2, (int) player.Center.X, (int) player.Center.Y, 103);
                 }
 
                 player.itemAnimation = player.itemAnimationMax;
@@ -273,7 +274,7 @@ namespace DoomBubblesMod.Items.Thanos
                 var theta = Main.rand.NextDouble() * 2 * Math.PI;
                 var x = mousePos.X + Main.rand.NextDouble() * 40 * Math.Cos(theta);
                 var y = mousePos.Y + Main.rand.NextDouble() * 40 * Math.Sin(theta);
-                Projectile.NewProjectile((float) x, (float) y, 0f, 0f, mod.ProjectileType("RealityBeam"), 100, 0,
+                Projectile.NewProjectile(new ProjectileSource_Item(player, Item), (float) x, (float) y, 0f, 0f, ModContent.ProjectileType<RealityBeam>(), 100, 0,
                     player.whoAmI);
             }
             else
@@ -286,7 +287,7 @@ namespace DoomBubblesMod.Items.Thanos
         {
             var newPos = Main.MouseWorld;
 
-            Projectile.NewProjectileDirect(player.Center, new Vector2(0, 0), mod.ProjectileType("SpaceStoneWormhole"),
+            Projectile.NewProjectileDirect(new ProjectileSource_Item(player, Item), player.Center, new Vector2(0, 0), ModContent.ProjectileType<SpaceStoneWormhole>(),
                 0, 0, player.whoAmI);
             for (var i = 0; i <= 360; i += 4)
             {
@@ -300,7 +301,7 @@ namespace DoomBubblesMod.Items.Thanos
 
             player.Teleport(newPos, -1);
 
-            Projectile.NewProjectileDirect(player.Center, new Vector2(0, 0), mod.ProjectileType("SpaceStoneWormhole"),
+            Projectile.NewProjectileDirect(new ProjectileSource_Item(player, Item), player.Center, new Vector2(0, 0), ModContent.ProjectileType<SpaceStoneWormhole>(),
                 0, 0, player.whoAmI);
             for (var i = 0; i <= 360; i += 4)
             {
@@ -312,8 +313,8 @@ namespace DoomBubblesMod.Items.Thanos
                 dust.noGravity = true;
             }
 
-            player.AddBuff(mod.BuffType("SpaceStoneCooldown"), 360);
-            Main.PlaySound(SoundID.Item8, player.Center);
+            player.AddBuff(ModContent.BuffType<SpaceStoneCooldown>(), 360);
+            SoundEngine.PlaySound(SoundID.Item8, player.Center);
         }
 
         private void powerAbility(Player player)
@@ -328,7 +329,7 @@ namespace DoomBubblesMod.Items.Thanos
                     player.GetModPlayer<ThanosPlayer>().powerStoneCharge += 1;
                     if (Main.time % 10 == 0)
                     {
-                        Main.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 34,
+                        SoundEngine.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 34,
                             .3f + (float) (.05 * Math.Sqrt(player.GetModPlayer<ThanosPlayer>().powerStoneCharge)));
                     }
                 }
@@ -350,7 +351,7 @@ namespace DoomBubblesMod.Items.Thanos
                 {
                     if (Main.time % 10 == 0)
                     {
-                        Main.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 15);
+                        SoundEngine.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 15);
                         for (var i = 0; i <= 360; i += 4)
                         {
                             var rad = Math.PI * i / 180;
@@ -378,18 +379,18 @@ namespace DoomBubblesMod.Items.Thanos
             }
             else
             {
-                Main.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 74, 2f);
-                Main.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 89, 2f);
-                Main.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 93, .5f);
+                SoundEngine.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 74, 2f);
+                SoundEngine.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 89, 2f);
+                SoundEngine.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 93, .5f);
                 player.itemAnimation = 1;
 
-                player.AddBuff(mod.BuffType("PowerStone"), 6 * player.GetModPlayer<ThanosPlayer>().powerStoneCharge);
+                player.AddBuff(ModContent.BuffType<Buffs.PowerStone>(), 6 * player.GetModPlayer<ThanosPlayer>().powerStoneCharge);
                 for (var i = 0; i <= 360; i += 5)
                 {
                     var rad = Math.PI * i / 180;
                     var dX = (float) (20 * Math.Cos(rad));
                     var dY = (float) (20 * Math.Sin(rad));
-                    Projectile.NewProjectile(gauntlet, new Vector2(dX, dY), mod.ProjectileType("PowerExplosion"),
+                    Projectile.NewProjectile(new ProjectileSource_Item(player, Item), gauntlet, new Vector2(dX, dY), ModContent.ProjectileType<PowerExplosion>(),
                         (int) (player.GetModPlayer<ThanosPlayer>().powerStoneCharge * 3.33333333f), 5, player.whoAmI);
                 }
 
@@ -409,8 +410,8 @@ namespace DoomBubblesMod.Items.Thanos
                 player.chest = -3;
                 player.chestX = (int) (player.position.X / 16f);
                 player.chestY = (int) (player.position.Y / 16f);
-                player.talkNPC = -1;
-                Main.npcShop = 0;
+                player.SetTalkNPC(-1);
+                Main.SetNPCShopIndex(0);
                 Main.playerInventory = true;
                 Main.recBigList = false;
                 Recipe.FindRecipes();
@@ -434,8 +435,8 @@ namespace DoomBubblesMod.Items.Thanos
                 dust.noGravity = true;
             }
 
-            Main.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 15, 2f);
-            player.AddBuff(mod.BuffType("TimeStoneCooldown"), 1800);
+            SoundEngine.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 15, 2f);
+            player.AddBuff(ModContent.BuffType<TimeStoneCooldown>(), 1800);
         }
 
         private void mindAbility(Player player)
@@ -461,8 +462,8 @@ namespace DoomBubblesMod.Items.Thanos
                 dust.noGravity = true;
             }
 
-            Main.PlaySound(SoundLoader.customSoundType, (int) player.position.X, (int) player.position.Y,
-                mod.GetSoundSlot(SoundType.Custom, "Sounds/MindStone"));
+            SoundEngine.PlaySound(SoundLoader.customSoundType, (int) player.position.X, (int) player.position.Y,
+                Mod.GetSoundSlot(SoundType.Custom, "Sounds/MindStone"));
 
             foreach (var npc in Main.npc)
             {
@@ -472,7 +473,7 @@ namespace DoomBubblesMod.Items.Thanos
                     npc.GetGlobalNPC<DoomBubblesGlobalNPC>().mindStoneFriendly = true;
                     if (Main.netMode == 1)
                     {
-                        var packet = mod.GetPacket();
+                        var packet = Mod.GetPacket();
                         packet.Write((byte) DoomBubblesModMessageType.infinityStone);
                         packet.Write(npc.whoAmI);
                         packet.Write(2);
@@ -482,77 +483,76 @@ namespace DoomBubblesMod.Items.Thanos
             }
 
 
-            player.AddBuff(mod.BuffType("MindStoneCooldown"), 1200);
+            player.AddBuff(ModContent.BuffType<MindStoneCooldown>(), 1200);
         }
 
 
         private void switchGem()
         {
-            if (item.Name.Contains("(Power)"))
+            if (Item.Name.Contains("(Power)"))
             {
-                item.SetNameOverride("Infinity Gauntlet (Space)");
-                item.rare = 1;
-                item.expert = false;
-                item.channel = false;
+                Item.SetNameOverride("Infinity Gauntlet (Space)");
+                Item.rare = ItemRarityID.Blue;
+                Item.expert = false;
+                Item.channel = false;
             }
-            else if (item.Name.Contains("(Space)"))
+            else if (Item.Name.Contains("(Space)"))
             {
-                item.SetNameOverride("Infinity Gauntlet (Reality)");
-                item.rare = 10;
-                item.expert = false;
-                item.channel = true;
+                Item.SetNameOverride("Infinity Gauntlet (Reality)");
+                Item.rare = ItemRarityID.Red;
+                Item.expert = false;
+                Item.channel = true;
             }
-            else if (item.Name.Contains("(Reality)"))
+            else if (Item.Name.Contains("(Reality)"))
             {
-                item.SetNameOverride("Infinity Gauntlet (Soul)");
-                item.rare = -11;
-                item.expert = false;
-                item.channel = false;
+                Item.SetNameOverride("Infinity Gauntlet (Soul)");
+                Item.rare = ItemRarityID.Quest;
+                Item.expert = false;
+                Item.channel = false;
             }
-            else if (item.Name.Contains("(Soul)"))
+            else if (Item.Name.Contains("(Soul)"))
             {
-                item.SetNameOverride("Infinity Gauntlet (Time)");
-                item.rare = 2;
-                item.expert = false;
-                item.channel = false;
+                Item.SetNameOverride("Infinity Gauntlet (Time)");
+                Item.rare = ItemRarityID.Green;
+                Item.expert = false;
+                Item.channel = false;
             }
-            else if (item.Name.Contains("(Time)"))
+            else if (Item.Name.Contains("(Time)"))
             {
-                item.SetNameOverride("Infinity Gauntlet (Mind)");
-                item.rare = 8;
-                item.expert = false;
-                item.channel = false;
+                Item.SetNameOverride("Infinity Gauntlet (Mind)");
+                Item.rare = ItemRarityID.Yellow;
+                Item.expert = false;
+                Item.channel = false;
             }
             else
             {
-                item.SetNameOverride("Infinity Gauntlet (Power)");
-                item.rare = 11;
-                item.expert = false;
-                item.channel = true;
+                Item.SetNameOverride("Infinity Gauntlet (Power)");
+                Item.rare = ItemRarityID.Purple;
+                Item.expert = false;
+                Item.channel = true;
             }
         }
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(mod);
+            var recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.PowerGlove);
-            recipe.AddIngredient(mod.ItemType("PowerStone"));
-            recipe.AddIngredient(mod.ItemType("SpaceStone"));
-            recipe.AddIngredient(mod.ItemType("RealityStone"));
-            recipe.AddIngredient(mod.ItemType("SoulStone"));
-            recipe.AddIngredient(mod.ItemType("TimeStone"));
-            recipe.AddIngredient(mod.ItemType("MindStone"));
+            recipe.AddIngredient(ModContent.ItemType<PowerStone>());
+            recipe.AddIngredient(ModContent.ItemType<SpaceStone>());
+            recipe.AddIngredient(ModContent.ItemType<RealityStone>());
+            recipe.AddIngredient(ModContent.ItemType<SoulStone>());
+            recipe.AddIngredient(ModContent.ItemType<TimeStone>());
+            recipe.AddIngredient(ModContent.ItemType<MindStone>());
             recipe.AddIngredient(ItemID.LunarBar, 20);
             recipe.AddTile(TileID.LunarCraftingStation);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
 
         public override void OnCraft(Recipe recipe)
         {
-            Main.PlaySound(SoundLoader.customSoundType, (int) Main.player[Main.myPlayer].position.X,
+            SoundEngine.PlaySound(SoundLoader.customSoundType, (int) Main.player[Main.myPlayer].position.X,
                 (int) Main.player[Main.myPlayer].position.Y,
-                mod.GetSoundSlot(SoundType.Custom, "Sounds/GauntletComplete"));
+                Mod.GetSoundSlot(SoundType.Custom, "Sounds/GauntletComplete"));
             base.OnCraft(recipe);
         }
     }

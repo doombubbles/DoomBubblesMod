@@ -6,30 +6,34 @@ namespace DoomBubblesMod.Items.Tools
 {
     public class ObsidianAxe : ModItem
     {
+        public override void SetStaticDefaults()
+        {
+            Item.SetResearchAmount(1);
+        }
+
         public override void SetDefaults()
         {
-            item.height = 28;
-            item.width = 32;
-            item.damage = 18;
-            item.knockBack = 5f;
-            item.useTime = 30;
-            item.useAnimation = 30;
-            item.axe = 14;
-            item.useStyle = 1;
-            item.value = Item.sellPrice(0, 0, 40);
-            item.rare = ItemRarityID.Blue;
-            item.UseSound = SoundID.Item1;
-            item.autoReuse = true;
+            Item.height = 28;
+            Item.width = 32;
+            Item.damage = 18;
+            Item.knockBack = 5f;
+            Item.useTime = 30;
+            Item.useAnimation = 30;
+            Item.axe = 14;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.value = Item.sellPrice(0, 0, 40);
+            Item.rare = ItemRarityID.Blue;
+            Item.UseSound = SoundID.Item1;
+            Item.autoReuse = true;
         }
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(mod);
+            var recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.Obsidian, 20);
             recipe.AddTile(TileID.Anvils);
-            recipe.needLava = true;
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.AddCondition(Recipe.Condition.NearLava);
+            recipe.Register();
         }
     }
 }

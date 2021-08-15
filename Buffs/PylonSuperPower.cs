@@ -5,14 +5,14 @@ namespace DoomBubblesMod.Buffs
 {
     public class PylonSuperPower : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Pylon Super Power");
             Description.SetDefault("Increased Life/Mana Regen and Damage");
             Main.debuff[Type] = false;
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;
-            longerExpertDebuff = false;
+            LongerExpertDebuff = false;
             Main.buffNoTimeDisplay[Type] = true;
         }
 
@@ -27,7 +27,7 @@ namespace DoomBubblesMod.Buffs
             player.manaRegenBonus += 25;
             player.lifeRegen++;
 
-            player.allDamage += .15f;
+            player.GetDamage(DamageClass.Generic) += .15f;
         }
     }
 }

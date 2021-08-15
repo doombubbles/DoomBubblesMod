@@ -5,7 +5,7 @@ namespace DoomBubblesMod.Buffs
 {
     public class PhotonCannon : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Photon Cannon");
             Description.SetDefault("Make sure they're in Power Fields");
@@ -16,7 +16,7 @@ namespace DoomBubblesMod.Buffs
         public override void Update(Player player, ref int buffIndex)
         {
             var modPlayer = player.GetModPlayer<HotSPlayer>();
-            if (player.ownedProjectileCounts[mod.ProjectileType("PhotonCannon")] > 0)
+            if (player.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.HotS.PhotonCannon>()] > 0)
             {
                 modPlayer.photonCannon = true;
             }

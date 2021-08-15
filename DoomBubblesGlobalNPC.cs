@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using DoomBubblesMod.Buffs;
 using DoomBubblesMod.Items;
+using DoomBubblesMod.Items.HotS;
+using DoomBubblesMod.Items.Talent;
 using DoomBubblesMod.Items.Thanos;
+using DoomBubblesMod.Items.Weapons;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -32,19 +36,12 @@ namespace DoomBubblesMod
 
             if (npc.boss)
             {
-                npc.buffImmune[mod.BuffType("LivingBomb")] = false;
+                npc.buffImmune[ModContent.BuffType<LivingBomb>()] = false;
             }
         }
 
         public override void DrawEffects(NPC npc, ref Color drawColor)
         {
-            if (npc.HasBuff(mod.BuffType("Cleaved")))
-            {
-                var stacks = 1 + npc.buffTime[npc.FindBuffIndex(mod.BuffType("Cleaved"))] % 10;
-                drawColor.G = (byte) (drawColor.G * ((255f - stacks * 15) / 255f));
-                drawColor.B = (byte) (drawColor.G * ((255f - stacks * 15) / 255f));
-            }
-
             if (npc.GetGlobalNPC<DoomBubblesGlobalNPC>().mindStoneFriendly)
             {
                 drawColor.B = (byte) (drawColor.B * .7f);
@@ -53,7 +50,7 @@ namespace DoomBubblesMod
             if (npc.GetGlobalNPC<DoomBubblesGlobalNPC>().powerStoned)
             {
                 drawColor.G = (byte) (drawColor.G * .7f);
-                var dust = Main.dust[Dust.NewDust(npc.position, npc.width, npc.height, 212, npc.velocity.X,
+                var dust = Main.dust[Dust.NewDust(npc.position, npc.width, npc.height, DustID.BubbleBurst_White, npc.velocity.X,
                     npc.velocity.Y,
                     100, InfinityGauntlet.power, 1.5f)];
                 dust.noGravity = true;
@@ -124,9 +121,9 @@ namespace DoomBubblesMod
                         if (!projectile.friendly)
                         {
                             projectile.hostile = false;
-                            if (Main.netMode == 1)
+                            if (Main.netMode == NetmodeID.MultiplayerClient)
                             {
-                                var packet = mod.GetPacket();
+                                var packet = Mod.GetPacket();
                                 packet.Write((byte) DoomBubblesModMessageType.infinityStone);
                                 packet.Write(projectile.whoAmI);
                                 packet.Write(1);
@@ -145,9 +142,9 @@ namespace DoomBubblesMod
                         {
                             n.damage = 0;
                             n.GetGlobalNPC<DoomBubblesGlobalNPC>().mindStoneFriendly = true;
-                            if (Main.netMode == 1)
+                            if (Main.netMode == NetmodeID.MultiplayerClient)
                             {
-                                var packet = mod.GetPacket();
+                                var packet = Mod.GetPacket();
                                 packet.Write((byte) DoomBubblesModMessageType.infinityStone);
                                 packet.Write(n.whoAmI);
                                 packet.Write(2);
@@ -159,30 +156,30 @@ namespace DoomBubblesMod
             }
         }
 
-        public override void NPCLoot(NPC npc)
+        public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
             if (Main.expertMode)
             {
                 if (npc.type == NPCID.Mothron && Main.rand.Next(1, 3) == 1)
                 {
-                    Item.NewItem(npc.position, mod.ItemType("BrokenHeroGun"));
+                    Item.NewItem(npc.position, ModContent.ItemType<BrokenHeroGun>());
                 }
             }
             else
             {
                 if (npc.type == NPCID.Mothron && Main.rand.Next(1, 4) == 1)
                 {
-                    Item.NewItem(npc.position, mod.ItemType("BrokenHeroGun"));
+                    Item.NewItem(npc.position, ModContent.ItemType<BrokenHeroGun>());
                 }
 
                 if (npc.type == NPCID.Plantera)
                 {
-                    Item.NewItem(npc.position, mod.ItemType("HeartOfTerraria"));
+                    //Item.NewItem(npc.position, ModContent.ItemType<HeartOfTerraria>());
                 }
 
                 if (npc.type == NPCID.DukeFishron && Main.rand.Next(1, 5) == 1)
                 {
-                    Item.NewItem(npc.position, mod.ItemType("Ultrashark"));
+                    Item.NewItem(npc.position, ModContent.ItemType<Ultrashark>());
                 }
             }
         }
@@ -193,14 +190,14 @@ namespace DoomBubblesMod
             {
                 var items = new List<ModItem>
                 {
-                    mod.GetItem("LightningSurge"), mod.GetItem("DiscordBlade"),
-                    mod.GetItem("RepeaterCannon"), mod.GetItem("PhaseBombLauncher"), mod.GetItem("ShieldCapacitor"),
-                    mod.GetItem("PylonStaff"), mod.GetItem("PhotonCannonStaff")
+                    ModContent.GetInstance<LightningSurge>(), ModContent.GetInstance<DiscordBlade>(),
+                    ModContent.GetInstance<RepeaterCannon>(), ModContent.GetInstance<PhaseBombLauncher>(), ModContent.GetInstance<ShieldCapacitor>(),
+                    ModContent.GetInstance<PylonStaff>(), ModContent.GetInstance<PhotonCannonStaff>()
                 };
 
                 foreach (var modItem in items)
                 {
-                    shop.item[nextSlot].SetDefaults(modItem.item.type);
+                    shop.item[nextSlot].SetDefaults(modItem.Item.type);
                     nextSlot++;
                 }
 
@@ -210,7 +207,7 @@ namespace DoomBubblesMod
                 {
                     var talentItem = (TalentItem) modItem;
 
-                    if (Main.LocalPlayer.HasItem(talentItem.item.type))
+                    if (Main.LocalPlayer.HasItem(talentItem.Item.type))
                     {
                         if (NPC.downedHalloweenKing && NPC.downedHalloweenTree)
                         {
@@ -234,13 +231,13 @@ namespace DoomBubblesMod
             {
                 var items = new List<ModItem>
                 {
-                    mod.GetItem("FlamestrikeTome"), mod.GetItem("LivingBombWand"),
-                    mod.GetItem("VerdantSpheres")
+                    ModContent.GetInstance<FlamestrikeTome>(), ModContent.GetInstance<LivingBombWand>(),
+                    ModContent.GetInstance<VerdantSpheres>()
                 };
 
                 foreach (var modItem in items)
                 {
-                    shop.item[nextSlot].SetDefaults(modItem.item.type);
+                    shop.item[nextSlot].SetDefaults(modItem.Item.type);
                     nextSlot++;
                 }
 
@@ -250,7 +247,7 @@ namespace DoomBubblesMod
                 {
                     var talentItem = (TalentItem) modItem;
 
-                    if (Main.LocalPlayer.HasItem(talentItem.item.type))
+                    if (Main.LocalPlayer.HasItem(talentItem.Item.type))
                     {
                         if (NPC.downedHalloweenKing && NPC.downedHalloweenTree)
                         {
@@ -274,29 +271,10 @@ namespace DoomBubblesMod
             /*
             if (type == NPCID.WitchDoctor && Main.LocalPlayer.ZoneCrimson && NPC.downedMoonlord)
             {
-                shop.item[nextSlot].SetDefaults(mod.ItemType("BloodlustTalisman"));
+                shop.item[nextSlot].SetDefaults(ModContent.ItemType<BloodlustTalisman>());
                 nextSlot++;
             }
             */
-        }
-
-        public override void ModifyHitByItem(NPC npc, Player player, Item item, ref int damage, ref float knockback,
-            ref bool crit)
-        {
-            if (npc.HasBuff(mod.BuffType("Exposed")))
-            {
-                damage = (int) (damage * 1.1);
-            }
-        }
-
-        public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback,
-            ref bool crit,
-            ref int hitDirection)
-        {
-            if (npc.HasBuff(mod.BuffType("Exposed")))
-            {
-                damage = (int) (damage * 1.1);
-            }
         }
 
         private void addTalent(TalentItem talentItem, int i, Chest shop, ref int nextSlot)
@@ -304,15 +282,15 @@ namespace DoomBubblesMod
             switch (i)
             {
                 case 1:
-                    shop.item[nextSlot].SetDefaults(mod.ItemType(talentItem.Talent1Name));
+                    shop.item[nextSlot].SetDefaults(ModContent.Find<ModItem>(talentItem.Talent1Name).Type);
                     nextSlot++;
                     break;
                 case 2:
-                    shop.item[nextSlot].SetDefaults(mod.ItemType(talentItem.Talent2Name));
+                    shop.item[nextSlot].SetDefaults(ModContent.Find<ModItem>(talentItem.Talent2Name).Type);
                     nextSlot++;
                     break;
                 case 3:
-                    shop.item[nextSlot].SetDefaults(mod.ItemType(talentItem.Talent3Name));
+                    shop.item[nextSlot].SetDefaults(ModContent.Find<ModItem>(talentItem.Talent3Name).Type);
                     nextSlot++;
                     break;
             }

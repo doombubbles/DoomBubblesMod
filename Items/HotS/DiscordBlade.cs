@@ -1,7 +1,13 @@
 using System;
+using DoomBubblesMod.Items.Talent;
+using DoomBubblesMod.Projectiles.HotS;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
+using SoundType = Terraria.ModLoader.SoundType;
+using Terraria.ID;
 
 namespace DoomBubblesMod.Items.HotS
 {
@@ -21,26 +27,26 @@ namespace DoomBubblesMod.Items.HotS
             DisplayName.SetDefault("Discord Blade");
             Tooltip.SetDefault("Makes a very hard to code triangle attack\n" +
                                "Magic and Melee Weapon");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            item.damage = 75;
-            item.melee = true;
-            item.magic = true;
-            item.width = 36;
-            item.height = 44;
-            item.useTime = 30;
-            item.useAnimation = 30;
-            item.useStyle = 1;
-            item.knockBack = 5;
-            item.value = 640000;
-            item.rare = 8;
-            item.autoReuse = true;
-            item.useTurn = true;
-            item.shoot = mod.ProjectileType("DiscordStrike");
-            item.shootSpeed = 10f;
-            item.scale = 1.2f;
+            Item.damage = 75;
+            Item.DamageType = DamageClass.Magic;
+            Item.width = 36;
+            Item.height = 44;
+            Item.useTime = 30;
+            Item.useAnimation = 30;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.knockBack = 5;
+            Item.value = 640000;
+            Item.rare = ItemRarityID.Yellow;
+            Item.autoReuse = true;
+            Item.useTurn = true;
+            Item.shoot = ModContent.ProjectileType<DiscordStrike>();
+            Item.shootSpeed = 10f;
+            Item.scale = 1.2f;
         }
 
         public override void MeleeEffects(Player player, Rectangle hitbox)
@@ -54,9 +60,8 @@ namespace DoomBubblesMod.Items.HotS
             }
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY,
-            ref int type, ref int damage,
-            ref float knockBack)
+        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type,
+            int damage, float knockback)
         {
             if (player == Main.LocalPlayer)
             {
@@ -67,27 +72,27 @@ namespace DoomBubblesMod.Items.HotS
                 for (var i = -1; i <= 1; i++)
                 {
                     position = player.Center;
-                    speedX = (float) Math.Cos(theta + i * (Math.PI / 2)) * Length / 15f;
-                    speedY = (float) Math.Sin(theta + i * (Math.PI / 2)) * Length / 15f;
+                    velocity.X = (float) Math.Cos(theta + i * (Math.PI / 2)) * Length / 15f;
+                    velocity.Y = (float) Math.Sin(theta + i * (Math.PI / 2)) * Length / 15f;
                     if (i != 0)
                     {
-                        speedX /= 3f;
-                        speedY /= 3f;
-                        position += 1200f / Length * new Vector2(speedX, speedY);
+                        velocity.X /= 3f;
+                        velocity.Y /= 3f;
+                        position += 1200f / Length * velocity;
                     }
                     else
                     {
-                        position += 300f / Length * new Vector2(speedX, speedY);
+                        position += 300f / Length * velocity;
                     }
                     
-                    var proj = Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, 
-                        knockBack * 2, player.whoAmI, ChosenTalent);
+                    var proj = Projectile.NewProjectile(source, position, velocity, type, damage, 
+                        knockback * 2, player.whoAmI, ChosenTalent);
                     Main.projectile[proj].netUpdate = true;
                 }
             }
 
-            Main.PlaySound(SoundLoader.customSoundType, (int) position.X, (int) position.Y,
-                mod.GetSoundSlot(SoundType.Custom, "Sounds/DiscordStrike"));
+            SoundEngine.PlaySound(SoundLoader.customSoundType, (int) position.X, (int) position.Y,
+                Mod.GetSoundSlot(SoundType.Custom, "Sounds/DiscordStrike"));
             
             return false;
         }

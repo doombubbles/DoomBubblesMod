@@ -1,4 +1,6 @@
+using DoomBubblesMod.Dusts;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Projectiles
 {
@@ -8,24 +10,24 @@ namespace DoomBubblesMod.Projectiles
         {
             get
             {
-                if (projectile.frame == 0)
+                if (Projectile.frame == 0)
                 {
-                    return mod.DustType("Solar229");
+                    return ModContent.DustType<Solar229>();
                 }
 
-                if (projectile.frame == 1)
+                if (Projectile.frame == 1)
                 {
-                    return mod.DustType("Vortex229");
+                    return ModContent.DustType<Vortex229>();
                 }
 
-                if (projectile.frame == 2)
+                if (Projectile.frame == 2)
                 {
-                    return mod.DustType("Nebula229");
+                    return ModContent.DustType<Nebula229>();
                 }
 
-                if (projectile.frame == 3)
+                if (Projectile.frame == 3)
                 {
-                    return mod.DustType("Stardust229");
+                    return ModContent.DustType<Stardust229>();
                 }
 
                 return 229;
@@ -34,26 +36,26 @@ namespace DoomBubblesMod.Projectiles
 
         public override void SetStaticDefaults()
         {
-            Main.projFrames[projectile.type] = 4;
+            Main.projFrames[Projectile.type] = 4;
         }
 
         public override void AI()
         {
-            if (projectile.alpha == 255)
+            if (Projectile.alpha == 255)
             {
-                projectile.frame = Main.rand.Next(0, 3);
+                Projectile.frame = Main.rand.Next(0, 3);
             }
 
             base.AI();
 
-            projectile.frameCounter++;
-            if (projectile.frameCounter > 10)
+            Projectile.frameCounter++;
+            if (Projectile.frameCounter > 10)
             {
-                projectile.frameCounter = 0;
-                projectile.frame++;
-                if (projectile.frame >= 4)
+                Projectile.frameCounter = 0;
+                Projectile.frame++;
+                if (Projectile.frame >= 4)
                 {
-                    projectile.frame = 0;
+                    Projectile.frame = 0;
                 }
             }
 

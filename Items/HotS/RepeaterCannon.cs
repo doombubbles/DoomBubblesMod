@@ -1,5 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using DoomBubblesMod.Items.Talent;
+using DoomBubblesMod.Projectiles.HotS;
+using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Items.HotS
 {
@@ -17,24 +21,25 @@ namespace DoomBubblesMod.Items.HotS
             DisplayName.SetDefault("Repeater Cannon");
             Tooltip.SetDefault("Shots build up to empower your next Phase Bomb\n" +
                                "(Stacks up to 10)");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            item.width = 74;
-            item.height = 26;
-            item.noMelee = true;
-            item.damage = 83;
-            item.shoot = mod.ProjectileType("Repeater");
-            item.shootSpeed = 15f;
-            item.useAnimation = 15;
-            item.useTime = 15;
-            item.ranged = true;
-            item.knockBack = 5;
-            item.useStyle = 5;
-            item.rare = 10;
-            item.autoReuse = true;
-            item.value = Item.buyPrice(0, 69);
+            Item.width = 74;
+            Item.height = 26;
+            Item.noMelee = true;
+            Item.damage = 83;
+            Item.shoot = ModContent.ProjectileType<Repeater>();
+            Item.shootSpeed = 15f;
+            Item.useAnimation = 15;
+            Item.useTime = 15;
+            Item.DamageType = DamageClass.Ranged;
+            Item.knockBack = 5;
+            Item.useStyle = 5;
+            Item.rare = 10;
+            Item.autoReuse = true;
+            Item.value = Item.buyPrice(0, 69);
         }
 
         public override Vector2? HoldoutOffset()
@@ -42,28 +47,27 @@ namespace DoomBubblesMod.Items.HotS
             return new Vector2(-10, 3);
         }
 
-        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
+        public override void ModifyWeaponDamage(Player player, ref StatModifier damage, ref float flat)
         {
             if (ChosenTalent == 1 || ChosenTalent == -1)
             {
-                add += player.velocity.Length() / 50f;
+                flat += player.velocity.Length() / 50f;
             }
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY,
-            ref int type, ref int damage,
-            ref float knockBack)
+        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type,
+            int damage, float knockback)
         {
             m_Shot++;
 
             if ((ChosenTalent == 2 || ChosenTalent == -1) && m_Shot == 3)
             {
-                Projectile.NewProjectile(position, new Vector2(speedX, speedY), mod.ProjectileType("RepeaterBig"),
-                    damage * 2, knockBack * 2f, player.whoAmI, 4, ChosenTalent);
+                Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<RepeaterBig>(),
+                    damage * 2, knockback * 2f, player.whoAmI, 4, ChosenTalent);
             }
             else
             {
-                Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI,
+                Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI,
                     m_Shot, ChosenTalent);
             }
 

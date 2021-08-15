@@ -1,5 +1,8 @@
+using DoomBubblesMod.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -11,62 +14,61 @@ namespace DoomBubblesMod.Items.Weapons
         {
             //Tooltip.SetDefault("This is a modded gun.");
             DisplayName.SetDefault("True Midnight Maelstrom");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            item.damage = 60;
-            item.ranged = true;
-            item.width = 58;
-            item.height = 24;
-            item.useTime = 27;
-            item.useAnimation = 27;
-            item.useStyle = 5;
-            item.noMelee = true; //so the item's animation doesn't do damage
-            item.knockBack = 4;
-            item.value = Item.sellPrice(0, 10);
-            item.rare = 8;
-            item.UseSound = SoundID.Item41;
-            item.autoReuse = false;
-            item.shoot = 10; //idk why but all the guns in the vanilla source have this
-            item.shootSpeed = 10f;
-            item.useAmmo = AmmoID.Bullet;
+            Item.damage = 60;
+            Item.DamageType = DamageClass.Ranged;
+            Item.width = 58;
+            Item.height = 24;
+            Item.useTime = 27;
+            Item.useAnimation = 27;
+            Item.useStyle = 5;
+            Item.noMelee = true; //so the item's animation doesn't do damage
+            Item.knockBack = 4;
+            Item.value = Item.sellPrice(0, 10);
+            Item.rare = ItemRarityID.Yellow;
+            Item.UseSound = SoundID.Item41;
+            Item.autoReuse = false;
+            Item.shoot = 10; //idk why but all the guns in the vanilla source have this
+            Item.shootSpeed = 10f;
+            Item.useAmmo = AmmoID.Bullet;
         }
 
-        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
+        /*public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
         {
             // Here we use the multiplicative damage modifier because Terraria does this approach for Ammo damage bonuses. 
             mult *= player.bulletDamage;
-        }
+        }*/
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(mod);
-            recipe.AddIngredient(mod.ItemType("MidnightMaelstrom"));
-            recipe.AddIngredient(mod.ItemType("BrokenHeroGun"));
+            var recipe = CreateRecipe();
+            recipe.AddIngredient(ModContent.ItemType<MidnightMaelstrom>());
+            recipe.AddIngredient(ModContent.ItemType<BrokenHeroGun>());
             recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY,
-            ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type,
+            int damage, float knockback)
         {
-            Main.PlaySound(SoundID.Item36, position);
+            SoundEngine.PlaySound(SoundID.Item36, position);
             var numberProjectiles = 3 + Main.rand.Next(2);
             for (var i = 0; i < numberProjectiles; i++)
             {
-                var perturbedSpeed =
-                    new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(10)); // 30 degree spread.
+                var perturbedSpeed = velocity.RotatedByRandom(MathHelper.ToRadians(10)); // 30 degree spread.
                 // If you want to randomize the speed to stagger the projectiles
                 var scale = 1f - Main.rand.NextFloat() * .1f;
                 perturbedSpeed = perturbedSpeed * scale;
-                Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type,
-                    (int) (damage / 2.0), knockBack, player.whoAmI);
+                Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type,
+                    (int) (damage / 2.0), knockback, player.whoAmI);
             }
 
-            Projectile.NewProjectile(position.X, position.Y, speedX, speedY, mod.ProjectileType("MidnightBlast"),
-                damage, knockBack, player.whoAmI);
+            Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<MidnightBlast>(),
+                damage, knockback, player.whoAmI);
 
 
             return false;

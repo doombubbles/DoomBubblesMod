@@ -9,31 +9,33 @@ namespace DoomBubblesMod.Items.Accessories
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Frederick's Gift");
-            Tooltip.SetDefault("42% reduced mana usage");
+            Tooltip.SetDefault("42% reduced mana usage\n" +
+                               "Mana Flower's effects overriden");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            item.value = 100000;
-            item.width = 34;
-            item.height = 22;
-            item.rare = 2;
-            item.accessory = true;
+            Item.value = 100000;
+            Item.width = 34;
+            Item.height = 22;
+            Item.rare = ItemRarityID.Green;
+            Item.accessory = true;
         }
 
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.manaCost -= .42f;
+            player.GetDoomBubblesPlayer().noManaFlower = true;
         }
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(mod);
+            var recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.NaturesGift, 7);
             recipe.AddTile(TileID.TinkerersWorkbench);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
@@ -8,7 +9,7 @@ using Terraria.UI;
 
 namespace DoomBubblesMod.UI
 {
-    internal class InfinityGauntletUI : UIState
+    public class InfinityGauntletUI : UIState
     {
         public static UIImage backgroundPanel;
         public static bool visible;
@@ -23,7 +24,7 @@ namespace DoomBubblesMod.UI
             panelWidth = 84f;
             panelHeight = 117f;
 
-            backgroundPanel = new UIImage(ModContent.GetTexture("DoomBubblesMod/UI/Gauntlet"));
+            backgroundPanel = new UIImage(ModContent.Request<Texture2D>("DoomBubblesMod/UI/Gauntlet", AssetRequestMode.ImmediateLoad));
             backgroundPanel.SetPadding(0);
             backgroundPanel.Left.Set((float) Main.screenWidth / 2 - panelWidth / 2, 0f);
             backgroundPanel.Top.Set((float) Main.screenHeight / 2 - panelHeight / 2, 0f);
@@ -49,7 +50,7 @@ namespace DoomBubblesMod.UI
 
         public void addButton(int i, string texture, int x, int y)
         {
-            var buttonTexture = ModContent.GetTexture(texture);
+            var buttonTexture = ModContent.Request<Texture2D>(texture, AssetRequestMode.ImmediateLoad);
             buttonList.Add(new UIImageButton(buttonTexture));
             var index = i;
             buttonList[i].OnClick += (evt, element) => chooseGem(index);

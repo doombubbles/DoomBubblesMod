@@ -6,30 +6,34 @@ namespace DoomBubblesMod.Items.Tools
 {
     public class ObsidianHammer : ModItem
     {
+        public override void SetStaticDefaults()
+        {
+            Item.SetResearchAmount(1);
+        }
+
         public override void SetDefaults()
         {
-            item.height = 32;
-            item.width = 32;
-            item.damage = 8;
-            item.knockBack = 5f;
-            item.useTime = 26;
-            item.useAnimation = 26;
-            item.hammer = 55;
-            item.useStyle = 1;
-            item.value = Item.sellPrice(0, 0, 40);
-            item.rare = ItemRarityID.Blue;
-            item.UseSound = SoundID.Item1;
-            item.autoReuse = true;
+            Item.height = 32;
+            Item.width = 32;
+            Item.damage = 8;
+            Item.knockBack = 5f;
+            Item.useTime = 26;
+            Item.useAnimation = 26;
+            Item.hammer = 55;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.value = Item.sellPrice(0, 0, 40);
+            Item.rare = ItemRarityID.Blue;
+            Item.UseSound = SoundID.Item1;
+            Item.autoReuse = true;
         }
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(mod);
+            var recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.Obsidian, 20);
             recipe.AddTile(TileID.Anvils);
-            recipe.needLava = true;
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.AddCondition(Recipe.Condition.NearLava);
+            recipe.Register();
         }
     }
 }

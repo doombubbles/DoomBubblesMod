@@ -5,7 +5,7 @@ namespace DoomBubblesMod.Buffs
 {
     public class VampireKnifeBat : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Vampire Knife Bat");
             Description.SetDefault("Hi Oliver");
@@ -16,7 +16,7 @@ namespace DoomBubblesMod.Buffs
         public override void Update(Player player, ref int buffIndex)
         {
             var modPlayer = player.GetModPlayer<DoomBubblesPlayer>();
-            if (player.ownedProjectileCounts[mod.ProjectileType("VampireKnifeBat")] > 0)
+            if (player.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.VampireKnifeBat>()] > 0)
             {
                 modPlayer.vampireKnifeBat = true;
             }

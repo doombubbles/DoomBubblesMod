@@ -5,14 +5,14 @@ namespace DoomBubblesMod.Buffs
 {
     public class TimeStoneCooldown : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Time Stone Cooldown");
             Description.SetDefault("");
             Main.debuff[Type] = true;
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;
-            longerExpertDebuff = false;
+            LongerExpertDebuff = false;
         }
 
         public override void Update(NPC npc, ref int buffIndex)

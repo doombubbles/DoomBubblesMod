@@ -11,15 +11,15 @@ namespace DoomBubblesMod.Items.Thanos
     {
         public override void SetDefaults()
         {
-            item.value = Item.sellPrice(5);
+            Item.value = Item.sellPrice(5);
             ;
-            item.rare = -11;
-            item.height = 20;
-            item.width = 14;
-            item.useStyle = 4;
+            Item.rare = -11;
+            Item.height = 20;
+            Item.width = 14;
+            Item.useStyle = 4;
         }
 
-        public override bool UseItem(Player player)
+        public override bool? UseItem(Player player)
         {
             player.KillMe(
                 PlayerDeathReason.ByCustomReason(player.name + " wielded power beyond " +
@@ -47,19 +47,19 @@ namespace DoomBubblesMod.Items.Thanos
                                "demands a sacrifice. In order to take the stone, you\n" +
                                "must lose that which you love. A soul for a soul.\"\n" +
                                "-The Stonekeeper");
+            Item.SetResearchAmount(1);
         }
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(mod);
+            var recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.Amber);
             recipe.AddIngredient(ItemID.FragmentNebula, 5);
             recipe.AddIngredient(ItemID.FragmentSolar, 5);
             recipe.AddIngredient(ItemID.FragmentStardust, 5);
             recipe.AddIngredient(ItemID.FragmentVortex, 5);
             recipe.AddTile(TileID.LunarCraftingStation);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
 }

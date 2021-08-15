@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -15,62 +16,62 @@ namespace DoomBubblesMod.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 8;
-            projectile.height = 8;
-            projectile.aiStyle = 1;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.ranged = true;
-            projectile.penetrate = 1;
-            projectile.timeLeft = 600;
-            projectile.alpha = 255;
-            projectile.ignoreWater = true;
-            projectile.tileCollide = true;
-            projectile.extraUpdates = 1;
-            projectile.light = 0.3f;
-            aiType = ProjectileID.Bullet;
+            Projectile.width = 8;
+            Projectile.height = 8;
+            Projectile.aiStyle = 1;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.penetrate = 1;
+            Projectile.timeLeft = 600;
+            Projectile.alpha = 255;
+            Projectile.ignoreWater = true;
+            Projectile.tileCollide = true;
+            Projectile.extraUpdates = 1;
+            Projectile.light = 0.3f;
+            AIType = ProjectileID.Bullet;
         }
 
         public override bool PreAI()
         {
-            var projSpeed = (float) Math.Sqrt(projectile.velocity.X * projectile.velocity.X +
-                                              projectile.velocity.Y * projectile.velocity.Y);
-            var num139 = projectile.localAI[1];
+            var projSpeed = (float) Math.Sqrt(Projectile.velocity.X * Projectile.velocity.X +
+                                              Projectile.velocity.Y * Projectile.velocity.Y);
+            var num139 = Projectile.localAI[1];
             if (num139 == 0f)
             {
-                projectile.localAI[1] = projSpeed;
+                Projectile.localAI[1] = projSpeed;
                 num139 = projSpeed;
             }
 
-            if (projectile.alpha > 0)
+            if (Projectile.alpha > 0)
             {
-                projectile.alpha -= 25;
+                Projectile.alpha -= 25;
             }
 
-            if (projectile.alpha < 0)
+            if (Projectile.alpha < 0)
             {
-                projectile.alpha = 0;
+                Projectile.alpha = 0;
             }
 
-            var initialX = projectile.position.X;
-            var initialY = projectile.position.Y;
+            var initialX = Projectile.position.X;
+            var initialY = Projectile.position.Y;
             var homingDistance = 300f;
             var flag4 = false;
             var num143 = 0;
-            if (projectile.ai[1] == 0f)
+            if (Projectile.ai[1] == 0f)
             {
                 for (var n = 0; n < 200; n++)
                 {
-                    if (Main.npc[n].CanBeChasedBy(projectile) && (projectile.ai[1] == 0f
-                                                                  || projectile.ai[1] == n + 1))
+                    if (Main.npc[n].CanBeChasedBy(Projectile) && (Projectile.ai[1] == 0f
+                                                                  || Projectile.ai[1] == n + 1))
                     {
                         var npcCenterX = Main.npc[n].position.X + Main.npc[n].width / 2;
                         var npcCenterY = Main.npc[n].position.Y + Main.npc[n].height / 2;
-                        var distanceDifference = Math.Abs(projectile.position.X + projectile.width / 2 - npcCenterX) +
-                                                 Math.Abs(projectile.position.Y + projectile.height / 2 - npcCenterY);
+                        var distanceDifference = Math.Abs(Projectile.position.X + Projectile.width / 2 - npcCenterX) +
+                                                 Math.Abs(Projectile.position.Y + Projectile.height / 2 - npcCenterY);
                         if (distanceDifference < homingDistance && Collision.CanHit(
-                            new Vector2(projectile.position.X + projectile.width / 2,
-                                projectile.position.Y + projectile.height / 2), 1, 1, Main.npc[n].position,
+                            new Vector2(Projectile.position.X + Projectile.width / 2,
+                                Projectile.position.Y + Projectile.height / 2), 1, 1, Main.npc[n].position,
                             Main.npc[n].width, Main.npc[n].height))
                         {
                             homingDistance = distanceDifference;
@@ -84,22 +85,22 @@ namespace DoomBubblesMod.Projectiles
 
                 if (flag4)
                 {
-                    projectile.ai[1] = num143 + 1;
+                    Projectile.ai[1] = num143 + 1;
                 }
 
                 flag4 = false;
             }
 
-            if (projectile.ai[1] > 0f)
+            if (Projectile.ai[1] > 0f)
             {
-                var num148 = (int) (projectile.ai[1] - 1f);
-                if (Main.npc[num148].active && Main.npc[num148].CanBeChasedBy(projectile, true) &&
+                var num148 = (int) (Projectile.ai[1] - 1f);
+                if (Main.npc[num148].active && Main.npc[num148].CanBeChasedBy(Projectile, true) &&
                     !Main.npc[num148].dontTakeDamage)
                 {
                     var num149 = Main.npc[num148].position.X + Main.npc[num148].width / 2;
                     var num150 = Main.npc[num148].position.Y + Main.npc[num148].height / 2;
-                    var num151 = Math.Abs(projectile.position.X + projectile.width / 2 - num149) +
-                                 Math.Abs(projectile.position.Y + projectile.height / 2 - num150);
+                    var num151 = Math.Abs(Projectile.position.X + Projectile.width / 2 - num149) +
+                                 Math.Abs(Projectile.position.Y + Projectile.height / 2 - num150);
                     if (num151 < 1000f)
                     {
                         flag4 = true;
@@ -109,11 +110,11 @@ namespace DoomBubblesMod.Projectiles
                 }
                 else
                 {
-                    projectile.ai[1] = 0f;
+                    Projectile.ai[1] = 0f;
                 }
             }
 
-            if (!projectile.friendly)
+            if (!Projectile.friendly)
             {
                 flag4 = false;
             }
@@ -121,8 +122,8 @@ namespace DoomBubblesMod.Projectiles
             if (flag4)
             {
                 var num152 = num139;
-                var vector13 = new Vector2(projectile.position.X + projectile.width * 0.5f,
-                    projectile.position.Y + projectile.height * 0.5f);
+                var vector13 = new Vector2(Projectile.position.X + Projectile.width * 0.5f,
+                    Projectile.position.Y + Projectile.height * 0.5f);
                 var num153 = initialX - vector13.X;
                 var num154 = initialY - vector13.Y;
                 var num155 = (float) Math.Sqrt(num153 * num153 + num154 * num154);
@@ -130,8 +131,8 @@ namespace DoomBubblesMod.Projectiles
                 num153 *= num155;
                 num154 *= num155;
                 var num156 = 8;
-                projectile.velocity.X = (projectile.velocity.X * (num156 - 1) + num153) / num156;
-                projectile.velocity.Y = (projectile.velocity.Y * (num156 - 1) + num154) / num156;
+                Projectile.velocity.X = (Projectile.velocity.X * (num156 - 1) + num153) / num156;
+                Projectile.velocity.Y = (Projectile.velocity.Y * (num156 - 1) + num154) / num156;
             }
 
             return base.PreAI();
@@ -140,9 +141,9 @@ namespace DoomBubblesMod.Projectiles
         public override void Kill(int timeLeft)
         {
             // This code and the similar code above in OnTileCollide spawn dust from the tiles collided with. SoundID.Item10 is the bounce sound you hear.
-            Collision.HitTiles(projectile.position + projectile.velocity, projectile.velocity, projectile.width,
-                projectile.height);
-            Main.PlaySound(SoundID.Item10, projectile.position);
+            Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width,
+                Projectile.height);
+            SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
         }
     }
 }

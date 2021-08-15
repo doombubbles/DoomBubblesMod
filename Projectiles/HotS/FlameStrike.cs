@@ -1,50 +1,54 @@
 ﻿using System;
+using DoomBubblesMod.Buffs;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
+using SoundType = Terraria.ModLoader.SoundType;
 
 namespace DoomBubblesMod.Projectiles.HotS
 {
-    public class FlameStrike : HappyProjectile
+    public class FlameStrike : CenteredProjectile
     {
         public static readonly int Delay = 60;
         public static readonly int Visible = 10;
 
         public float Size => 75f + Verdant * 37.5f;
-        public int ChosenTalent => (int) Math.Round(projectile.ai[0]);
-        public int Verdant => (int) Math.Round(projectile.ai[1]);
+        public int ChosenTalent => (int) Math.Round(Projectile.ai[0]);
+        public int Verdant => (int) Math.Round(Projectile.ai[1]);
 
         public override void SetStaticDefaults()
         {
-            Main.projFrames[projectile.type] = 5;
+            Main.projFrames[Projectile.type] = 5;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 89;
-            projectile.height = 89;
-            projectile.timeLeft = Delay + Visible;
-            projectile.friendly = true;
-            projectile.tileCollide = false;
-            projectile.light = .5f;
-            projectile.aiStyle = -1;
-            projectile.ignoreWater = true;
-            projectile.magic = true;
-            projectile.scale = 2f;
-            projectile.alpha = 255;
-            projectile.penetrate = -1;
-            projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = 15;
+            Projectile.width = 89;
+            Projectile.height = 89;
+            Projectile.timeLeft = Delay + Visible;
+            Projectile.friendly = true;
+            Projectile.tileCollide = false;
+            Projectile.light = .5f;
+            Projectile.aiStyle = -1;
+            Projectile.ignoreWater = true;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.scale = 2f;
+            Projectile.alpha = 255;
+            Projectile.penetrate = -1;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 15;
         }
 
         public override bool? CanHitNPC(NPC target)
         {
-            if (projectile.alpha == 255)
+            if (Projectile.alpha == 255)
             {
                 return false;
             }
 
-            if (target.Hitbox.Distance(projectile.Center) > Size)
+            if (target.Hitbox.Distance(Projectile.Center) > Size)
             {
                 return false;
             }
@@ -56,28 +60,28 @@ namespace DoomBubblesMod.Projectiles.HotS
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit,
             ref int hitDirection)
         {
-            if ((ChosenTalent == 2 || ChosenTalent == -1) && projectile.localAI[1] < .5)
+            if ((ChosenTalent == 2 || ChosenTalent == -1) && Projectile.localAI[1] < .5)
             {
-                var ai = Main.player[projectile.owner].gravControl2 ? 1 : 0;
-                if (Main.player[projectile.owner].gravControl2)
+                var ai = Main.player[Projectile.owner].gravControl2 ? 1 : 0;
+                if (Main.player[Projectile.owner].gravControl2)
                 {
-                    target.AddBuff(mod.BuffType("LivingBomb"), 152);
-                    var proj = Projectile.NewProjectile(target.Center, new Vector2(0, 0),
-                        mod.ProjectileType("LivingBomb"),
-                        (int) (damage / 115f * 160f), 0, projectile.owner, ai, target.whoAmI);
+                    target.AddBuff(ModContent.BuffType<Buffs.LivingBomb>(), 152);
+                    var proj = Projectile.NewProjectile(new ProjectileSource_ProjectileParent(Projectile), target.Center, new Vector2(0, 0),
+                        ModContent.ProjectileType<LivingBomb>(),
+                        (int) (damage / 115f * 160f), 0, Projectile.owner, ai, target.whoAmI);
                     Main.projectile[proj].netUpdate = true;
-                    Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/LivingBombWand2"), target.Center);
+                    SoundEngine.PlaySound(Mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/LivingBombWand2"), target.Center);
                 }
-                else if (!target.HasBuff(mod.BuffType("LivingBomb")))
+                else if (!target.HasBuff(ModContent.BuffType<Buffs.LivingBomb>()))
                 {
-                    target.AddBuff(mod.BuffType("LivingBomb"), 150);
-                    var proj = Projectile.NewProjectile(target.Center, new Vector2(0, 0),
-                        mod.ProjectileType("LivingBomb"),
-                        (int) (damage / 115f * 160f), 0, projectile.owner, ai, target.whoAmI);
+                    target.AddBuff(ModContent.BuffType<Buffs.LivingBomb>(), 150);
+                    var proj = Projectile.NewProjectile(new ProjectileSource_ProjectileParent(Projectile), target.Center, new Vector2(0, 0),
+                        ModContent.ProjectileType<LivingBomb>(),
+                        (int) (damage / 115f * 160f), 0, Projectile.owner, ai, target.whoAmI);
                     Main.projectile[proj].netUpdate = true;
-                    Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/LivingBombWand2"), target.Center);
+                    SoundEngine.PlaySound(Mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/LivingBombWand2"), target.Center);
 
-                    projectile.localAI[1] += 2 + ai * 2;
+                    Projectile.localAI[1] += 2 + ai * 2;
                 }
             }
 
@@ -87,12 +91,12 @@ namespace DoomBubblesMod.Projectiles.HotS
             }
 
             if ((ChosenTalent == 1 || ChosenTalent == -1) &&
-                Main.player[projectile.owner].GetModPlayer<HotSPlayer>().convection < 100)
+                Main.player[Projectile.owner].GetModPlayer<HotSPlayer>().convection < 100)
             {
-                Main.player[projectile.owner].GetModPlayer<HotSPlayer>().convection++;
-                if (!Main.player[projectile.owner].HasBuff(mod.BuffType("Convection")))
+                Main.player[Projectile.owner].GetModPlayer<HotSPlayer>().convection++;
+                if (!Main.player[Projectile.owner].HasBuff(ModContent.BuffType<Convection>()))
                 {
-                    Main.player[projectile.owner].AddBuff(mod.BuffType("Convection"), 10);
+                    Main.player[Projectile.owner].AddBuff(ModContent.BuffType<Convection>(), 10);
                 }
             }
 
@@ -102,70 +106,70 @@ namespace DoomBubblesMod.Projectiles.HotS
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             base.OnHitNPC(target, damage, knockback, crit);
-            target.immune[projectile.owner] = 0;
+            target.immune[Projectile.owner] = 0;
         }
 
         public override void AI()
         {
-            if (projectile.timeLeft == Delay + Visible)
+            if (Projectile.timeLeft == Delay + Visible)
             {
                 if (Verdant > 0)
                 {
-                    var center = projectile.Center;
-                    projectile.width = 178 + Verdant * 89;
-                    projectile.height = 178 + Verdant * 89;
-                    projectile.scale = 2f + Verdant;
-                    projectile.Center = center;
-                    Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Flame2"), projectile.position);
+                    var center = Projectile.Center;
+                    Projectile.width = 178 + Verdant * 89;
+                    Projectile.height = 178 + Verdant * 89;
+                    Projectile.scale = 2f + Verdant;
+                    Projectile.Center = center;
+                    SoundEngine.PlaySound(Mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Flame2"), Projectile.position);
                 }
                 else
                 {
-                    Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Flame"), projectile.position);
+                    SoundEngine.PlaySound(Mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Flame"), Projectile.position);
                 }
             }
-            else if (projectile.timeLeft == Visible)
+            else if (Projectile.timeLeft == Visible)
             {
-                projectile.alpha = 0;
+                Projectile.alpha = 0;
                 if (Verdant > 0)
                 {
-                    Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Strike2"), projectile.position);
+                    SoundEngine.PlaySound(Mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Strike2"), Projectile.position);
                 }
                 else
                 {
-                    Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Strike"), projectile.position);
+                    SoundEngine.PlaySound(Mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Strike"), Projectile.position);
                 }
             }
-            else if (projectile.timeLeft < Visible)
+            else if (Projectile.timeLeft < Visible)
             {
-                projectile.alpha = 0;
-                projectile.frameCounter++;
-                if (projectile.frameCounter >= 2)
+                Projectile.alpha = 0;
+                Projectile.frameCounter++;
+                if (Projectile.frameCounter >= 2)
                 {
-                    projectile.frameCounter = 0;
-                    projectile.frame++;
+                    Projectile.frameCounter = 0;
+                    Projectile.frame++;
                 }
             }
             else
             {
-                for (var i = 0; i < 12 * (1 - (projectile.timeLeft - Visible) / (float) Delay); i++)
+                for (var i = 0; i < 12 * (1 - (Projectile.timeLeft - Visible) / (float) Delay); i++)
                 {
                     foreach (var z in new[] {0, 120, 240})
                     {
-                        var x = projectile.Center.X + Size * Math.Cos((z + 10 * i) * Math.PI / 180);
-                        var y = projectile.Center.Y + Size * Math.Sin((z + 10 * i) * Math.PI / 180);
+                        var x = Projectile.Center.X + Size * Math.Cos((z + 10 * i) * Math.PI / 180);
+                        var y = Projectile.Center.Y + Size * Math.Sin((z + 10 * i) * Math.PI / 180);
                         var d = Dust.NewDust(new Vector2((float) x, (float) y), 0, 0, 75);
                         Main.dust[d].noGravity = true;
                     }
                 }
             }
 
-            if (projectile.timeLeft == 1 && projectile.localAI[0] < 1 && (ChosenTalent == 3 || ChosenTalent == -1))
+            if (Projectile.timeLeft == 1 && Projectile.localAI[0] < 1 && (ChosenTalent == 3 || ChosenTalent == -1))
             {
-                projectile.timeLeft = Delay + Visible + 1;
-                projectile.alpha = 255;
-                projectile.localAI[0]++;
-                projectile.frame = 0;
-                projectile.localAI[1] = 0;
+                Projectile.timeLeft = Delay + Visible + 1;
+                Projectile.alpha = 255;
+                Projectile.localAI[0]++;
+                Projectile.frame = 0;
+                Projectile.localAI[1] = 0;
             }
         }
     }

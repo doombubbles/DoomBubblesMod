@@ -1,46 +1,46 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace DoomBubblesMod.Projectiles.HotS
 {
-    public class DiscordStrike : HappyProjectile
+    public class DiscordStrike : CenteredProjectile
     {
-        private int Size => (int) (Math.Sqrt(projectile.velocity.Length() * (ChosenTalent == 2 || ChosenTalent == -1 ? 1.5f : 3f)) * Math.Sqrt(60));
-        private float Length => projectile.velocity.Length() * 15f;
-        private int ChosenTalent => (int) Math.Round(projectile.ai[0]);
-        private float DistanceFactor => (Origin - projectile.Center).Length() / Length;
+        private int Size => (int) (Math.Sqrt(Projectile.velocity.Length() * (ChosenTalent == 2 || ChosenTalent == -1 ? 1.5f : 3f)) * Math.Sqrt(60));
+        private float Length => Projectile.velocity.Length() * 15f;
+        private int ChosenTalent => (int) Math.Round(Projectile.ai[0]);
+        private float DistanceFactor => (Origin - Projectile.Center).Length() / Length;
 
         private Vector2 Origin
         {
-            get => new Vector2(projectile.localAI[0], projectile.localAI[1]);
+            get => new Vector2(Projectile.localAI[0], Projectile.localAI[1]);
             set
             {
-                projectile.localAI[0] = value.X;
-                projectile.localAI[1] = value.Y;
+                Projectile.localAI[0] = value.X;
+                Projectile.localAI[1] = value.Y;
             }
         }
 
         private float Theta
         {
-            get => projectile.ai[1];
-            set => projectile.ai[1] = value;
+            get => Projectile.ai[1];
+            set => Projectile.ai[1] = value;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = Size;
-            projectile.height = Size;
-            projectile.magic = true;
-            projectile.friendly = true;
-            projectile.tileCollide = false;
-            projectile.alpha = 69;
-            projectile.timeLeft = 100;
-            projectile.extraUpdates = 2;
-            projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = 1000;
-            projectile.penetrate = -1;
+            Projectile.width = Size;
+            Projectile.height = Size;
+            Projectile.DamageType = GetInstance<MeleeMagic>();
+            Projectile.friendly = true;
+            Projectile.tileCollide = false;
+            Projectile.alpha = 69;
+            Projectile.timeLeft = 100;
+            Projectile.extraUpdates = 2;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 1000;
+            Projectile.penetrate = -1;
         }
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit,
@@ -55,18 +55,17 @@ namespace DoomBubblesMod.Projectiles.HotS
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
             if (ChosenTalent == 1 || ChosenTalent == -1)
             {
-                projectile.damage = (int) (projectile.damage * 1.1);
+                Projectile.damage = (int) (Projectile.damage * 1.1);
             }
-            
         }
 
         public override void AI()
         {
-            if (projectile.alpha == 69)
+            if (Projectile.alpha == 69)
             {
-                projectile.alpha = 255;
-                Origin = projectile.Center;
-                Theta = projectile.velocity.ToRotation();
+                Projectile.alpha = 255;
+                Origin = Projectile.Center;
+                Theta = Projectile.velocity.ToRotation();
             }
 
             HandlePosition();
@@ -76,21 +75,21 @@ namespace DoomBubblesMod.Projectiles.HotS
 
         private void HandlePosition()
         {
-            //projectile.position += Main.player[projectile.owner].velocity;
-            //Origin += Main.player[projectile.owner].velocity;
+            //Projectile.position += Main.player[Projectile.owner].velocity;
+            //Origin += Main.player[Projectile.owner].velocity;
         }
 
         private void HandleSize()
         {
-            var center = projectile.Center;
-            projectile.width = (int) (Size * (1 - DistanceFactor));
-            projectile.height = (int) (Size * (1 - DistanceFactor));
-            projectile.scale = 1 - DistanceFactor;
-            projectile.Center = center;
+            var center = Projectile.Center;
+            Projectile.width = (int) (Size * (1 - DistanceFactor));
+            Projectile.height = (int) (Size * (1 - DistanceFactor));
+            Projectile.scale = 1 - DistanceFactor;
+            Projectile.Center = center;
 
-            if (projectile.width <= 0 || projectile.height <= 0)
+            if (Projectile.width <= 0 || Projectile.height <= 0)
             {
-                projectile.Kill();
+                Projectile.Kill();
             }
         }
 
@@ -105,33 +104,33 @@ namespace DoomBubblesMod.Projectiles.HotS
             float previousDistance;
             do
             {
-                previousDistance = (dot - projectile.Center).Length();
+                previousDistance = (dot - Projectile.Center).Length();
                 var dust = Dust.NewDustPerfect(dot, 182);
                 dust.noGravity = true;
                 dust.velocity = new Vector2(0, 0);
-                dot.X += (float) Math.Cos((projectile.Center - dot).ToRotation()) * 2f;
-                dot.Y += (float) Math.Sin((projectile.Center - dot).ToRotation()) * 2f;
-            } while ((dot - projectile.Center).Length() < previousDistance);
+                dot.X += (float) Math.Cos((Projectile.Center - dot).ToRotation()) * 2f;
+                dot.Y += (float) Math.Sin((Projectile.Center - dot).ToRotation()) * 2f;
+            } while ((dot - Projectile.Center).Length() < previousDistance);
 
             dot = line2Start;
             do
             {
-                previousDistance = (dot - projectile.Center).Length();
+                previousDistance = (dot - Projectile.Center).Length();
                 var dust = Dust.NewDustPerfect(dot, 182);
                 dust.noGravity = true;
                 dust.velocity = new Vector2(0, 0);
-                dot.X += (float) Math.Cos((projectile.Center - dot).ToRotation()) * 2f;
-                dot.Y += (float) Math.Sin((projectile.Center - dot).ToRotation()) * 2f;
-            } while ((dot - projectile.Center).Length() < previousDistance);
+                dot.X += (float) Math.Cos((Projectile.Center - dot).ToRotation()) * 2f;
+                dot.Y += (float) Math.Sin((Projectile.Center - dot).ToRotation()) * 2f;
+            } while ((dot - Projectile.Center).Length() < previousDistance);
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             base.OnHitNPC(target, damage, knockback, crit);
-            if (Main.player[projectile.owner].gravControl2)
+            if (Main.player[Projectile.owner].gravControl2)
             {
-                projectile.localNPCImmunity[target.whoAmI] = 0;
-                target.immune[projectile.owner] = 0;
+                Projectile.localNPCImmunity[target.whoAmI] = 0;
+                target.immune[Projectile.owner] = 0;
             }
         }
     }

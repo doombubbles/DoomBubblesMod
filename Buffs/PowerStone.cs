@@ -5,7 +5,7 @@ namespace DoomBubblesMod.Buffs
 {
     public class PowerStone : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Power Stoned");
             Description.SetDefault("");
@@ -13,7 +13,7 @@ namespace DoomBubblesMod.Buffs
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = false;
-            longerExpertDebuff = false;
+            LongerExpertDebuff = false;
         }
 
         public override void Update(Player player, ref int buffIndex)

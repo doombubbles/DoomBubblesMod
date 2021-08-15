@@ -8,17 +8,18 @@ namespace DoomBubblesMod.Items.Accessories
     {
         public override void SetDefaults()
         {
-            item.value = 42069;
-            item.width = 20;
-            item.height = 30;
-            item.rare = -12;
-            item.accessory = true;
+            Item.value = 42069;
+            Item.width = 20;
+            Item.height = 30;
+            Item.rare = -12;
+            Item.accessory = true;
         }
 
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Royal Honey");
             Tooltip.SetDefault("Bees are friendly");
+            Item.SetResearchAmount(1);
         }
 
 
@@ -30,21 +31,19 @@ namespace DoomBubblesMod.Items.Accessories
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(mod);
+            var recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.BottledHoney);
             recipe.AddIngredient(ItemID.GoldCrown);
             recipe.AddIngredient(ItemID.RoyalGel);
             recipe.AddTile(TileID.DemonAltar);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
 
-            var recipe2 = new ModRecipe(mod);
+            var recipe2 = CreateRecipe();
             recipe2.AddIngredient(ItemID.BottledHoney);
             recipe2.AddIngredient(ItemID.PlatinumCrown);
             recipe2.AddIngredient(ItemID.RoyalGel);
             recipe2.AddTile(TileID.DemonAltar);
-            recipe2.SetResult(this);
-            recipe2.AddRecipe();
+            recipe2.Register();
         }
     }
 }

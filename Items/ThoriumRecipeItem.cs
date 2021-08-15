@@ -8,7 +8,7 @@ namespace DoomBubblesMod.Items
         {
             if (DoomBubblesMod.thoriumMod != null)
             {
-                AddThoriumRecipe(ModLoader.GetMod("ThoriumMod"));
+                AddThoriumRecipe(DoomBubblesMod.thoriumMod);
             }
         }
 

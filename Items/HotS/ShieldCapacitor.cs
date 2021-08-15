@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using DoomBubblesMod.Items.Talent;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 
@@ -16,21 +17,22 @@ namespace DoomBubblesMod.Items.HotS
         {
             DisplayName.SetDefault("Shield Capacitor");
             Tooltip.SetDefault("You quickly and constantly generate a 50 life shield.");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            item.width = 0;
-            item.height = 0;
-            item.accessory = true;
-            item.rare = ItemRarityID.Yellow;
-            item.value = Item.buyPrice(0, 69);
+            Item.width = 0;
+            Item.height = 0;
+            Item.accessory = true;
+            Item.rare = ItemRarityID.Yellow;
+            Item.value = Item.buyPrice(0, 69);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<HotSPlayer>().shieldCapacitorChosenTalent = ChosenTalent;
-            player.SetThoriumProperty<int>("metalShieldMax", i => i + 100);
+            player.SetThoriumProperty<int>("metalShieldMax", i => i + 50);
             player.GetModPlayer<HotSPlayer>().newShieldCapactior = true;
         }
     }

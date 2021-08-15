@@ -10,20 +10,21 @@ namespace DoomBubblesMod.Items.Accessories
         {
             DisplayName.SetDefault("Bloodlust Talisman");
             Tooltip.SetDefault("Your lifesteal is uncapped");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            item.width = 24;
-            item.height = 32;
-            item.rare = ItemRarityID.Red;
-            item.accessory = true;
-            item.value = Item.buyPrice(2);
+            Item.width = 24;
+            Item.height = 32;
+            Item.rare = ItemRarityID.Red;
+            Item.accessory = true;
+            Item.value = Item.buyPrice(2);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<DoomBubblesPlayer>().bloodlust = true;
+            //player.GetModPlayer<DoomBubblesPlayer>().bloodlust = true;
         }
     }
 }

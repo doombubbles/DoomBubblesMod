@@ -11,36 +11,36 @@ namespace DoomBubblesMod.Items.Armor
         {
             DisplayName.SetDefault("Laser Meteor Leggings");
             Tooltip.SetDefault("11% Increased Magic Damage");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            var realSlot = item.legSlot;
-            item.CloneDefaults(ItemID.MeteorLeggings);
-            item.rare = ItemRarityID.LightRed;
-            item.value = Item.sellPrice(0, 4, 50);
-            item.defense = 10;
-            item.legSlot = realSlot;
+            var realSlot = Item.legSlot;
+            Item.CloneDefaults(ItemID.MeteorLeggings);
+            Item.rare = ItemRarityID.LightRed;
+            Item.value = Item.sellPrice(0, 4, 50);
+            Item.defense = 10;
+            Item.legSlot = realSlot;
         }
 
         public override bool IsArmorSet(Item head, Item body, Item legs)
         {
-            return head.type == mod.ItemType("LaserMeteorHelmet") && body.type == mod.ItemType("LaserMeteorSuit");
+            return head.type == ModContent.ItemType<LaserMeteorHelmet>() && body.type == ModContent.ItemType<LaserMeteorSuit>();
         }
 
         public override void UpdateEquip(Player player)
         {
-            player.magicDamage += .11f;
+            player.GetDamage(DamageClass.Magic) += .11f;
         }
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(mod);
+            var recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.MeteorLeggings);
             recipe.AddIngredient(ItemID.CrystalShard, 15);
             recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
 }

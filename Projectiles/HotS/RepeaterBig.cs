@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Projectiles.HotS
 {
@@ -7,17 +8,17 @@ namespace DoomBubblesMod.Projectiles.HotS
     {
         public override void SetDefaults()
         {
-            projectile.width = 8;
-            projectile.height = 8;
-            projectile.aiStyle = 1;
-            projectile.friendly = true;
-            projectile.alpha = 255;
-            projectile.extraUpdates = 2;
-            projectile.scale = 1f;
-            projectile.timeLeft = 600;
-            projectile.ranged = true;
-            projectile.ignoreWater = true;
-            projectile.alpha = 69;
+            Projectile.width = 8;
+            Projectile.height = 8;
+            Projectile.aiStyle = 1;
+            Projectile.friendly = true;
+            Projectile.alpha = 255;
+            Projectile.extraUpdates = 2;
+            Projectile.scale = 1f;
+            Projectile.timeLeft = 600;
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.ignoreWater = true;
+            Projectile.alpha = 69;
         }
 
 
@@ -34,7 +35,7 @@ namespace DoomBubblesMod.Projectiles.HotS
             var num293 = Main.rand.Next(3, 7);
             for (var num294 = 0; num294 < num293; num294++)
             {
-                var num295 = Dust.NewDust(projectile.Center - projectile.velocity / 2f, 0, 0, 63, 0f, 0f, 100,
+                var num295 = Dust.NewDust(Projectile.Center - Projectile.velocity / 2f, 0, 0, 63, 0f, 0f, 100,
                     Color.Blue, 2.1f);
                 var dust = Main.dust[num295];
                 dust.velocity *= 2f;

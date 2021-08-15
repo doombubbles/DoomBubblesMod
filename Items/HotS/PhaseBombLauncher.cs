@@ -1,7 +1,10 @@
 ﻿using System;
 using DoomBubblesMod.Buffs;
+using DoomBubblesMod.Items.Talent;
+using DoomBubblesMod.Projectiles.HotS;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Items.HotS
@@ -18,24 +21,25 @@ namespace DoomBubblesMod.Items.HotS
             DisplayName.SetDefault("Phase Bomb Launcher");
             Tooltip.SetDefault("Buffs Repeater Cannon attack speed for each enemy hit\n" +
                                "(Up to 10)");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            item.width = 74;
-            item.height = 34;
-            item.noMelee = true;
-            item.damage = 83;
-            item.shoot = mod.ProjectileType("PhaseBomb");
-            item.shootSpeed = 7f;
-            item.useAnimation = 38;
-            item.useTime = 38;
-            item.ranged = true;
-            item.knockBack = 7;
-            item.useStyle = 5;
-            item.rare = 10;
-            item.autoReuse = true;
-            item.value = Item.buyPrice(0, 69);
+            Item.width = 74;
+            Item.height = 34;
+            Item.noMelee = true;
+            Item.damage = 83;
+            Item.shoot = ModContent.ProjectileType<PhaseBomb>();
+            Item.shootSpeed = 7f;
+            Item.useAnimation = 38;
+            Item.useTime = 38;
+            Item.DamageType = DamageClass.Ranged;
+            Item.knockBack = 7;
+            Item.useStyle = 5;
+            Item.rare = 10;
+            Item.autoReuse = true;
+            Item.value = Item.buyPrice(0, 69);
         }
 
         public override Vector2? HoldoutOffset()
@@ -43,11 +47,11 @@ namespace DoomBubblesMod.Items.HotS
             return new Vector2(-7, -3);
         }
 
-        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
+        public override void ModifyWeaponDamage(Player player, ref StatModifier damage, ref float flat)
         {
-            if (ChosenTalent == 3 || ChosenTalent == -1)
+            if (ChosenTalent is 3 or -1)
             {
-                add += .5f;
+                flat += .5f;
             }
         }
 
@@ -61,26 +65,24 @@ namespace DoomBubblesMod.Items.HotS
             return base.UseTimeMultiplier(player);
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY,
-            ref int type, ref int damage,
-            ref float knockBack)
+        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type,
+            int damage, float knockback)
         {
             if (player == Main.LocalPlayer)
             {
                 var dX = position.X - Main.MouseWorld.X;
                 var dY = position.Y - Main.MouseWorld.Y;
                 var distance = Math.Sqrt(dX * dX + dY * dY);
-                var speed = new Vector2(speedX, speedY);
-                speed *= 1f + player.GetModPlayer<HotSPlayer>().fenixBombBuildUp * .1f;
-                knockBack *= 1f + player.GetModPlayer<HotSPlayer>().fenixBombBuildUp * .1f;
+                velocity *= 1f + player.GetModPlayer<HotSPlayer>().fenixBombBuildUp * .1f;
+                knockback *= 1f + player.GetModPlayer<HotSPlayer>().fenixBombBuildUp * .1f;
                 damage = (int) (damage * Math.Pow(1.1f, player.GetModPlayer<HotSPlayer>().fenixBombBuildUp));
 
 
                 var speedFactor = 1.015;
 
-                var time = Math.Log(distance / speed.Length() * Math.Log(speedFactor) + 1) / Math.Log(speedFactor);
+                var time = Math.Log(distance / velocity.Length() * Math.Log(speedFactor) + 1) / Math.Log(speedFactor);
 
-                Projectile.NewProjectile(position, speed, type, damage, knockBack, player.whoAmI, (float) time,
+                Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, (float) time,
                     ChosenTalent);
 
                 if (player.HasBuff(ModContent.BuffType<FenixBombBuildUp>()))
@@ -88,7 +90,7 @@ namespace DoomBubblesMod.Items.HotS
                     player.DelBuff(player.FindBuffIndex(ModContent.BuffType<FenixBombBuildUp>()));
                 }
 
-                player.GetModPlayer<HotSPlayer>().phaseUseTime = item.useTime;
+                player.GetModPlayer<HotSPlayer>().phaseUseTime = Item.useTime;
                 player.itemAnimation = 10;
                 player.itemTime = 10;
             }

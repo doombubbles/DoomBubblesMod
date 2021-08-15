@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DoomBubblesMod.Items.Weapons;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -26,25 +27,18 @@ namespace DoomBubblesMod.Items
                 {"Omega Core", "Varp Kore"}
             };
 
-            foreach (var kvp in itemNameOverrides)
+            foreach (var (itemId, replacementName) in itemNameOverrides)
             {
-                var itemId = kvp.Key;
-                var replacementName = kvp.Value;
                 if (item.Name == itemId)
                 {
                     item.SetNameOverride(replacementName);
                 }
             }
-
-            if (item.type == ItemID.SpikyBall)
-            {
-                item.ammo = item.type;
-            }
         }
 
         public override bool CanUseItem(Item item, Player player)
         {
-            if (player.GetModPlayer<ThanosPlayer>().InfinityGauntlet && DoomBubblesMod.powerStoneHotKey.Current)
+            if (player.GetModPlayer<ThanosPlayer>().InfinityGauntlet != null && DoomBubblesMod.powerStoneHotKey.Current)
             {
                 return false;
             }
@@ -52,35 +46,36 @@ namespace DoomBubblesMod.Items
             return base.CanUseItem(item, player);
         }
 
-        public override void GetWeaponCrit(Item item, Player player, ref int crit)
+        public override void ModifyWeaponCrit(Item item, Player player, ref int crit)
         {
             crit = (int) (crit * player.GetModPlayer<DoomBubblesPlayer>().critChanceMult);
-            base.GetWeaponCrit(item, player, ref crit);
+            base.ModifyWeaponCrit(item, player, ref crit);
         }
 
-        public override void ModifyWeaponDamage(Item item, Player player, ref float add, ref float mult, ref float flat)
+        public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage, ref float flat)
         {
             if ((item.type == ItemID.ExplodingBullet || item.Name == "Endless Explosive Pouch") &&
                 player.GetModPlayer<DoomBubblesPlayer>().explosionBulletBonus)
             {
-                mult *= 2;
+                damage *= 2;
             }
 
-            base.ModifyWeaponDamage(item, player, ref add, ref mult, ref flat);
+            base.ModifyWeaponDamage(item, player, ref damage, ref flat);
         }
+
 
         public override void OpenVanillaBag(string context, Player player, int arg)
         {
             if (arg == ItemID.PlanteraBossBag && context == "bossBag")
             {
-                player.QuickSpawnItem(mod.ItemType("HeartOfTerraria"));
+                //player.QuickSpawnItem(ModContent.ItemType<HeartOfTerraria>());
             }
 
             if (arg == ItemID.FishronBossBag && context == "bossBag")
             {
                 if (Main.rand.Next(1, 5) == 1)
                 {
-                    player.QuickSpawnItem(mod.ItemType("Ultrashark"));
+                    player.QuickSpawnItem(ModContent.ItemType<Ultrashark>());
                 }
             }
 
@@ -99,17 +94,17 @@ namespace DoomBubblesMod.Items
         {
             if (item.type == ItemID.GravityGlobe)
             {
-                tooltips.Add(new TooltipLine(mod, "Secret", "Now has certain special properties...")
+                tooltips.Add(new TooltipLine(Mod, "Secret", "Now has certain special properties...")
                 {
                     overrideColor = Color.MediumPurple
                 });
-                tooltips.Add(new TooltipLine(mod, "Secret2", "  -doombubbles")
+                tooltips.Add(new TooltipLine(Mod, "Secret2", "  -doombubbles")
                 {
                     overrideColor = Color.MediumPurple
                 });
             }
 
-            if (item.owner != 255 && item.owner != -1 && Main.player[item.owner].GetModPlayer<DoomBubblesPlayer>()
+            if (item.playerIndexTheItemIsReservedFor != 255 && item.playerIndexTheItemIsReservedFor != -1 && Main.player[item.playerIndexTheItemIsReservedFor].GetModPlayer<DoomBubblesPlayer>()
                 .noManaItems.Contains(item.type))
             {
                 for (var i = 0; i < tooltips.Count; i++)
@@ -135,7 +130,7 @@ namespace DoomBubblesMod.Items
 
         public override bool CanEquipAccessory(Item item, Player player, int slot)
         {
-            if (item.Name.Contains("Emblem") && player.GetModPlayer<DoomBubblesPlayer>().emblem == -1)
+            if (item.Name.Contains("Emblem") && player.GetModPlayer<DoomBubblesPlayer>().emblem < 0)
             {
                 return false;
             }

@@ -8,14 +8,15 @@ namespace DoomBubblesMod.Items.Phase
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Cyan Phasesword");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            item.CloneDefaults(ItemID.BluePhasesaber);
-            item.damage = 81;
-            item.scale = 1.3f;
-            item.rare = 7;
+            Item.CloneDefaults(ItemID.BluePhasesaber);
+            Item.damage = 81;
+            Item.scale = 1.3f;
+            Item.rare = ItemRarityID.Lime;
         }
 
         public override void AddRecipes()
@@ -28,12 +29,11 @@ namespace DoomBubblesMod.Items.Phase
 
         private void AddThoriumRecipe()
         {
-            var recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModLoader.GetMod("ThoriumMod").ItemType("CyanPhasesaber"));
+            var recipe = CreateRecipe();
+            recipe.AddIngredient(DoomBubblesMod.thoriumMod.Find<ModItem>("CyanPhasesaber"));
             recipe.AddIngredient(ItemID.Ectoplasm, 25);
             recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
 }

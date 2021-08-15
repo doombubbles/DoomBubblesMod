@@ -10,15 +10,16 @@ namespace DoomBubblesMod.Items.Accessories
         {
             DisplayName.SetDefault("Explosive Charm");
             Tooltip.SetDefault("Explosive Bullets deal more damage and can no longer hurt you");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            item.value = Item.sellPrice(0, 2);
-            item.width = 28;
-            item.height = 26;
-            item.rare = 4;
-            item.accessory = true;
+            Item.value = Item.sellPrice(0, 2);
+            Item.width = 28;
+            Item.height = 26;
+            Item.rare = 4;
+            Item.accessory = true;
         }
 
 
@@ -29,12 +30,11 @@ namespace DoomBubblesMod.Items.Accessories
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(mod);
+            var recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.ExplosivePowder, 100);
             recipe.AddIngredient(ItemID.SoulofLight, 10);
             recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
 }

@@ -1,86 +1,84 @@
-﻿using Microsoft.Xna.Framework;
+﻿using DoomBubblesMod.Buffs;
+using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ModLoader;
+using SoundType = Terraria.ModLoader.SoundType;
 
 namespace DoomBubblesMod.Projectiles.HotS
 {
-    public class PhaseBomb : HappyProjectile
+    public class PhaseBomb : CenteredProjectile
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Phase Bomb");
-            Main.projFrames[projectile.type] = 9;
+            Main.projFrames[Projectile.type] = 9;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 100;
-            projectile.height = 100;
-            projectile.scale = .33f;
-            projectile.aiStyle = 0;
-            projectile.friendly = true;
-            projectile.ignoreWater = true;
-            projectile.tileCollide = false;
-            projectile.timeLeft = 1000;
-            projectile.ranged = true;
-            projectile.penetrate = -1;
-            projectile.alpha = 69;
+            Projectile.width = 100;
+            Projectile.height = 100;
+            Projectile.scale = .33f;
+            Projectile.aiStyle = 0;
+            Projectile.friendly = true;
+            Projectile.ignoreWater = true;
+            Projectile.tileCollide = false;
+            Projectile.timeLeft = 1000;
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.penetrate = -1;
+            Projectile.alpha = 69;
         }
 
         public override bool? CanHitNPC(NPC target)
         {
-            if (1000 - projectile.timeLeft <= projectile.ai[0] && !(projectile.ai[1] == 1 || projectile.ai[1] == -1))
+            if (1000 - Projectile.timeLeft <= Projectile.ai[0] && !(Projectile.ai[1] == 1 || Projectile.ai[1] == -1))
             {
                 return false;
             }
 
-            if (1000 - projectile.timeLeft > (int) projectile.ai[0] + 1)
-            {
-                return false;
-            }
-
-            return base.CanHitNPC(target);
+            return 1000 - Projectile.timeLeft > (int) Projectile.ai[0] + 1 ? false : base.CanHitNPC(target);
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            projectile.localAI[0]++;
+            Projectile.localAI[0]++;
         }
 
         public override void AI()
         {
-            if (projectile.alpha == 69)
+            if (Projectile.alpha == 69)
             {
-                Main.PlaySound(SoundLoader.customSoundType, (int) projectile.position.X, (int) projectile.position.Y,
-                    mod.GetSoundSlot(SoundType.Custom, "Sounds/Phase"));
+                SoundEngine.PlaySound(SoundLoader.customSoundType, (int) Projectile.position.X, (int) Projectile.position.Y,
+                    Mod.GetSoundSlot(SoundType.Custom, "Sounds/Phase"));
             }
 
-            if (projectile.alpha > 0)
+            if (Projectile.alpha > 0)
             {
-                projectile.alpha -= 15;
-            }
-            else
-            {
-                projectile.alpha = 0;
-            }
-
-
-            Lighting.AddLight((int) projectile.Center.X / 16, (int) projectile.Center.Y / 16, 0.4f, 0.4f, 0.5f);
-
-            var center = projectile.Center;
-
-            if (1000 - projectile.timeLeft <= projectile.ai[0])
-            {
-                projectile.frame = projectile.timeLeft / 10 % 2;
-                projectile.velocity *= 1.015f;
+                Projectile.alpha -= 15;
             }
             else
             {
-                projectile.width = (int) (20 * projectile.knockBack);
-                projectile.height = (int) (20 * projectile.knockBack);
-                projectile.scale = projectile.knockBack / 5f;
-                projectile.Center = center;
-                if (projectile.velocity != new Vector2(0, 0))
+                Projectile.alpha = 0;
+            }
+
+
+            Lighting.AddLight((int) Projectile.Center.X / 16, (int) Projectile.Center.Y / 16, 0.4f, 0.4f, 0.5f);
+
+            var center = Projectile.Center;
+
+            if (1000 - Projectile.timeLeft <= Projectile.ai[0])
+            {
+                Projectile.frame = Projectile.timeLeft / 10 % 2;
+                Projectile.velocity *= 1.015f;
+            }
+            else
+            {
+                Projectile.width = (int) (20 * Projectile.knockBack);
+                Projectile.height = (int) (20 * Projectile.knockBack);
+                Projectile.scale = Projectile.knockBack / 5f;
+                Projectile.Center = center;
+                if (Projectile.velocity != new Vector2(0, 0))
                 {
                     var npcs = 0;
                     for (var i = 0; i < Main.npc.Length; i++)
@@ -91,42 +89,42 @@ namespace DoomBubblesMod.Projectiles.HotS
                             continue;
                         }
 
-                        if (projectile.Hitbox.Intersects(npc.getRect()))
+                        if (Projectile.Hitbox.Intersects(npc.getRect()))
                         {
                             npcs++;
-                            npc.immune[projectile.owner] = 0;
+                            npc.immune[Projectile.owner] = 0;
                         }
                     }
 
-                    if (npcs == 1 && (projectile.ai[1] == 2 || projectile.ai[1] == -1))
+                    if (npcs == 1 && (Projectile.ai[1] == 2 || Projectile.ai[1] == -1))
                     {
-                        projectile.damage = (int) (projectile.damage * 2 * projectile.knockBack / 5f);
+                        Projectile.damage = (int) (Projectile.damage * 2 * Projectile.knockBack / 5f);
                     }
 
-                    Main.PlaySound(SoundLoader.customSoundType, (int) projectile.position.X,
-                        (int) projectile.position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Bomb"),
-                        projectile.knockBack / 5f);
+                    SoundEngine.PlaySound(SoundLoader.customSoundType, (int) Projectile.position.X,
+                        (int) Projectile.position.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Bomb"),
+                        Projectile.knockBack / 5f);
                 }
 
-                projectile.velocity = new Vector2(0, 0);
+                Projectile.velocity = new Vector2(0, 0);
 
-                projectile.frame++;
+                Projectile.frame++;
 
 
-                if (projectile.frame == 9)
+                if (Projectile.frame == 9)
                 {
-                    projectile.Kill();
+                    Projectile.Kill();
                 }
             }
         }
 
         public override void Kill(int timeLeft)
         {
-            if (projectile.localAI[0] > 0)
+            if (Projectile.localAI[0] > 0)
             {
-                var player = Main.player[projectile.owner];
-                player.AddBuff(mod.BuffType("FenixRepeaterBuff"), 360);
-                player.GetModPlayer<HotSPlayer>().fenixRepeaterBuff += (int) projectile.localAI[0];
+                var player = Main.player[Projectile.owner];
+                player.AddBuff(ModContent.BuffType<FenixRepeaterBuff>(), 360);
+                player.GetModPlayer<HotSPlayer>().fenixRepeaterBuff += (int) Projectile.localAI[0];
                 if (player.gravControl2)
                 {
                     if (player.GetModPlayer<HotSPlayer>().fenixRepeaterBuff > 15)

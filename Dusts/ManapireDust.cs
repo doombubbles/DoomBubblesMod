@@ -4,9 +4,9 @@ namespace DoomBubblesMod.Dusts
 {
     public class ManapireDust : ModDust
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
-            updateType = 182;
+            UpdateType = 182;
         }
     }
 }

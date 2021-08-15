@@ -12,15 +12,16 @@ namespace DoomBubblesMod.Items.Talent
             Tooltip.SetDefault("Living Bomb Talent\n" +
                                "Living Bomb can spread indefinitely\n" +
                                "[Right Click on a Living Bomb Wand with this to apply]");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            item.width = 44;
-            item.height = 44;
-            item.maxStack = 1;
-            item.value = Item.buyPrice(0, 42);
-            item.rare = ItemRarityID.Lime;
+            Item.width = 44;
+            Item.height = 44;
+            Item.maxStack = 1;
+            Item.value = Item.buyPrice(0, 42);
+            Item.rare = ItemRarityID.Lime;
         }
     }
 }

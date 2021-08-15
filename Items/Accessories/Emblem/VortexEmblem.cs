@@ -10,31 +10,31 @@ namespace DoomBubblesMod.Items.Accessories.Emblem
         {
             DisplayName.SetDefault("Vortex Emblem");
             Tooltip.SetDefault("20% increased ranged damage");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            item.value = Item.sellPrice(0, 5);
-            item.width = 28;
-            item.height = 28;
-            item.rare = 10;
-            item.accessory = true;
+            Item.value = Item.sellPrice(0, 5);
+            Item.width = 28;
+            Item.height = 28;
+            Item.rare = ItemRarityID.Red;
+            Item.accessory = true;
         }
 
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.rangedDamage += .2f;
+            player.GetDamage(DamageClass.Ranged) += .2f;
         }
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(mod);
+            var recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.RangerEmblem);
             recipe.AddIngredient(ItemID.FragmentVortex, 5);
             recipe.AddTile(TileID.LunarCraftingStation);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
 }

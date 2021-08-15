@@ -7,7 +7,7 @@ namespace DoomBubblesMod.Projectiles
     {
         public override void SetDefaults()
         {
-            projectile.CloneDefaults(ProjectileID.CrystalShard);
+            Projectile.CloneDefaults(ProjectileID.CrystalShard);
         }
 
         public override void SetStaticDefaults()

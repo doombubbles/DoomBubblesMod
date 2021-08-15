@@ -7,17 +7,18 @@ namespace DoomBubblesMod.Items.Accessories
     {
         public override void SetDefaults()
         {
-            item.value = 42069;
-            item.width = 30;
-            item.height = 20;
-            item.rare = -12;
-            item.accessory = true;
+            Item.value = 42069;
+            Item.width = 30;
+            Item.height = 20;
+            Item.rare = -12;
+            Item.accessory = true;
         }
 
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Targeting Computer");
             Tooltip.SetDefault("Who needs the Force anyway?");
+            Item.SetResearchAmount(1);
         }
 
 

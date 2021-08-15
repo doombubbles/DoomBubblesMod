@@ -1,9 +1,7 @@
 author = doombubbles
-version = 0.34.0
-displayName = Doom Bubbles' Mod
+version = 1.34.0
+displayName = Doombubbles' Mod
 includeSource = false
 buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*
 includePDB = false
-weakReferences = ThoriumMod, CalamityMod
-noCompile = false
 homepage=https://github.com/doombubbles/DoomBubblesMod

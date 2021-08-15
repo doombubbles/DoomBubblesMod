@@ -16,34 +16,34 @@ namespace DoomBubblesMod.Projectiles.Thanos
 
         public override void SetDefaults()
         {
-            projectile.width = 16;
-            projectile.height = 16;
-            projectile.penetrate = -1;
-            projectile.friendly = true;
-            projectile.tileCollide = false;
-            projectile.timeLeft = 60;
-            projectile.hide = true;
-            projectile.damage = 100;
+            Projectile.width = 16;
+            Projectile.height = 16;
+            Projectile.penetrate = -1;
+            Projectile.friendly = true;
+            Projectile.tileCollide = false;
+            Projectile.timeLeft = 60;
+            Projectile.hide = true;
+            Projectile.damage = 100;
         }
 
         public override void AI()
         {
-            var player = Main.player[projectile.owner];
+            var player = Main.player[Projectile.owner];
             var gauntlet = new Vector2(player.Center.X + 10 * player.direction, player.Center.Y - 25);
 
             handleProjectiles(gauntlet);
 
-            if (Math.Sqrt(Math.Pow(gauntlet.X - projectile.position.X, 2) +
-                          Math.Pow(gauntlet.Y - projectile.position.Y, 2)) < 30f)
+            if (Math.Sqrt(Math.Pow(gauntlet.X - Projectile.position.X, 2) +
+                          Math.Pow(gauntlet.Y - Projectile.position.Y, 2)) < 30f)
             {
-                projectile.Kill();
+                Projectile.Kill();
                 return;
             }
 
             for (var i = 0; i < 6; i++)
             {
-                var dust = Main.dust[Dust.NewDust(new Vector2(projectile.Center.X + projectile.velocity.X * i / 6,
-                        projectile.Center.Y + projectile.velocity.Y * i / 6), 0, 0, 212, 0, 0, 0,
+                var dust = Main.dust[Dust.NewDust(new Vector2(Projectile.Center.X + Projectile.velocity.X * i / 6,
+                        Projectile.Center.Y + Projectile.velocity.Y * i / 6), 0, 0, 212, 0, 0, 0,
                     InfinityGauntlet.reality,
                     1.5f)];
                 dust.velocity *= .5f;
@@ -65,24 +65,24 @@ namespace DoomBubblesMod.Projectiles.Thanos
             */
 
 
-            double dXPlayer = gauntlet.X - projectile.Center.X;
-            double dYPlayer = gauntlet.Y - projectile.Center.Y;
+            double dXPlayer = gauntlet.X - Projectile.Center.X;
+            double dYPlayer = gauntlet.Y - Projectile.Center.Y;
             var theta = Math.Atan2(dYPlayer, dXPlayer);
 
-            projectile.velocity.X = (float) (40 * Math.Cos(theta));
-            projectile.velocity.Y = (float) (40 * Math.Sin(theta));
+            Projectile.velocity.X = (float) (40 * Math.Cos(theta));
+            Projectile.velocity.Y = (float) (40 * Math.Sin(theta));
         }
 
         public void handleProjectiles(Vector2 gauntlet)
         {
             foreach (var otherProjectile in Main.projectile)
             {
-                if (otherProjectile.Distance(projectile.Center) < 16f && !otherProjectile
+                if (otherProjectile.Distance(Projectile.Center) < 16f && !otherProjectile
                                                                           .GetGlobalProjectile<
                                                                               DoomBubblesGlobalProjectile>()
                                                                           .realityStone
                                                                       && otherProjectile.type !=
-                                                                      mod.ProjectileType("RealityBeam") &&
+                                                                      ModContent.ProjectileType<RealityBeam>() &&
                                                                       (!otherProjectile.friendly ||
                                                                        otherProjectile.hostile))
                 {
@@ -109,11 +109,11 @@ namespace DoomBubblesMod.Projectiles.Thanos
             target.AddBuff(BuffID.OnFire, 60 * Main.rand.Next(5, 10));
             target.AddBuff(BuffID.CursedInferno, 60 * Main.rand.Next(5, 10));
             target.AddBuff(BuffID.Frostburn, 60 * Main.rand.Next(5, 10));
-            if (Main.player[projectile.owner].gravControl2)
+            if (Main.player[Projectile.owner].gravControl2)
             {
-                target.immune[projectile.owner] = 1;
+                target.immune[Projectile.owner] = 1;
             }
-            else target.immune[projectile.owner] = 7;
+            else target.immune[Projectile.owner] = 7;
 
             base.OnHitNPC(target, damage, knockback, crit);
         }

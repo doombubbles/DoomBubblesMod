@@ -8,24 +8,24 @@ namespace DoomBubblesMod.Items.Phase
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Red Phasesword");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            item.CloneDefaults(ItemID.RedPhasesaber);
-            item.damage = 81;
-            item.scale = 1.3f;
-            item.rare = 7;
+            Item.CloneDefaults(ItemID.RedPhasesaber);
+            Item.damage = 81;
+            Item.scale = 1.3f;
+            Item.rare = ItemRarityID.Lime;
         }
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(mod);
+            var recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.RedPhasesaber);
             recipe.AddIngredient(ItemID.Ectoplasm, 25);
             recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
 }

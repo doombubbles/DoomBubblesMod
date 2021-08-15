@@ -10,28 +10,29 @@ namespace DoomBubblesMod.Items.Ammo
         {
             DisplayName.SetDefault("Endless Vortex Pouch");
             Tooltip.SetDefault("Creates bullet echos on enemy hits");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            item.shoot = mod.ProjectileType("VortexBullet");
-            item.width = 26;
-            item.height = 34;
-            item.ammo = AmmoID.Bullet;
-            item.value = Item.sellPrice(0, 4);
-            item.ranged = true;
-            item.rare = 10;
-            item.damage = 17;
-            item.knockBack = 3;
+            Item.shoot = ModContent.ProjectileType<Projectiles.VortexBullet>();
+            Item.width = 26;
+            Item.height = 34;
+            Item.ammo = AmmoID.Bullet;
+            Item.value = Item.sellPrice(0, 4);
+            Item.DamageType = DamageClass.Ranged;
+            Item.rare = ItemRarityID.Red;
+            Item.damage = 17;
+            Item.knockBack = 3;
         }
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(mod);
-            recipe.AddIngredient(mod.ItemType("VortexBullet"), 3996);
-            recipe.SetResult(this);
+            var recipe = CreateRecipe();
+            recipe.AddIngredient(ModContent.ItemType<VortexBullet>(), 3996);
+            recipe.ReplaceResult(this);
             recipe.AddTile(TileID.LunarCraftingStation);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
 }

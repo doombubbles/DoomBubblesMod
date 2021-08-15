@@ -1,3 +1,4 @@
+using DoomBubblesMod.Buffs;
 using DoomBubblesMod.Items.Thanos;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -14,25 +15,25 @@ namespace DoomBubblesMod.Projectiles.Thanos
 
         public override void SetDefaults()
         {
-            projectile.width = 16;
-            projectile.height = 16;
-            projectile.hide = true;
-            projectile.timeLeft = 60;
-            projectile.tileCollide = true;
-            projectile.friendly = true;
+            Projectile.width = 16;
+            Projectile.height = 16;
+            Projectile.hide = true;
+            Projectile.timeLeft = 60;
+            Projectile.tileCollide = true;
+            Projectile.friendly = true;
         }
 
         public override void AI()
         {
-            if (projectile.localAI[0] == 0f)
+            if (Projectile.localAI[0] == 0f)
             {
-                projectile.timeLeft = projectile.damage / 20;
-                projectile.localAI[0] = 1f;
+                Projectile.timeLeft = Projectile.damage / 20;
+                Projectile.localAI[0] = 1f;
             }
 
             for (var i = 0; i < 1; i++)
             {
-                var dust = Main.dust[Dust.NewDust(projectile.Center, 0, 0, 212, 0, 0, 0, InfinityGauntlet.power, 1.5f)];
+                var dust = Main.dust[Dust.NewDust(Projectile.Center, 0, 0, 212, 0, 0, 0, InfinityGauntlet.power, 1.5f)];
                 dust.velocity *= .5f;
                 dust.noGravity = true;
             }
@@ -40,10 +41,10 @@ namespace DoomBubblesMod.Projectiles.Thanos
 
         public override bool? CanHitNPC(NPC target)
         {
-            if (target.HasBuff(mod.BuffType("PowerStoneDebuff")))
+            if (target.HasBuff(ModContent.BuffType<PowerStoneDebuff>()))
             {
-                if (target.buffTime[target.FindBuffIndex(mod.BuffType("PowerStoneDebuff"))] > 260
-                    && Main.player[projectile.owner].GetModPlayer<ThanosPlayer>().powerStoning.Contains(target.whoAmI))
+                if (target.buffTime[target.FindBuffIndex(ModContent.BuffType<PowerStoneDebuff>())] > 260
+                    && Main.player[Projectile.owner].GetModPlayer<ThanosPlayer>().powerStoning.Contains(target.whoAmI))
                 {
                     return false;
                 }
@@ -54,10 +55,10 @@ namespace DoomBubblesMod.Projectiles.Thanos
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.AddBuff(mod.BuffType("PowerStoneDebuff"), 300);
-            if (!Main.player[projectile.owner].GetModPlayer<ThanosPlayer>().powerStoning.Contains(target.whoAmI))
+            target.AddBuff(ModContent.BuffType<PowerStoneDebuff>(), 300);
+            if (!Main.player[Projectile.owner].GetModPlayer<ThanosPlayer>().powerStoning.Contains(target.whoAmI))
             {
-                Main.player[projectile.owner].GetModPlayer<ThanosPlayer>().powerStoning.Add(target.whoAmI);
+                Main.player[Projectile.owner].GetModPlayer<ThanosPlayer>().powerStoning.Add(target.whoAmI);
             }
 
             base.OnHitNPC(target, damage, knockback, crit);
@@ -65,7 +66,7 @@ namespace DoomBubblesMod.Projectiles.Thanos
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            projectile.velocity = new Vector2(0, 0);
+            Projectile.velocity = new Vector2(0, 0);
 
             return false;
         }

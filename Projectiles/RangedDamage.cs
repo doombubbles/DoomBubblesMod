@@ -1,10 +1,12 @@
+using Terraria.ModLoader;
+
 namespace DoomBubblesMod.Projectiles
 {
     public class RangedDamage : Damage
     {
         public override void SetDefaults()
         {
-            projectile.ranged = true;
+            Projectile.DamageType = DamageClass.Ranged;
         }
     }
 }

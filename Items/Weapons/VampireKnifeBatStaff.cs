@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using DoomBubblesMod.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -12,27 +14,28 @@ namespace DoomBubblesMod.Items.Weapons
         {
             DisplayName.SetDefault("Vampire Knife Bat Staff");
             Tooltip.SetDefault("Summons Bats that shoot Vampire Knives as you do");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            item.width = 38;
-            item.height = 38;
-            item.summon = true;
-            item.mana = 10;
-            item.useTime = 32;
-            item.useAnimation = 32;
-            item.useStyle = 1;
-            item.noMelee = true;
-            item.knockBack = 3;
-            item.value = Item.buyPrice(0, 30);
-            item.rare = ItemRarityID.Yellow;
-            item.damage = 29;
-            item.UseSound = SoundID.Item44;
-            item.shoot = mod.ProjectileType("VampireKnifeBat");
-            item.shootSpeed = 10f;
-            item.buffType = mod.BuffType("VampireKnifeBat");
-            item.buffTime = 3600;
+            Item.width = 38;
+            Item.height = 38;
+            Item.DamageType = DamageClass.Summon;
+            Item.mana = 10;
+            Item.useTime = 32;
+            Item.useAnimation = 32;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.noMelee = true;
+            Item.knockBack = 3;
+            Item.value = Item.buyPrice(0, 30);
+            Item.rare = ItemRarityID.Yellow;
+            Item.damage = 29;
+            Item.UseSound = SoundID.Item44;
+            Item.shoot = ModContent.ProjectileType<VampireKnifeBat>();
+            Item.shootSpeed = 10f;
+            Item.buffType = ModContent.BuffType<Buffs.VampireKnifeBat>();
+            Item.buffTime = 3600;
         }
 
         public override bool AltFunctionUse(Player player)
@@ -40,17 +43,17 @@ namespace DoomBubblesMod.Items.Weapons
             return true;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY,
-            ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type,
+            int damage, float knockback)
         {
             return player.altFunctionUse != 2;
         }
 
-        public override bool UseItem(Player player)
+        public override bool? UseItem(Player player)
         {
             if (player.altFunctionUse == 2)
             {
-                player.MinionNPCTargetAim();
+                player.MinionNPCTargetAim(false);
             }
 
             return base.UseItem(player);
@@ -72,13 +75,12 @@ namespace DoomBubblesMod.Items.Weapons
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(mod);
+            var recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.BatScepter);
             recipe.AddIngredient(ItemID.VampireKnives);
             recipe.AddIngredient(ItemID.BrokenBatWing, 2);
             recipe.AddTile(TileID.DemonAltar);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
 }

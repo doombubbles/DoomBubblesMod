@@ -1,6 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using DoomBubblesMod.Items.Talent;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Items.HotS
 {
@@ -16,37 +18,38 @@ namespace DoomBubblesMod.Items.HotS
             DisplayName.SetDefault("Verdant Spheres");
             Tooltip.SetDefault("Flamestrike has increased radius and damage\n" +
                                "Living Bomb has extra pierce and costs no mana");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            item.width = 0;
-            item.height = 0;
-            item.accessory = true;
-            item.rare = ItemRarityID.Lime;
-            item.value = Item.buyPrice(0, 69);
+            Item.width = 0;
+            Item.height = 0;
+            Item.accessory = true;
+            Item.rare = ItemRarityID.Lime;
+            Item.value = Item.buyPrice(0, 69);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<HotSPlayer>().verdant = true;
-            if (ChosenTalent == 1 || ChosenTalent == -1)
+            if (ChosenTalent is 1 or -1)
             {
-                player.allDamage -= .1f;
-                player.magicDamage += .25f;
+                player.GetDamage(DamageClass.Generic) -= .1f;
+                player.GetDamage(DamageClass.Magic) += .25f;
             }
 
-            if (ChosenTalent == 2 || ChosenTalent == -1)
+            if (ChosenTalent is 2 or -1)
             {
                 player.GetModPlayer<HotSPlayer>().manaTap = true;
             }
 
-            if (ChosenTalent == 3 || ChosenTalent == -1)
+            if (ChosenTalent is 3 or -1)
             {
                 player.GetModPlayer<HotSPlayer>().superVerdant = true;
             }
 
-            player.GetModPlayer<DoomBubblesPlayer>().noManaItems.Add(mod.ItemType("LivingBombWand"));
+            player.GetModPlayer<DoomBubblesPlayer>().noManaItems.Add(ModContent.ItemType<LivingBombWand>());
         }
     }
 }

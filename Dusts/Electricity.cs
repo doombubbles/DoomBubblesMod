@@ -4,9 +4,9 @@ namespace DoomBubblesMod.Dusts
 {
     public class Electricity : ModDust
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
-            updateType = 226;
+            UpdateType = 226;
         }
     }
 }

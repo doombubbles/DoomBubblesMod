@@ -1,6 +1,8 @@
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
+using SoundType = Terraria.ModLoader.SoundType;
 
 namespace DoomBubblesMod.Items
 {
@@ -9,38 +11,38 @@ namespace DoomBubblesMod.Items
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Time to play chopsticks with these bad boys.");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults() {
-            item.width = 26;
-            item.height = 28;
-            item.maxStack = 1;
-            item.value = 100;
-            item.rare = 1;
-            item.useStyle = 1;
-            item.useAnimation = 10;
-            item.useTime = 10;
-            item.useTurn = true;
-            item.autoReuse = true;
+            Item.width = 26;
+            Item.height = 28;
+            Item.maxStack = 1;
+            Item.value = 100;
+            Item.rare = ItemRarityID.Blue;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.useAnimation = 10;
+            Item.useTime = 10;
+            Item.useTurn = true;
+            Item.autoReuse = true;
         }
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(mod);
-            recipe.AddIngredient(mod, "RhythmStick", 1);
+            var recipe = CreateRecipe();
+            recipe.AddIngredient(Mod, "RhythmStick", 1);
             recipe.AddIngredient(ItemID.MusicBox);
             recipe.AddTile(TileID.CrystalBall);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
 
-        public override bool UseItem(Player player) {
+        public override bool? UseItem(Player player) {
             if (player.itemAnimation == player.itemAnimationMax - 1)
             {
-                Main.PlaySound(SoundLoader.customSoundType,
+                SoundEngine.PlaySound(SoundLoader.customSoundType,
                     (int) player.position.X,
                     (int) player.position.Y,
-                    mod.GetSoundSlot(SoundType.Custom, "Sounds/MelodyStickSound"));
+                    Mod.GetSoundSlot(SoundType.Custom, "Sounds/MelodyStickSound"));
             }
             return base.UseItem(player);
         }

@@ -1,12 +1,12 @@
-A tModLoader Terraria mod used primarily by myself and my friends
+A tModLoader Terraria Mod used primarily by myself and my friends
 
-Check the Home Page Wiki to see mod content
+Check the Home Page Wiki to see Mod content
 
 Highlights include: An Infinity Gauntlet, League of Legends Items and Runes, Heroes of the Storm items and Talents, Rainbow Machine Gun etc.
 
-Best used alongside the GottaGoFast mod, as well as probably the Thorium Mod.
+Best used alongside the GottaGoFast Mod, as well as probably the Thorium Mod.
 
-Since people actually are downloading this mod, here's some recent additions
+Since people actually are downloading this Mod, here's some recent additions
 
 -League of Legends Runes (just key stones for now)
 -Rioter NPC to help with League of Legends item progression

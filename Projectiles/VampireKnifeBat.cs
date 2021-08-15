@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -17,25 +18,25 @@ namespace DoomBubblesMod.Projectiles
 
         public override void SetStaticDefaults()
         {
-            Main.projFrames[projectile.type] = 4;
-            Main.projPet[projectile.type] = true;
-            ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
-            ProjectileID.Sets.Homing[projectile.type] = true;
-            ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
+            Main.projFrames[Projectile.type] = 4;
+            Main.projPet[Projectile.type] = true;
+            ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
+            ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
+            ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 72;
-            projectile.height = 38;
-            projectile.netImportant = true;
-            projectile.friendly = true;
-            projectile.minion = true;
-            projectile.minionSlots = 1f;
-            projectile.tileCollide = false;
-            projectile.timeLeft = 18000;
-            projectile.ignoreWater = true;
-            projectile.penetrate = -1;
+            Projectile.width = 72;
+            Projectile.height = 38;
+            Projectile.netImportant = true;
+            Projectile.friendly = true;
+            Projectile.minion = true;
+            Projectile.minionSlots = 1f;
+            Projectile.tileCollide = false;
+            Projectile.timeLeft = 18000;
+            Projectile.ignoreWater = true;
+            Projectile.penetrate = -1;
         }
 
         public override bool? CanHitNPC(NPC target)
@@ -62,7 +63,7 @@ namespace DoomBubblesMod.Projectiles
 
         public void CheckActive()
         {
-            var player = Main.player[projectile.owner];
+            var player = Main.player[Projectile.owner];
             var modPlayer = player.GetModPlayer<DoomBubblesPlayer>();
             if (player.dead)
             {
@@ -72,66 +73,66 @@ namespace DoomBubblesMod.Projectiles
             if (modPlayer.vampireKnifeBat)
             {
                 // Make sure you are resetting this bool in ModPlayer.ResetEffects. See ExamplePlayer.ResetEffects
-                projectile.timeLeft = 2;
+                Projectile.timeLeft = 2;
             }
         }
 
         private void HandleFrames()
         {
-            projectile.frameCounter++;
-            if (projectile.frameCounter >= 6)
+            Projectile.frameCounter++;
+            if (Projectile.frameCounter >= 6)
             {
-                projectile.frameCounter = 0;
-                projectile.frame++;
-                if (projectile.frame > 3)
+                Projectile.frameCounter = 0;
+                Projectile.frame++;
+                if (Projectile.frame > 3)
                 {
-                    projectile.frame = 0;
+                    Projectile.frame = 0;
                 }
             }
         }
 
         public void Behavior()
         {
-            var player = Main.player[projectile.owner];
-            var spacing = projectile.width * spacingMult;
+            var player = Main.player[Projectile.owner];
+            var spacing = Projectile.width * spacingMult;
             for (var k = 0; k < 1000; k++)
             {
                 var otherProj = Main.projectile[k];
-                if (k != projectile.whoAmI && otherProj.active && otherProj.owner == projectile.owner &&
-                    otherProj.type == projectile.type && Math.Abs(projectile.position.X - otherProj.position.X) +
-                    Math.Abs(projectile.position.Y - otherProj.position.Y) < spacing)
+                if (k != Projectile.whoAmI && otherProj.active && otherProj.owner == Projectile.owner &&
+                    otherProj.type == Projectile.type && Math.Abs(Projectile.position.X - otherProj.position.X) +
+                    Math.Abs(Projectile.position.Y - otherProj.position.Y) < spacing)
                 {
-                    if (projectile.position.X < Main.projectile[k].position.X)
+                    if (Projectile.position.X < Main.projectile[k].position.X)
                     {
-                        projectile.velocity.X -= idleAccel;
+                        Projectile.velocity.X -= idleAccel;
                     }
                     else
                     {
-                        projectile.velocity.X += idleAccel;
+                        Projectile.velocity.X += idleAccel;
                     }
 
-                    if (projectile.position.Y < Main.projectile[k].position.Y)
+                    if (Projectile.position.Y < Main.projectile[k].position.Y)
                     {
-                        projectile.velocity.Y -= idleAccel;
+                        Projectile.velocity.Y -= idleAccel;
                     }
                     else
                     {
-                        projectile.velocity.Y += idleAccel;
+                        Projectile.velocity.Y += idleAccel;
                     }
                 }
             }
 
-            var targetPos = projectile.position;
+            var targetPos = Projectile.position;
             var targetDist = viewDist;
             var target = false;
-            projectile.tileCollide = true;
+            Projectile.tileCollide = true;
             if (player.HasMinionAttackTargetNPC)
             {
                 var npc = Main.npc[player.MinionAttackTargetNPC];
-                if (Collision.CanHitLine(projectile.position, projectile.width, projectile.height, npc.position,
+                if (Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, npc.position,
                     npc.width, npc.height))
                 {
-                    targetDist = Vector2.Distance(projectile.Center, targetPos);
+                    targetDist = Vector2.Distance(Projectile.Center, targetPos);
                     targetPos = npc.Center;
                     target = true;
                 }
@@ -143,9 +144,9 @@ namespace DoomBubblesMod.Projectiles
                     var npc = Main.npc[k];
                     if (npc.CanBeChasedBy(this))
                     {
-                        var distance = Vector2.Distance(npc.Center, projectile.Center);
-                        if ((distance < targetDist || !target) && Collision.CanHitLine(projectile.position,
-                            projectile.width, projectile.height, npc.position, npc.width, npc.height))
+                        var distance = Vector2.Distance(npc.Center, Projectile.Center);
+                        if ((distance < targetDist || !target) && Collision.CanHitLine(Projectile.position,
+                            Projectile.width, Projectile.height, npc.position, npc.width, npc.height))
                         {
                             targetDist = distance;
                             targetPos = npc.Center;
@@ -155,51 +156,51 @@ namespace DoomBubblesMod.Projectiles
                 }
             }
 
-            if (Vector2.Distance(player.Center, projectile.Center) > (target ? 1000f : 500f))
+            if (Vector2.Distance(player.Center, Projectile.Center) > (target ? 1000f : 500f))
             {
-                projectile.ai[0] = 1f;
-                projectile.netUpdate = true;
+                Projectile.ai[0] = 1f;
+                Projectile.netUpdate = true;
             }
 
-            if (projectile.ai[0] == 1f)
+            if (Projectile.ai[0] == 1f)
             {
-                projectile.tileCollide = false;
+                Projectile.tileCollide = false;
             }
 
-            if (target && projectile.ai[0] == 0f)
+            if (target && Projectile.ai[0] == 0f)
             {
-                var direction = targetPos - projectile.Center;
+                var direction = targetPos - Projectile.Center;
                 if (direction.Length() > chaseDist)
                 {
                     direction.Normalize();
-                    projectile.velocity = (projectile.velocity * inertia + direction * chaseAccel) / (inertia + 1);
+                    Projectile.velocity = (Projectile.velocity * inertia + direction * chaseAccel) / (inertia + 1);
                 }
                 else
                 {
-                    projectile.velocity *= (float) Math.Pow(0.97, 40.0 / inertia);
+                    Projectile.velocity *= (float) Math.Pow(0.97, 40.0 / inertia);
                 }
             }
             else
             {
-                if (!Collision.CanHitLine(projectile.Center, 1, 1, player.Center, 1, 1))
+                if (!Collision.CanHitLine(Projectile.Center, 1, 1, player.Center, 1, 1))
                 {
-                    projectile.ai[0] = 1f;
+                    Projectile.ai[0] = 1f;
                 }
 
                 var speed = 6f;
-                if (projectile.ai[0] == 1f)
+                if (Projectile.ai[0] == 1f)
                 {
                     speed = 15f;
                 }
 
-                var center = projectile.Center;
+                var center = Projectile.Center;
                 var direction = player.Center - center;
-                projectile.netUpdate = true;
+                Projectile.netUpdate = true;
                 var num = 1;
-                for (var k = 0; k < projectile.whoAmI; k++)
+                for (var k = 0; k < Projectile.whoAmI; k++)
                 {
-                    if (Main.projectile[k].active && Main.projectile[k].owner == projectile.owner &&
-                        Main.projectile[k].type == projectile.type)
+                    if (Main.projectile[k].active && Main.projectile[k].owner == Projectile.owner &&
+                        Main.projectile[k].type == Projectile.type)
                     {
                         num++;
                     }
@@ -213,16 +214,16 @@ namespace DoomBubblesMod.Projectiles
                     speed = 9f;
                 }
 
-                if (distanceTo < 100f && projectile.ai[0] == 1f &&
-                    !Collision.SolidCollision(projectile.position, projectile.width, projectile.height))
+                if (distanceTo < 100f && Projectile.ai[0] == 1f &&
+                    !Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
                 {
-                    projectile.ai[0] = 0f;
-                    projectile.netUpdate = true;
+                    Projectile.ai[0] = 0f;
+                    Projectile.netUpdate = true;
                 }
 
                 if (distanceTo > 2000f)
                 {
-                    projectile.Center = player.Center;
+                    Projectile.Center = player.Center;
                 }
 
                 if (distanceTo > 48f)
@@ -230,32 +231,32 @@ namespace DoomBubblesMod.Projectiles
                     direction.Normalize();
                     direction *= speed;
                     var temp = inertia / 2f;
-                    projectile.velocity = (projectile.velocity * temp + direction) / (temp + 1);
+                    Projectile.velocity = (Projectile.velocity * temp + direction) / (temp + 1);
                 }
                 else
                 {
-                    projectile.direction = Main.player[projectile.owner].direction;
-                    projectile.velocity *= (float) Math.Pow(0.9, 40.0 / inertia);
+                    Projectile.direction = Main.player[Projectile.owner].direction;
+                    Projectile.velocity *= (float) Math.Pow(0.9, 40.0 / inertia);
                 }
             }
 
-            projectile.rotation = projectile.velocity.X * 0.05f;
+            Projectile.rotation = Projectile.velocity.X * 0.05f;
 
-            if (projectile.velocity.X > 0f)
+            if (Projectile.velocity.X > 0f)
             {
-                projectile.spriteDirection = projectile.direction = -1;
+                Projectile.spriteDirection = Projectile.direction = -1;
             }
-            else if (projectile.velocity.X < 0f)
+            else if (Projectile.velocity.X < 0f)
             {
-                projectile.spriteDirection = projectile.direction = 1;
+                Projectile.spriteDirection = Projectile.direction = 1;
             }
 
-            if (Main.myPlayer == projectile.owner && player.itemAnimation == player.itemAnimationMax - 1
+            if (Main.myPlayer == Projectile.owner && player.itemAnimation == player.itemAnimationMax - 1
                                                   && Main.LocalPlayer.inventory[Main.LocalPlayer.selectedItem].type ==
                                                   ItemID.VampireKnives)
             {
-                var x = projectile.Center.X;
-                var y = projectile.Center.Y;
+                var x = Projectile.Center.X;
+                var y = Projectile.Center.Y;
                 var theta = Math.Atan2(Main.MouseWorld.Y - y, Main.MouseWorld.X - x);
                 var dX = 15f * Math.Cos(theta);
                 var dY = 15f * Math.Sin(theta);
@@ -290,20 +291,20 @@ namespace DoomBubblesMod.Projectiles
                         // If you want to randomize the speed to stagger the projectiles
                         // float scale = 1f - (Main.rand.NextFloat() * .3f);
                         // perturbedSpeed = perturbedSpeed * scale; 
-                        var proj = Projectile.NewProjectile(projectile.Center, perturbedSpeed,
-                            ProjectileID.VampireKnife, projectile.damage, projectile.knockBack, player.whoAmI);
+                        var proj = Projectile.NewProjectile(new ProjectileSource_ProjectileParent(Projectile), Projectile.Center, perturbedSpeed,
+                            ProjectileID.VampireKnife, Projectile.damage, Projectile.knockBack, player.whoAmI);
                         Main.projectile[proj].netUpdate = true;
                     }
                 }
                 else
                 {
-                    var proj = Projectile.NewProjectile(projectile.Center, speed, ProjectileID.VampireKnife,
-                        projectile.damage,
-                        projectile.knockBack, projectile.owner);
+                    var proj = Projectile.NewProjectile(new ProjectileSource_ProjectileParent(Projectile), Projectile.Center, speed, ProjectileID.VampireKnife,
+                        Projectile.damage,
+                        Projectile.knockBack, Projectile.owner);
                     Main.projectile[proj].netUpdate = true;
                 }
 
-                projectile.netUpdate = true;
+                Projectile.netUpdate = true;
             }
         }
     }

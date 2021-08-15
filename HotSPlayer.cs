@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using DoomBubblesMod.Buffs;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
+using SoundType = Terraria.ModLoader.SoundType;
 
 namespace DoomBubblesMod
 {
@@ -29,22 +32,22 @@ namespace DoomBubblesMod
 
         public override void ResetEffects()
         {
-            if (!player.HasBuff(mod.BuffType("FenixBombBuildUp")))
+            if (!Player.HasBuff(ModContent.BuffType<FenixBombBuildUp>()))
             {
                 fenixBombBuildUp = 0;
             }
 
-            if (!player.HasBuff(mod.BuffType("FenixRepeaterBuff")))
+            if (!Player.HasBuff(ModContent.BuffType<FenixRepeaterBuff>()))
             {
                 fenixRepeaterBuff = 0;
             }
 
-            if (!player.HasBuff(mod.BuffType("PhotonCannon")))
+            if (!Player.HasBuff(ModContent.BuffType<PhotonCannon>()))
             {
                 photonCannon = false;
             }
 
-            if (!player.HasBuff(mod.BuffType("Convection")))
+            if (!Player.HasBuff(ModContent.BuffType<Convection>()))
             {
                 convection = 0;
             }
@@ -68,8 +71,8 @@ namespace DoomBubblesMod
         {
             if (newShieldCapactior)
             {
-                var shieldHealth = player.GetThoriumProperty<int>("shieldHealth");
-                player.SetThoriumProperty<int>("metalShieldMaxTimer", i =>
+                var shieldHealth = Player.GetThoriumProperty<int>("shieldHealth");
+                Player.SetThoriumProperty<int>("metalShieldMaxTimer", i =>
                 {
                     for (var j = 0; j < 3; j++)
                     {
@@ -81,8 +84,8 @@ namespace DoomBubblesMod
 
                     if (i == 119 && shieldHealth == 24)
                     {
-                        Main.PlaySound(SoundLoader.customSoundType, (int) player.Center.X, (int) player.Center.Y,
-                            mod.GetSoundSlot(SoundType.Custom, "Sounds/ShieldRecharge"));
+                        SoundEngine.PlaySound(SoundLoader.customSoundType, (int) Player.Center.X, (int) Player.Center.Y,
+                            Mod.GetSoundSlot(SoundType.Custom, "Sounds/ShieldRecharge"));
                     }
                     return i;
                 });
@@ -91,18 +94,18 @@ namespace DoomBubblesMod
 
         public override void PostUpdateEquips()
         {
-            var shieldHealth = player.GetThoriumProperty<int>("shieldHealth");
-            var metalShieldMax = player.GetThoriumProperty<int>("metalShieldMax");
+            var shieldHealth = Player.GetThoriumProperty<int>("shieldHealth");
+            var metalShieldMax = Player.GetThoriumProperty<int>("metalShieldMax");
             if (shieldHealth * 2 >= metalShieldMax)
             {
                 if (shieldCapacitorChosenTalent == 2 || shieldCapacitorChosenTalent == -1)
                 {
-                    player.endurance += .25f;
+                    Player.endurance += .25f;
                 }
 
                 if (shieldCapacitorChosenTalent == 3 || shieldCapacitorChosenTalent == -1)
                 {
-                    player.allDamage += .15f;
+                    Player.GetDamage(DamageClass.Generic) += .15f;
                 }
             }
         }
@@ -116,10 +119,10 @@ namespace DoomBubblesMod
             {
                 if (damage > player.statLife &&
                     (shieldCapacitorChosenTalent == 1 || shieldCapacitorChosenTalent == -1) &&
-                    !player.HasBuff(mod.BuffType("UnconqueredSpiritCooldown")))
+                    !player.HasBuff(ModContent.BuffType<UnconqueredSpiritCooldown>()))
                 {
                     shieldCapacitor = shieldCapacitorMax;
-                    player.AddBuff(mod.BuffType("UnconqueredSpiritCooldown"), 60 * 120);
+                    player.AddBuff(ModContent.BuffType<UnconqueredSpiritCooldown>(), 60 * 120);
                     player.immune = true;
                     player.immuneTime = 40;
                     if (player.longInvince)
@@ -132,7 +135,7 @@ namespace DoomBubblesMod
                         var rad = Math.PI * i / 180;
                         var dX = (float) (9 * Math.Cos(rad));
                         var dY = (float) (9 * Math.Sin(rad));
-                        var dust = Dust.NewDustPerfect(player.Center, mod.DustType("Green182"), new Vector2(dX, dY), 0,
+                        var dust = Dust.NewDustPerfect(player.Center, ModContent.DustType<Green182>(), new Vector2(dX, dY), 0,
                             default, 1.5f);
                         dust.noGravity = true;
                     }
@@ -144,12 +147,12 @@ namespace DoomBubblesMod
                         var dY = (float) (9 * Math.Sin(rad));
                         var dust = Dust.NewDustPerfect(
                             new Vector2(player.Center.X + 11 * dX, player.Center.Y + 11 * dY),
-                            mod.DustType("LightBlue182"), new Vector2(-dX, -dY), 0, default, 1.5f);
+                            ModContent.DustType<LightBlue182>(), new Vector2(-dX, -dY), 0, default, 1.5f);
                         dust.noGravity = true;
                     }
 
-                    Main.PlaySound(SoundLoader.customSoundType, (int) player.Center.X, (int) player.Center.Y,
-                        mod.GetSoundSlot(SoundType.Custom, "Sounds/UnconqueredSpirit"));
+                    SoundEngine.PlaySound(SoundLoader.customSoundType, (int) player.Center.X, (int) player.Center.Y,
+                        Mod.GetSoundSlot(SoundType.Custom, "Sounds/UnconqueredSpirit"));
 
                     return false;
                 }
@@ -171,8 +174,8 @@ namespace DoomBubblesMod
                     CombatText.NewText(
                         new Rectangle((int) player.position.X, (int) player.position.Y, player.width, player.height),
                         Color.Blue, startShields - shieldCapacitor, crit);
-                    Main.PlaySound(SoundLoader.customSoundType, (int) player.position.X, (int) player.position.Y,
-                        mod.GetSoundSlot(SoundType.Custom, "Sounds/ShieldHit"));
+                    SoundEngine.PlaySound(SoundLoader.customSoundType, (int) player.position.X, (int) player.position.Y,
+                        Mod.GetSoundSlot(SoundType.Custom, "Sounds/ShieldHit"));
                     if (damage == 0)
                     {
                         player.immune = true;
@@ -202,11 +205,11 @@ namespace DoomBubblesMod
             convection = 0;
         }
 
-        public override void ModifyWeaponDamage(Item item, ref float add, ref float mult, ref float flat)
+        public override void ModifyWeaponDamage(Item item, ref StatModifier damage, ref float flat)
         {
-            if (item.magic && manaTap && item.mana > 0)
+            if (item.CountsAsClass(DamageClass.Magic) && manaTap && item.mana > 0)
             {
-                flat += item.mana * add * mult;
+                flat += item.mana * (float)damage;
             }
         }
     }

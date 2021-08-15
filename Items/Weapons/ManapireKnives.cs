@@ -1,5 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using DoomBubblesMod.Projectiles;
+using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -12,26 +14,25 @@ namespace DoomBubblesMod.Items.Weapons
             DisplayName.SetDefault("Manapire Knives");
             Tooltip.SetDefault("Rapidly throw mana stealing daggers;\n" +
                                "Or, life stealing if at max");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            item.CloneDefaults(ItemID.VampireKnives);
-            item.melee = false;
-            item.magic = true;
-            item.shoot = mod.ProjectileType("ManapireKnife");
+            Item.CloneDefaults(ItemID.VampireKnives);
+            Item.DamageType = DamageClass.Magic;
+            Item.shoot = ModContent.ProjectileType<ManapireKnife>();
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY,
-            ref int type, ref int damage,
-            ref float knockBack)
+        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type,
+            int damage, float knockback)
         {
-            /*
+        /*
             Vector2 position2 = player.RotatedRelativePoint(player.MountedCenter);
             
             if (player.whoAmI == Main.myPlayer)
             {
-                float speed = item.shootSpeed;
+                float speed = Item.shootSpeed;
                 float dX = Main.mouseX - Main.screenWidth / 2;
                 float dY = Main.mouseY - Main.screenHeight / 2;
                 float distance = (float)Math.Sqrt(dX * dX + dY * dY);
@@ -78,33 +79,30 @@ namespace DoomBubblesMod.Items.Weapons
 
             for (var i = 0; i < numKnives; i++)
             {
-                var perturbedSpeed =
-                    new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(35)); // 30 degree spread.
+                var perturbedSpeed = velocity.RotatedByRandom(MathHelper.ToRadians(35)); // 30 degree spread.
                 // If you want to randomize the speed to stagger the projectiles
                 // float scale = 1f - (Main.rand.NextFloat() * .3f);
                 // perturbedSpeed = perturbedSpeed * scale; 
-                Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage,
-                    knockBack, player.whoAmI);
+                Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage,
+                    knockback, player.whoAmI);
             }
 
-            return base.Shoot(player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
+            return base.Shoot(player, source, position, velocity, type, damage, knockback);
         }
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(mod);
+            var recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.VampireKnives);
             recipe.AddIngredient(ItemID.ManaCrystal, 7);
             recipe.AddTile(TileID.CrystalBall);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
 
-            var recipe2 = new ModRecipe(mod);
+            var recipe2 = CreateRecipe();
             recipe2.AddIngredient(ItemID.VampireKnives);
             recipe2.AddIngredient(ItemID.BlueDye);
             recipe2.AddTile(TileID.CrystalBall);
-            recipe2.SetResult(this);
-            recipe2.AddRecipe();
+            recipe2.Register();
         }
     }
 }

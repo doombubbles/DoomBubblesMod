@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using DoomBubblesMod.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -34,8 +36,8 @@ namespace DoomBubblesMod
                 projectile.localNPCHitCooldown = 30;
             }
 
-            if (projectile.modProjectile != null && (projectile.modProjectile.Name == "Nebulash" ||
-                                                     projectile.modProjectile.Name == "Nebudust"))
+            if (projectile.ModProjectile != null && (projectile.ModProjectile.Name == "Nebulash" ||
+                                                     projectile.ModProjectile.Name == "Nebudust"))
             {
                 projectile.usesLocalNPCImmunity = true;
                 projectile.localNPCHitCooldown = 20;
@@ -232,9 +234,9 @@ namespace DoomBubblesMod
                 {
                     type = ProjectileID.CrystalShard;
                 }
-                else if (projectile.type == mod.ProjectileType("TerraBullet"))
+                else if (projectile.type == ModContent.ProjectileType<TerraBullet>())
                 {
-                    type = mod.ProjectileType("TerraShard");
+                    type = ModContent.ProjectileType<TerraShard>();
                 }
                 else
                 {
@@ -249,7 +251,7 @@ namespace DoomBubblesMod
                     var SpeedY =
                         (float) (-(double) projectile.velocity.Y * Main.rand.Next(40, 70) * 0.00999999977648258 +
                                  Main.rand.Next(-20, 21) * 0.400000005960464);
-                    Projectile.NewProjectile(projectile.position.X + SpeedX, projectile.position.Y + SpeedY, SpeedX,
+                    Projectile.NewProjectile(new ProjectileSource_ProjectileParent(projectile), projectile.position.X + SpeedX, projectile.position.Y + SpeedY, SpeedX,
                         SpeedY, type, (int) (projectile.damage * 0.5), 0.0f, projectile.owner);
                 }
             }

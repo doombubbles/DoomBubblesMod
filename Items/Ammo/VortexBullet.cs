@@ -9,23 +9,24 @@ namespace DoomBubblesMod.Items.Ammo
         {
             DisplayName.SetDefault("Vortex Bullet");
             Tooltip.SetDefault("Creates bullet echos on enemy hits");
+            Item.SetResearchAmount(99);
         }
 
         public override void SetDefaults()
         {
-            item.CloneDefaults(ItemID.MoonlordBullet);
-            item.shoot = mod.ProjectileType("VortexBullet");
-            item.shootSpeed = 1.5f;
-            item.damage = 17;
+            Item.CloneDefaults(ItemID.MoonlordBullet);
+            Item.shoot = ModContent.ProjectileType<Projectiles.VortexBullet>();
+            Item.shootSpeed = 1.5f;
+            Item.damage = 17;
         }
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(mod);
+            var recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.FragmentVortex);
-            recipe.SetResult(this, 111);
+            recipe.ReplaceResult(this, 111);
             recipe.AddTile(TileID.LunarCraftingStation);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
 }

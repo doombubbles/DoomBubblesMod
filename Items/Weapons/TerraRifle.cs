@@ -1,5 +1,8 @@
+using DoomBubblesMod.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -12,43 +15,43 @@ namespace DoomBubblesMod.Items.Weapons
             Tooltip.SetDefault("50% chance to not consume ammo\n" +
                                "Turns Bullets into Terra Bullets");
             DisplayName.SetDefault("Terra Rifle");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            item.damage = 42;
-            item.ranged = true;
-            item.width = 64;
-            item.height = 22;
-            item.useTime = 9;
-            item.useAnimation = 9;
-            item.useStyle = 5;
-            item.noMelee = true; //so the item's animation doesn't do damage
-            item.knockBack = 6;
-            item.value = Item.sellPrice(0, 20);
-            item.rare = 8;
-            item.UseSound = SoundID.Item36;
-            item.autoReuse = true;
-            item.shoot = 10; //idk why but all the guns in the vanilla source have this
-            item.shootSpeed = 11f;
-            item.useAmmo = AmmoID.Bullet;
+            Item.damage = 42;
+            Item.DamageType = DamageClass.Ranged;
+            Item.width = 64;
+            Item.height = 22;
+            Item.useTime = 9;
+            Item.useAnimation = 9;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true; //so the item's animation doesn't do damage
+            Item.knockBack = 6;
+            Item.value = Item.sellPrice(0, 20);
+            Item.rare = ItemRarityID.Yellow;
+            Item.UseSound = SoundID.Item36;
+            Item.autoReuse = true;
+            Item.shoot = ProjectileID.PurificationPowder; //idk why but all the guns in the vanilla source have this
+            Item.shootSpeed = 11f;
+            Item.useAmmo = AmmoID.Bullet;
         }
 
-        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
+        /*public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
         {
             // Here we use the multiplicative damage modifier because Terraria does this approach for Ammo damage bonuses. 
             mult *= player.bulletDamage;
-        }
+        }*/
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(mod);
-            recipe.AddIngredient(mod.ItemType("TrueMidnightMaelstrom"));
-            recipe.AddIngredient(mod.ItemType("TrueTrigun"));
-            recipe.AddIngredient(mod.ItemType("HeartOfTerraria"));
+            var recipe = CreateRecipe();
+            recipe.AddIngredient(ModContent.ItemType<TrueMidnightMaelstrom>());
+            recipe.AddIngredient(ModContent.ItemType<TrueTrigun>());
+            //recipe.AddIngredient(ModContent.ItemType<HeartOfTerraria>());
             recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
 
         // What if I wanted this gun to have a 38% chance not to consume ammo?
@@ -57,18 +60,17 @@ namespace DoomBubblesMod.Items.Weapons
             return Main.rand.NextFloat() >= .50f;
         }
 
-
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY,
-            ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type,
+            int damage, float knockback)
         {
-            type = mod.ProjectileType("TerraBullet");
+            type = ModContent.ProjectileType<TerraBullet>();
 
 
             if (Main.rand.NextFloat() <= .2)
             {
-                Projectile.NewProjectile(position.X, position.Y, speedX, speedY, mod.ProjectileType("MidnightBlast"),
-                    damage * 2, knockBack, player.whoAmI);
-                Main.PlaySound(SoundID.Item38, position);
+                Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<MidnightBlast>(),
+                    damage * 2, knockback, player.whoAmI);
+                SoundEngine.PlaySound(SoundID.Item38, position);
             }
             /* Other implementation
             else
@@ -80,12 +82,12 @@ namespace DoomBubblesMod.Items.Weapons
                     // If you want to randomize the speed to stagger the projectiles
                     float scale = 1f - (Main.rand.NextFloat() * .1f);
                     perturbedSpeed = perturbedSpeed * scale; 
-                    Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, mod.ProjectileType("TerraBullet"), (int)(.5 * damage), knockBack, player.whoAmI);
+                    Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<TerraBullet>(), (int)(.5 * damage), knockBack, player.whoAmI);
                 }
             }
             */
 
-            return true;
+            return base.Shoot(player, source, position, velocity, type, damage, knockback);
         }
 
 

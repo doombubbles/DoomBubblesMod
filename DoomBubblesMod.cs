@@ -1,33 +1,34 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
+using System.Linq;
+using DoomBubblesMod.Items;
 using DoomBubblesMod.UI;
 using Microsoft.Xna.Framework;
-using MonoMod.Cil;
-using On.Terraria;
+using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
-using RecipeGroup = Terraria.RecipeGroup;
 
 namespace DoomBubblesMod
 {
     public class DoomBubblesMod : Mod
     {
-        public static ModHotKey powerStoneHotKey;
-        public static ModHotKey spaceStoneHotKey;
-        public static ModHotKey realityStoneHotKey;
-        public static ModHotKey soulStoneHotKey;
-        public static ModHotKey timeStoneHotKey;
-        public static ModHotKey mindStoneHotKey;
+        public static ModKeybind powerStoneHotKey;
+        public static ModKeybind spaceStoneHotKey;
+        public static ModKeybind realityStoneHotKey;
+        public static ModKeybind soulStoneHotKey;
+        public static ModKeybind timeStoneHotKey;
+        public static ModKeybind mindStoneHotKey;
 
         public static Mod thoriumMod;
         public static Mod calamityMod;
 
         public static List<Color> rainbowColors;
-        internal InfinityGauntletUI infinityGauntletUi;
+        public InfinityGauntletUI InfinityGauntletUi;
 
-        private UserInterface m_InfinityGauntletUserInterface;
+        public UserInterface InfinityGauntletUserInterface;
 
         public override void AddRecipeGroups()
         {
@@ -38,50 +39,33 @@ namespace DoomBubblesMod
 
         public override void Load()
         {
-            powerStoneHotKey = RegisterHotKey("Power Stone", "F2");
-            spaceStoneHotKey = RegisterHotKey("Space Stone", "F3");
-            realityStoneHotKey = RegisterHotKey("Reality Stone", "F4");
-            soulStoneHotKey = RegisterHotKey("Soul Stone", "F5");
-            timeStoneHotKey = RegisterHotKey("Time Stone", "F6");
-            mindStoneHotKey = RegisterHotKey("Mind Stone", "OemTilde");
+            powerStoneHotKey = KeybindLoader.RegisterKeybind(this, "Power Stone", "F2");
+            spaceStoneHotKey = KeybindLoader.RegisterKeybind(this, "Space Stone", "F3");
+            realityStoneHotKey = KeybindLoader.RegisterKeybind(this, "Reality Stone", "F4");
+            soulStoneHotKey = KeybindLoader.RegisterKeybind(this, "Soul Stone", "F5");
+            timeStoneHotKey = KeybindLoader.RegisterKeybind(this, "Time Stone", "F6");
+            mindStoneHotKey = KeybindLoader.RegisterKeybind(this, "Mind Stone", "OemTilde");
 
             rainbowColors = new List<Color>
                 {Color.Red, Color.Orange, Color.Yellow, Color.LimeGreen, Color.Blue, Color.Indigo, Color.Violet};
-            thoriumMod = ModLoader.GetMod("ThoriumMod");
-            calamityMod = ModLoader.GetMod("CalamityMod");
+            ModLoader.TryGetMod("ThoriumMod", out thoriumMod);
+            ModLoader.TryGetMod("CalamityMod", out calamityMod);
 
-            if (!Terraria.Main.dedServ)
+            if (!Main.dedServ)
             {
-                infinityGauntletUi = new InfinityGauntletUI();
-                infinityGauntletUi.Activate();
-                m_InfinityGauntletUserInterface = new UserInterface();
-                m_InfinityGauntletUserInterface.SetState(infinityGauntletUi);
+                InfinityGauntletUi = new InfinityGauntletUI();
+                InfinityGauntletUi.Activate();
+                InfinityGauntletUserInterface = new UserInterface();
+                InfinityGauntletUserInterface.SetState(InfinityGauntletUi);
 
-                Terraria.Main.projectileTexture[ProjectileID.MoonlordBullet] = GetTexture("Projectiles/Projectile_638");
-                Terraria.Main.dustTexture = GetTexture("Dusts/Dust");
+                //TextureAssets.Projectile[ProjectileID.MoonlordBullet]. TODO texture changing
+                //Main.dustTexture = GetTexture("Dusts/Dust"); TODO dust changing
             }
 
-            Player.UpdateLifeRegen += PlayerOnUpdateLifeRegen;
-            Player.UpdateManaRegen += PlayerOnUpdateManaRegen;
-            IL.Terraria.Player.Update += PlayerOnUpdate;
-            //On.Terraria.Main.DrawInterface_Resources_Life += MainOnDrawInterfaceResourcesLife;
-
-
-            DoomBubblesModExtensions.fields = new Dictionary<string, FieldInfo>();
+            DoomBubblesHooks.Load();
+            ThoriumChanges.Load();
         }
 
-        private void PlayerOnUpdate(ILContext il)
-        {
-            var c = new ILCursor(il);
-            if (!c.TryGotoNext(i => i.MatchLdcI4(400)))
-                return;
-
-            c.Index -= 2;
-            for (var i = 0; i < 7; i++)
-            {
-                c.Remove();
-            }
-        }
 
         public override void Unload()
         {
@@ -91,81 +75,9 @@ namespace DoomBubblesMod
             soulStoneHotKey = null;
             timeStoneHotKey = null;
             mindStoneHotKey = null;
-            //LoLPlayer.RUNES = null;
-            infinityGauntletUi = null;
-
-            DoomBubblesModExtensions.attackSpeedField = null;
-            DoomBubblesModExtensions.symphonicDamageField = null;
-            DoomBubblesModExtensions.symphonicCritField = null;
-            DoomBubblesModExtensions.radiantCritField = null;
-            DoomBubblesModExtensions.attackSpeedField = null;
-            DoomBubblesModExtensions.fields = null;
+            InfinityGauntletUi = null;
         }
 
-        private void PlayerOnUpdateManaRegen(Player.orig_UpdateManaRegen orig, Terraria.Player self)
-        {
-            if (self.active)
-            {
-                var sStone = self.GetModPlayer<DoomBubblesPlayer>().sStone;
-                if (sStone)
-                {
-                    var v = self.velocity;
-                    self.velocity = new Vector2(0, 0);
-                    orig(self);
-                    self.velocity = v;
-                    return;
-                }
-            }
-
-            orig(self);
-        }
-
-        private void PlayerOnUpdateLifeRegen(Player.orig_UpdateLifeRegen orig, Terraria.Player self)
-        {
-            if (self.active)
-            {
-                var sStone = self.GetModPlayer<DoomBubblesPlayer>().sStone;
-                if (sStone)
-                {
-                    var v = self.velocity;
-                    self.velocity = new Vector2(0, 0);
-                    orig(self);
-                    self.velocity = v;
-                    return;
-                }
-            }
-
-            orig(self);
-        }
-
-        public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
-        {
-            var mouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
-            if (mouseTextIndex != -1)
-            {
-                layers.Insert(mouseTextIndex, new LegacyGameInterfaceLayer(
-                    "DoomBubblesMod: Infinity Gauntlet",
-                    () =>
-                    {
-                        if (InfinityGauntletUI.visible)
-                        {
-                            m_InfinityGauntletUserInterface.Update(Terraria.Main
-                                ._drawInterfaceGameTime); //I don't understand
-                            infinityGauntletUi.Draw(Terraria.Main.spriteBatch);
-                        }
-
-                        return true;
-                    },
-                    InterfaceScaleType.UI)
-                );
-            }
-
-        }
-
-        public override void UpdateUI(GameTime gameTime)
-        {
-            base.UpdateUI(gameTime);
-        }
 
         public override void AddRecipes()
         {
@@ -198,56 +110,88 @@ namespace DoomBubblesMod
             }
             */
 
-            var finder2 = new RecipeFinder();
-            finder2.SetResult(ItemID.TerraBlade);
-            foreach (var searchRecipe in finder2.SearchRecipes())
+
+            var badItems = new[]
             {
-                var editor = new RecipeEditor(searchRecipe);
-                editor.AddIngredient(ItemType("HeartOfTerraria"));
+                "AutoHouse",
+                "InstaBridge",
+                "InstaTrack",
+                "Instavator",
+                "LihzahrdInstactuationBomb",
+                "MiniInstaBridge",
+                "ObsidianInstaBridge",
+                "Trollbomb",
+                "CityBuster",
+                "BoomShuriken"
+            };
+
+
+            ModLoader.TryGetMod("Fargowiltas", out var fargo);
+
+            for (var i = 0; i < Recipe.numRecipes; i++)
+            {
+                var recipe = Main.recipe[i];
+
+                if (recipe.HasResult(ItemID.TerraBlade))
+                {
+                    //recipe.AddIngredient(ModContent.ItemType<HeartOfTerraria>());
+                }
+
+
+                if (fargo != null)
+                {
+                    foreach (var badItem in badItems)
+                    {
+                        if (fargo.TryFind(badItem, out ModItem bad) && recipe.HasResult(bad))
+                        {
+                            recipe.RemoveRecipe();
+                        }
+                    }
+                }
+
             }
 
-            if (thoriumMod != null)
-            {
-                ModifyThoriumRecipes();
-            }
+            ThoriumChanges.ModifyThoriumRecipes();
         }
 
-        private void ModifyThoriumRecipes()
+        /*
+        for (var i = 1; i < ItemLoader.ItemCount; i++)
         {
-            var thoriumMod = ModLoader.GetMod("ThoriumMod");
-            var finder = new RecipeFinder();
-            finder.SetResult(thoriumMod.ItemType("TerraStaff"));
-            foreach (var searchRecipe in finder.SearchRecipes())
+            var item = new Item();
+            Item.SetDefaults(i);
+            if (string.IsNullOrEmpty(Item.Name))
             {
-                var editor = new RecipeEditor(searchRecipe);
-                editor.AddIngredient(ItemType("HeartOfTerraria"));
+                continue;
             }
 
-            finder = new RecipeFinder();
-            finder.SetResult(thoriumMod.ItemType("TerraScythe"));
-            foreach (var searchRecipe in finder.SearchRecipes())
+            var cost = 0;
+            
+            if (Item.createTile != -1 && (Item.value == 0 || Item.placeStyle != 0))
             {
-                var editor = new RecipeEditor(searchRecipe);
-                editor.AddIngredient(ItemType("HeartOfTerraria"));
+                cost = 100;
             }
 
-            finder = new RecipeFinder();
-            finder.SetResult(thoriumMod.ItemType("TerraBow"));
-            foreach (var searchRecipe in finder.SearchRecipes())
+            if (Item.createWall != -1)
             {
-                var editor = new RecipeEditor(searchRecipe);
-                editor.AddIngredient(ItemType("HeartOfTerraria"));
+                cost = 400;
             }
 
-
-            var recipe = new ModRecipe(this);
-            recipe.SetResult(ItemID.LightningBoots);
-            recipe.AddIngredient(ItemID.SpectreBoots);
-            recipe.AddIngredient(thoriumMod.ItemType("Zephyr"));
-            recipe.AddIngredient(thoriumMod.ItemType("ZephyrsFeather"));
-            recipe.AddTile(TileID.TinkerersWorkbench);
-            recipe.AddRecipe();
+            if (cost > 0)
+            {
+                var modRecipe = new ModRecipe(this);
+                modRecipe.AddIngredient(i, cost);
+                modrecipe.ReplaceResult(i, Item.maxStack);
+                try
+                {
+                    modrecipe.Register();
+                }
+                catch (Exception e)
+                {
+                    Logger.Info($"{Item.Name}: {e.Message}");
+                }
+            }
         }
+        */
 
         public override void HandlePacket(BinaryReader reader, int whoAmI)
         {
@@ -259,22 +203,22 @@ namespace DoomBubblesMod
                     var process = reader.ReadInt32();
                     if (process == 1)
                     {
-                        if (!Terraria.Main.projectile[id].friendly)
+                        if (!Main.projectile[id].friendly)
                         {
-                            Terraria.Main.projectile[id].hostile = false;
+                            Main.projectile[id].hostile = false;
                         }
                     }
                     else if (process == 2)
                     {
-                        Terraria.Main.npc[id].damage = 0;
-                        Terraria.Main.npc[id].GetGlobalNPC<DoomBubblesGlobalNPC>().mindStoneFriendly = true;
+                        Main.npc[id].damage = 0;
+                        Main.npc[id].GetGlobalNPC<DoomBubblesGlobalNPC>().mindStoneFriendly = true;
                     }
                     else if (process == 3)
                     {
                         var realityId = reader.ReadInt32();
-                        var realityBeam = Terraria.Main.projectile[realityId];
-                        Terraria.Main.projectile[id].Center = realityBeam.Center;
-                        Terraria.Main.projectile[id].velocity = realityBeam.velocity;
+                        var realityBeam = Main.projectile[realityId];
+                        Main.projectile[id].Center = realityBeam.Center;
+                        Main.projectile[id].velocity = realityBeam.velocity;
                     }
 
                     break;

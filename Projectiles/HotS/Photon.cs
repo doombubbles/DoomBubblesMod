@@ -1,44 +1,46 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
+using SoundType = Terraria.ModLoader.SoundType;
 
 namespace DoomBubblesMod.Projectiles.HotS
 {
-    public class Photon : HappyProjectile
+    public class Photon : CenteredProjectile
     {
-        public int ChosenTalent => (int) Math.Round(projectile.ai[0]);
+        public int ChosenTalent => (int) Math.Round(Projectile.ai[0]);
 
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Photon");
-            Main.projFrames[projectile.type] = 5;
-            ProjectileID.Sets.Homing[projectile.type] = true;
-            ProjectileID.Sets.MinionShot[projectile.type] = true;
+            Main.projFrames[Projectile.type] = 5;
+            ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
+            ProjectileID.Sets.MinionShot[Projectile.type] = true;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 38;
-            projectile.height = 38;
-            projectile.scale = .6f;
-            projectile.penetrate = -1;
-            projectile.friendly = true;
-            projectile.ignoreWater = true;
-            projectile.tileCollide = false;
-            projectile.timeLeft = 300;
-            projectile.aiStyle = -1;
+            Projectile.width = 38;
+            Projectile.height = 38;
+            Projectile.scale = .6f;
+            Projectile.penetrate = -1;
+            Projectile.friendly = true;
+            Projectile.ignoreWater = true;
+            Projectile.tileCollide = false;
+            Projectile.timeLeft = 300;
+            Projectile.aiStyle = -1;
         }
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit,
             ref int hitDirection)
         {
-            if (target.whoAmI == (int) projectile.ai[1])
+            if (target.whoAmI == (int) Projectile.ai[1])
             {
-                projectile.penetrate = 1;
-                Main.PlaySound(SoundLoader.customSoundType, (int) projectile.position.X, (int) projectile.position.Y,
-                    mod.GetSoundSlot(SoundType.Custom, "Sounds/PhotonHit"));
+                Projectile.penetrate = 1;
+                SoundEngine.PlaySound(SoundLoader.customSoundType, (int) Projectile.position.X, (int) Projectile.position.Y,
+                    Mod.GetSoundSlot(SoundType.Custom, "Sounds/PhotonHit"));
             }
 
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
@@ -46,36 +48,36 @@ namespace DoomBubblesMod.Projectiles.HotS
 
         public override void AI()
         {
-            projectile.frame++;
-            if (projectile.frame > 4)
+            Projectile.frame++;
+            if (Projectile.frame > 4)
             {
-                projectile.frame = 0;
+                Projectile.frame = 0;
             }
 
-            if (projectile.alpha < 0)
+            if (Projectile.alpha < 0)
             {
-                projectile.alpha = 0;
+                Projectile.alpha = 0;
             }
 
-            projectile.localAI[0] = projectile.velocity.Length() * 1.02f;
+            Projectile.localAI[0] = Projectile.velocity.Length() * 1.02f;
             Homing();
         }
 
 
         public void Homing()
         {
-            var target = Main.npc[(int) projectile.ai[1]];
+            var target = Main.npc[(int) Projectile.ai[1]];
             if (!target.active)
             {
-                projectile.Kill();
+                Projectile.Kill();
             }
 
-            var x = projectile.Center.X;
-            var y = projectile.Center.Y - 6;
+            var x = Projectile.Center.X;
+            var y = Projectile.Center.Y - 6;
             var theta = Math.Atan2(target.Center.Y - y, target.Center.X - x);
-            var dX = projectile.localAI[0] * Math.Cos(theta);
-            var dY = projectile.localAI[0] * Math.Sin(theta);
-            projectile.velocity = new Vector2((float) dX, (float) dY);
+            var dX = Projectile.localAI[0] * Math.Cos(theta);
+            var dY = Projectile.localAI[0] * Math.Sin(theta);
+            Projectile.velocity = new Vector2((float) dX, (float) dY);
         }
     }
 }

@@ -10,11 +10,12 @@ namespace DoomBubblesMod.Items.Accessories
         {
             DisplayName.SetDefault("Sorcerer's Stone");
             Tooltip.SetDefault("Your health and mana always regenerate as if you weren't moving");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            item.CloneDefaults(ItemID.PhilosophersStone);
+            Item.CloneDefaults(ItemID.PhilosophersStone);
         }
 
 
@@ -26,17 +27,16 @@ namespace DoomBubblesMod.Items.Accessories
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(mod);
+            var recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.PhilosophersStone);
             recipe.AddTile(TileID.AlchemyTable);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
 
-            var recipe2 = new ModRecipe(mod);
+            var recipe2 = CreateRecipe();
             recipe2.AddIngredient(this);
             recipe2.AddTile(TileID.AlchemyTable);
-            recipe2.SetResult(ItemID.PhilosophersStone);
-            recipe2.AddRecipe();
+            recipe2.ReplaceResult(ItemID.PhilosophersStone);
+            recipe2.Register();
         }
     }
 }

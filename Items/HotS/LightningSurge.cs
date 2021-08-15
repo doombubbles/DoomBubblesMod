@@ -1,7 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using DoomBubblesMod.Items.Talent;
+using DoomBubblesMod.Projectiles.HotS;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Items.HotS
 {
@@ -18,25 +22,26 @@ namespace DoomBubblesMod.Items.HotS
             DisplayName.SetDefault("Lightning Surge");
             Tooltip.SetDefault("Shoots lightning at an enemy by your cursor\n" +
                                "Enemies hit along the way take bonus damage");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            item.width = 36;
-            item.height = 36;
-            item.noMelee = true;
-            item.noUseGraphic = true;
-            item.damage = 62;
-            item.shoot = mod.ProjectileType("AlarakLightning");
-            item.useAnimation = 25;
-            item.useTime = 25;
-            item.magic = true;
-            item.knockBack = 3;
-            item.useStyle = 5;
-            item.rare = 10;
-            item.mana = 12;
-            item.autoReuse = false;
-            item.value = Item.buyPrice(0, 69);
+            Item.width = 36;
+            Item.height = 36;
+            Item.noMelee = true;
+            Item.noUseGraphic = true;
+            Item.damage = 62;
+            Item.shoot = ModContent.ProjectileType<AlarakLightning>();
+            Item.useAnimation = 25;
+            Item.useTime = 25;
+            Item.DamageType = DamageClass.Magic;
+            Item.knockBack = 3;
+            Item.useStyle = 5;
+            Item.rare = 10;
+            Item.mana = 12;
+            Item.autoReuse = false;
+            Item.value = Item.buyPrice(0, 69);
         }
 
         public override bool CanUseItem(Player player)
@@ -44,9 +49,8 @@ namespace DoomBubblesMod.Items.HotS
             return FindNpcs(player) != null;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY,
-            ref int type, ref int damage,
-            ref float knockBack)
+        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type,
+            int damage, float knockback)
         {
             var npcs = FindNpcs(player);
             if (npcs == null)
@@ -57,9 +61,9 @@ namespace DoomBubblesMod.Items.HotS
             if (npc != -1)
             {
                 var target = Main.npc[npc];
-                var proj = Projectile.NewProjectile(position,
+                var proj = Projectile.NewProjectile(source, position,
                     new Vector2((target.Center.X - position.X) / 200f, (target.Center.Y - position.Y) / 200f), type,
-                    damage, knockBack, player.whoAmI, npc, ChosenTalent);
+                    damage, knockback, player.whoAmI, npc, ChosenTalent);
                 Main.projectile[proj].netUpdate = true;
             }
 
@@ -68,9 +72,9 @@ namespace DoomBubblesMod.Items.HotS
                 for (var i = 1; i < (player.gravControl2 ? npcs.Count : 1); i++)
                 {
                     var target = Main.npc[npcs[i].Key];
-                    var proj = Projectile.NewProjectile(position,
+                    var proj = Projectile.NewProjectile(source, position,
                         new Vector2((target.Center.X - position.X) / 200f, (target.Center.Y - position.Y) / 200f), type,
-                        damage, knockBack, player.whoAmI, target.whoAmI, ChosenTalent);
+                        damage, knockback, player.whoAmI, target.whoAmI, ChosenTalent);
                     Main.projectile[proj].netUpdate = true;
                 }
             }

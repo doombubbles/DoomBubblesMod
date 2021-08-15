@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using DoomBubblesMod.Items.Thanos;
+using DoomBubblesMod.Buffs;
+using DoomBubblesMod.Projectiles.Thanos;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
+using PowerStone = DoomBubblesMod.Items.Thanos.PowerStone;
+using SoundType = Terraria.ModLoader.SoundType;
 
 namespace DoomBubblesMod
 {
@@ -13,7 +18,7 @@ namespace DoomBubblesMod
     {
         public int gem = -1;
 
-        public bool InfinityGauntlet;
+        public Item InfinityGauntlet;
         public bool powerStone;
         public int powerStoneCharge;
         public int powerStoned;
@@ -33,46 +38,46 @@ namespace DoomBubblesMod
                 powerStoned--;
             }
 
-            powerStoning.RemoveAll(i => !Main.npc[i].HasBuff(mod.BuffType("PowerStoneDebuff")));
-            InfinityGauntlet = false;
+            powerStoning.RemoveAll(i => !Main.npc[i].HasBuff(ModContent.BuffType<PowerStoneDebuff>()));
+            InfinityGauntlet = null;
         }
 
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
             base.ProcessTriggers(triggersSet);
-            var gauntlet = new Vector2(player.Center.X + 10 * player.direction, player.Center.Y - 25);
+            var gauntlet = new Vector2(Player.Center.X + 10 * Player.direction, Player.Center.Y - 25);
 
-            if (InfinityGauntlet && player.itemTime == 0 && player.itemAnimation == 0)
+            if (InfinityGauntlet != null && Player.itemTime == 0 && Player.itemAnimation == 0)
             {
                 if (DoomBubblesMod.powerStoneHotKey.Current)
                 {
-                    if (player.GetModPlayer<ThanosPlayer>().powerStoneCharge < 300)
+                    if (Player.GetModPlayer<ThanosPlayer>().powerStoneCharge < 300)
                     {
-                        player.GetModPlayer<ThanosPlayer>().powerStoneCharge += 1;
+                        Player.GetModPlayer<ThanosPlayer>().powerStoneCharge += 1;
                         if (Main.time % 10 == 0)
                         {
-                            Main.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 34,
-                                .3f + (float) (.05 * Math.Sqrt(player.GetModPlayer<ThanosPlayer>().powerStoneCharge)));
+                            SoundEngine.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 34,
+                                .3f + (float) (.05 * Math.Sqrt(Player.GetModPlayer<ThanosPlayer>().powerStoneCharge)));
                         }
                     }
 
-                    if (player.GetModPlayer<ThanosPlayer>().powerStoneCharge > 100 &&
-                        player.GetModPlayer<ThanosPlayer>().powerStoneCharge < 300)
+                    if (Player.GetModPlayer<ThanosPlayer>().powerStoneCharge > 100 &&
+                        Player.GetModPlayer<ThanosPlayer>().powerStoneCharge < 300)
                     {
-                        player.GetModPlayer<ThanosPlayer>().powerStoneCharge += 1;
+                        Player.GetModPlayer<ThanosPlayer>().powerStoneCharge += 1;
                     }
 
-                    if (player.GetModPlayer<ThanosPlayer>().powerStoneCharge > 200 &&
-                        player.GetModPlayer<ThanosPlayer>().powerStoneCharge < 300)
+                    if (Player.GetModPlayer<ThanosPlayer>().powerStoneCharge > 200 &&
+                        Player.GetModPlayer<ThanosPlayer>().powerStoneCharge < 300)
                     {
-                        player.GetModPlayer<ThanosPlayer>().powerStoneCharge += 1;
+                        Player.GetModPlayer<ThanosPlayer>().powerStoneCharge += 1;
                     }
 
-                    if (player.GetModPlayer<ThanosPlayer>().powerStoneCharge == 300)
+                    if (Player.GetModPlayer<ThanosPlayer>().powerStoneCharge == 300)
                     {
                         if (Main.time % 10 == 0)
                         {
-                            Main.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 15);
+                            SoundEngine.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 15);
                             for (var i = 0; i <= 360; i += 4)
                             {
                                 var rad = Math.PI * i / 180;
@@ -80,7 +85,7 @@ namespace DoomBubblesMod
                                 var dY = (float) (10 * Math.Sin(rad));
                                 var dust = Dust.NewDustPerfect(new Vector2(gauntlet.X + 10 * dX, gauntlet.Y + 10 * dY),
                                     212,
-                                    new Vector2(dX * -1f + player.velocity.X, dY * -1f + player.velocity.Y), 0,
+                                    new Vector2(dX * -1f + Player.velocity.X, dY * -1f + Player.velocity.Y), 0,
                                     Items.Thanos.InfinityGauntlet.power);
                                 dust.noGravity = true;
                             }
@@ -88,7 +93,7 @@ namespace DoomBubblesMod
                     }
                     else
                     {
-                        for (var i = 0; i < player.GetModPlayer<ThanosPlayer>().powerStoneCharge / 10; i++)
+                        for (var i = 0; i < Player.GetModPlayer<ThanosPlayer>().powerStoneCharge / 10; i++)
                         {
                             var rad = Math.PI * Main.rand.NextDouble() * 2;
                             var dX = (float) (10 * Math.Cos(rad));
@@ -96,7 +101,7 @@ namespace DoomBubblesMod
 
                             var dust = Dust.NewDustPerfect(new Vector2(gauntlet.X + 10 * dX, gauntlet.Y + 10 * dY),
                                 212,
-                                new Vector2(dX * -1f + player.velocity.X, dY * -1f + player.velocity.Y), 0,
+                                new Vector2(dX * -1f + Player.velocity.X, dY * -1f + Player.velocity.Y), 0,
                                 Items.Thanos.InfinityGauntlet.power);
                             dust.noGravity = true;
                         }
@@ -104,118 +109,118 @@ namespace DoomBubblesMod
                 }
                 else if (DoomBubblesMod.powerStoneHotKey.JustReleased)
                 {
-                    Main.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 74, 2f);
-                    Main.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 89, 2f);
-                    Main.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 93, .5f);
-                    player.AddBuff(mod.BuffType("PowerStone"),
-                        6 * player.GetModPlayer<ThanosPlayer>().powerStoneCharge);
+                    SoundEngine.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 74, 2f);
+                    SoundEngine.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 89, 2f);
+                    SoundEngine.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 93, .5f);
+                    Player.AddBuff(ModContent.BuffType<Buffs.PowerStone>(),
+                        6 * Player.GetModPlayer<ThanosPlayer>().powerStoneCharge);
                     for (var i = 0; i <= 360; i += 5)
                     {
                         var rad = Math.PI * i / 180;
                         var dX = (float) (20 * Math.Cos(rad));
                         var dY = (float) (20 * Math.Sin(rad));
-                        Projectile.NewProjectile(gauntlet, new Vector2(dX, dY), mod.ProjectileType("PowerExplosion"),
-                            (int) (player.GetModPlayer<ThanosPlayer>().powerStoneCharge * 3.33333333f), 5,
-                            player.whoAmI);
+                        Projectile.NewProjectile(new ProjectileSource_Item(Player, InfinityGauntlet), gauntlet, new Vector2(dX, dY), ModContent.ProjectileType<PowerExplosion>(),
+                            (int) (Player.GetModPlayer<ThanosPlayer>().powerStoneCharge * 3.33333333f), 5,
+                            Player.whoAmI);
                     }
 
 
-                    player.GetModPlayer<ThanosPlayer>().powerStoneCharge = 0;
+                    Player.GetModPlayer<ThanosPlayer>().powerStoneCharge = 0;
                 }
                 else if (DoomBubblesMod.spaceStoneHotKey.JustPressed &&
-                         !player.HasBuff(mod.BuffType("SpaceStoneCooldown")) &&
-                         !Collision.SolidCollision(Main.MouseWorld, player.width, player.height)
+                         !Player.HasBuff(ModContent.BuffType<SpaceStoneCooldown>()) &&
+                         !Collision.SolidCollision(Main.MouseWorld, Player.width, Player.height)
                          && Main.MouseWorld.X > 50f && Main.MouseWorld.X < Main.maxTilesX * 16 - 50 &&
                          Main.MouseWorld.Y > 50f && Main.MouseWorld.Y < Main.maxTilesY * 16 - 50)
                 {
                     var newPos = Main.MouseWorld;
 
-                    Projectile.NewProjectileDirect(player.Center, new Vector2(0, 0),
-                        mod.ProjectileType("SpaceStoneWormhole"), 0, 0, player.whoAmI);
+                    Projectile.NewProjectileDirect(new ProjectileSource_Item(Player, InfinityGauntlet), Player.Center, new Vector2(0, 0),
+                        ModContent.ProjectileType<SpaceStoneWormhole>(), 0, 0, Player.whoAmI);
                     for (var i = 0; i <= 360; i += 4)
                     {
                         var rad = Math.PI * i / 180;
                         var dX = (float) (12 * Math.Cos(rad));
                         var dY = (float) (12 * Math.Sin(rad));
-                        var dust = Dust.NewDustPerfect(new Vector2(player.Center.X, player.Center.Y), 212,
+                        var dust = Dust.NewDustPerfect(new Vector2(Player.Center.X, Player.Center.Y), 212,
                             new Vector2(dX, dY), 0, Items.Thanos.InfinityGauntlet.space, 1.5f);
                         dust.noGravity = true;
                     }
 
-                    player.Teleport(newPos, -1);
+                    Player.Teleport(newPos, -1);
 
-                    Projectile.NewProjectileDirect(player.Center, new Vector2(0, 0),
-                        mod.ProjectileType("SpaceStoneWormhole"), 0, 0, player.whoAmI);
+                    Projectile.NewProjectileDirect(new ProjectileSource_Item(Player, InfinityGauntlet), Player.Center, new Vector2(0, 0),
+                        ModContent.ProjectileType<SpaceStoneWormhole>(), 0, 0, Player.whoAmI);
                     for (var i = 0; i <= 360; i += 4)
                     {
                         var rad = Math.PI * i / 180;
                         var dX = (float) (12 * Math.Cos(rad));
                         var dY = (float) (12 * Math.Sin(rad));
-                        var dust = Dust.NewDustPerfect(new Vector2(player.Center.X, player.Center.Y), 212,
+                        var dust = Dust.NewDustPerfect(new Vector2(Player.Center.X, Player.Center.Y), 212,
                             new Vector2(dX, dY), 0, Items.Thanos.InfinityGauntlet.space, 1.5f);
                         dust.noGravity = true;
                     }
 
-                    player.AddBuff(mod.BuffType("SpaceStoneCooldown"), 360);
-                    Main.PlaySound(SoundID.Item8, player.Center);
+                    Player.AddBuff(ModContent.BuffType<SpaceStoneCooldown>(), 360);
+                    SoundEngine.PlaySound(SoundID.Item8, Player.Center);
                 }
                 else if (DoomBubblesMod.realityStoneHotKey.Current)
                 {
                     if (Main.time % 15 == 0)
                     {
-                        Main.PlaySound(2, (int) player.Center.X, (int) player.Center.Y, 103);
+                        SoundEngine.PlaySound(2, (int) Player.Center.X, (int) Player.Center.Y, 103);
                     }
 
                     var mousePos = Main.MouseWorld;
                     var theta = Main.rand.NextDouble() * 2 * Math.PI;
                     var x = mousePos.X + Main.rand.NextDouble() * 40 * Math.Cos(theta);
                     var y = mousePos.Y + Main.rand.NextDouble() * 40 * Math.Sin(theta);
-                    Projectile.NewProjectile((float) x, (float) y, 0f, 0f, mod.ProjectileType("RealityBeam"), 100, 0,
-                        player.whoAmI);
+                    Projectile.NewProjectile(new ProjectileSource_Item(Player, InfinityGauntlet), (float) x, (float) y, 0f, 0f, ModContent.ProjectileType<RealityBeam>(), 100, 0,
+                        Player.whoAmI);
                 }
                 else if (DoomBubblesMod.soulStoneHotKey.JustPressed)
                 {
-                    if (player.chest == -3)
+                    if (Player.chest == -3)
                     {
-                        player.chest = -1;
+                        Player.chest = -1;
                         Recipe.FindRecipes();
                     }
                     else
                     {
-                        player.chest = -3;
-                        player.chestX = (int) (player.position.X / 16f);
-                        player.chestY = (int) (player.position.Y / 16f);
-                        player.talkNPC = -1;
-                        Main.npcShop = 0;
+                        Player.chest = -3;
+                        Player.chestX = (int) (Player.position.X / 16f);
+                        Player.chestY = (int) (Player.position.Y / 16f);
+                        Player.SetTalkNPC(-1);
+                        Main.SetNPCShopIndex(0);
                         Main.playerInventory = true;
                         Main.recBigList = false;
                         Recipe.FindRecipes();
-                        player.GetModPlayer<ThanosPlayer>().soulStone = true;
+                        Player.GetModPlayer<ThanosPlayer>().soulStone = true;
                     }
                 }
                 else if (DoomBubblesMod.timeStoneHotKey.JustPressed)
                 {
-                    var previousHp = player.GetModPlayer<ThanosPlayer>().timeHealth[300];
-                    if (previousHp > player.statLife && !player.HasBuff(mod.BuffType("TimeStoneCooldown")))
+                    var previousHp = Player.GetModPlayer<ThanosPlayer>().timeHealth[300];
+                    if (previousHp > Player.statLife && !Player.HasBuff(ModContent.BuffType<TimeStoneCooldown>()))
                     {
-                        player.HealEffect(previousHp - player.statLife);
-                        player.statLife = previousHp;
+                        Player.HealEffect(previousHp - Player.statLife);
+                        Player.statLife = previousHp;
                         for (var i = 0; i <= 360; i += 4)
                         {
                             var rad = Math.PI * i / 180;
                             var dX = (float) (5 * Math.Cos(rad));
                             var dY = (float) (5 * Math.Sin(rad));
-                            var dust = Dust.NewDustPerfect(new Vector2(player.Center.X, player.Center.Y), 212,
+                            var dust = Dust.NewDustPerfect(new Vector2(Player.Center.X, Player.Center.Y), 212,
                                 new Vector2(dX, dY), 0, Items.Thanos.InfinityGauntlet.time);
                             dust.noGravity = true;
                         }
 
-                        Main.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 15, 2f);
-                        player.AddBuff(mod.BuffType("TimeStoneCooldown"), 1800);
+                        SoundEngine.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 15, 2f);
+                        Player.AddBuff(ModContent.BuffType<TimeStoneCooldown>(), 1800);
                     }
                 }
                 else if (DoomBubblesMod.mindStoneHotKey.JustPressed &&
-                         !player.HasBuff(mod.BuffType("MindStoneCooldown")))
+                         !Player.HasBuff(ModContent.BuffType<MindStoneCooldown>()))
                 {
                     var newPos = Main.MouseWorld;
 
@@ -239,8 +244,8 @@ namespace DoomBubblesMod
                         dust.noGravity = true;
                     }
 
-                    Main.PlaySound(SoundLoader.customSoundType, (int) player.position.X, (int) player.position.Y,
-                        mod.GetSoundSlot(SoundType.Custom, "Sounds/MindStone"));
+                    SoundEngine.PlaySound(SoundLoader.customSoundType, (int) Player.position.X, (int) Player.position.Y,
+                        Mod.GetSoundSlot(SoundType.Custom, "Sounds/MindStone"));
 
                     foreach (var npc in Main.npc)
                     {
@@ -250,7 +255,7 @@ namespace DoomBubblesMod
                             npc.GetGlobalNPC<DoomBubblesGlobalNPC>().mindStoneFriendly = true;
                             if (Main.netMode == 1)
                             {
-                                var packet = mod.GetPacket();
+                                var packet = Mod.GetPacket();
                                 packet.Write((byte) DoomBubblesModMessageType.infinityStone);
                                 packet.Write(npc.whoAmI);
                                 packet.Write(2);
@@ -260,7 +265,7 @@ namespace DoomBubblesMod
                     }
 
 
-                    player.AddBuff(mod.BuffType("MindStoneCooldown"), 1200);
+                    Player.AddBuff(ModContent.BuffType<MindStoneCooldown>(), 1200);
                 }
             }
         }
@@ -275,15 +280,15 @@ namespace DoomBubblesMod
                 }
             }
 
-            if (soulStone)
+            if (soulStone) // TODO: DO SOUL STONE BETTER
             {
-                player.chestX = (int) (player.position.X / 16f);
-                player.chestY = (int) (player.position.Y / 16f);
-                soulStoneTile = Main.tile[(int) (player.position.X / 16f), (int) (player.position.Y / 16f)];
-                soulStoneTileActive = soulStoneTile.active();
+                Player.chestX = (int) (Player.position.X / 16f);
+                Player.chestY = (int) (Player.position.Y / 16f);
+                soulStoneTile = Main.tile[(int) (Player.position.X / 16f), (int) (Player.position.Y / 16f)];
+                soulStoneTileActive = soulStoneTile.IsActive;
                 if (!soulStoneTileActive)
                 {
-                    soulStoneTile.active(true);
+                    
                 }
             }
 
@@ -293,7 +298,7 @@ namespace DoomBubblesMod
                 timeHealth[i] = timeHealth[i - 1];
             }
 
-            timeHealth[0] = player.statLife;
+            timeHealth[0] = Player.statLife;
 
             base.PreUpdate();
         }
@@ -304,12 +309,12 @@ namespace DoomBubblesMod
             {
                 if (!soulStoneTileActive)
                 {
-                    soulStoneTile.active(false);
+                    
                 }
             }
 
 
-            if (player.chest != -3)
+            if (Player.chest != -3)
             {
                 soulStone = false;
             }
@@ -325,17 +330,17 @@ namespace DoomBubblesMod
 
         public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
         {
-            if (player.GetModPlayer<ThanosPlayer>().powerStone)
+            if (Player.GetModPlayer<ThanosPlayer>().powerStone)
             {
-                if (target.HasBuff(mod.BuffType("PowerStoneDebuff")))
+                if (target.HasBuff(ModContent.BuffType<PowerStoneDebuff>()))
                 {
-                    player.GetModPlayer<ThanosPlayer>().powerStoneDamage(target.whoAmI, .01f);
+                    Player.GetModPlayer<ThanosPlayer>().powerStoneDamage(target.whoAmI, .01f);
                 }
 
-                target.AddBuff(mod.BuffType("PowerStoneDebuff"), 300);
-                if (!player.GetModPlayer<ThanosPlayer>().powerStoning.Contains(target.whoAmI))
+                target.AddBuff(ModContent.BuffType<PowerStoneDebuff>(), 300);
+                if (!Player.GetModPlayer<ThanosPlayer>().powerStoning.Contains(target.whoAmI))
                 {
-                    player.GetModPlayer<ThanosPlayer>().powerStoning.Add(target.whoAmI);
+                    Player.GetModPlayer<ThanosPlayer>().powerStoning.Add(target.whoAmI);
                 }
             }
         }
@@ -344,13 +349,13 @@ namespace DoomBubblesMod
             ref bool crit,
             ref int hitDirection)
         {
-            if (player.GetModPlayer<ThanosPlayer>().powerStone && proj.type != mod.ProjectileType("PowerStone"))
+            if (Player.GetModPlayer<ThanosPlayer>().powerStone)
             {
-                player.GetModPlayer<ThanosPlayer>().powerStoneDamage(target.whoAmI, .01f);
-                target.AddBuff(mod.BuffType("PowerStoneDebuff"), 300);
-                if (!player.GetModPlayer<ThanosPlayer>().powerStoning.Contains(target.whoAmI))
+                Player.GetModPlayer<ThanosPlayer>().powerStoneDamage(target.whoAmI, .01f);
+                target.AddBuff(ModContent.BuffType<PowerStoneDebuff>(), 300);
+                if (!Player.GetModPlayer<ThanosPlayer>().powerStoning.Contains(target.whoAmI))
                 {
-                    player.GetModPlayer<ThanosPlayer>().powerStoning.Add(target.whoAmI);
+                    Player.GetModPlayer<ThanosPlayer>().powerStoning.Add(target.whoAmI);
                 }
             }
         }
@@ -379,8 +384,8 @@ namespace DoomBubblesMod
                 }
             }
 
-            player.ApplyDamageToNPC(npc, damage, knockback, direction, crit);
-            player.addDPS(damage);
+            Player.ApplyDamageToNPC(npc, damage, knockback, direction, crit);
+            Player.addDPS(damage);
             if (combatText != -1 && Main.combatText[combatText].active)
             {
                 Main.combatText[combatText].color = Items.Thanos.InfinityGauntlet.power;

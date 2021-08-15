@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using DoomBubblesMod.Items.HotS;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
+using SoundType = Terraria.ModLoader.SoundType;
 
 namespace DoomBubblesMod.Projectiles.HotS
 {
@@ -10,36 +14,36 @@ namespace DoomBubblesMod.Projectiles.HotS
     {
         public static readonly float AttackSpeed = 30f;
 
-        public float ShootDistance => ChosenTalent == 2 || ChosenTalent == -1 ? 900f : 600f;
-        public float PowerDistance => ChosenTalent == 2 || ChosenTalent == -1 ? 450f : 300f;
+        public float ShootDistance => ChosenTalent is 2 or -1 ? 900f : 600f;
+        public float PowerDistance => ChosenTalent is 2 or -1 ? 450f : 300f;
 
-        public int ChosenTalent => (int) Math.Round(projectile.ai[0]);
+        public int ChosenTalent => (int)Math.Round(Projectile.ai[0]);
 
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Pylon");
-            Main.projFrames[projectile.type] = 6;
+            Main.projFrames[Projectile.type] = 6;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 34;
-            projectile.height = 52;
-            projectile.friendly = true;
-            projectile.ignoreWater = true;
-            projectile.aiStyle = -1;
-            projectile.timeLeft = Projectile.SentryLifeTime * 10;
-            projectile.tileCollide = true;
-            projectile.light = .25f;
-            projectile.minion = true;
-            projectile.alpha = 69;
-            projectile.netImportant = true;
+            Projectile.width = 34;
+            Projectile.height = 52;
+            Projectile.friendly = true;
+            Projectile.ignoreWater = true;
+            Projectile.aiStyle = -1;
+            Projectile.timeLeft = Projectile.SentryLifeTime * 10;
+            Projectile.tileCollide = true;
+            Projectile.light = .25f;
+            Projectile.minion = true;
+            Projectile.alpha = 69;
+            Projectile.netImportant = true;
         }
 
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            projectile.velocity = new Vector2(0, 0);
+            Projectile.velocity = new Vector2(0, 0);
             return false;
         }
 
@@ -60,29 +64,29 @@ namespace DoomBubblesMod.Projectiles.HotS
 
         public override void Kill(int timeLeft)
         {
-            Main.player[projectile.owner].GetModPlayer<HotSPlayer>().pylons
-                .RemoveAll(i => i == projectile.whoAmI);
+            Main.player[Projectile.owner].GetModPlayer<HotSPlayer>().pylons
+                .RemoveAll(i => i == Projectile.whoAmI);
             base.Kill(timeLeft);
         }
 
         public override void AI()
         {
-            if (!Main.player[projectile.owner].GetModPlayer<HotSPlayer>().pylons.Contains(projectile.whoAmI) &&
-                projectile.owner == Main.myPlayer)
+            if (!Main.player[Projectile.owner].GetModPlayer<HotSPlayer>().pylons.Contains(Projectile.whoAmI) &&
+                Projectile.owner == Main.myPlayer)
             {
-                projectile.Kill();
+                Projectile.Kill();
                 return;
             }
 
-            if (projectile.alpha == 69)
+            if (Projectile.alpha == 69)
             {
-                Main.PlaySound(SoundLoader.customSoundType, (int) projectile.Center.X, (int)
-                    projectile.Center.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/PylonWarpIn"));
-                projectile.alpha = 0;
+                SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Projectile.Center.X, (int)
+                    Projectile.Center.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/PylonWarpIn"));
+                Projectile.alpha = 0;
             }
 
             HandleFrames();
-            if (projectile.frame > 1)
+            if (Projectile.frame > 1)
             {
                 CreateDust();
                 BuffPlayers();
@@ -93,30 +97,30 @@ namespace DoomBubblesMod.Projectiles.HotS
 
         private void HandleFrames()
         {
-            if ((projectile.timeLeft - 1) % 30 == 0)
+            if ((Projectile.timeLeft - 1) % 30 == 0)
             {
-                projectile.frame++;
+                Projectile.frame++;
             }
 
-            if (projectile.frame == 6)
+            if (Projectile.frame == 6)
             {
-                projectile.frame = 2;
+                Projectile.frame = 2;
             }
         }
 
         private void CreateDust()
         {
-            if (Main.player[projectile.owner].inventory[Main.player[projectile.owner].selectedItem].type ==
-                mod.ItemType("PylonStaff") && projectile.owner == Main.myPlayer ||
-                projectile.Hitbox.Contains(Main.MouseWorld.ToPoint()))
+            if (Main.player[Projectile.owner].inventory[Main.player[Projectile.owner].selectedItem].type ==
+                ModContent.ItemType<PylonStaff>() && Projectile.owner == Main.myPlayer ||
+                Projectile.Hitbox.Contains(Main.MouseWorld.ToPoint()))
             {
                 for (var i = 0; i < 360; i++)
                 {
                     if (Main.rand.Next(4) == 1)
                     {
-                        var x = projectile.Center.X + PowerDistance * Math.Cos(i * Math.PI / 180f);
-                        var y = projectile.Center.Y + PowerDistance * Math.Sin(i * Math.PI / 180f);
-                        var dust = Dust.NewDustPerfect(new Vector2((float) x, (float) y), 135);
+                        var x = Projectile.Center.X + PowerDistance * Math.Cos(i * Math.PI / 180f);
+                        var y = Projectile.Center.Y + PowerDistance * Math.Sin(i * Math.PI / 180f);
+                        var dust = Dust.NewDustPerfect(new Vector2((float)x, (float)y), 135);
                         dust.noGravity = true;
                         dust.noLight = true;
                     }
@@ -128,9 +132,9 @@ namespace DoomBubblesMod.Projectiles.HotS
                     {
                         if (Main.rand.Next(4) == 1)
                         {
-                            var x = projectile.Center.X + ShootDistance * Math.Cos(i * Math.PI / 180f);
-                            var y = projectile.Center.Y + ShootDistance * Math.Sin(i * Math.PI / 180f);
-                            var dust = Dust.NewDustPerfect(new Vector2((float) x, (float) y), 182);
+                            var x = Projectile.Center.X + ShootDistance * Math.Cos(i * Math.PI / 180f);
+                            var y = Projectile.Center.Y + ShootDistance * Math.Sin(i * Math.PI / 180f);
+                            var dust = Dust.NewDustPerfect(new Vector2((float)x, (float)y), 182);
                             dust.scale = .5f;
                             dust.noGravity = true;
                             dust.noLight = true;
@@ -142,13 +146,13 @@ namespace DoomBubblesMod.Projectiles.HotS
 
         private void BuffPlayers()
         {
-            for (var i = 0; i < Main.player.Length; i++)
+            foreach (var player in Main.player)
             {
-                var player = Main.player[i];
-                var buffType =
-                    mod.BuffType("Pylon" + (ChosenTalent == 3 || ChosenTalent == -1 ? "Super" : "") + "Power");
-                if (player.active && player.Distance(projectile.Center) < PowerDistance)
+                if (player.active && player.Distance(Projectile.Center) < PowerDistance)
                 {
+                    var buffType = ModContent
+                        .Find<ModBuff>("Pylon" + (ChosenTalent == 3 || ChosenTalent == -1 ? "Super" : "") + "Power")
+                        .Type;
                     player.AddBuff(buffType, 5);
                 }
             }
@@ -157,22 +161,22 @@ namespace DoomBubblesMod.Projectiles.HotS
 
         public void HandleAttacking()
         {
-            if (ChosenTalent != 1 && ChosenTalent != -1 || projectile.owner == Main.myPlayer)
+            if (ChosenTalent != 1 && ChosenTalent != -1 || Projectile.owner == Main.myPlayer)
             {
                 return;
             }
 
-            projectile.localAI[0]++;
+            Projectile.localAI[0]++;
 
-            if (projectile.localAI[0] >= AttackSpeed)
+            if (Projectile.localAI[0] >= AttackSpeed)
             {
-                projectile.localAI[0] = 0f;
+                Projectile.localAI[0] = 0f;
                 NPC target;
-                if (Main.player[projectile.owner].MinionAttackTargetNPC > 0
-                    && Main.npc[Main.player[projectile.owner].MinionAttackTargetNPC].Distance(projectile.Center) <
+                if (Main.player[Projectile.owner].MinionAttackTargetNPC > 0
+                    && Main.npc[Main.player[Projectile.owner].MinionAttackTargetNPC].Distance(Projectile.Center) <
                     ShootDistance)
                 {
-                    target = Main.npc[Main.player[projectile.owner].MinionAttackTargetNPC];
+                    target = Main.npc[Main.player[Projectile.owner].MinionAttackTargetNPC];
                 }
                 else
                 {
@@ -180,7 +184,7 @@ namespace DoomBubblesMod.Projectiles.HotS
                     for (var i = 0; i < Main.npc.Length; i++)
                     {
                         var npc = Main.npc[i];
-                        if (npc.CanBeChasedBy(projectile) && npc.Distance(projectile.Center) < ShootDistance)
+                        if (npc.CanBeChasedBy(Projectile) && npc.Distance(Projectile.Center) < ShootDistance)
                         {
                             inRange.Add(npc);
                         }
@@ -191,22 +195,23 @@ namespace DoomBubblesMod.Projectiles.HotS
                         return;
                     }
 
-                    inRange.Sort((npc1, npc2) => npc1.Distance(Main.player[projectile.owner].Center)
-                        .CompareTo(npc2.Distance(Main.player[projectile.owner].Center)));
+                    inRange.Sort((npc1, npc2) => npc1.Distance(Main.player[Projectile.owner].Center)
+                        .CompareTo(npc2.Distance(Main.player[Projectile.owner].Center)));
                     target = inRange[0];
                 }
 
-                var x = projectile.Center.X;
-                var y = projectile.Center.Y - 23;
+                var x = Projectile.Center.X;
+                var y = Projectile.Center.Y - 23;
                 var dX = (target.Center.X - x) / 200f;
                 var dY = (target.Center.Y - y) / 200f;
-                var proj = Projectile.NewProjectile(x, y, dX, dY, mod.ProjectileType("PylonLaser"), projectile.damage,
-                    projectile.knockBack, projectile.owner);
+                var proj = Projectile.NewProjectile(new ProjectileSource_ProjectileParent(Projectile), x, y, dX, dY, ModContent.ProjectileType<PylonLaser>(),
+                    Projectile.damage,
+                    Projectile.knockBack, Projectile.owner);
 
                 Main.projectile[proj].netUpdate = true;
-                projectile.netUpdate = true;
-                Main.PlaySound(SoundLoader.customSoundType, (int) x, (int) y,
-                    mod.GetSoundSlot(SoundType.Custom, "Sounds/PylonLaser"));
+                Projectile.netUpdate = true;
+                SoundEngine.PlaySound(SoundLoader.customSoundType, (int)x, (int)y,
+                    Mod.GetSoundSlot(SoundType.Custom, "Sounds/PylonLaser"));
             }
         }
 
@@ -215,8 +220,8 @@ namespace DoomBubblesMod.Projectiles.HotS
             for (var i = 0; i < Main.projectile.Length; i++)
             {
                 var proj = Main.projectile[i];
-                if (proj.active && proj.Distance(projectile.Center) < PowerDistance &&
-                    proj.type == mod.ProjectileType("PhotonCannon"))
+                if (proj.active && proj.Distance(Projectile.Center) < PowerDistance &&
+                    proj.type == ModContent.ProjectileType<PhotonCannon>())
                 {
                     proj.ai[1] = 100;
                 }

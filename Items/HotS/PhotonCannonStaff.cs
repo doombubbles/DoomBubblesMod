@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
+using DoomBubblesMod.Items.Talent;
+using DoomBubblesMod.Projectiles.HotS;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -18,23 +21,24 @@ namespace DoomBubblesMod.Items.HotS
             DisplayName.SetDefault("Photon Cannon Staff");
             Tooltip.SetDefault("Warps Photon Cannons as stationary minions\n" +
                                "Photon Cannons require a Pylon power field");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            item.width = 36;
-            item.height = 36;
-            item.mana = 10;
-            item.useTime = 36;
-            item.useAnimation = 36;
-            item.useStyle = 1;
-            item.noMelee = true;
-            item.damage = 96;
-            item.shoot = mod.ProjectileType("PhotonCannon");
-            item.value = Item.buyPrice(0, 69);
-            item.rare = ItemRarityID.Yellow;
-            item.buffType = mod.BuffType("PhotonCannon");
-            item.buffTime = 3600;
+            Item.width = 36;
+            Item.height = 36;
+            Item.mana = 10;
+            Item.useTime = 36;
+            Item.useAnimation = 36;
+            Item.useStyle = 1;
+            Item.noMelee = true;
+            Item.damage = 96;
+            Item.shoot = ModContent.ProjectileType<PhotonCannon>();
+            Item.value = Item.buyPrice(0, 69);
+            Item.rare = ItemRarityID.Yellow;
+            Item.buffType = ModContent.BuffType<Buffs.PhotonCannon>();
+            Item.buffTime = 3600;
         }
 
         public override bool AltFunctionUse(Player player)
@@ -42,25 +46,26 @@ namespace DoomBubblesMod.Items.HotS
             return true;
         }
 
-        public override bool UseItem(Player player)
+        
+        
+        public override bool? UseItem(Player player)
         {
             if (player.altFunctionUse == 2)
             {
-                player.MinionNPCTargetAim();
+                player.MinionNPCTargetAim(false);
             }
 
             return base.UseItem(player);
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY,
-            ref int type, ref int damage,
-            ref float knockBack)
+        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type,
+            int damage, float knockback)
         {
             if (player == Main.LocalPlayer && player.altFunctionUse != 2)
             {
                 var num144 = (int) (Main.mouseX + Main.screenPosition.X) / 16;
                 var num145 = (int) (Main.mouseY + Main.screenPosition.Y) / 16;
-                if (player.gravDir == -1f)
+                if (player.gravDir is -1f)
                 {
                     num145 = (int) (Main.screenPosition.Y + Main.screenHeight - Main.mouseY) / 16;
                 }
@@ -75,8 +80,8 @@ namespace DoomBubblesMod.Items.HotS
                 }
 
                 num145--;
-                Projectile.NewProjectile(Main.mouseX + Main.screenPosition.X, num145 * 16, 0f, 15f, type, damage,
-                    knockBack, player.whoAmI, ChosenTalent);
+                Projectile.NewProjectile(source, Main.mouseX + Main.screenPosition.X, num145 * 16, 0f, 15f, type, damage,
+                    knockback, player.whoAmI, ChosenTalent);
             }
 
             return false;

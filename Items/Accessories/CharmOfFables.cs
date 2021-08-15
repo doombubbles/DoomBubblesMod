@@ -13,14 +13,15 @@ namespace DoomBubblesMod.Items.Accessories
             Tooltip.SetDefault("Health/mana always regenerates as if you weren't moving\n"
                                + "Incrases maximum mana by 20\n"
                                + "Increases mana regeneration rate");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            var real = item.handOnSlot;
-            item.CloneDefaults(ItemID.CharmofMyths);
-            item.handOnSlot = real;
-            item.lifeRegen = 0;
+            var real = Item.handOnSlot;
+            Item.CloneDefaults(ItemID.CharmofMyths);
+            Item.handOnSlot = real;
+            Item.lifeRegen = 0;
         }
 
 
@@ -34,12 +35,11 @@ namespace DoomBubblesMod.Items.Accessories
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(mod);
-            recipe.AddIngredient(mod.ItemType("SorcerersStone"));
+            var recipe = CreateRecipe();
+            recipe.AddIngredient(ModContent.ItemType<SorcerersStone>());
             recipe.AddIngredient(ItemID.ManaRegenerationBand);
             recipe.AddTile(TileID.TinkerersWorkbench);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
 }

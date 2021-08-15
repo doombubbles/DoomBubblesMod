@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -11,43 +13,42 @@ namespace DoomBubblesMod.Items.Weapons
         {
             //Tooltip.SetDefault("This is a modded gun.");
             DisplayName.SetDefault("Midnight Maelstrom");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            item.damage = 28;
-            item.ranged = true;
-            item.width = 52;
-            item.height = 20;
-            item.useTime = 28;
-            item.useAnimation = 28;
-            item.useStyle = 5;
-            item.noMelee = true; //so the item's animation doesn't do damage
-            item.knockBack = 4;
-            item.value = 54000;
-            item.rare = 3;
-            item.UseSound = SoundID.Item41;
-            item.autoReuse = false;
-            item.shoot = 10; //idk why but all the guns in the vanilla source have this
-            item.shootSpeed = 10f;
-            item.useAmmo = AmmoID.Bullet;
+            Item.damage = 28;
+            Item.DamageType = DamageClass.Ranged;
+            Item.width = 52;
+            Item.height = 20;
+            Item.useTime = 28;
+            Item.useAnimation = 28;
+            Item.useStyle = 5;
+            Item.noMelee = true; //so the item's animation doesn't do damage
+            Item.knockBack = 4;
+            Item.value = 54000;
+            Item.rare = ItemRarityID.Orange;
+            Item.UseSound = SoundID.Item41;
+            Item.autoReuse = false;
+            Item.shoot = 10; //idk why but all the guns in the vanilla source have this
+            Item.shootSpeed = 10f;
+            Item.useAmmo = AmmoID.Bullet;
         }
 
         public override void AddRecipes()
         {
-            var recipe = new ModRecipe(mod);
+            var recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.Musket);
             recipe.AddIngredient(ItemID.Boomstick);
             recipe.AddIngredient(ItemID.PhoenixBlaster);
             recipe.AddTile(TileID.DemonAltar);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
 
-            var recipe2 = new ModRecipe(mod);
-            recipe2.AddIngredient(mod.GetItem("BloodburstBlunderbuss"));
+            var recipe2 = CreateRecipe();
+            recipe2.AddIngredient(ModContent.ItemType<BloodburstBlunderbuss>());
             recipe2.AddTile(TileID.DemonAltar);
-            recipe2.SetResult(this);
-            recipe2.AddRecipe();
+            recipe2.Register();
         }
 
         // What if I wanted this gun to have a 38% chance not to consume ammo?
@@ -69,20 +70,20 @@ namespace DoomBubblesMod.Items.Weapons
 
         // What if I wanted it to shoot like a shotgun?
         // Shotgun style: Multiple Projectiles, Random spread 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY,
-            ref int type, ref int damage, ref float knockBack)
+
+        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type,
+            int damage, float knockback)
         {
-            Main.PlaySound(SoundID.Item36, position);
+            SoundEngine.PlaySound(SoundID.Item36, position);
             var numberProjectiles = 2 + Main.rand.Next(2);
             for (var i = 0; i < numberProjectiles; i++)
             {
-                var perturbedSpeed =
-                    new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(10)); // 30 degree spread.
+                var perturbedSpeed = velocity.RotatedByRandom(MathHelper.ToRadians(10)); // 30 degree spread.
                 // If you want to randomize the speed to stagger the projectiles
                 var scale = 1f - Main.rand.NextFloat() * .1f;
                 perturbedSpeed = perturbedSpeed * scale;
-                Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type,
-                    (int) (damage / 2.0), knockBack, player.whoAmI);
+                Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type,
+                    (int) (damage / 2.0), knockback, player.whoAmI);
             }
 
             return true;
@@ -107,7 +108,7 @@ namespace DoomBubblesMod.Items.Weapons
             position += Vector2.Normalize(new Vector2(speedX, speedY)) * 45f;
             for (int i = 0; i < numberProjectiles; i++)
             {
-                Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * .2f; // Watch out for dividing by 0 if there is only 1 projectile.
+                Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * .2f; // Watch out for dividing by 0 if there is only 1 Projectile.
                 Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
             }
             return false;
@@ -134,14 +135,14 @@ namespace DoomBubblesMod.Items.Weapons
         // How can I get a "Clockwork Assault Riffle" effect?
         // 3 round burst, only consume 1 ammo for burst. Delay between bursts, use reuseDelay
         /*	The following changes to SetDefaults()
-             item.useAnimation = 12;
-            item.useTime = 4;
-            item.reuseDelay = 14;
+             Item.useAnimation = 12;
+            Item.useTime = 4;
+            Item.reuseDelay = 14;
         public override bool ConsumeAmmo(Player player)
         {
             // Because of how the game works, player.itemAnimation will be 11, 7, and finally 3. (UseAmination - 1, then - useTime until less than 0.) 
             // We can get the Clockwork Assault Riffle Effect by not consuming ammo when itemAnimation is lower than the first shot.
-            return !(player.itemAnimation < item.useAnimation - 2);
+            return !(player.itemAnimation < Item.useAnimation - 2);
         }*/
 
         // How can I shoot 2 different projectiles at the same time?

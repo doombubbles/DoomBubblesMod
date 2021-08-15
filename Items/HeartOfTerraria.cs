@@ -1,5 +1,6 @@
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace DoomBubblesMod.Items
 {
@@ -8,15 +9,16 @@ namespace DoomBubblesMod.Items
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Heart of Terraria");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            item.width = 26;
-            item.height = 22;
-            item.maxStack = 99;
-            item.value = Item.sellPrice(0, 9, 99);
-            item.rare = 8;
+            Item.width = 26;
+            Item.height = 22;
+            Item.maxStack = 99;
+            Item.value = Item.sellPrice(0, 9, 99);
+            Item.rare = ItemRarityID.Yellow;
         }
     }
 }

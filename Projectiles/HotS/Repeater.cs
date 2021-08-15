@@ -1,8 +1,12 @@
 ﻿using System;
+using DoomBubblesMod.Buffs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ModLoader;
+using SoundType = Terraria.ModLoader.SoundType;
 
 namespace DoomBubblesMod.Projectiles.HotS
 {
@@ -10,35 +14,35 @@ namespace DoomBubblesMod.Projectiles.HotS
     {
         public override void SetDefaults()
         {
-            projectile.width = 5;
-            projectile.height = 5;
-            projectile.aiStyle = 1;
-            projectile.friendly = true;
-            projectile.alpha = 69;
-            projectile.extraUpdates = 2;
-            projectile.scale = 1f;
-            projectile.timeLeft = 600;
-            projectile.ranged = true;
-            projectile.ignoreWater = true;
+            Projectile.width = 5;
+            Projectile.height = 5;
+            Projectile.aiStyle = 1;
+            Projectile.friendly = true;
+            Projectile.alpha = 69;
+            Projectile.extraUpdates = 2;
+            Projectile.scale = 1f;
+            Projectile.timeLeft = 600;
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.ignoreWater = true;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            if (projectile.owner == Main.myPlayer)
+            if (Projectile.owner == Main.myPlayer)
             {
-                var player = Main.player[projectile.owner];
-                player.AddBuff(mod.BuffType("FenixBombBuildUp"), 360);
-                if ((projectile.ai[1] == 3 || projectile.ai[1] == -1) &&
+                var player = Main.player[Projectile.owner];
+                player.AddBuff(ModContent.BuffType<FenixBombBuildUp>(), 360);
+                if ((Projectile.ai[1] == 3 || Projectile.ai[1] == -1) &&
                     player.GetModPlayer<HotSPlayer>().fenixBombBuildUp == 14
-                    || !(projectile.ai[1] == 3 || projectile.ai[1] == -1) &&
+                    || !(Projectile.ai[1] == 3 || Projectile.ai[1] == -1) &&
                     player.GetModPlayer<HotSPlayer>().fenixBombBuildUp == 9)
                 {
-                    Main.PlaySound(SoundLoader.customSoundType, (int) projectile.position.X,
-                        (int) projectile.position.Y, mod.GetSoundSlot(SoundType.Custom, "Sounds/Boung"));
+                    SoundEngine.PlaySound(SoundLoader.customSoundType, (int) Projectile.position.X,
+                        (int) Projectile.position.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Boung"));
                 }
 
                 player.GetModPlayer<HotSPlayer>().fenixBombBuildUp++;
-                if (projectile.ai[1] == 3 || projectile.ai[1] == -1)
+                if (Projectile.ai[1] == 3 || Projectile.ai[1] == -1)
                 {
                     if (player.GetModPlayer<HotSPlayer>().fenixBombBuildUp > 15)
                     {
@@ -52,33 +56,33 @@ namespace DoomBubblesMod.Projectiles.HotS
             }
         }
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
-            var originX = (Main.projectileTexture[projectile.type].Width - projectile.width) * 0.5f +
-                          projectile.width * 0.5f;
+            var originX = (TextureAssets.Projectile[Projectile.type].Value.Width - Projectile.width) * 0.5f +
+                          Projectile.width * 0.5f;
             var offsetX = 0;
             var offsetY = 0;
             var spriteEffects = SpriteEffects.None;
-            var color25 = Lighting.GetColor((int) (projectile.position.X + projectile.width * 0.5) / 16,
-                (int) ((projectile.position.Y + projectile.height * 0.5) / 16.0));
+            var color25 = Lighting.GetColor((int) (Projectile.position.X + Projectile.width * 0.5) / 16,
+                (int) ((Projectile.position.Y + Projectile.height * 0.5) / 16.0));
 
             var value11 = new Rectangle((int) Main.screenPosition.X - 500, (int) Main.screenPosition.Y - 500,
                 Main.screenWidth + 1000, Main.screenHeight + 1000);
-            if (projectile.getRect().Intersects(value11))
+            if (Projectile.getRect().Intersects(value11))
             {
-                var value12 = new Vector2(projectile.position.X - Main.screenPosition.X + originX + offsetX,
-                    projectile.position.Y - Main.screenPosition.Y + projectile.height / 2 + projectile.gfxOffY);
+                var value12 = new Vector2(Projectile.position.X - Main.screenPosition.X + originX + offsetX,
+                    Projectile.position.Y - Main.screenPosition.Y + Projectile.height / 2f + Projectile.gfxOffY);
                 var num152 = 100f;
                 var scaleFactor = 3f;
-                for (var num153 = 1; num153 <= (int) projectile.localAI[0]; num153++)
+                for (var num153 = 1; num153 <= (int) Projectile.localAI[0]; num153++)
                 {
-                    var value13 = Vector2.Normalize(projectile.velocity) * num153 * scaleFactor;
-                    var alpha2 = projectile.GetAlpha(lightColor);
+                    var value13 = Vector2.Normalize(Projectile.velocity) * num153 * scaleFactor;
+                    var alpha2 = Projectile.GetAlpha(lightColor);
                     alpha2 *= (num152 - num153) / num152;
                     alpha2.A = 0;
-                    spriteBatch.Draw(Main.projectileTexture[projectile.type], value12 - value13, null, alpha2,
-                        projectile.rotation, new Vector2(originX, projectile.height / 2 + offsetY), projectile.scale,
-                        spriteEffects, 0f);
+                    Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, value12 - value13, null, alpha2,
+                        Projectile.rotation, new Vector2(originX, Projectile.height / 2 + offsetY), Projectile.scale,
+                        spriteEffects, 0);
                 }
             }
 
@@ -87,35 +91,35 @@ namespace DoomBubblesMod.Projectiles.HotS
 
         public override void AI()
         {
-            if (projectile.alpha == 69)
+            if (Projectile.alpha == 69)
             {
-                projectile.alpha = 255;
-                Main.PlaySound(SoundLoader.customSoundType, (int) projectile.position.X, (int) projectile.position.Y,
-                    mod.GetSoundSlot(SoundType.Custom, "Sounds/Repeater" + Math.Min(3, projectile.ai[0])), 1f,
-                    projectile.ai[0] == 4 ? -.25f : 0f);
+                Projectile.alpha = 255;
+                SoundEngine.PlaySound(SoundLoader.customSoundType, (int) Projectile.position.X, (int) Projectile.position.Y,
+                    Mod.GetSoundSlot(SoundType.Custom, "Sounds/Repeater" + Math.Min(3, Projectile.ai[0])), 1f,
+                    Projectile.ai[0] == 4 ? -.25f : 0f);
             }
 
-            projectile.ai[0] = 0;
+            Projectile.ai[0] = 0;
 
-            if (projectile.alpha > 0)
+            if (Projectile.alpha > 0)
             {
-                projectile.alpha -= 25;
+                Projectile.alpha -= 25;
             }
 
-            if (projectile.alpha < 0)
+            if (Projectile.alpha < 0)
             {
-                projectile.alpha = 0;
+                Projectile.alpha = 0;
             }
 
-            Lighting.AddLight((int) projectile.Center.X / 16, (int) projectile.Center.Y / 16, 0.2f, 0.2f, 0.25f);
+            Lighting.AddLight((int) Projectile.Center.X / 16, (int) Projectile.Center.Y / 16, 0.2f, 0.2f, 0.25f);
 
             var num55 = 50f;
             var num56 = 3f;
 
-            projectile.localAI[0] += num56;
-            if (projectile.localAI[0] > num55)
+            Projectile.localAI[0] += num56;
+            if (Projectile.localAI[0] > num55)
             {
-                projectile.localAI[0] = num55;
+                Projectile.localAI[0] = num55;
             }
         }
 
@@ -124,15 +128,15 @@ namespace DoomBubblesMod.Projectiles.HotS
             var num293 = Main.rand.Next(3, 7);
             for (var num294 = 0; num294 < num293; num294++)
             {
-                var num295 = Dust.NewDust(projectile.Center - projectile.velocity / 2f, 0, 0, 63, 0f, 0f, 100,
+                var num295 = Dust.NewDust(Projectile.Center - Projectile.velocity / 2f, 0, 0, 63, 0f, 0f, 100,
                     Color.Lavender, 2.1f);
                 var dust = Main.dust[num295];
                 dust.velocity *= 2f;
                 Main.dust[num295].noGravity = true;
             }
 
-            Main.PlaySound(SoundLoader.customSoundType, (int) projectile.position.X, (int) projectile.position.Y,
-                mod.GetSoundSlot(SoundType.Custom, "Sounds/Hit"), .5f);
+            SoundEngine.PlaySound(SoundLoader.customSoundType, (int) Projectile.position.X, (int) Projectile.position.Y,
+                Mod.GetSoundSlot(SoundType.Custom, "Sounds/Hit"), .5f);
             base.Kill(timeLeft);
         }
     }

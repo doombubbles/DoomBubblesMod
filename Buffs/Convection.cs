@@ -5,14 +5,14 @@ namespace DoomBubblesMod.Buffs
 {
     public class Convection : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Convection");
             Description.SetDefault("Flamestrike Damage Bonus: 0");
             Main.debuff[Type] = false;
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;
-            longerExpertDebuff = false;
+            LongerExpertDebuff = false;
             Main.buffNoTimeDisplay[Type] = true;
         }
 

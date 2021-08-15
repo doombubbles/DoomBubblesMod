@@ -9,15 +9,16 @@ namespace DoomBubblesMod.Items
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Broken Hero Gun");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            item.width = 30;
-            item.height = 26;
-            item.maxStack = 99;
-            item.value = Item.sellPrice(0, 2);
-            item.rare = 8;
+            Item.width = 30;
+            Item.height = 26;
+            Item.maxStack = 99;
+            Item.value = Item.sellPrice(0, 2);
+            Item.rare = ItemRarityID.Yellow;
         }
 
         public override void AddRecipes()
@@ -28,31 +29,31 @@ namespace DoomBubblesMod.Items
             }
         }
 
-        public void ThoriumRecipes()
+        private void ThoriumRecipes()
         {
-            var recipe1 = new ModRecipe(mod);
+            var recipe1 = CreateRecipe();
             recipe1.AddIngredient(this);
-            recipe1.SetResult(ModLoader.GetMod("ThoriumMod").ItemType("BrokenHeroFragment"), 2);
+            recipe1.ReplaceResult(DoomBubblesMod.thoriumMod.Find<ModItem>("BrokenHeroFragment"), 2);
             recipe1.AddTile(TileID.MythrilAnvil);
-            recipe1.AddRecipe();
+            recipe1.Register();
 
-            var recipe2 = new ModRecipe(mod);
-            recipe2.SetResult(this);
-            recipe2.AddIngredient(ModLoader.GetMod("ThoriumMod").ItemType("BrokenHeroFragment"), 2);
+            var recipe2 = CreateRecipe();
+            recipe2.ReplaceResult(this);
+            recipe2.AddIngredient(DoomBubblesMod.thoriumMod.Find<ModItem>("BrokenHeroFragment"), 2);
             recipe2.AddTile(TileID.MythrilAnvil);
-            recipe2.AddRecipe();
+            recipe2.Register();
 
-            var recipe3 = new ModRecipe(mod);
+            var recipe3 = CreateRecipe();
             recipe3.AddIngredient(ItemID.BrokenHeroSword);
-            recipe3.SetResult(ModLoader.GetMod("ThoriumMod").ItemType("BrokenHeroFragment"), 2);
+            recipe3.ReplaceResult(DoomBubblesMod.thoriumMod.Find<ModItem>("BrokenHeroFragment"), 2);
             recipe3.AddTile(TileID.MythrilAnvil);
-            recipe3.AddRecipe();
+            recipe3.Register();
 
-            var recipe4 = new ModRecipe(mod);
-            recipe4.SetResult(ItemID.BrokenHeroSword);
-            recipe4.AddIngredient(ModLoader.GetMod("ThoriumMod").ItemType("BrokenHeroFragment"), 2);
+            var recipe4 = CreateRecipe();
+            recipe4.ReplaceResult(ItemID.BrokenHeroSword);
+            recipe4.AddIngredient(DoomBubblesMod.thoriumMod.Find<ModItem>("BrokenHeroFragment"), 2);
             recipe4.AddTile(TileID.MythrilAnvil);
-            recipe4.AddRecipe();
+            recipe4.Register();
         }
     }
 }

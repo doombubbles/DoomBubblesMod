@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -12,35 +13,36 @@ namespace DoomBubblesMod.Items.Weapons
             Tooltip.SetDefault("50% chance to not consume ammo\n" +
                                "'It came from the edge of Minishark's cool uncle'");
             DisplayName.SetDefault("Ultrashark");
+            Item.SetResearchAmount(1);
         }
 
         public override void SetDefaults()
         {
-            item.damage = 65;
-            item.ranged = true;
-            item.width = 90;
-            item.height = 32;
-            item.useTime = 6;
-            item.useAnimation = 6;
-            item.crit = 5;
-            item.useStyle = 5;
-            item.noMelee = true; //so the item's animation doesn't do damage
-            item.knockBack = 4;
-            item.value = Item.sellPrice(0, 10, 50);
-            item.rare = 8;
-            item.UseSound = SoundID.Item40;
-            item.autoReuse = true;
-            item.shoot = 10; //idk why but all the guns in the vanilla source have this
-            item.shootSpeed = 11f;
-            item.useAmmo = AmmoID.Bullet;
-            item.scale = .9f;
+            Item.damage = 65;
+            Item.DamageType = DamageClass.Ranged;
+            Item.width = 90;
+            Item.height = 32;
+            Item.useTime = 6;
+            Item.useAnimation = 6;
+            Item.crit = 5;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true; //so the item's animation doesn't do damage
+            Item.knockBack = 4;
+            Item.value = Item.sellPrice(0, 10, 50);
+            Item.rare = ItemRarityID.Yellow;
+            Item.UseSound = SoundID.Item40;
+            Item.autoReuse = true;
+            Item.shoot = ProjectileID.PurificationPowder; //idk why but all the guns in the vanilla source have this
+            Item.shootSpeed = 11f;
+            Item.useAmmo = AmmoID.Bullet;
+            Item.scale = .9f;
         }
 
-        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
+        /*public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
         {
             // Here we use the multiplicative damage modifier because Terraria does this approach for Ammo damage bonuses. 
             mult *= player.bulletDamage;
-        }
+        }*/
 
         // What if I wanted this gun to have a 38% chance not to consume ammo?
         public override bool ConsumeAmmo(Player player)
@@ -49,13 +51,10 @@ namespace DoomBubblesMod.Items.Weapons
         }
 
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY,
-            ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type,
+            int damage, float knockback)
         {
-            var perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(3));
-            speedX = perturbedSpeed.X;
-            speedY = perturbedSpeed.Y;
-            return true;
+            return base.Shoot(player, source, position, velocity.RotatedByRandom(MathHelper.ToRadians(3)), type, damage, knockback);
         }
 
 
