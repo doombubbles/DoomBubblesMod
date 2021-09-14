@@ -2,13 +2,13 @@
   "profiles": {
     "Terraria": {
       "commandName": "Executable",
-      "executablePath": "dotnet",
-      "commandLineArgs": "$(tMLPath)",
-      "workingDirectory": "$(TerrariaSteamPath)"
+      "executablePath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\tModLoader\\tModLoader.dll",
+      "commandLineArgs": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\tModLoader",
+      "workingDirectory": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\tModLoader"
     },
     "TerrariaServer": {
       "commandName": "Executable",
-      "executablePath": "dotnet",
+      "executablePath": "$(tMLServerPath)",
       "commandLineArgs": "$(tMLServerPath)",
       "workingDirectory": "$(TerrariaSteamPath)"
     }

@@ -8,11 +8,8 @@ using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Items.HotS
 {
-    public class LivingBombWand : TalentItem
+    public class LivingBombWand : ModItemWithTalents<TalentPyromaniac, TalentSunKingsFury, TalentMasterOfFlame>
     {
-        public override string Talent1Name => "TalentPyromaniac";
-        public override string Talent2Name => "TalentSunKingsFury";
-        public override string Talent3Name => "TalentMasterOfFlame";
         protected override Color? TalentColor => Color.LimeGreen;
 
         public int Verdant => Main.player[Item.playerIndexTheItemIsReservedFor].GetModPlayer<HotSPlayer>().superVerdant ? 2 :

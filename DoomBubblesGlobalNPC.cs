@@ -18,10 +18,8 @@ namespace DoomBubblesMod
         //public List<int> cleavedby = new List<int> { };
 
         public bool mindStoneFriendly;
-        public int mindStoneNpcCount;
-
-        public int mindStoneProjCount;
-
+        private int mindStoneNpcCount;
+        private int mindStoneProjCount;
         public bool powerStoned;
         public override bool InstancePerEntity => true;
 
@@ -52,7 +50,7 @@ namespace DoomBubblesMod
                 drawColor.G = (byte) (drawColor.G * .7f);
                 var dust = Main.dust[Dust.NewDust(npc.position, npc.width, npc.height, DustID.BubbleBurst_White, npc.velocity.X,
                     npc.velocity.Y,
-                    100, InfinityGauntlet.power, 1.5f)];
+                    100, InfinityGauntlet.PowerColor, 1.5f)];
                 dust.noGravity = true;
             }
         }
@@ -167,19 +165,17 @@ namespace DoomBubblesMod
             }
             else
             {
-                if (npc.type == NPCID.Mothron && Main.rand.Next(1, 4) == 1)
+                switch (npc.type)
                 {
-                    Item.NewItem(npc.position, ModContent.ItemType<BrokenHeroGun>());
-                }
-
-                if (npc.type == NPCID.Plantera)
-                {
-                    //Item.NewItem(npc.position, ModContent.ItemType<HeartOfTerraria>());
-                }
-
-                if (npc.type == NPCID.DukeFishron && Main.rand.Next(1, 5) == 1)
-                {
-                    Item.NewItem(npc.position, ModContent.ItemType<Ultrashark>());
+                    case NPCID.Mothron when Main.rand.Next(1, 4) == 1:
+                        Item.NewItem(npc.position, ModContent.ItemType<BrokenHeroGun>());
+                        break;
+                    case NPCID.Plantera:
+                        //Item.NewItem(npc.position, ModContent.ItemType<HeartOfTerraria>());
+                        break;
+                    case NPCID.DukeFishron when Main.rand.Next(1, 5) == 1:
+                        Item.NewItem(npc.position, ModContent.ItemType<Ultrashark>());
+                        break;
                 }
             }
         }
@@ -205,23 +201,23 @@ namespace DoomBubblesMod
 
                 foreach (var modItem in items)
                 {
-                    var talentItem = (TalentItem) modItem;
+                    var talentItem = (ModItemWithTalents) modItem;
 
                     if (Main.LocalPlayer.HasItem(talentItem.Item.type))
                     {
                         if (NPC.downedHalloweenKing && NPC.downedHalloweenTree)
                         {
-                            addTalent(talentItem, hash % 3 + 1, shop, ref nextSlot);
+                            AddTalent(talentItem, hash % 3 + 1, shop, ref nextSlot);
                         }
 
                         if (NPC.downedChristmasIceQueen && NPC.downedChristmasSantank && NPC.downedChristmasTree)
                         {
-                            addTalent(talentItem, (hash + 1) % 3 + 1, shop, ref nextSlot);
+                            AddTalent(talentItem, (hash + 1) % 3 + 1, shop, ref nextSlot);
                         }
 
                         if (NPC.downedMartians)
                         {
-                            addTalent(talentItem, (hash + 2) % 3 + 1, shop, ref nextSlot);
+                            AddTalent(talentItem, (hash + 2) % 3 + 1, shop, ref nextSlot);
                         }
                     }
                 }
@@ -245,23 +241,23 @@ namespace DoomBubblesMod
 
                 foreach (var modItem in items)
                 {
-                    var talentItem = (TalentItem) modItem;
+                    var talentItem = (ModItemWithTalents) modItem;
 
                     if (Main.LocalPlayer.HasItem(talentItem.Item.type))
                     {
                         if (NPC.downedHalloweenKing && NPC.downedHalloweenTree)
                         {
-                            addTalent(talentItem, hash % 3 + 1, shop, ref nextSlot);
+                            AddTalent(talentItem, hash % 3 + 1, shop, ref nextSlot);
                         }
 
                         if (NPC.downedChristmasIceQueen && NPC.downedChristmasSantank && NPC.downedChristmasTree)
                         {
-                            addTalent(talentItem, (hash + 1) % 3 + 1, shop, ref nextSlot);
+                            AddTalent(talentItem, (hash + 1) % 3 + 1, shop, ref nextSlot);
                         }
 
                         if (NPC.downedMartians)
                         {
-                            addTalent(talentItem, (hash + 2) % 3 + 1, shop, ref nextSlot);
+                            AddTalent(talentItem, (hash + 2) % 3 + 1, shop, ref nextSlot);
                         }
                     }
                 }
@@ -277,20 +273,20 @@ namespace DoomBubblesMod
             */
         }
 
-        private void addTalent(TalentItem talentItem, int i, Chest shop, ref int nextSlot)
+        private static void AddTalent(ModItemWithTalents modItemWithTalents, int i, Chest shop, ref int nextSlot)
         {
             switch (i)
             {
                 case 1:
-                    shop.item[nextSlot].SetDefaults(ModContent.Find<ModItem>(talentItem.Talent1Name).Type);
+                    shop.item[nextSlot].SetDefaults(modItemWithTalents.Talent1Item.Type);
                     nextSlot++;
                     break;
                 case 2:
-                    shop.item[nextSlot].SetDefaults(ModContent.Find<ModItem>(talentItem.Talent2Name).Type);
+                    shop.item[nextSlot].SetDefaults(modItemWithTalents.Talent1Item.Type);
                     nextSlot++;
                     break;
                 case 3:
-                    shop.item[nextSlot].SetDefaults(ModContent.Find<ModItem>(talentItem.Talent3Name).Type);
+                    shop.item[nextSlot].SetDefaults(modItemWithTalents.Talent3Item.Type);
                     nextSlot++;
                     break;
             }

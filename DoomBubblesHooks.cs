@@ -1,16 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using DoomBubblesMod.UI;
 using Microsoft.Xna.Framework;
 using MonoMod.Cil;
 using On.Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Terraria.UI;
-using RecipeGroup = Terraria.RecipeGroup;
-
+using Main = Terraria.Main;
 
 namespace DoomBubblesMod
 {
@@ -21,10 +13,30 @@ namespace DoomBubblesMod
             Player.UpdateLifeRegen += PlayerOnUpdateLifeRegen;
             Player.UpdateManaRegen += PlayerOnUpdateManaRegen;
             IL.Terraria.Player.Update += PlayerOnUpdate;
-            Main.DamageVar += (_, dmg, luck) => (int)Math.Round(dmg * (1 + luck / 20));
+            On.Terraria.Main.DamageVar += (_, dmg, luck) => (int)Math.Round(dmg * (1 + luck / 20));
+            On.Terraria.Main.DrawCursor += MainOnDrawCursor;
         }
-        
-        
+
+        private static void MainOnDrawCursor(On.Terraria.Main.orig_DrawCursor orig, Vector2 bonus, bool smart)
+        {
+            var gameMenu = Main.gameMenu;
+            if (gameMenu && Main.alreadyGrabbingSunOrMoon)
+            {
+                return;
+            }
+            
+            var hasRainbowCursor = Main.LocalPlayer.hasRainbowCursor;
+            
+            Main.gameMenu = false;
+            Main.LocalPlayer.hasRainbowCursor = true;
+            
+            orig(bonus, smart);
+
+            Main.gameMenu = gameMenu;
+            Main.LocalPlayer.hasRainbowCursor = hasRainbowCursor;
+        }
+
+
         private static void PlayerOnUpdate(ILContext il)
         {
             var c = new ILCursor(il);

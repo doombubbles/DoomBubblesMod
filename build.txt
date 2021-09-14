@@ -3,5 +3,6 @@ version = 1.34.0
 displayName = Doombubbles' Mod
 includeSource = false
 buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*
-includePDB = false
 homepage=https://github.com/doombubbles/DoomBubblesMod
+modReferences = ElementalDamage
+sortAfter = ElementalDamage

@@ -25,7 +25,7 @@ namespace DoomBubblesMod
 
         public override void SetDefaults(Projectile projectile)
         {
-            if (newLocalNpcImmunity.Contains(projectile.type))
+            /*if (newLocalNpcImmunity.Contains(projectile.type))
             {
                 projectile.usesLocalNPCImmunity = true;
                 projectile.localNPCHitCooldown = 10;
@@ -34,7 +34,7 @@ namespace DoomBubblesMod
             if (projectile.type == ProjectileID.LastPrismLaser)
             {
                 projectile.localNPCHitCooldown = 30;
-            }
+            }*/
 
             if (projectile.ModProjectile != null && (projectile.ModProjectile.Name == "Nebulash" ||
                                                      projectile.ModProjectile.Name == "Nebudust"))
@@ -211,16 +211,6 @@ namespace DoomBubblesMod
             }
 
             base.ModifyHitNPC(projectile, target, ref damage, ref knockback, ref crit, ref hitDirection);
-        }
-
-        public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit)
-        {
-            base.OnHitNPC(projectile, target, damage, knockback, crit);
-            if (projectile.type == ProjectileID.LastPrismLaser)
-            {
-                target.immune[projectile.owner] = 0;
-                projectile.localNPCImmunity[target.whoAmI] = projectile.localNPCHitCooldown;
-            }
         }
 
         public override void Kill(Projectile projectile, int timeLeft)

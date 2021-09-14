@@ -11,11 +11,8 @@ using Terraria.ID;
 
 namespace DoomBubblesMod.Items.HotS
 {
-    public class DiscordBlade : TalentItem
+    public class DiscordBlade : ModItemWithTalents<TalentChaosReigns, TalentDissonance, TalentLethalOnslaught>
     {
-        public override string Talent1Name => "TalentChaosReigns";
-        public override string Talent2Name => "TalentDissonance";
-        public override string Talent3Name => "TalentLethalOnslaught";
         protected override Color? TalentColor => Color.Red;
 
         private float Length => ChosenTalent == 2 || ChosenTalent == -1 ? 600f : 300f;

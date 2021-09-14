@@ -9,11 +9,8 @@ using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Items.HotS
 {
-    public class PhotonCannonStaff : TalentItem
+    public class PhotonCannonStaff : ModItemWithTalents<TalentWarpResonance, TalentTowerDefense, TalentShootEmUp>
     {
-        public override string Talent1Name => "TalentWarpResonance";
-        public override string Talent2Name => "TalentTowerDefense";
-        public override string Talent3Name => "TalentShootEmUp";
         protected override Color? TalentColor => Color.Blue;
 
         public override void SetStaticDefaults()

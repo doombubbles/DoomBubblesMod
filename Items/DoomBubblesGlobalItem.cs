@@ -34,6 +34,11 @@ namespace DoomBubblesMod.Items
                     item.SetNameOverride(replacementName);
                 }
             }
+
+            if (item.accessory)
+            {
+                item.canBePlacedInVanityRegardlessOfConditions = true;
+            }
         }
 
         public override bool CanUseItem(Item item, Player player)
@@ -115,6 +120,11 @@ namespace DoomBubblesMod.Items
                         i--;
                     }
                 }
+            }
+
+            if (item.canBePlacedInVanityRegardlessOfConditions)
+            {
+                tooltips.RemoveAll(line => line.Name == "VanityLegal");
             }
         }
 

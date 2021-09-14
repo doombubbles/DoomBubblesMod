@@ -8,6 +8,7 @@ namespace DoomBubblesMod.Sounds
         public override SoundEffectInstance PlaySound(ref SoundEffectInstance soundInstance, float volume, float pan,
             SoundType type)
         {
+            soundInstance = Sound.Value.CreateInstance();
             soundInstance.Volume = volume * 2.0f;
             soundInstance.Pan = pan;
             return soundInstance;

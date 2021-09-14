@@ -33,7 +33,7 @@ namespace DoomBubblesMod.Projectiles.Thanos
 
             for (var i = 0; i < 1; i++)
             {
-                var dust = Main.dust[Dust.NewDust(Projectile.Center, 0, 0, 212, 0, 0, 0, InfinityGauntlet.power, 1.5f)];
+                var dust = Main.dust[Dust.NewDust(Projectile.Center, 0, 0, 212, 0, 0, 0, InfinityGauntlet.PowerColor, 1.5f)];
                 dust.velocity *= .5f;
                 dust.noGravity = true;
             }

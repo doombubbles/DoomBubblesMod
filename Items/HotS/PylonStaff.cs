@@ -9,11 +9,8 @@ using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Items.HotS
 {
-    public class PylonStaff : TalentItem
+    public class PylonStaff : ModItemWithTalents<TalentPylonOvercharge, TalentConstructAdditionalPylons, TalentPowerOverflowing>
     {
-        public override string Talent1Name => "TalentPylonOvercharge";
-        public override string Talent2Name => "TalentConstructAdditionalPylons";
-        public override string Talent3Name => "TalentPowerOverflowing";
         protected override Color? TalentColor => Color.Blue;
 
         public override void SetStaticDefaults()
@@ -31,7 +28,7 @@ namespace DoomBubblesMod.Items.HotS
             Item.mana = 10;
             Item.useTime = 36;
             Item.useAnimation = 36;
-            Item.useStyle = 1;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.noMelee = true;
             Item.damage = 96;
             Item.shoot = ModContent.ProjectileType<Pylon>();

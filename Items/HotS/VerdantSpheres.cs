@@ -6,11 +6,8 @@ using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Items.HotS
 {
-    public class VerdantSpheres : TalentItem
+    public class VerdantSpheres : ModItemWithTalents<TalentFelInfusion, TalentManaTap, TalentTwinSpheres>
     {
-        public override string Talent1Name => "TalentFelInfusion";
-        public override string Talent2Name => "TalentManaTap";
-        public override string Talent3Name => "TalentTwinSpheres";
         protected override Color? TalentColor => Color.Lime;
 
         public override void SetStaticDefaults()

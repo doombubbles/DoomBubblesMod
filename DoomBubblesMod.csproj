@@ -13,4 +13,9 @@
   <ItemGroup>
     <Folder Include="Localization" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="ElementalDamage, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>lib\ElementalDamage.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>

@@ -9,11 +9,8 @@ using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Items.HotS
 {
-    public class LightningSurge : TalentItem
+    public class LightningSurge : ModItemWithTalents<TalentSustainingPower, TalentLightningBarrage, TalentNegativelyCharged>
     {
-        public override string Talent1Name => "TalentSustainingPower";
-        public override string Talent2Name => "TalentLightningBarrage";
-        public override string Talent3Name => "TalentNegativelyCharged";
         protected override Color? TalentColor => Color.Red;
 
 

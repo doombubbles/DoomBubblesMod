@@ -26,8 +26,7 @@ namespace DoomBubblesMod
         public static Mod calamityMod;
 
         public static List<Color> rainbowColors;
-        public InfinityGauntletUI InfinityGauntletUi;
-
+        public InfinityGauntletUI infinityGauntletUi;
         public UserInterface InfinityGauntletUserInterface;
 
         public override void AddRecipeGroups()
@@ -53,10 +52,10 @@ namespace DoomBubblesMod
 
             if (!Main.dedServ)
             {
-                InfinityGauntletUi = new InfinityGauntletUI();
-                InfinityGauntletUi.Activate();
+                infinityGauntletUi = new InfinityGauntletUI();
+                infinityGauntletUi.Activate();
                 InfinityGauntletUserInterface = new UserInterface();
-                InfinityGauntletUserInterface.SetState(InfinityGauntletUi);
+                InfinityGauntletUserInterface.SetState(infinityGauntletUi);
 
                 //TextureAssets.Projectile[ProjectileID.MoonlordBullet]. TODO texture changing
                 //Main.dustTexture = GetTexture("Dusts/Dust"); TODO dust changing
@@ -75,7 +74,13 @@ namespace DoomBubblesMod
             soulStoneHotKey = null;
             timeStoneHotKey = null;
             mindStoneHotKey = null;
-            InfinityGauntletUi = null;
+            InfinityGauntletUI.backgroundPanel = null;
+            infinityGauntletUi = null;
+            rainbowColors = null;
+            InfinityGauntletUserInterface = null;
+            
+            thoriumMod = null;
+            calamityMod = null;
         }
 
 
@@ -114,15 +119,16 @@ namespace DoomBubblesMod
             var badItems = new[]
             {
                 "AutoHouse",
+                "BoomShuriken",
+                "CityBuster",
                 "InstaBridge",
+                "DoubleObsidianInstaBridge",
                 "InstaTrack",
                 "Instavator",
                 "LihzahrdInstactuationBomb",
                 "MiniInstaBridge",
                 "ObsidianInstaBridge",
                 "Trollbomb",
-                "CityBuster",
-                "BoomShuriken"
             };
 
 

@@ -22,7 +22,7 @@ namespace DoomBubblesMod
                             var doomBubblesMod = ModContent.GetInstance<DoomBubblesMod>();
                             doomBubblesMod.InfinityGauntletUserInterface.Update(Main
                                 ._drawInterfaceGameTime); //I don't understand
-                            doomBubblesMod.InfinityGauntletUi.Draw(Main.spriteBatch);
+                            doomBubblesMod.infinityGauntletUi.Draw(Main.spriteBatch);
                         }
 
                         return true;

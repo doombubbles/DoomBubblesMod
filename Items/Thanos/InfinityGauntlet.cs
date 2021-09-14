@@ -15,12 +15,12 @@ namespace DoomBubblesMod.Items.Thanos
 {
     internal class InfinityGauntlet : ModItem
     {
-        public static Color power = new Color(123, 0, 255);
-        public static Color space = new Color(0, 38, 255);
-        public static Color reality = new Color(150, 0, 0);
-        public static Color soul = new Color(255, 106, 0);
-        public static Color time = new Color(0, 200, 0);
-        public static Color mind = new Color(255, 255, 0);
+        public static readonly Color PowerColor = new Color(123, 0, 255);
+        public static readonly Color SpaceColor = new Color(0, 38, 255);
+        public static readonly Color RealityColor = new Color(150, 0, 0);
+        public static readonly Color SoulColor = new Color(255, 106, 0);
+        public static readonly Color TimeColor = new Color(0, 200, 0);
+        public static readonly Color MindColor = new Color(255, 255, 0);
 
         public override void SetStaticDefaults()
         {
@@ -210,15 +210,15 @@ namespace DoomBubblesMod.Items.Thanos
 
             if (Item.Name.Contains("(Power)"))
             {
-                color = power;
+                color = PowerColor;
             }
             else if (Item.Name.Contains("(Space)"))
             {
-                color = space;
+                color = SpaceColor;
             }
             else if (Item.Name.Contains("(Reality)"))
             {
-                color = reality;
+                color = RealityColor;
 
                 foreach (var dust in Main.dust)
                 {
@@ -236,15 +236,15 @@ namespace DoomBubblesMod.Items.Thanos
             }
             else if (Item.Name.Contains("(Soul)"))
             {
-                color = soul;
+                color = SoulColor;
             }
             else if (Item.Name.Contains("(Time)"))
             {
-                color = time;
+                color = TimeColor;
             }
             else if (Item.Name.Contains("(Mind)"))
             {
-                color = mind;
+                color = MindColor;
             }
 
             if (color != null && !player.channel)
@@ -295,7 +295,7 @@ namespace DoomBubblesMod.Items.Thanos
                 var dX = (float) (12 * Math.Cos(rad));
                 var dY = (float) (12 * Math.Sin(rad));
                 var dust = Dust.NewDustPerfect(new Vector2(player.Center.X, player.Center.Y), 212, new Vector2(dX, dY),
-                    0, space, 1.5f);
+                    0, SpaceColor, 1.5f);
                 dust.noGravity = true;
             }
 
@@ -309,7 +309,7 @@ namespace DoomBubblesMod.Items.Thanos
                 var dX = (float) (12 * Math.Cos(rad));
                 var dY = (float) (12 * Math.Sin(rad));
                 var dust = Dust.NewDustPerfect(new Vector2(player.Center.X, player.Center.Y), 212, new Vector2(dX, dY),
-                    0, space, 1.5f);
+                    0, SpaceColor, 1.5f);
                 dust.noGravity = true;
             }
 
@@ -358,7 +358,7 @@ namespace DoomBubblesMod.Items.Thanos
                             var dX = (float) (10 * Math.Cos(rad));
                             var dY = (float) (10 * Math.Sin(rad));
                             var dust = Dust.NewDustPerfect(new Vector2(gauntlet.X + 10 * dX, gauntlet.Y + 10 * dY), 212,
-                                new Vector2(dX * -1f + player.velocity.X, dY * -1f + player.velocity.Y), 0, power);
+                                new Vector2(dX * -1f + player.velocity.X, dY * -1f + player.velocity.Y), 0, PowerColor);
                             dust.noGravity = true;
                         }
                     }
@@ -372,7 +372,7 @@ namespace DoomBubblesMod.Items.Thanos
                         var dY = (float) (10 * Math.Sin(rad));
 
                         var dust = Dust.NewDustPerfect(new Vector2(gauntlet.X + 10 * dX, gauntlet.Y + 10 * dY), 212,
-                            new Vector2(dX * -1f + player.velocity.X, dY * -1f + player.velocity.Y), 0, power);
+                            new Vector2(dX * -1f + player.velocity.X, dY * -1f + player.velocity.Y), 0, PowerColor);
                         dust.noGravity = true;
                     }
                 }
@@ -431,7 +431,7 @@ namespace DoomBubblesMod.Items.Thanos
                 var dX = (float) (5 * Math.Cos(rad));
                 var dY = (float) (5 * Math.Sin(rad));
                 var dust = Dust.NewDustPerfect(new Vector2(player.Center.X, player.Center.Y), 212, new Vector2(dX, dY),
-                    0, time);
+                    0, TimeColor);
                 dust.noGravity = true;
             }
 
@@ -448,7 +448,7 @@ namespace DoomBubblesMod.Items.Thanos
                 var rad = Math.PI * i / 180;
                 var dX = (float) (9 * Math.Cos(rad));
                 var dY = (float) (9 * Math.Sin(rad));
-                var dust = Dust.NewDustPerfect(newPos, 212, new Vector2(dX, dY), 0, mind, 1.5f);
+                var dust = Dust.NewDustPerfect(newPos, 212, new Vector2(dX, dY), 0, MindColor, 1.5f);
                 dust.noGravity = true;
             }
 
@@ -458,7 +458,7 @@ namespace DoomBubblesMod.Items.Thanos
                 var dX = (float) (9 * Math.Cos(rad));
                 var dY = (float) (9 * Math.Sin(rad));
                 var dust = Dust.NewDustPerfect(new Vector2(newPos.X + 11 * dX, newPos.Y + 11 * dY), 212,
-                    new Vector2(-dX, -dY), 0, mind, 1.5f);
+                    new Vector2(-dX, -dY), 0, MindColor, 1.5f);
                 dust.noGravity = true;
             }
 

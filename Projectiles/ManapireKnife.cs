@@ -18,7 +18,7 @@ namespace DoomBubblesMod.Projectiles
         public override void SetDefaults()
         {
             Projectile.CloneDefaults(ProjectileID.VampireKnife);
-            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.DamageType = DamageClass.Magic;
             Projectile.aiStyle = -1;
         }
 

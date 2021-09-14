@@ -1,4 +1,5 @@
 using System;
+using ElementalDamage.Elements;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -21,7 +22,7 @@ namespace DoomBubblesMod.Projectiles
             Projectile.aiStyle = 1;
             Projectile.friendly = true;
             Projectile.hostile = false;
-            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.DamageType = ModContent.GetInstance<RangedHoly>();
             Projectile.penetrate = 1;
             Projectile.timeLeft = 600;
             Projectile.alpha = 255;

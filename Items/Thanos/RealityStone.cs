@@ -7,8 +7,11 @@ using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Items.Thanos
 {
-    internal class RealityStone : ModItem
+    internal class RealityStone : InfinityStone
     {
+        protected override int Rarity => ItemRarityID.Red;
+        protected override int Gem => ItemID.Ruby;
+        protected override Color Color => InfinityGauntlet.RealityColor;
 
         public override void SetStaticDefaults()
         {
@@ -19,49 +22,7 @@ namespace DoomBubblesMod.Items.Thanos
                                "night. Such evil was possible through the power of the Aether, an ancient\n" +
                                "force of infinite destruction.\"\n" +
                                "-Odin");
-            
-            
             Item.SetResearchAmount(1);
-        }
-
-        public override void SetDefaults()
-        {
-            Item.value = Item.sellPrice(5);
-            Item.rare = ItemRarityID.Red;
-            Item.height = 20;
-            Item.width = 14;
-            Item.useStyle = 4;
-        }
-
-        public override bool? UseItem(Player player)
-        {
-            player.KillMe(
-                PlayerDeathReason.ByCustomReason(player.name + " wielded power beyond " +
-                                                 (player.Male ? "his" : "her") + " control."), 0, 0);
-
-            for (var i = 0; i <= 360; i += 5)
-            {
-                var rad = Math.PI * i / 180;
-                var dX = (float) (10 * Math.Cos(rad));
-                var dY = (float) (10 * Math.Sin(rad));
-                var dust = Dust.NewDustPerfect(new Vector2(player.Center.X, player.Center.Y), 212, new Vector2(dX, dY),
-                    0, InfinityGauntlet.reality, 1.5f);
-                dust.noGravity = true;
-            }
-
-            return base.UseItem(player);
-        }
-        
-        public override void AddRecipes()
-        {
-            var recipe = CreateRecipe();
-            recipe.AddIngredient(ItemID.Ruby);
-            recipe.AddIngredient(ItemID.FragmentNebula, 5);
-            recipe.AddIngredient(ItemID.FragmentSolar, 5);
-            recipe.AddIngredient(ItemID.FragmentStardust, 5);
-            recipe.AddIngredient(ItemID.FragmentVortex, 5);
-            recipe.AddTile(TileID.LunarCraftingStation);
-            recipe.Register();
         }
     }
 }

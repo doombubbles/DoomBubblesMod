@@ -44,7 +44,7 @@ namespace DoomBubblesMod.Projectiles.Thanos
             {
                 var dust = Main.dust[Dust.NewDust(new Vector2(Projectile.Center.X + Projectile.velocity.X * i / 6,
                         Projectile.Center.Y + Projectile.velocity.Y * i / 6), 0, 0, 212, 0, 0, 0,
-                    InfinityGauntlet.reality,
+                    InfinityGauntlet.RealityColor,
                     1.5f)];
                 dust.velocity *= .5f;
                 dust.noGravity = true;

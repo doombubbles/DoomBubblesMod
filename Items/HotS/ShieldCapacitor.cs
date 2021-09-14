@@ -5,11 +5,8 @@ using Terraria.ID;
 
 namespace DoomBubblesMod.Items.HotS
 {
-    public class ShieldCapacitor : TalentItem
+    public class ShieldCapacitor : ModItemWithTalents<TalentUnconqueredSpirit, TalentDampeningField, TalentPhotonicWeaponry>
     {
-        public override string Talent1Name => "TalentUnconqueredSpirit";
-        public override string Talent2Name => "TalentDampeningField";
-        public override string Talent3Name => "TalentPhotonicWeaponry";
         protected override Color? TalentColor => Color.Orange;
 
 

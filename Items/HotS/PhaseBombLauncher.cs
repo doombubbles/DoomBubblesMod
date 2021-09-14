@@ -9,11 +9,8 @@ using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Items.HotS
 {
-    public class PhaseBombLauncher : TalentItem
+    public class PhaseBombLauncher : ModItemWithTalents<TalentSecondaryFire, TalentSingularityCharge, TalentDivertPowerWeapons>
     {
-        public override string Talent1Name => "TalentSecondaryFire";
-        public override string Talent2Name => "TalentSingularityCharge";
-        public override string Talent3Name => "TalentDivertPowerWeapons";
         protected override Color? TalentColor => Color.Orange;
 
         public override void SetStaticDefaults()

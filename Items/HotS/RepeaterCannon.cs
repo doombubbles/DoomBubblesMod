@@ -7,13 +7,10 @@ using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Items.HotS
 {
-    public class RepeaterCannon : TalentItem
+    public class RepeaterCannon : ModItemWithTalents<TalentMobileOffense, TalentOffensiveCadence, TalentArsenalOvercharge>
     {
         private short m_Shot;
 
-        public override string Talent1Name => "TalentMobileOffense";
-        public override string Talent2Name => "TalentOffensiveCadence";
-        public override string Talent3Name => "TalentArsenalOvercharge";
         protected override Color? TalentColor => Color.Orange;
 
         public override void SetStaticDefaults()

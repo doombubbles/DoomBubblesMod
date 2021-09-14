@@ -22,7 +22,7 @@ namespace DoomBubblesMod
         public bool powerStone;
         public int powerStoneCharge;
         public int powerStoned;
-        public List<int> powerStoning = new List<int>();
+        public HashSet<int> powerStoning = new HashSet<int>();
         public bool soulStone;
         public Tile soulStoneTile = new Tile();
         public bool soulStoneTileActive;
@@ -38,7 +38,7 @@ namespace DoomBubblesMod
                 powerStoned--;
             }
 
-            powerStoning.RemoveAll(i => !Main.npc[i].HasBuff(ModContent.BuffType<PowerStoneDebuff>()));
+            powerStoning.RemoveWhere(i => !Main.npc[i].HasBuff(ModContent.BuffType<PowerStoneDebuff>()));
             InfinityGauntlet = null;
         }
 
@@ -86,7 +86,7 @@ namespace DoomBubblesMod
                                 var dust = Dust.NewDustPerfect(new Vector2(gauntlet.X + 10 * dX, gauntlet.Y + 10 * dY),
                                     212,
                                     new Vector2(dX * -1f + Player.velocity.X, dY * -1f + Player.velocity.Y), 0,
-                                    Items.Thanos.InfinityGauntlet.power);
+                                    Items.Thanos.InfinityGauntlet.PowerColor);
                                 dust.noGravity = true;
                             }
                         }
@@ -102,7 +102,7 @@ namespace DoomBubblesMod
                             var dust = Dust.NewDustPerfect(new Vector2(gauntlet.X + 10 * dX, gauntlet.Y + 10 * dY),
                                 212,
                                 new Vector2(dX * -1f + Player.velocity.X, dY * -1f + Player.velocity.Y), 0,
-                                Items.Thanos.InfinityGauntlet.power);
+                                Items.Thanos.InfinityGauntlet.PowerColor);
                             dust.noGravity = true;
                         }
                     }
@@ -143,7 +143,7 @@ namespace DoomBubblesMod
                         var dX = (float) (12 * Math.Cos(rad));
                         var dY = (float) (12 * Math.Sin(rad));
                         var dust = Dust.NewDustPerfect(new Vector2(Player.Center.X, Player.Center.Y), 212,
-                            new Vector2(dX, dY), 0, Items.Thanos.InfinityGauntlet.space, 1.5f);
+                            new Vector2(dX, dY), 0, Items.Thanos.InfinityGauntlet.SpaceColor, 1.5f);
                         dust.noGravity = true;
                     }
 
@@ -157,7 +157,7 @@ namespace DoomBubblesMod
                         var dX = (float) (12 * Math.Cos(rad));
                         var dY = (float) (12 * Math.Sin(rad));
                         var dust = Dust.NewDustPerfect(new Vector2(Player.Center.X, Player.Center.Y), 212,
-                            new Vector2(dX, dY), 0, Items.Thanos.InfinityGauntlet.space, 1.5f);
+                            new Vector2(dX, dY), 0, Items.Thanos.InfinityGauntlet.SpaceColor, 1.5f);
                         dust.noGravity = true;
                     }
 
@@ -211,7 +211,7 @@ namespace DoomBubblesMod
                             var dX = (float) (5 * Math.Cos(rad));
                             var dY = (float) (5 * Math.Sin(rad));
                             var dust = Dust.NewDustPerfect(new Vector2(Player.Center.X, Player.Center.Y), 212,
-                                new Vector2(dX, dY), 0, Items.Thanos.InfinityGauntlet.time);
+                                new Vector2(dX, dY), 0, Items.Thanos.InfinityGauntlet.TimeColor);
                             dust.noGravity = true;
                         }
 
@@ -229,7 +229,7 @@ namespace DoomBubblesMod
                         var rad = Math.PI * i / 180;
                         var dX = (float) (9 * Math.Cos(rad));
                         var dY = (float) (9 * Math.Sin(rad));
-                        var dust = Dust.NewDustPerfect(newPos, 212, new Vector2(dX, dY), 0, Items.Thanos.InfinityGauntlet.mind,
+                        var dust = Dust.NewDustPerfect(newPos, 212, new Vector2(dX, dY), 0, Items.Thanos.InfinityGauntlet.MindColor,
                             1.5f);
                         dust.noGravity = true;
                     }
@@ -240,7 +240,7 @@ namespace DoomBubblesMod
                         var dX = (float) (9 * Math.Cos(rad));
                         var dY = (float) (9 * Math.Sin(rad));
                         var dust = Dust.NewDustPerfect(new Vector2(newPos.X + 11 * dX, newPos.Y + 11 * dY), 212,
-                            new Vector2(-dX, -dY), 0, Items.Thanos.InfinityGauntlet.mind, 1.5f);
+                            new Vector2(-dX, -dY), 0, Items.Thanos.InfinityGauntlet.MindColor, 1.5f);
                         dust.noGravity = true;
                     }
 
@@ -272,11 +272,15 @@ namespace DoomBubblesMod
 
         public override void PreUpdate()
         {
-            if (Main.time % 60 == 0)
+            if (powerStone)
             {
-                foreach (var i in powerStoning)
+                var buffIndex = Player.FindBuffIndex(ModContent.BuffType<Buffs.PowerStone>());
+                if (buffIndex != -1 && Player.buffTime[buffIndex] % 60 == 0)
                 {
-                    powerStoneDamage(i, .1f);
+                    foreach (var i in powerStoning)
+                    {
+                        powerStoneDamage(i, .1f);
+                    }
                 }
             }
 
@@ -325,7 +329,7 @@ namespace DoomBubblesMod
 
         public override void UpdateDead()
         {
-            powerStoning = new List<int>();
+            powerStoning = new HashSet<int>();
         }
 
         public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
@@ -388,7 +392,7 @@ namespace DoomBubblesMod
             Player.addDPS(damage);
             if (combatText != -1 && Main.combatText[combatText].active)
             {
-                Main.combatText[combatText].color = Items.Thanos.InfinityGauntlet.power;
+                Main.combatText[combatText].color = Items.Thanos.InfinityGauntlet.PowerColor;
                 Main.combatText[combatText].crit = multiplier > .05f;
                 Main.combatText[combatText].dot = multiplier > .05f;
             }

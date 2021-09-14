@@ -1,4 +1,5 @@
 using DoomBubblesMod.Projectiles;
+using ElementalDamage.Elements;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -21,7 +22,7 @@ namespace DoomBubblesMod.Items.Weapons
         public override void SetDefaults()
         {
             Item.damage = 42;
-            Item.DamageType = DamageClass.Ranged;
+            Item.DamageType = ModContent.GetInstance<RangedNature>();
             Item.width = 64;
             Item.height = 22;
             Item.useTime = 9;
