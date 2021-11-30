@@ -90,7 +90,7 @@ namespace DoomBubblesMod.Projectiles
             for (var num294 = 0; num294 < num293; num294++)
             {
                 var num295 = Dust.NewDust(Projectile.Center - Projectile.velocity / 2f, 0, 0, 63, 0f, 0f, 100,
-                    DoomBubblesMod.rainbowColors[Main.rand.Next(0, 6)], 2.1f);
+                    DoomBubblesMod.RainbowColors[Main.rand.Next(0, 6)], 2.1f);
                 var dust = Main.dust[num295];
                 dust.velocity *= 2f;
                 Main.dust[num295].noGravity = true;

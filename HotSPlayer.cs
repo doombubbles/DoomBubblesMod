@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DoomBubblesMod.Buffs;
-using Microsoft.Xna.Framework;
+using DoomBubblesMod.Utils;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ModLoader;
-using SoundType = Terraria.ModLoader.SoundType;
 
 namespace DoomBubblesMod
 {
@@ -25,9 +22,9 @@ namespace DoomBubblesMod
 
         public int shieldCapacitorChosenTalent;
         public bool newShieldCapactior;
-        
+
         public bool superVerdant;
-        
+
         public bool verdant;
 
         public override void ResetEffects()
@@ -84,9 +81,10 @@ namespace DoomBubblesMod
 
                     if (i == 119 && shieldHealth == 24)
                     {
-                        SoundEngine.PlaySound(SoundLoader.customSoundType, (int) Player.Center.X, (int) Player.Center.Y,
-                            Mod.GetSoundSlot(SoundType.Custom, "Sounds/ShieldRecharge"));
+                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/ShieldRecharge"),
+                            Player.Center);
                     }
+
                     return i;
                 });
             }
@@ -209,7 +207,7 @@ namespace DoomBubblesMod
         {
             if (item.CountsAsClass(DamageClass.Magic) && manaTap && item.mana > 0)
             {
-                flat += item.mana * (float)damage;
+                flat += item.mana * (float) damage;
             }
         }
     }

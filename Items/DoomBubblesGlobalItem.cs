@@ -43,7 +43,7 @@ namespace DoomBubblesMod.Items
 
         public override bool CanUseItem(Item item, Player player)
         {
-            if (player.GetModPlayer<ThanosPlayer>().InfinityGauntlet != null && DoomBubblesMod.powerStoneHotKey.Current)
+            if (player.GetModPlayer<ThanosPlayer>().infinityGauntlet != null && DoomBubblesMod.powerStoneHotKey.Current)
             {
                 return false;
             }
@@ -109,8 +109,10 @@ namespace DoomBubblesMod.Items
                 });
             }
 
-            if (item.playerIndexTheItemIsReservedFor != 255 && item.playerIndexTheItemIsReservedFor != -1 && Main.player[item.playerIndexTheItemIsReservedFor].GetModPlayer<DoomBubblesPlayer>()
-                .noManaItems.Contains(item.type))
+            if (!Main.gameMenu && item.playerIndexTheItemIsReservedFor != 255 &&
+                item.playerIndexTheItemIsReservedFor != -1 && Main.player[item.playerIndexTheItemIsReservedFor]
+                    .GetModPlayer<DoomBubblesPlayer>()
+                    .noManaItems.Contains(item.type))
             {
                 for (var i = 0; i < tooltips.Count; i++)
                 {
@@ -138,15 +140,14 @@ namespace DoomBubblesMod.Items
             base.UpdateAccessory(item, player, hideVisual);
         }
 
-        public override bool CanEquipAccessory(Item item, Player player, int slot)
+        public override bool CanEquipAccessory(Item item, Player player, int slot, bool modded)
         {
             if (item.Name.Contains("Emblem") && player.GetModPlayer<DoomBubblesPlayer>().emblem < 0)
             {
                 return false;
             }
 
-            return base.CanEquipAccessory(item, player, slot);
+            return base.CanEquipAccessory(item, player, slot, modded);
         }
-
     }
 }

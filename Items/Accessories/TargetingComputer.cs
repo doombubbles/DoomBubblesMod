@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using DoomBubblesMod.Utils;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace DoomBubblesMod.Items.Accessories

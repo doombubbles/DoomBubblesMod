@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
-using SoundType = Terraria.ModLoader.SoundType;
+
 
 namespace DoomBubblesMod.Projectiles.HotS
 {
@@ -56,7 +56,7 @@ namespace DoomBubblesMod.Projectiles.HotS
                         ModContent.ProjectileType<LivingBomb>(),
                         Damage, ++Projectile.knockBack, Projectile.owner, ChosenTalent, target.whoAmI);
                     Main.projectile[proj].netUpdate = true;
-                    SoundEngine.PlaySound(Mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/LivingBombWand2"), target.Center);
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/LivingBombWand2"), target.Center);
                 }
                 else if (ChosenTalent is 1 or -1 &&
                          target.buffTime[target.FindBuffIndex(ModContent.BuffType<Buffs.LivingBomb>())] < 150)
@@ -66,7 +66,7 @@ namespace DoomBubblesMod.Projectiles.HotS
                         ModContent.ProjectileType<LivingBomb>(),
                         Damage, ++Projectile.knockBack, Projectile.owner, ChosenTalent, target.whoAmI);
                     Main.projectile[proj].netUpdate = true;
-                    SoundEngine.PlaySound(Mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/LivingBombWand2"), target.Center);
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/LivingBombWand2"), target.Center);
                 }
             }
 
@@ -88,7 +88,7 @@ namespace DoomBubblesMod.Projectiles.HotS
             {
                 Projectile.timeLeft = 10;
                 Projectile.alpha = 0;
-                SoundEngine.PlaySound(Mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/LivingBoom"), Projectile.Center);
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/LivingBoom"), Projectile.Center);
             }
 
             if (Projectile.timeLeft < 10)

@@ -11,7 +11,7 @@ namespace DoomBubblesMod.Items.Phase
 
         public override void AddRecipes()
         {
-            if (DoomBubblesMod.thoriumMod != null)
+            if (DoomBubblesMod.ThoriumMod != null)
             {
                 AddThoriumRecipe();
             }
@@ -20,7 +20,7 @@ namespace DoomBubblesMod.Items.Phase
         private void AddThoriumRecipe()
         {
             var recipe = CreateRecipe();
-            recipe.AddIngredient(DoomBubblesMod.thoriumMod.Find<ModItem>(PhasesaberModItem));
+            recipe.AddIngredient(DoomBubblesMod.ThoriumMod.Find<ModItem>(PhasesaberModItem));
             recipe.AddIngredient(ItemID.Ectoplasm, 25);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();

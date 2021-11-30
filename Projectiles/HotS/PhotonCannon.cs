@@ -8,7 +8,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ModLoader;
-using SoundType = Terraria.ModLoader.SoundType;
+
 
 namespace DoomBubblesMod.Projectiles.HotS
 {
@@ -16,7 +16,7 @@ namespace DoomBubblesMod.Projectiles.HotS
     {
         private static readonly float ProjSpeed = 10f;
 
-        private int ChosenTalent => (int)Math.Round(Projectile.ai[0]);
+        private int ChosenTalent => (int) Math.Round(Projectile.ai[0]);
 
         private float ShootDistance => 600f;
         private float AttackSpeed => ChosenTalent == 3 || ChosenTalent == -1 ? 30f : 60f;
@@ -123,8 +123,8 @@ namespace DoomBubblesMod.Projectiles.HotS
         {
             if (Projectile.alpha == 69)
             {
-                SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Projectile.Center.X, (int)
-                    Projectile.Center.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/PhotonCannonWarpIn"));
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/PhotonCannonWarpIn"),
+                    Projectile.Center);
                 Projectile.alpha = 0;
             }
 
@@ -191,7 +191,7 @@ namespace DoomBubblesMod.Projectiles.HotS
                     {
                         var x = Projectile.Center.X + ShootDistance * Math.Cos(i * Math.PI / 180f);
                         var y = Projectile.Center.Y + ShootDistance * Math.Sin(i * Math.PI / 180f);
-                        var dust = Dust.NewDustPerfect(new Vector2((float)x, (float)y), 182);
+                        var dust = Dust.NewDustPerfect(new Vector2((float) x, (float) y), 182);
                         dust.scale = .5f;
                         dust.noGravity = true;
                         dust.noLight = true;
@@ -242,15 +242,14 @@ namespace DoomBubblesMod.Projectiles.HotS
                 var theta = Math.Atan2(target.Center.Y - y, target.Center.X - x);
                 var dX = ProjSpeed * Math.Cos(theta);
                 var dY = ProjSpeed * Math.Sin(theta);
-                var proj = Projectile.NewProjectile(new ProjectileSource_ProjectileParent(Projectile), x, y, (float)dX,
-                    (float)dY, ModContent.ProjectileType<Photon>(),
-                    (int)(Projectile.damage + (ChosenTalent == 1 || ChosenTalent == -1 ? Projectile.ai[1] : 0)),
+                var proj = Projectile.NewProjectile(new ProjectileSource_ProjectileParent(Projectile), x, y, (float) dX,
+                    (float) dY, ModContent.ProjectileType<Photon>(),
+                    (int) (Projectile.damage + (ChosenTalent == 1 || ChosenTalent == -1 ? Projectile.ai[1] : 0)),
                     Projectile.knockBack, Projectile.owner, ChosenTalent, target.whoAmI);
 
                 Main.projectile[proj].netUpdate = true;
                 Projectile.netUpdate = true;
-                SoundEngine.PlaySound(SoundLoader.customSoundType, (int)x, (int)y,
-                    Mod.GetSoundSlot(SoundType.Custom, "Sounds/PhotonShoot"));
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/PhotonShoot"), (int) x, (int) y);
             }
         }
 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="../tModLoader.targets" />
+  <Import Project="..\tModLoader.targets" />
   <PropertyGroup>
     <AssemblyName>DoomBubblesMod</AssemblyName>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
@@ -11,7 +11,16 @@
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Localization" />
+    <Compile Remove="OldAssets\**" />
+    <Compile Remove="lib\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="OldAssets\**" />
+    <EmbeddedResource Remove="lib\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="OldAssets\**" />
+    <None Remove="lib\**" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ElementalDamage, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">

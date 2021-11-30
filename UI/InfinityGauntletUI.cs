@@ -14,46 +14,46 @@ namespace DoomBubblesMod.UI
         public static UIImage backgroundPanel;
         public static bool visible;
         private List<UIImageButton> buttonList;
-        public float panelHeight;
-        public float panelWidth;
+        private float panelHeight;
+        private float panelWidth;
 
 
         public override void OnInitialize()
         {
-            buttonList = new List<UIImageButton>();
+            buttonList = new();
             panelWidth = 84f;
             panelHeight = 117f;
 
-            backgroundPanel = new UIImage(ModContent.Request<Texture2D>("DoomBubblesMod/UI/Gauntlet", AssetRequestMode.ImmediateLoad));
+            backgroundPanel = new(ModContent.Request<Texture2D>("DoomBubblesMod/UI/Gauntlet", AssetRequestMode.ImmediateLoad));
             backgroundPanel.SetPadding(0);
-            backgroundPanel.Left.Set((float) Main.screenWidth / 2 - panelWidth / 2, 0f);
-            backgroundPanel.Top.Set((float) Main.screenHeight / 2 - panelHeight / 2, 0f);
+            backgroundPanel.Left.Set((Main.screenWidth / 2f - panelWidth / 2) / Main.UIScale, 0f);
+            backgroundPanel.Top.Set((Main.screenHeight / 2f - panelHeight / 2) / Main.UIScale, 0f);
             backgroundPanel.Width.Set(panelWidth, 0f);
             backgroundPanel.Height.Set(panelHeight, 0f);
 
-            initializeGems(ref backgroundPanel);
+            InitializeGems();
 
             Append(backgroundPanel);
             Recalculate();
         }
 
 
-        public void initializeGems(ref UIImage backgroundPanel)
+        private void InitializeGems()
         {
-            addButton(0, "DoomBubblesMod/Items/Thanos/PowerStone", 52, 9);
-            addButton(1, "DoomBubblesMod/Items/Thanos/SpaceStone", 37, 7);
-            addButton(2, "DoomBubblesMod/Items/Thanos/RealityStone", 22, 7);
-            addButton(3, "DoomBubblesMod/Items/Thanos/SoulStone", 8, 11);
-            addButton(4, "DoomBubblesMod/Items/Thanos/TimeStone", 70, 28);
-            addButton(5, "DoomBubblesMod/Items/Thanos/MindStone", 29, 26);
+            AddButton(0, "DoomBubblesMod/Items/Thanos/PowerStone", 52, 9);
+            AddButton(1, "DoomBubblesMod/Items/Thanos/SpaceStone", 37, 7);
+            AddButton(2, "DoomBubblesMod/Items/Thanos/RealityStone", 22, 7);
+            AddButton(3, "DoomBubblesMod/Items/Thanos/SoulStone", 8, 11);
+            AddButton(4, "DoomBubblesMod/Items/Thanos/TimeStone", 70, 28);
+            AddButton(5, "DoomBubblesMod/Items/Thanos/MindStone", 29, 26);
         }
 
-        public void addButton(int i, string texture, int x, int y)
+        private void AddButton(int i, string texture, int x, int y)
         {
             var buttonTexture = ModContent.Request<Texture2D>(texture, AssetRequestMode.ImmediateLoad);
-            buttonList.Add(new UIImageButton(buttonTexture));
+            buttonList.Add(new(buttonTexture));
             var index = i;
-            buttonList[i].OnClick += (evt, element) => chooseGem(index);
+            buttonList[i].OnClick += (evt, element) => ChooseGem(index);
             buttonList[i].SetVisibility(1f, .75f);
             buttonList[i].Left.Set(x, 0f);
             buttonList[i].Top.Set(y, 0f);
@@ -67,7 +67,7 @@ namespace DoomBubblesMod.UI
 
             if (backgroundPanel.Left.Pixels == newPanelX)
             {
-                if (!backgroundPanel.ContainsPoint(new Vector2(Main.mouseX, Main.mouseY)))
+                if (!backgroundPanel.ContainsPoint(new(Main.mouseX, Main.mouseY)))
                 {
                     visible = false;
                 }
@@ -81,7 +81,7 @@ namespace DoomBubblesMod.UI
             Recalculate();
         }
 
-        public void chooseGem(int gem)
+        private static void ChooseGem(int gem)
         {
             Main.player[Main.myPlayer].GetModPlayer<ThanosPlayer>().gem = gem;
             visible = false;
@@ -89,8 +89,8 @@ namespace DoomBubblesMod.UI
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            var MousePosition = new Vector2(Main.mouseX, Main.mouseY);
-            if (backgroundPanel.ContainsPoint(MousePosition))
+            var mousePosition = new Vector2(Main.mouseX, Main.mouseY);
+            if (backgroundPanel.ContainsPoint(mousePosition))
             {
                 Main.LocalPlayer.mouseInterface = true;
             }

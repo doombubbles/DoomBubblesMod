@@ -6,7 +6,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
-using SoundType = Terraria.ModLoader.SoundType;
+
 
 namespace DoomBubblesMod.Projectiles.HotS
 {
@@ -80,8 +80,7 @@ namespace DoomBubblesMod.Projectiles.HotS
 
             if (Projectile.alpha == 69)
             {
-                SoundEngine.PlaySound(SoundLoader.customSoundType, (int)Projectile.Center.X, (int)
-                    Projectile.Center.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/PylonWarpIn"));
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/PylonWarpIn"), Projectile.Center);
                 Projectile.alpha = 0;
             }
 
@@ -210,8 +209,7 @@ namespace DoomBubblesMod.Projectiles.HotS
 
                 Main.projectile[proj].netUpdate = true;
                 Projectile.netUpdate = true;
-                SoundEngine.PlaySound(SoundLoader.customSoundType, (int)x, (int)y,
-                    Mod.GetSoundSlot(SoundType.Custom, "Sounds/PylonLaser"));
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/PylonLaser"), (int)x, (int)y);
             }
         }
 

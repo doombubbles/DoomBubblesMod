@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using DoomBubblesMod.Utils;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -30,7 +31,7 @@ namespace DoomBubblesMod.Items.Accessories.Emblem
 
         public override void AddRecipes()
         {
-            if (DoomBubblesMod.thoriumMod != null)
+            if (DoomBubblesMod.ThoriumMod != null)
             {
                 var recipe = CreateRecipe();
                 addThoriumRecipe(ref recipe);
@@ -43,7 +44,7 @@ namespace DoomBubblesMod.Items.Accessories.Emblem
 
         public void addThoriumRecipe(ref Recipe recipe)
         {
-            var thoriumMod = DoomBubblesMod.thoriumMod;
+            var thoriumMod = DoomBubblesMod.ThoriumMod;
             recipe.AddIngredient(thoriumMod.Find<ModItem>("NinjaEmblem"));
         }
     }

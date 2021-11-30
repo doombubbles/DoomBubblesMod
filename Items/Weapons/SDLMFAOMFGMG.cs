@@ -1,4 +1,5 @@
 using DoomBubblesMod.Projectiles;
+using DoomBubblesMod.Utils;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
@@ -44,9 +45,9 @@ namespace DoomBubblesMod.Items.Weapons
             return new Vector2(0, -5);
         }
 
-        public override bool ConsumeAmmo(Player player)
+        public override bool CanConsumeAmmo(Player player)
         {
-            return !(Main.rand.NextDouble() <= .75) && base.ConsumeAmmo(player);
+            return !(Main.rand.NextDouble() <= .75) && base.CanConsumeAmmo(player);
         }
 
         /*public override void ModifyWeaponDamage(Player player, ref StatModifier damage, ref float flat)
@@ -87,7 +88,7 @@ namespace DoomBubblesMod.Items.Weapons
             }
 
 
-            if (DoomBubblesMod.calamityMod != null)
+            if (DoomBubblesMod.CalamityMod != null)
             {
                 FireCalamityProjectiles(source, position, velocity, damage, knockback, player);
             }
@@ -102,21 +103,21 @@ namespace DoomBubblesMod.Items.Weapons
             if (dub > .66)
             {
                 var projecitle = Projectile.NewProjectileDirect(source, position, velocity * 3,
-                    DoomBubblesMod.calamityMod.Find<ModProjectile>("FishronRPG").Type,
+                    DoomBubblesMod.CalamityMod.Find<ModProjectile>("FishronRPG").Type,
                     damage, knockBack, player.whoAmI);
                 projecitle.netUpdate = true;
             }
             else if (dub < .33)
             {
                 var projecitle = Projectile.NewProjectileDirect(source, position, velocity * 2,
-                    DoomBubblesMod.calamityMod.Find<ModProjectile>("BloodfireBullet").Type,
+                    DoomBubblesMod.CalamityMod.Find<ModProjectile>("BloodfireBullet").Type,
                     damage, knockBack, player.whoAmI);
                 projecitle.netUpdate = true;
             }
             else
             {
                 var projecitle = Projectile.NewProjectileDirect(source, position, velocity * 2,
-                    DoomBubblesMod.calamityMod.Find<ModProjectile>("AstralRound").Type,
+                    DoomBubblesMod.CalamityMod.Find<ModProjectile>("AstralRound").Type,
                     damage, knockBack, player.whoAmI);
                 projecitle.netUpdate = true;
             }
@@ -124,7 +125,7 @@ namespace DoomBubblesMod.Items.Weapons
 
         public override void AddRecipes()
         {
-            if (DoomBubblesMod.calamityMod != null)
+            if (DoomBubblesMod.CalamityMod != null)
             {
                 AddCalamityRecipe();
             }
@@ -133,20 +134,20 @@ namespace DoomBubblesMod.Items.Weapons
         private void AddCalamityRecipe()
         {
             var recipe = CreateRecipe();
-            recipe.AddIngredient(DoomBubblesMod.calamityMod.Find<ModItem>("SDFMG"));
-            recipe.AddIngredient(DoomBubblesMod.calamityMod.Find<ModItem>("ClaretCannon"));
-            recipe.AddIngredient(DoomBubblesMod.calamityMod.Find<ModItem>("StormDragoon"));
-            recipe.AddIngredient(DoomBubblesMod.calamityMod.Find<ModItem>("AstralBlaster"));
+            recipe.AddIngredient(DoomBubblesMod.CalamityMod.Find<ModItem>("SDFMG"));
+            recipe.AddIngredient(DoomBubblesMod.CalamityMod.Find<ModItem>("ClaretCannon"));
+            recipe.AddIngredient(DoomBubblesMod.CalamityMod.Find<ModItem>("StormDragoon"));
+            recipe.AddIngredient(DoomBubblesMod.CalamityMod.Find<ModItem>("AstralBlaster"));
             recipe.AddIngredient(ModContent.ItemType<TerraRifle>());
             recipe.AddIngredient(ModContent.ItemType<Ultrashark>());
-            recipe.AddIngredient(DoomBubblesMod.calamityMod.Find<ModItem>("NightmareFuel"), 5);
-            recipe.AddIngredient(DoomBubblesMod.calamityMod.Find<ModItem>("EndothermicEnergy"), 5);
-            recipe.AddIngredient(DoomBubblesMod.calamityMod.Find<ModItem>("CosmiliteBar"), 5);
-            recipe.AddIngredient(DoomBubblesMod.calamityMod.Find<ModItem>("Phantoplasm"), 5);
-            recipe.AddIngredient(DoomBubblesMod.calamityMod.Find<ModItem>("HellcasterFragment"), 3);
-            recipe.AddIngredient(DoomBubblesMod.calamityMod.Find<ModItem>("DarksunFragment"), 5);
-            recipe.AddIngredient(DoomBubblesMod.calamityMod.Find<ModItem>("AuricOre"), 25);
-            recipe.AddTile(DoomBubblesMod.calamityMod.Find<ModTile>("DraedonsForge").Type);
+            recipe.AddIngredient(DoomBubblesMod.CalamityMod.Find<ModItem>("NightmareFuel"), 5);
+            recipe.AddIngredient(DoomBubblesMod.CalamityMod.Find<ModItem>("EndothermicEnergy"), 5);
+            recipe.AddIngredient(DoomBubblesMod.CalamityMod.Find<ModItem>("CosmiliteBar"), 5);
+            recipe.AddIngredient(DoomBubblesMod.CalamityMod.Find<ModItem>("Phantoplasm"), 5);
+            recipe.AddIngredient(DoomBubblesMod.CalamityMod.Find<ModItem>("HellcasterFragment"), 3);
+            recipe.AddIngredient(DoomBubblesMod.CalamityMod.Find<ModItem>("DarksunFragment"), 5);
+            recipe.AddIngredient(DoomBubblesMod.CalamityMod.Find<ModItem>("AuricOre"), 25);
+            recipe.AddTile(DoomBubblesMod.CalamityMod.Find<ModTile>("DraedonsForge").Type);
             recipe.Register();
         }
     }

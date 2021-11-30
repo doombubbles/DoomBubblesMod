@@ -1,4 +1,5 @@
 using DoomBubblesMod.Projectiles;
+using DoomBubblesMod.Utils;
 using ElementalDamage.Elements;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -56,7 +57,7 @@ namespace DoomBubblesMod.Items.Weapons
         }
 
         // What if I wanted this gun to have a 38% chance not to consume ammo?
-        public override bool ConsumeAmmo(Player player)
+        public override bool CanConsumeAmmo(Player player)
         {
             return Main.rand.NextFloat() >= .50f;
         }

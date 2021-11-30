@@ -5,7 +5,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using SoundType = Terraria.ModLoader.SoundType;
+
 
 namespace DoomBubblesMod.Projectiles.HotS
 {
@@ -43,7 +43,7 @@ namespace DoomBubblesMod.Projectiles.HotS
                 var proj = Projectile.NewProjectile(new ProjectileSource_ProjectileParent(Projectile), target.Center, new Vector2(0, 0), ModContent.ProjectileType<LivingBomb>(),
                     damage * 2, 0, Projectile.owner, ChosenTalent, target.whoAmI);
                 Main.projectile[proj].netUpdate = true;
-                SoundEngine.PlaySound(Mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/LivingBombWand2"), target.Center);
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/LivingBombWand2"), target.Center);
             }
             else if (ChosenTalent == 1 || ChosenTalent == -1)
             {
@@ -51,7 +51,7 @@ namespace DoomBubblesMod.Projectiles.HotS
                 var proj = Projectile.NewProjectile(new ProjectileSource_ProjectileParent(Projectile), target.Center, new Vector2(0, 0), ModContent.ProjectileType<LivingBomb>(),
                     damage * 2, 0, Projectile.owner, ChosenTalent, target.whoAmI);
                 Main.projectile[proj].netUpdate = true;
-                SoundEngine.PlaySound(Mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/LivingBombWand2"), target.Center);
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/LivingBombWand2"), target.Center);
             }
 
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);

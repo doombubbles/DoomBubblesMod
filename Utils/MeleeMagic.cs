@@ -1,6 +1,6 @@
 using Terraria.ModLoader;
 
-namespace DoomBubblesMod
+namespace DoomBubblesMod.Utils
 {
     public class MeleeMagic : DamageClass
     {

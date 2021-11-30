@@ -129,7 +129,7 @@ namespace DoomBubblesMod.Projectiles
                 {
                     var num5 = Dust.NewDust(value - Vector2.One * 8f, 16, 16, 63, Projectile.velocity.X / 2f,
                         Projectile.velocity.Y / 2f,
-                        100, DoomBubblesMod.rainbowColors[Main.rand.Next(0, 6)]);
+                        100, DoomBubblesMod.RainbowColors[Main.rand.Next(0, 6)]);
                     Main.dust[num5].velocity *= 0.66f;
                     Main.dust[num5].noGravity = true;
                     Main.dust[num5].scale = 1.4f;

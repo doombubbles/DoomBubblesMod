@@ -118,15 +118,7 @@ namespace DoomBubblesMod
                         var projectile = Main.projectile[i];
                         if (!projectile.friendly)
                         {
-                            projectile.hostile = false;
-                            if (Main.netMode == NetmodeID.MultiplayerClient)
-                            {
-                                var packet = Mod.GetPacket();
-                                packet.Write((byte) DoomBubblesModMessageType.infinityStone);
-                                packet.Write(projectile.whoAmI);
-                                packet.Write(1);
-                                packet.Send();
-                            }
+                            new MindStonePacket {ProjectileId = projectile.whoAmI}.HandleForAll();
                         }
                     }
                 }
@@ -138,16 +130,7 @@ namespace DoomBubblesMod
                         var n = Main.npc[i];
                         if (!n.friendly && !n.boss)
                         {
-                            n.damage = 0;
-                            n.GetGlobalNPC<DoomBubblesGlobalNPC>().mindStoneFriendly = true;
-                            if (Main.netMode == NetmodeID.MultiplayerClient)
-                            {
-                                var packet = Mod.GetPacket();
-                                packet.Write((byte) DoomBubblesModMessageType.infinityStone);
-                                packet.Write(n.whoAmI);
-                                packet.Write(2);
-                                packet.Send();
-                            }
+                            new MindStonePacket {NpcId = npc.whoAmI}.HandleForAll();
                         }
                     }
                 }

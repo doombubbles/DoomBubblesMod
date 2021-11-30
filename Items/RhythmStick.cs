@@ -1,8 +1,9 @@
+using DoomBubblesMod.Utils;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using SoundType = Terraria.ModLoader.SoundType;
+
 
 namespace DoomBubblesMod.Items
 {
@@ -41,8 +42,7 @@ namespace DoomBubblesMod.Items
         {
             if (player.itemAnimation == player.itemAnimationMax - 1)
             {
-                SoundEngine.PlaySound(SoundLoader.customSoundType, (int) player.position.X, (int) player.position.Y,
-                    Mod.GetSoundSlot(SoundType.Custom, "Sounds/RhythmStick"));
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/DiscordStrike"));
             }
 
             return base.UseItem(player);

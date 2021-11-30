@@ -1,11 +1,11 @@
 ﻿using System;
 using DoomBubblesMod.Dusts;
+using DoomBubblesMod.Sounds;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using SoundType = Terraria.ModLoader.SoundType;
 
 namespace DoomBubblesMod.Projectiles
 {
@@ -51,11 +51,11 @@ namespace DoomBubblesMod.Projectiles
                         }
                         else if (Main.rand.NextBool())
                         {
-                            SoundEngine.PlaySound(Mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Pig1"), player.Center);
+                            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Pig1"));
                         }
                         else
                         {
-                            SoundEngine.PlaySound(Mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Pig2"), player.Center);
+                            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Pig2"));
                         }
                     }
                     else if (!Main.player[Main.myPlayer].moonLeech && player.statLife < player.statLifeMax2 &&

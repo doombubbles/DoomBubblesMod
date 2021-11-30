@@ -1,3 +1,4 @@
+using DoomBubblesMod.Utils;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -23,7 +24,7 @@ namespace DoomBubblesMod.Items
 
         public override void AddRecipes()
         {
-            if (DoomBubblesMod.thoriumMod != null)
+            if (DoomBubblesMod.ThoriumMod != null)
             {
                 ThoriumRecipes();
             }
@@ -33,25 +34,25 @@ namespace DoomBubblesMod.Items
         {
             var recipe1 = CreateRecipe();
             recipe1.AddIngredient(this);
-            recipe1.ReplaceResult(DoomBubblesMod.thoriumMod.Find<ModItem>("BrokenHeroFragment"), 2);
+            recipe1.ReplaceResult(DoomBubblesMod.ThoriumMod.Find<ModItem>("BrokenHeroFragment"), 2);
             recipe1.AddTile(TileID.MythrilAnvil);
             recipe1.Register();
 
             var recipe2 = CreateRecipe();
             recipe2.ReplaceResult(this);
-            recipe2.AddIngredient(DoomBubblesMod.thoriumMod.Find<ModItem>("BrokenHeroFragment"), 2);
+            recipe2.AddIngredient(DoomBubblesMod.ThoriumMod.Find<ModItem>("BrokenHeroFragment"), 2);
             recipe2.AddTile(TileID.MythrilAnvil);
             recipe2.Register();
 
             var recipe3 = CreateRecipe();
             recipe3.AddIngredient(ItemID.BrokenHeroSword);
-            recipe3.ReplaceResult(DoomBubblesMod.thoriumMod.Find<ModItem>("BrokenHeroFragment"), 2);
+            recipe3.ReplaceResult(DoomBubblesMod.ThoriumMod.Find<ModItem>("BrokenHeroFragment"), 2);
             recipe3.AddTile(TileID.MythrilAnvil);
             recipe3.Register();
 
             var recipe4 = CreateRecipe();
             recipe4.ReplaceResult(ItemID.BrokenHeroSword);
-            recipe4.AddIngredient(DoomBubblesMod.thoriumMod.Find<ModItem>("BrokenHeroFragment"), 2);
+            recipe4.AddIngredient(DoomBubblesMod.ThoriumMod.Find<ModItem>("BrokenHeroFragment"), 2);
             recipe4.AddTile(TileID.MythrilAnvil);
             recipe4.Register();
         }

@@ -1,4 +1,5 @@
 using DoomBubblesMod.Items.Accessories.Glove;
+using DoomBubblesMod.Utils;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -42,9 +43,9 @@ namespace DoomBubblesMod.Items.Accessories.Emblem
             player.GetDoomBubblesPlayer().emblem = -42;
         }
 
-        public override bool CanEquipAccessory(Player player, int slot)
+        public override bool CanEquipAccessory(Player player, int slot, bool modded)
         {
-            return player.GetModPlayer<DoomBubblesPlayer>().emblem == 0 && base.CanEquipAccessory(player, slot);
+            return player.GetModPlayer<DoomBubblesPlayer>().emblem == 0 && base.CanEquipAccessory(player, slot, modded);
         }
 
         public override void AddThoriumRecipe(Mod thoriumMod)

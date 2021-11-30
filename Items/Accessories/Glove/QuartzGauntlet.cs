@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using DoomBubblesMod.Utils;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -29,7 +30,7 @@ namespace DoomBubblesMod.Items.Accessories.Glove
 
         public override void AddRecipes()
         {
-            if (DoomBubblesMod.thoriumMod != null)
+            if (DoomBubblesMod.ThoriumMod != null)
             {
                 addThoriumRecipe();
             }
@@ -38,7 +39,7 @@ namespace DoomBubblesMod.Items.Accessories.Glove
         private void addThoriumRecipe()
         {
             var recipe = CreateRecipe();
-            recipe.AddIngredient(DoomBubblesMod.thoriumMod.Find<ModItem>("LeatherGlove"));
+            recipe.AddIngredient(DoomBubblesMod.ThoriumMod.Find<ModItem>("LeatherGlove"));
             recipe.AddIngredient(ItemID.Diamond, 7);
             recipe.AddTile(TileID.WorkBenches);
             recipe.Register();

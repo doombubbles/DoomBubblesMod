@@ -1,12 +1,12 @@
 using System;
 using DoomBubblesMod.Items.Talent;
 using DoomBubblesMod.Projectiles.HotS;
+using DoomBubblesMod.Utils;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
-using SoundType = Terraria.ModLoader.SoundType;
 using Terraria.ID;
 
 namespace DoomBubblesMod.Items.HotS
@@ -88,8 +88,7 @@ namespace DoomBubblesMod.Items.HotS
                 }
             }
 
-            SoundEngine.PlaySound(SoundLoader.customSoundType, (int) position.X, (int) position.Y,
-                Mod.GetSoundSlot(SoundType.Custom, "Sounds/DiscordStrike"));
+            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/DiscordStrike"), position);
             
             return false;
         }

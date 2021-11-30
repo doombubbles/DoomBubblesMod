@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using SoundType = Terraria.ModLoader.SoundType;
+
 
 namespace DoomBubblesMod.Projectiles.HotS
 {
@@ -16,7 +16,7 @@ namespace DoomBubblesMod.Projectiles.HotS
         {
             DisplayName.SetDefault("Photon");
             Main.projFrames[Projectile.type] = 5;
-            ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
+            ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ProjectileID.Sets.MinionShot[Projectile.type] = true;
         }
 
@@ -39,8 +39,7 @@ namespace DoomBubblesMod.Projectiles.HotS
             if (target.whoAmI == (int) Projectile.ai[1])
             {
                 Projectile.penetrate = 1;
-                SoundEngine.PlaySound(SoundLoader.customSoundType, (int) Projectile.position.X, (int) Projectile.position.Y,
-                    Mod.GetSoundSlot(SoundType.Custom, "Sounds/PhotonHit"));
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/PhotonHit"), Projectile.Center);
             }
 
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);

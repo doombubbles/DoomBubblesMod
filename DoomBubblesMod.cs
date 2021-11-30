@@ -1,15 +1,13 @@
-using System;
+global using Terraria;
+global using Terraria.ModLoader;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using DoomBubblesMod.Items;
 using DoomBubblesMod.UI;
+using DoomBubblesMod.Utils;
 using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.UI;
+
 
 namespace DoomBubblesMod
 {
@@ -22,12 +20,14 @@ namespace DoomBubblesMod
         public static ModKeybind timeStoneHotKey;
         public static ModKeybind mindStoneHotKey;
 
-        public static Mod thoriumMod;
-        public static Mod calamityMod;
+        public static Mod ThoriumMod => ModLoader.TryGetMod("ThoriumMod", out var thoriumMod) ? thoriumMod : null;
+        public static Mod CalamityMod => ModLoader.TryGetMod("CalamityMod", out var calamityMod) ? calamityMod : null;
 
-        public static List<Color> rainbowColors;
+        public static List<Color> RainbowColors => new()
+            {Color.Red, Color.Orange, Color.Yellow, Color.LimeGreen, Color.Blue, Color.Indigo, Color.Violet};
+
         public InfinityGauntletUI infinityGauntletUi;
-        public UserInterface InfinityGauntletUserInterface;
+        public UserInterface infinityGauntletUserInterface;
 
         public override void AddRecipeGroups()
         {
@@ -45,17 +45,12 @@ namespace DoomBubblesMod
             timeStoneHotKey = KeybindLoader.RegisterKeybind(this, "Time Stone", "F6");
             mindStoneHotKey = KeybindLoader.RegisterKeybind(this, "Mind Stone", "OemTilde");
 
-            rainbowColors = new List<Color>
-                {Color.Red, Color.Orange, Color.Yellow, Color.LimeGreen, Color.Blue, Color.Indigo, Color.Violet};
-            ModLoader.TryGetMod("ThoriumMod", out thoriumMod);
-            ModLoader.TryGetMod("CalamityMod", out calamityMod);
-
             if (!Main.dedServ)
             {
                 infinityGauntletUi = new InfinityGauntletUI();
                 infinityGauntletUi.Activate();
-                InfinityGauntletUserInterface = new UserInterface();
-                InfinityGauntletUserInterface.SetState(infinityGauntletUi);
+                infinityGauntletUserInterface = new UserInterface();
+                infinityGauntletUserInterface.SetState(infinityGauntletUi);
 
                 //TextureAssets.Projectile[ProjectileID.MoonlordBullet]. TODO texture changing
                 //Main.dustTexture = GetTexture("Dusts/Dust"); TODO dust changing
@@ -76,46 +71,12 @@ namespace DoomBubblesMod
             mindStoneHotKey = null;
             InfinityGauntletUI.backgroundPanel = null;
             infinityGauntletUi = null;
-            rainbowColors = null;
-            InfinityGauntletUserInterface = null;
-            
-            thoriumMod = null;
-            calamityMod = null;
+            infinityGauntletUserInterface = null;
         }
 
 
         public override void AddRecipes()
         {
-            /*
-            RecipeFinder finder = new RecipeFinder();
-            finder.AddIngredient(ItemID.FrostsparkBoots);
-            finder.AddIngredient(ItemID.LavaWaders);
-            finder.AddIngredient(ItemID.SoulofMight);
-            finder.AddIngredient(ItemID.SoulofSight);
-            finder.AddIngredient(ItemID.SoulofFright);
-            foreach (Recipe recipe2 in finder.SearchRecipes())
-            {
-                RecipeEditor editor = new RecipeEditor(recipe2);
-                editor.DeleteIngredient(ItemID.SoulofMight);
-                editor.DeleteIngredient(ItemID.SoulofFright);
-                editor.DeleteIngredient(ItemID.SoulofSight);
-                editor.AddIngredient(ItemID.SoulofLight);
-                editor.AddIngredient(ItemID.SoulofNight);
-            }
-            */
-            /*
-            RecipeFinder finder2 = new RecipeFinder();
-            finder2.AddIngredient(ItemID.FrostsparkBoots);
-            finder2.AddIngredient(ItemID.LavaWaders);
-            finder2.AddIngredient(ItemID.PanicNecklace);
-            foreach (Recipe recipe in finder2.SearchRecipes())
-            {
-                RecipeEditor editor = new RecipeEditor(recipe);
-                editor.AddIngredient(ItemID.Ectoplasm);
-            }
-            */
-
-
             var badItems = new[]
             {
                 "AutoHouse",
@@ -154,87 +115,14 @@ namespace DoomBubblesMod
                         }
                     }
                 }
-
             }
 
             ThoriumChanges.ModifyThoriumRecipes();
         }
 
-        /*
-        for (var i = 1; i < ItemLoader.ItemCount; i++)
-        {
-            var item = new Item();
-            Item.SetDefaults(i);
-            if (string.IsNullOrEmpty(Item.Name))
-            {
-                continue;
-            }
-
-            var cost = 0;
-            
-            if (Item.createTile != -1 && (Item.value == 0 || Item.placeStyle != 0))
-            {
-                cost = 100;
-            }
-
-            if (Item.createWall != -1)
-            {
-                cost = 400;
-            }
-
-            if (cost > 0)
-            {
-                var modRecipe = new ModRecipe(this);
-                modRecipe.AddIngredient(i, cost);
-                modrecipe.ReplaceResult(i, Item.maxStack);
-                try
-                {
-                    modrecipe.Register();
-                }
-                catch (Exception e)
-                {
-                    Logger.Info($"{Item.Name}: {e.Message}");
-                }
-            }
-        }
-        */
-
         public override void HandlePacket(BinaryReader reader, int whoAmI)
         {
-            var msgType = (DoomBubblesModMessageType) reader.ReadByte();
-            switch (msgType)
-            {
-                case DoomBubblesModMessageType.infinityStone:
-                    var id = reader.ReadInt32();
-                    var process = reader.ReadInt32();
-                    if (process == 1)
-                    {
-                        if (!Main.projectile[id].friendly)
-                        {
-                            Main.projectile[id].hostile = false;
-                        }
-                    }
-                    else if (process == 2)
-                    {
-                        Main.npc[id].damage = 0;
-                        Main.npc[id].GetGlobalNPC<DoomBubblesGlobalNPC>().mindStoneFriendly = true;
-                    }
-                    else if (process == 3)
-                    {
-                        var realityId = reader.ReadInt32();
-                        var realityBeam = Main.projectile[realityId];
-                        Main.projectile[id].Center = realityBeam.Center;
-                        Main.projectile[id].velocity = realityBeam.velocity;
-                    }
-
-                    break;
-            }
+            this.HandleCustomPacket(reader, whoAmI);
         }
-    }
-
-
-    public enum DoomBubblesModMessageType : byte
-    {
-        infinityStone
     }
 }

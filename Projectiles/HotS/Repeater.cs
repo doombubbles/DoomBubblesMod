@@ -6,7 +6,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ModLoader;
-using SoundType = Terraria.ModLoader.SoundType;
+
 
 namespace DoomBubblesMod.Projectiles.HotS
 {
@@ -37,8 +37,7 @@ namespace DoomBubblesMod.Projectiles.HotS
                     || !(Projectile.ai[1] == 3 || Projectile.ai[1] == -1) &&
                     player.GetModPlayer<HotSPlayer>().fenixBombBuildUp == 9)
                 {
-                    SoundEngine.PlaySound(SoundLoader.customSoundType, (int) Projectile.position.X,
-                        (int) Projectile.position.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Boung"));
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Boung"), Projectile.position);
                 }
 
                 player.GetModPlayer<HotSPlayer>().fenixBombBuildUp++;
@@ -94,9 +93,10 @@ namespace DoomBubblesMod.Projectiles.HotS
             if (Projectile.alpha == 69)
             {
                 Projectile.alpha = 255;
-                SoundEngine.PlaySound(SoundLoader.customSoundType, (int) Projectile.position.X, (int) Projectile.position.Y,
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Repeater" + Math.Min(3, Projectile.ai[0])), Projectile.position);
+                /*SoundEngine.PlaySound(SoundLoader.customSoundType, (int) Projectile.position.X, (int) Projectile.position.Y,
                     Mod.GetSoundSlot(SoundType.Custom, "Sounds/Repeater" + Math.Min(3, Projectile.ai[0])), 1f,
-                    Projectile.ai[0] == 4 ? -.25f : 0f);
+                    Projectile.ai[0] == 4 ? -.25f : 0f);*/
             }
 
             Projectile.ai[0] = 0;
@@ -135,8 +135,7 @@ namespace DoomBubblesMod.Projectiles.HotS
                 Main.dust[num295].noGravity = true;
             }
 
-            SoundEngine.PlaySound(SoundLoader.customSoundType, (int) Projectile.position.X, (int) Projectile.position.Y,
-                Mod.GetSoundSlot(SoundType.Custom, "Sounds/Hit"), .5f);
+            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Hit"), Projectile.position);
             base.Kill(timeLeft);
         }
     }

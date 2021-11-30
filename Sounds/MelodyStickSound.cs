@@ -7,7 +7,7 @@ namespace DoomBubblesMod.Sounds
     public class MelodyStickSound : ModSound
     {
         public override SoundEffectInstance PlaySound(ref SoundEffectInstance soundInstance,
-            float volume, float pan, SoundType type)
+            float volume, float pan)
         {
             float note = (float) Main.mouseX / (float) Main.screenWidth;
             float dynamic = (float) Main.mouseY / (float) Main.screenHeight;

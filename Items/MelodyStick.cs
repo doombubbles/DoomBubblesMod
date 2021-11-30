@@ -1,8 +1,9 @@
+using DoomBubblesMod.Utils;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using SoundType = Terraria.ModLoader.SoundType;
+
 
 namespace DoomBubblesMod.Items
 {
@@ -39,10 +40,7 @@ namespace DoomBubblesMod.Items
         public override bool? UseItem(Player player) {
             if (player.itemAnimation == player.itemAnimationMax - 1)
             {
-                SoundEngine.PlaySound(SoundLoader.customSoundType,
-                    (int) player.position.X,
-                    (int) player.position.Y,
-                    Mod.GetSoundSlot(SoundType.Custom, "Sounds/MelodyStickSound"));
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/MelodyStickSound"), player.position);
             }
             return base.UseItem(player);
         }

@@ -1,5 +1,6 @@
 using DoomBubblesMod.Items.Talent;
 using DoomBubblesMod.Projectiles.HotS;
+using DoomBubblesMod.Utils;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
@@ -30,8 +31,8 @@ namespace DoomBubblesMod.Items.HotS
             Item.shoot = ModContent.ProjectileType<LivingFireball>();
             Item.damage = 80;
             Item.knockBack = 6;
-            Item.useStyle = 5;
-            Item.UseSound = Mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/LivingBombWand"); //SoundID.Item73;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/LivingBombWand");
             Item.autoReuse = true;
             Item.noMelee = true;
             Item.DamageType = DamageClass.Magic;

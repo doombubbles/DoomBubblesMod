@@ -6,9 +6,9 @@ namespace DoomBubblesMod.Items
     {
         public override void AddRecipes()
         {
-            if (DoomBubblesMod.thoriumMod != null)
+            if (DoomBubblesMod.ThoriumMod != null)
             {
-                AddThoriumRecipe(DoomBubblesMod.thoriumMod);
+                AddThoriumRecipe(DoomBubblesMod.ThoriumMod);
             }
         }
 

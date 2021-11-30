@@ -1,17 +1,15 @@
 using System;
 using Microsoft.Xna.Framework;
 using MonoMod.Cil;
-using On.Terraria;
-using Main = Terraria.Main;
 
-namespace DoomBubblesMod
+namespace DoomBubblesMod.Utils
 {
     public class DoomBubblesHooks
     {
         public static void Load()
         {
-            Player.UpdateLifeRegen += PlayerOnUpdateLifeRegen;
-            Player.UpdateManaRegen += PlayerOnUpdateManaRegen;
+            On.Terraria.Player.UpdateLifeRegen += PlayerOnUpdateLifeRegen;
+            On.Terraria.Player.UpdateManaRegen += PlayerOnUpdateManaRegen;
             IL.Terraria.Player.Update += PlayerOnUpdate;
             On.Terraria.Main.DamageVar += (_, dmg, luck) => (int)Math.Round(dmg * (1 + luck / 20));
             On.Terraria.Main.DrawCursor += MainOnDrawCursor;
@@ -50,7 +48,7 @@ namespace DoomBubblesMod
             }
         }
         
-        private static void PlayerOnUpdateManaRegen(Player.orig_UpdateManaRegen orig, Terraria.Player self)
+        private static void PlayerOnUpdateManaRegen(On.Terraria.Player.orig_UpdateManaRegen orig, Terraria.Player self)
         {
             if (self.active)
             {
@@ -68,7 +66,7 @@ namespace DoomBubblesMod
             orig(self);
         }
 
-        private static void PlayerOnUpdateLifeRegen(Player.orig_UpdateLifeRegen orig, Terraria.Player self)
+        private static void PlayerOnUpdateLifeRegen(On.Terraria.Player.orig_UpdateLifeRegen orig, Terraria.Player self)
         {
             if (self.active)
             {

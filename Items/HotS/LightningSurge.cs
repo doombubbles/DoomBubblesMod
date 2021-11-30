@@ -2,6 +2,7 @@
 using System.Linq;
 using DoomBubblesMod.Items.Talent;
 using DoomBubblesMod.Projectiles.HotS;
+using DoomBubblesMod.Utils;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;

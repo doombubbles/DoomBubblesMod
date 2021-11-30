@@ -5,8 +5,7 @@ namespace DoomBubblesMod.Sounds
 {
     public class MindStone : ModSound
     {
-        public override SoundEffectInstance PlaySound(ref SoundEffectInstance soundInstance, float volume, float pan,
-            SoundType type)
+        public override SoundEffectInstance PlaySound(ref SoundEffectInstance soundInstance, float volume, float pan)
         {
             soundInstance = Sound.Value.CreateInstance();
             soundInstance.Volume = volume * 1.0f;

@@ -1,18 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using DoomBubblesMod.Items;
+using System.Linq;
+using log4net;
 using MonoMod.Cil;
-using Terraria.ID;
+using Terraria;
 using Terraria.ModLoader;
 using static Mono.Cecil.Cil.OpCodes;
-using log4net;
-using System.Linq;
-using MonoMod.RuntimeDetour.HookGen;
-using Terraria;
+
 // using ThoriumMod.Items;
 
-namespace DoomBubblesMod
+namespace DoomBubblesMod.Utils
 {
     public static class ThoriumChanges
     {
@@ -24,7 +19,7 @@ namespace DoomBubblesMod
         {
             //thoriumILChanges = new Dictionary<MethodInfo, Action<ILContext>>();
 
-            var thoriumMod = DoomBubblesMod.thoriumMod;
+            var thoriumMod = DoomBubblesMod.ThoriumMod;
             if (thoriumMod != null)
             {
                 /* TODO THORIUM
@@ -121,7 +116,7 @@ namespace DoomBubblesMod
             var test = 0;
             while (true)
             {
-                var fieldInfo = DoomBubblesMod.thoriumMod
+                var fieldInfo = DoomBubblesMod.ThoriumMod
                     .GetType()
                     .Assembly.GetTypes()
                     .First(type => type.Name == "ThoriumPlayer")
@@ -189,7 +184,7 @@ namespace DoomBubblesMod
 
         internal static void ModifyThoriumRecipes()
         {
-            var thoriumMod = DoomBubblesMod.thoriumMod;
+            var thoriumMod = DoomBubblesMod.ThoriumMod;
             if (thoriumMod == null)
             {
                 return;

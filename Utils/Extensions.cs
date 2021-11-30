@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 
-namespace DoomBubblesMod
+namespace DoomBubblesMod.Utils
 {
     public static class Extensions
     {
@@ -37,8 +38,8 @@ namespace DoomBubblesMod
 
         public static void SetThoriumProperty<T>(this Player player, string name, Func<T, T> func)
         {
-            if (DoomBubblesMod.thoriumMod == null) return;
-            var thoriumPlayer = player.GetModPlayer(DoomBubblesMod.thoriumMod.Find<ModPlayer>("ThoriumPlayer"));
+            if (DoomBubblesMod.ThoriumMod == null) return;
+            var thoriumPlayer = player.GetModPlayer(DoomBubblesMod.ThoriumMod.Find<ModPlayer>("ThoriumPlayer"));
 
             var fieldInfo = thoriumPlayer.GetType().GetField(name);
             if (fieldInfo == null) return;
@@ -50,8 +51,8 @@ namespace DoomBubblesMod
         
         public static T GetThoriumProperty<T>(this Player player, string name)
         {
-            if (DoomBubblesMod.thoriumMod == null) return default;
-            var thoriumPlayer = player.GetModPlayer(DoomBubblesMod.thoriumMod.Find<ModPlayer>("ThoriumPlayer"));
+            if (DoomBubblesMod.ThoriumMod == null) return default;
+            var thoriumPlayer = player.GetModPlayer(DoomBubblesMod.ThoriumMod.Find<ModPlayer>("ThoriumPlayer"));
 
             var fieldInfo = thoriumPlayer.GetType().GetField(name);
             if (fieldInfo == null) return default;
@@ -61,7 +62,7 @@ namespace DoomBubblesMod
         
         public static void SetThoriumProperty<T>(this Projectile projectile, string name, Func<T, T> func)
         {
-            if (DoomBubblesMod.thoriumMod == null) return;
+            if (DoomBubblesMod.ThoriumMod == null) return;
             var thoriumProjectile = projectile.ModProjectile;
             if (thoriumProjectile == null) return;
 
@@ -75,7 +76,7 @@ namespace DoomBubblesMod
         
         public static T GetThoriumProperty<T>(this Projectile projectile, string name)
         {
-            if (DoomBubblesMod.thoriumMod == null) return default;
+            if (DoomBubblesMod.ThoriumMod == null) return default;
             var thoriumProjectile = projectile.ModProjectile;
             if (thoriumProjectile == null) return default;
 
@@ -87,7 +88,7 @@ namespace DoomBubblesMod
         
         public static void SetThoriumProperty<T>(this Item item, string name, Func<T, T> func)
         {
-            if (DoomBubblesMod.thoriumMod == null) return;
+            if (DoomBubblesMod.ThoriumMod == null) return;
             var thoriumItem = item.ModItem;
             if (thoriumItem == null) return;
 
@@ -101,7 +102,7 @@ namespace DoomBubblesMod
         
         public static T GetThoriumProperty<T>(this Item item, string name)
         {
-            if (DoomBubblesMod.thoriumMod == null) return default;
+            if (DoomBubblesMod.ThoriumMod == null) return default;
             var thoriumItem = item.ModItem;
             if (thoriumItem == null) return default;
 
@@ -130,5 +131,18 @@ namespace DoomBubblesMod
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[item.type] = amount;
         }
 
+        public static void HandleCustomPacket(this Mod mod, BinaryReader reader, int whoAmI)
+        {
+            var type = reader.ReadInt32();
+            var customPacket = mod.GetContent<ModCustomPacket>().FirstOrDefault(packet => packet.Type == type);
+            if (customPacket != null)
+            {
+                customPacket.Receive(reader, whoAmI);
+            }
+            else
+            {
+                mod.Logger.Warn($"Couldn't find ModPacket with type {type}");
+            }
+        }
     }
 }

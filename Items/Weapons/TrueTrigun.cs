@@ -1,5 +1,6 @@
 using System;
 using DoomBubblesMod.Projectiles;
+using DoomBubblesMod.Utils;
 using ElementalDamage.Elements;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -48,7 +49,7 @@ namespace DoomBubblesMod.Items.Weapons
 
         public override void AddRecipes()
         {
-            if (DoomBubblesMod.thoriumMod != null)
+            if (DoomBubblesMod.ThoriumMod != null)
             {
                 addThoriumRecipe();
             }
@@ -66,20 +67,20 @@ namespace DoomBubblesMod.Items.Weapons
         private void addThoriumRecipe()
         {
             var recipe = CreateRecipe();
-            recipe.AddIngredient(DoomBubblesMod.thoriumMod.Find<ModItem>("Trigun"));
+            recipe.AddIngredient(DoomBubblesMod.ThoriumMod.Find<ModItem>("Trigun"));
             recipe.AddIngredient(ModContent.ItemType<BrokenHeroGun>());
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();
         }
 
-        public override bool ConsumeAmmo(Player player)
+        public override bool CanConsumeAmmo(Player player)
         {
             if (Main.rand.NextFloat() <= 25f)
             {
                 return false;
             }
 
-            return player.itemAnimation < Item.useAnimation - 2 && base.ConsumeAmmo(player);
+            return player.itemAnimation < Item.useAnimation - 2 && base.CanConsumeAmmo(player);
         }
 
         public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type,

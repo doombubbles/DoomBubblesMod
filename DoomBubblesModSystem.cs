@@ -20,7 +20,7 @@ namespace DoomBubblesMod
                         if (InfinityGauntletUI.visible)
                         {
                             var doomBubblesMod = ModContent.GetInstance<DoomBubblesMod>();
-                            doomBubblesMod.InfinityGauntletUserInterface.Update(Main
+                            doomBubblesMod.infinityGauntletUserInterface.Update(Main
                                 ._drawInterfaceGameTime); //I don't understand
                             doomBubblesMod.infinityGauntletUi.Draw(Main.spriteBatch);
                         }

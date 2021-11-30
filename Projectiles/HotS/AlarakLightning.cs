@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
-using SoundType = Terraria.ModLoader.SoundType;
+
 
 namespace DoomBubblesMod.Projectiles.HotS
 {
@@ -75,8 +75,8 @@ namespace DoomBubblesMod.Projectiles.HotS
         {
             if (Projectile.alpha == 69)
             {
-                SoundEngine.PlaySound(SoundLoader.customSoundType, (int) Projectile.position.X, (int) Projectile.position.Y,
-                    Mod.GetSoundSlot(SoundType.Custom, "Sounds/LightningSurge2"), 1f, Main.rand.NextFloat(-.1f, .1f));
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/LightningSurge2"),
+                    Projectile.position);
                 Projectile.alpha = 255;
             }
 

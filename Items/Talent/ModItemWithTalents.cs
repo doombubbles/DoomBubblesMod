@@ -6,11 +6,12 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using SoundType = Terraria.ModLoader.SoundType;
+
 
 namespace DoomBubblesMod.Items.Talent
 {
-    public abstract class ModItemWithTalents<T1, T2, T3> : ModItemWithTalents where T1 : ModItem where T2 : ModItem where T3 : ModItem
+    public abstract class ModItemWithTalents<T1, T2, T3> : ModItemWithTalents
+        where T1 : ModItem where T2 : ModItem where T3 : ModItem
     {
         public override ModItem Talent1Item => ModContent.GetInstance<T1>();
         public override ModItem Talent2Item => ModContent.GetInstance<T2>();
@@ -30,17 +31,15 @@ namespace DoomBubblesMod.Items.Talent
         private bool Talent3Unlocked { get; set; }
         public short ChosenTalent { get; private set; }
 
-        public override TagCompound Save()
+        public override void SaveData(TagCompound tag)
         {
-            var tag = new TagCompound();
-            tag.Set("talent1", Talent1Unlocked);
-            tag.Set("talent2", Talent2Unlocked);
-            tag.Set("talent3", Talent3Unlocked);
-            tag.Set("chosenTalent", ChosenTalent);
-            return tag;
+            tag["talent1"] = Talent1Unlocked;
+            tag["talent2"] = Talent2Unlocked;
+            tag["talent3"] = Talent3Unlocked;
+            tag["chosenTalent"] = ChosenTalent;
         }
 
-        public override void Load(TagCompound tag)
+        public override void LoadData(TagCompound tag)
         {
             Talent1Unlocked = tag.GetBool("talent1");
             Talent2Unlocked = tag.GetBool("talent2");
@@ -106,7 +105,8 @@ namespace DoomBubblesMod.Items.Talent
                     ChosenTalent = 3;
                     Main.mouseItem = new Item();
                 }
-                else if (Main.mouseItem.type == ItemID.GravityGlobe && ChosenTalent != -1 && Talent1Unlocked && Talent2Unlocked &&
+                else if (Main.mouseItem.type == ItemID.GravityGlobe && ChosenTalent != -1 && Talent1Unlocked &&
+                         Talent2Unlocked &&
                          Talent3Unlocked)
                 {
                     ChosenTalent = -1;
@@ -150,10 +150,8 @@ namespace DoomBubblesMod.Items.Talent
 
                     if (ChosenTalent != ogTalent)
                     {
-                        SoundEngine.PlaySound(SoundLoader.customSoundType,
-                            (int)Main.player[Item.playerIndexTheItemIsReservedFor].position.X,
-                            (int)Main.player[Item.playerIndexTheItemIsReservedFor].position.Y,
-                            Mod.GetSoundSlot(SoundType.Custom, "Sounds/TalentChange"));
+                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/TalentChange"),
+                            Main.player[Item.playerIndexTheItemIsReservedFor].position);
                     }
                 }
             }
@@ -200,7 +198,8 @@ namespace DoomBubblesMod.Items.Talent
                     new TooltipLine(Mod, "3", Talent3Item.Tooltip.GetDefault().Split('\n')[1]));
             }
 
-            if (ChosenTalent > 0 && Talent1Unlocked && Talent2Unlocked || Talent1Unlocked && Talent3Unlocked || Talent2Unlocked && Talent3Unlocked)
+            if (ChosenTalent > 0 && Talent1Unlocked && Talent2Unlocked || Talent1Unlocked && Talent3Unlocked ||
+                Talent2Unlocked && Talent3Unlocked)
             {
                 tooltips.Add(new TooltipLine(Mod, "talents", "[Right click to swap talent]"));
             }

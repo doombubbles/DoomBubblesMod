@@ -5,7 +5,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
-using SoundType = Terraria.ModLoader.SoundType;
+
 
 namespace DoomBubblesMod.Projectiles.HotS
 {
@@ -70,7 +70,7 @@ namespace DoomBubblesMod.Projectiles.HotS
                         ModContent.ProjectileType<LivingBomb>(),
                         (int) (damage / 115f * 160f), 0, Projectile.owner, ai, target.whoAmI);
                     Main.projectile[proj].netUpdate = true;
-                    SoundEngine.PlaySound(Mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/LivingBombWand2"), target.Center);
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/LivingBombWand2"), target.Center);
                 }
                 else if (!target.HasBuff(ModContent.BuffType<Buffs.LivingBomb>()))
                 {
@@ -79,9 +79,9 @@ namespace DoomBubblesMod.Projectiles.HotS
                         ModContent.ProjectileType<LivingBomb>(),
                         (int) (damage / 115f * 160f), 0, Projectile.owner, ai, target.whoAmI);
                     Main.projectile[proj].netUpdate = true;
-                    SoundEngine.PlaySound(Mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/LivingBombWand2"), target.Center);
 
                     Projectile.localAI[1] += 2 + ai * 2;
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/LivingBombWand2"), target.Center);
                 }
             }
 
@@ -120,11 +120,11 @@ namespace DoomBubblesMod.Projectiles.HotS
                     Projectile.height = 178 + Verdant * 89;
                     Projectile.scale = 2f + Verdant;
                     Projectile.Center = center;
-                    SoundEngine.PlaySound(Mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Flame2"), Projectile.position);
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Flame2"), Projectile.position);
                 }
                 else
                 {
-                    SoundEngine.PlaySound(Mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Flame"), Projectile.position);
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Flame"), Projectile.position);
                 }
             }
             else if (Projectile.timeLeft == Visible)
@@ -132,11 +132,11 @@ namespace DoomBubblesMod.Projectiles.HotS
                 Projectile.alpha = 0;
                 if (Verdant > 0)
                 {
-                    SoundEngine.PlaySound(Mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Strike2"), Projectile.position);
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Strike2"), Projectile.position);
                 }
                 else
                 {
-                    SoundEngine.PlaySound(Mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Strike"), Projectile.position);
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Strike"), Projectile.position);
                 }
             }
             else if (Projectile.timeLeft < Visible)

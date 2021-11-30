@@ -1,4 +1,5 @@
 ﻿using DoomBubblesMod.Items.Talent;
+using DoomBubblesMod.Utils;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;

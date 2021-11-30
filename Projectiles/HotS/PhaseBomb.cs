@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
-using SoundType = Terraria.ModLoader.SoundType;
+
 
 namespace DoomBubblesMod.Projectiles.HotS
 {
@@ -49,8 +49,7 @@ namespace DoomBubblesMod.Projectiles.HotS
         {
             if (Projectile.alpha == 69)
             {
-                SoundEngine.PlaySound(SoundLoader.customSoundType, (int) Projectile.position.X, (int) Projectile.position.Y,
-                    Mod.GetSoundSlot(SoundType.Custom, "Sounds/Phase"));
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Phase"), Projectile.position);
             }
 
             if (Projectile.alpha > 0)
@@ -101,9 +100,7 @@ namespace DoomBubblesMod.Projectiles.HotS
                         Projectile.damage = (int) (Projectile.damage * 2 * Projectile.knockBack / 5f);
                     }
 
-                    SoundEngine.PlaySound(SoundLoader.customSoundType, (int) Projectile.position.X,
-                        (int) Projectile.position.Y, Mod.GetSoundSlot(SoundType.Custom, "Sounds/Bomb"),
-                        Projectile.knockBack / 5f);
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Bomb"), Projectile.position);
                 }
 
                 Projectile.velocity = new Vector2(0, 0);

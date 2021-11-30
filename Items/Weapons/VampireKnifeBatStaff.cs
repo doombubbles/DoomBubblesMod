@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using DoomBubblesMod.Projectiles;
+using DoomBubblesMod.Utils;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
