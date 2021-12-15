@@ -9,7 +9,7 @@ namespace DoomBubblesMod.Content.Projectiles.Ranged;
 
 public abstract class LunarBullet : ModProjectile
 {
-    private readonly float NebulaDistance = 100f;
+    private readonly float nebulaDistance = 100f;
     public abstract int DustType { get; }
 
     public override void SetDefaults()
@@ -39,13 +39,13 @@ public abstract class LunarBullet : ModProjectile
         var flag2 = false;
         for (var num118 = 0; num118 < 200; num118++)
         {
-            var nPC = Main.npc[num118];
-            if (nPC.active &&
-                !nPC.dontTakeDamage &&
-                nPC.immune[Projectile.owner] == 0 &&
+            var nPc = Main.npc[num118];
+            if (nPc.active &&
+                !nPc.dontTakeDamage &&
+                nPc.immune[Projectile.owner] == 0 &&
                 Projectile.localNPCImmunity[num118] == 0 &&
-                nPC.Hitbox.Intersects(hitbox) &&
-                !nPC.friendly)
+                nPc.Hitbox.Intersects(hitbox) &&
+                !nPc.friendly)
             {
                 flag2 = true;
                 break;
@@ -182,15 +182,15 @@ public abstract class LunarBullet : ModProjectile
         var targetI = -1;
         for (var i = 0; i < 200; i++)
         {
-            var nPC = Main.npc[i];
-            if (nPC != null &&
-                nPC.active &&
-                nPC.immune[Projectile.owner] == 0 &&
+            var nPc = Main.npc[i];
+            if (nPc != null &&
+                nPc.active &&
+                nPc.immune[Projectile.owner] == 0 &&
                 (!Projectile.usesLocalNPCImmunity || Projectile.localNPCImmunity[i] == 0) &&
-                nPC.CanBeChasedBy(Projectile) &&
-                nPC.Hitbox.Distance(Projectile.Center) < NebulaDistance)
+                nPc.CanBeChasedBy(Projectile) &&
+                nPc.Hitbox.Distance(Projectile.Center) < nebulaDistance)
             {
-                targetI = nPC.whoAmI;
+                targetI = nPc.whoAmI;
                 break;
             }
         }
@@ -234,8 +234,8 @@ public abstract class LunarBullet : ModProjectile
                 newPos.Y = target.Hitbox.Top + dY;
             }
 
-            var newDX = Projectile.velocity.Length() * Math.Cos((newPos - Projectile.Center).ToRotation());
-            var newDY = Projectile.velocity.Length() * Math.Sin((newPos - Projectile.Center).ToRotation());
+            var newDx = Projectile.velocity.Length() * Math.Cos((newPos - Projectile.Center).ToRotation());
+            var newDy = Projectile.velocity.Length() * Math.Sin((newPos - Projectile.Center).ToRotation());
 
             for (double theta = 0; theta < Math.PI * 2; theta += Math.PI / 12)
             {
@@ -251,7 +251,7 @@ public abstract class LunarBullet : ModProjectile
             }
 
             Projectile.Center = newPos;
-            Projectile.velocity = new Vector2((float) newDX, (float) newDY);
+            Projectile.velocity = new Vector2((float) newDx, (float) newDy);
         }
     }
 

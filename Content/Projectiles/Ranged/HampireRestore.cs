@@ -1,7 +1,6 @@
 ﻿using System;
 using DoomBubblesMod.Content.Dusts;
 using Terraria.Audio;
-using Terraria.ID;
 
 namespace DoomBubblesMod.Content.Projectiles.Ranged;
 

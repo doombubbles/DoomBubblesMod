@@ -29,11 +29,11 @@ internal class EbonyGauntlet : ModItem
     {
         if (DoomBubblesMod.ThoriumMod != null)
         {
-            addThoriumRecipe();
+            AddThoriumRecipe();
         }
     }
 
-    private void addThoriumRecipe()
+    private void AddThoriumRecipe()
     {
         var recipe = CreateRecipe();
         recipe.AddIngredient(DoomBubblesMod.ThoriumMod.Find<ModItem>("LeatherGlove"));

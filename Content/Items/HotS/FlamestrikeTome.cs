@@ -3,7 +3,6 @@ using DoomBubblesMod.Content.Items.Talent;
 using DoomBubblesMod.Content.Projectiles.HotS;
 using DoomBubblesMod.Utils;
 using Terraria.DataStructures;
-using Terraria.ID;
 
 namespace DoomBubblesMod.Content.Items.HotS;
 
@@ -12,10 +11,8 @@ public class FlamestrikeTome : ModItemWithTalents<TalentConvection, TalentIgnite
     protected override Color? TalentColor => Color.LimeGreen;
 
     public int Verdant => Main.player[Item.playerIndexTheItemIsReservedFor].GetModPlayer<HotSPlayer>().superVerdant
-        ?
-        2
-        :
-        Main.player[Item.playerIndexTheItemIsReservedFor].GetModPlayer<HotSPlayer>().verdant
+        ? 2
+        : Main.player[Item.playerIndexTheItemIsReservedFor].GetModPlayer<HotSPlayer>().verdant
             ? 1
             : 0;
 

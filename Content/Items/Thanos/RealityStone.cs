@@ -23,7 +23,7 @@ internal class RealityStone : InfinityStone
                            "-Odin");
         Item.SetResearchAmount(1);
     }
-    
+
     public static void RealityAbility(Player player, Item item)
     {
         if (player.channel)

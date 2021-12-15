@@ -4,18 +4,18 @@ namespace DoomBubblesMod.Common.GlobalNPCs;
 
 public class ThanosGlobalNPC : GlobalNPC
 {
-    public bool MindStoneFriendly;
+    public bool mindStoneFriendly;
 
 
     private int mindStoneNpcCount;
     private int mindStoneProjCount;
-    public bool RealityStoned;
+    public bool realityStoned;
     public override bool InstancePerEntity => true;
 
 
     public override void DrawEffects(NPC npc, ref Color drawColor)
     {
-        if (MindStoneFriendly)
+        if (mindStoneFriendly)
         {
             drawColor.B = (byte) (drawColor.B * .7f);
         }
@@ -33,7 +33,7 @@ public class ThanosGlobalNPC : GlobalNPC
 
     public override bool PreAI(NPC npc)
     {
-        if (MindStoneFriendly)
+        if (mindStoneFriendly)
         {
             var projCount = 0;
             var npcCount = 0;
@@ -70,7 +70,7 @@ public class ThanosGlobalNPC : GlobalNPC
 
     public override void PostAI(NPC npc)
     {
-        if (MindStoneFriendly)
+        if (mindStoneFriendly)
         {
             var projCount = 0;
             var npcCount = 0;

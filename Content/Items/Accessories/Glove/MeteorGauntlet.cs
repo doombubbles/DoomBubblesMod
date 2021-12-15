@@ -1,4 +1,5 @@
-﻿using DoomBubblesMod.Utils;
+﻿using AttackSpeedMod;
+using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.Accessories.Glove;
 
@@ -22,18 +23,18 @@ internal class MeteorGauntlet : ModItem
 
     public override void UpdateAccessory(Player player, bool hideVisual)
     {
-        player.AttackSpeed(f => f + .05f);
+        player.GetAttackSpeed(DamageClass.Generic) += .05f;
     }
 
     public override void AddRecipes()
     {
         if (DoomBubblesMod.ThoriumMod != null)
         {
-            addThoriumRecipe();
+            AddThoriumRecipe();
         }
     }
 
-    private void addThoriumRecipe()
+    private void AddThoriumRecipe()
     {
         var recipe = CreateRecipe();
         recipe.AddIngredient(DoomBubblesMod.ThoriumMod.Find<ModItem>("LeatherGlove"));

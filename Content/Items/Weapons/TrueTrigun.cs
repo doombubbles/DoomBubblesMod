@@ -47,7 +47,7 @@ public class TrueTrigun : ModItem
     {
         if (DoomBubblesMod.ThoriumMod != null)
         {
-            addThoriumRecipe();
+            AddThoriumRecipe();
         }
         else
         {
@@ -60,7 +60,7 @@ public class TrueTrigun : ModItem
         }
     }
 
-    private void addThoriumRecipe()
+    private void AddThoriumRecipe()
     {
         var recipe = CreateRecipe();
         recipe.AddIngredient(DoomBubblesMod.ThoriumMod.Find<ModItem>("Trigun"));

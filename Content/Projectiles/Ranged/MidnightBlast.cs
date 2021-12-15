@@ -1,5 +1,4 @@
 using Terraria.Audio;
-using Terraria.ID;
 
 namespace DoomBubblesMod.Content.Projectiles.Ranged;
 
@@ -30,7 +29,8 @@ public class MidnightBlast : ModProjectile
         {
             for (var index1 = 0; index1 < 3; ++index1)
             {
-                var index2 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.TerraBlade, 0.0f, 0.0f,
+                var index2 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.TerraBlade,
+                    0.0f, 0.0f,
                     0, new Color(0, 0, 0));
                 Main.dust[index2].noGravity = true;
                 Main.dust[index2].velocity *= 0.3f;
@@ -85,37 +85,37 @@ public class MidnightBlast : ModProjectile
         Projectile.penetrate = -1;
         Projectile.Damage();
         SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
-        var Position = Projectile.Center + Vector2.One * -20f;
-        var Width = 40;
-        var Height = Width;
+        var position = Projectile.Center + Vector2.One * -20f;
+        var width = 40;
+        var height = width;
         for (var index1 = 0; index1 < 4; ++index1)
         {
-            var index2 = Dust.NewDust(Position, Width, Height, DustID.TerraBlade, 0.0f, 0.0f, 100, new Color(), .75f);
+            var index2 = Dust.NewDust(position, width, height, DustID.TerraBlade, 0.0f, 0.0f, 100, new Color(), .75f);
             Main.dust[index2].position = Projectile.Center +
                                          Vector2.UnitY.RotatedByRandom(3.14159274101257) *
                                          (float) Main.rand.NextDouble() *
-                                         Width /
+                                         width /
                                          2f;
         }
 
         for (var index1 = 0; index1 < 20; ++index1)
         {
-            var index2 = Dust.NewDust(Position, Width, Height, DustID.TerraBlade, 0.0f, 0.0f, 200, new Color(), 1.5f);
+            var index2 = Dust.NewDust(position, width, height, DustID.TerraBlade, 0.0f, 0.0f, 200, new Color(), 1.5f);
             Main.dust[index2].position = Projectile.Center +
                                          Vector2.UnitY.RotatedByRandom(3.14159274101257) *
                                          (float) Main.rand.NextDouble() *
-                                         Width /
+                                         width /
                                          2f;
             Main.dust[index2].noGravity = true;
             Main.dust[index2].noLight = true;
             Main.dust[index2].velocity *= 1.5f;
             Main.dust[index2].velocity += Projectile.DirectionTo(Main.dust[index2].position) *
                                           (float) (2.0 + Main.rand.NextFloat() * 2.0);
-            var index3 = Dust.NewDust(Position, Width, Height, DustID.GreenTorch, 0.0f, 0.0f, 100, new Color(), 1.5f);
+            var index3 = Dust.NewDust(position, width, height, DustID.GreenTorch, 0.0f, 0.0f, 100, new Color(), 1.5f);
             Main.dust[index3].position = Projectile.Center +
                                          Vector2.UnitY.RotatedByRandom(3.14159274101257) *
                                          (float) Main.rand.NextDouble() *
-                                         Width /
+                                         width /
                                          2f;
             Main.dust[index3].velocity *= 1.5f;
             Main.dust[index3].noGravity = true;
@@ -126,11 +126,11 @@ public class MidnightBlast : ModProjectile
 
         for (var index1 = 0; index1 < 20; ++index1)
         {
-            var index2 = Dust.NewDust(Position, Width, Height, DustID.TerraBlade, 0.0f, 0.0f, 0, new Color(), 1.3f);
+            var index2 = Dust.NewDust(position, width, height, DustID.TerraBlade, 0.0f, 0.0f, 0, new Color(), 1.3f);
             Main.dust[index2].position = Projectile.Center +
                                          Vector2.UnitX.RotatedByRandom(3.14159274101257)
                                              .RotatedBy(Projectile.velocity.ToRotation()) *
-                                         Width /
+                                         width /
                                          2f;
             Main.dust[index2].noGravity = true;
             Main.dust[index2].noLight = true;
@@ -140,11 +140,11 @@ public class MidnightBlast : ModProjectile
 
         for (var index1 = 0; index1 < 70; ++index1)
         {
-            var index2 = Dust.NewDust(Position, Width, Height, DustID.TerraBlade, 0.0f, 0.0f, 0, new Color(), .75f);
+            var index2 = Dust.NewDust(position, width, height, DustID.TerraBlade, 0.0f, 0.0f, 0, new Color(), .75f);
             Main.dust[index2].position = Projectile.Center +
                                          Vector2.UnitX.RotatedByRandom(3.14159274101257)
                                              .RotatedBy(Projectile.velocity.ToRotation()) *
-                                         Width /
+                                         width /
                                          2f;
             Main.dust[index2].noGravity = true;
             Main.dust[index2].velocity *= 1.5f;

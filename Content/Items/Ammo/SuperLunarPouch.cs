@@ -1,7 +1,6 @@
 ﻿using DoomBubblesMod.Content.Projectiles.Ranged;
 using DoomBubblesMod.Utils;
 using Terraria.DataStructures;
-using Terraria.ID;
 
 namespace DoomBubblesMod.Content.Items.Ammo;
 

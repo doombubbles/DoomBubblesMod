@@ -6,7 +6,6 @@ global using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.IO;
 using DoomBubblesMod.Utils;
-using Terraria.UI;
 
 
 namespace DoomBubblesMod;
@@ -44,7 +43,6 @@ public class DoomBubblesMod : Mod
 
         if (!Main.dedServ)
         {
-
             //TextureAssets.Projectile[ProjectileID.MoonlordBullet]. TODO texture changing
             //Main.dustTexture = GetTexture("Dusts/Dust"); TODO dust changing
         }

@@ -81,7 +81,7 @@ public class PhotonCannon : ModProjectile
     public override void PostDraw(Color lightColor)
     {
         base.PostDraw(lightColor);
-        if (isPowered() || ChosenTalent is 1 or -1)
+        if (IsPowered() || ChosenTalent is 1 or -1)
         {
             var texture2D = TextureAssets.Projectile[Projectile.type].Value;
             var height = texture2D.Height / Main.projFrames[Projectile.type];
@@ -134,7 +134,7 @@ public class PhotonCannon : ModProjectile
         if (Projectile.frame > 1)
         {
             CreateDust();
-            if ((isPowered() || ChosenTalent == 1 || ChosenTalent == -1) && Projectile.owner == Main.myPlayer)
+            if ((IsPowered() || ChosenTalent == 1 || ChosenTalent == -1) && Projectile.owner == Main.myPlayer)
             {
                 HandleAttacking();
             }
@@ -255,7 +255,7 @@ public class PhotonCannon : ModProjectile
         }
     }
 
-    public bool isPowered()
+    public bool IsPowered()
     {
         return Projectile.ai[1] > 1f;
     }

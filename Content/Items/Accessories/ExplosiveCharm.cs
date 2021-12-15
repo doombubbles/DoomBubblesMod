@@ -1,6 +1,5 @@
 ﻿using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Utils;
-using Terraria.ID;
 
 namespace DoomBubblesMod.Content.Items.Accessories;
 

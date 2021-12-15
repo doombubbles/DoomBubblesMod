@@ -20,7 +20,7 @@ internal class SpaceStone : InfinityStone
                            "-Red Skull to Thanos");
         Item.SetResearchAmount(1);
     }
-    
+
     public static void SpaceAbility(Player player, Item item)
     {
         var newPos = Main.MouseWorld;

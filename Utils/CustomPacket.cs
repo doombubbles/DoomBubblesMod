@@ -8,20 +8,20 @@ namespace DoomBubblesMod.Utils;
 
 public abstract class CustomPacket : ModType
 {
-    internal static Dictionary<Type, ModPacketInfo> PacketInfo = new();
+    internal static Dictionary<Type, ModPacketInfo> packetInfo = new();
 
     public int Type { get; internal set; }
 
     public override void Load()
     {
-        PacketInfo ??= new Dictionary<Type, ModPacketInfo>();
+        packetInfo ??= new Dictionary<Type, ModPacketInfo>();
         base.Load();
     }
 
     public override void Unload()
     {
         base.Unload();
-        PacketInfo = null;
+        packetInfo = null;
     }
 
     public abstract void HandlePacket(int playerId);
@@ -59,7 +59,7 @@ public abstract class CustomPacket<T> : CustomPacket where T : CustomPacket<T>
         var packetInfo = new ModPacketInfo<T>
         {
             mod = Mod,
-            type = PacketInfo.Count
+            type = CustomPacket.packetInfo.Count
         };
         Type = packetInfo.type;
         var properties = packetType.GetProperties(BindingFlags.Public |
@@ -76,7 +76,7 @@ public abstract class CustomPacket<T> : CustomPacket where T : CustomPacket<T>
         packetInfo.intSetters = GetSetters<int>(properties);
         packetInfo.intGetters = GetGetters<int>(properties);
 
-        PacketInfo[packetType] = packetInfo;
+        CustomPacket.packetInfo[packetType] = packetInfo;
 
         ModTypeLookup<CustomPacket>.Register(this);
 
@@ -85,7 +85,7 @@ public abstract class CustomPacket<T> : CustomPacket where T : CustomPacket<T>
 
     public sealed override void Receive(BinaryReader reader, int whoAmI)
     {
-        if (PacketInfo[GetType()] is ModPacketInfo<T> packetInfo)
+        if (CustomPacket.packetInfo[GetType()] is ModPacketInfo<T> packetInfo)
         {
             Mod.Logger.Info($"Receiving packet {GetType().Name} on netMode {Main.netMode}");
 
@@ -115,7 +115,7 @@ public abstract class CustomPacket<T> : CustomPacket where T : CustomPacket<T>
 
     public sealed override void Send(int toClient = -1, int ignoreClient = -1)
     {
-        if (PacketInfo[GetType()] is ModPacketInfo<T> packetInfo)
+        if (CustomPacket.packetInfo[GetType()] is ModPacketInfo<T> packetInfo)
         {
             packetInfo.mod.Logger.Info($"Sending packet {GetType().Name} on netMode {Main.netMode}");
 

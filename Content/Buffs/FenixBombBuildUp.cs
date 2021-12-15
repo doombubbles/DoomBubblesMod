@@ -11,7 +11,7 @@ public class FenixBombBuildUp : ModBuff
         Main.debuff[Type] = false;
         Main.pvpBuff[Type] = true;
         Main.buffNoSave[Type] = true;
-        LongerExpertDebuff = false;
+        BuffID.Sets.LongerExpertDebuff[Type] = false;
     }
 
     public override void Update(NPC npc, ref int buffIndex)

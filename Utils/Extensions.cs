@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using DoomBubblesMod.Common.Players;
@@ -27,12 +26,6 @@ public static class Extensions
     public static void RadiantCrit(this Player player, Func<int, int> func)
     {
         SetThoriumProperty(player, "radiantCrit", func);
-    }
-
-
-    public static void AttackSpeed(this Player player, Func<float, float> func)
-    {
-        SetThoriumProperty(player, "attackSpeed", func);
     }
 
     public static void SetThoriumProperty<T>(this Player player, string name, Func<T, T> func)
@@ -163,18 +156,6 @@ public static class Extensions
         }
 
         return (T) fieldInfo.GetValue(thoriumItem);
-    }
-
-    public static int ToInt(this float f)
-    {
-        return (int) Math.Round(f);
-    }
-
-
-    public static void Deconstruct<T1, T2>(this KeyValuePair<T1, T2> dic, out T1 first, out T2 second)
-    {
-        first = dic.Key;
-        second = dic.Value;
     }
 
     public static DoomBubblesPlayer GetDoomBubblesPlayer(this Player player)

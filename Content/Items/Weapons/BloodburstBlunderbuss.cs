@@ -2,7 +2,6 @@ using System;
 using DoomBubblesMod.Utils;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.ID;
 
 namespace DoomBubblesMod.Content.Items.Weapons;
 
@@ -15,25 +14,25 @@ public class BloodburstBlunderbuss : ModItem
         Item.SetResearchAmount(1);
     }
 
-        public override void SetDefaults()
-        {
-            Item.damage = 28;
-            Item.DamageType = DamageClass.Ranged;
-            Item.width = 52;
-            Item.height = 20;
-            Item.useTime = 28;
-            Item.useAnimation = 28;
-            Item.useStyle = ItemUseStyleID.Shoot;
-            Item.noMelee = true; //so the item's animation doesn't do damage
-            Item.knockBack = 4;
-            Item.value = 54000;
-            Item.rare = ItemRarityID.Orange;
-            Item.UseSound = SoundID.Item41;
-            Item.autoReuse = false;
-            Item.shoot = ProjectileID.PurificationPowder; //idk why but all the guns in the vanilla source have this
-            Item.shootSpeed = 10f;
-            Item.useAmmo = AmmoID.Bullet;
-        }
+    public override void SetDefaults()
+    {
+        Item.damage = 28;
+        Item.DamageType = DamageClass.Ranged;
+        Item.width = 52;
+        Item.height = 20;
+        Item.useTime = 28;
+        Item.useAnimation = 28;
+        Item.useStyle = ItemUseStyleID.Shoot;
+        Item.noMelee = true; //so the item's animation doesn't do damage
+        Item.knockBack = 4;
+        Item.value = 54000;
+        Item.rare = ItemRarityID.Orange;
+        Item.UseSound = SoundID.Item41;
+        Item.autoReuse = false;
+        Item.shoot = ProjectileID.PurificationPowder; //idk why but all the guns in the vanilla source have this
+        Item.shootSpeed = 10f;
+        Item.useAmmo = AmmoID.Bullet;
+    }
 
     public override void AddRecipes()
     {

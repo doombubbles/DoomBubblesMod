@@ -5,7 +5,6 @@ using DoomBubblesMod.Content.Items.Talent;
 using DoomBubblesMod.Content.Projectiles.HotS;
 using DoomBubblesMod.Utils;
 using Terraria.DataStructures;
-using Terraria.ID;
 
 namespace DoomBubblesMod.Content.Items.HotS;
 

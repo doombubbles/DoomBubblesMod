@@ -9,7 +9,7 @@ public class PylonPower : ModBuff
         Main.debuff[Type] = false;
         Main.pvpBuff[Type] = true;
         Main.buffNoSave[Type] = true;
-        LongerExpertDebuff = false;
+        BuffID.Sets.LongerExpertDebuff[Type] = false;
         Main.buffNoTimeDisplay[Type] = true;
     }
 

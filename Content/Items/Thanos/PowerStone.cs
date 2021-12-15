@@ -22,7 +22,7 @@ internal class PowerStone : InfinityStone
 
         Item.SetResearchAmount(1);
     }
-    
+
     public static void PowerAbility(Player player, Item item)
     {
         var gauntlet = new Vector2(player.Center.X + 10 * player.direction, player.Center.Y - 25);
@@ -64,7 +64,8 @@ internal class PowerStone : InfinityStone
                         var dX = (float) (10 * Math.Cos(rad));
                         var dY = (float) (10 * Math.Sin(rad));
                         var dust = Dust.NewDustPerfect(new Vector2(gauntlet.X + 10 * dX, gauntlet.Y + 10 * dY), 212,
-                            new Vector2(dX * -1f + player.velocity.X, dY * -1f + player.velocity.Y), 0, InfinityGauntlet.PowerColor);
+                            new Vector2(dX * -1f + player.velocity.X, dY * -1f + player.velocity.Y), 0,
+                            InfinityGauntlet.PowerColor);
                         dust.noGravity = true;
                     }
                 }
@@ -78,7 +79,8 @@ internal class PowerStone : InfinityStone
                     var dY = (float) (10 * Math.Sin(rad));
 
                     var dust = Dust.NewDustPerfect(new Vector2(gauntlet.X + 10 * dX, gauntlet.Y + 10 * dY), 212,
-                        new Vector2(dX * -1f + player.velocity.X, dY * -1f + player.velocity.Y), 0, InfinityGauntlet.PowerColor);
+                        new Vector2(dX * -1f + player.velocity.X, dY * -1f + player.velocity.Y), 0,
+                        InfinityGauntlet.PowerColor);
                     dust.noGravity = true;
                 }
             }

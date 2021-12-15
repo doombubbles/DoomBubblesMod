@@ -1,5 +1,4 @@
 ﻿using DoomBubblesMod.Utils;
-using Terraria.ID;
 
 namespace DoomBubblesMod.Content.Items.Accessories.Glove;
 
@@ -30,11 +29,11 @@ internal class SaffronGauntlet : ModItem
     {
         if (DoomBubblesMod.ThoriumMod != null)
         {
-            addThoriumRecipe();
+            AddThoriumRecipe();
         }
     }
 
-    private void addThoriumRecipe()
+    private void AddThoriumRecipe()
     {
         var recipe = CreateRecipe();
         recipe.AddIngredient(DoomBubblesMod.ThoriumMod.Find<ModItem>("LeatherGlove"));

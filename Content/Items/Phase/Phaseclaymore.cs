@@ -11,7 +11,7 @@ public abstract class Phaseclaymore<T> : ModItem where T : Phasesword
 
     public override void SetDefaults()
     {
-        Item.CloneDefaults(ModContent.GetInstance<T>().PhaseSaberID);
+        Item.CloneDefaults(ModContent.GetInstance<T>().PhaseSaberId);
         Item.damage = 169;
         Item.scale = 1.45f;
         Item.useTime = (int) (Item.useTime * .8f * .8f);

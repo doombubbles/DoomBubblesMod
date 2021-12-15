@@ -4,5 +4,5 @@ displayName = Doombubbles' Mod
 includeSource = false
 buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*
 homepage=https://github.com/doombubbles/DoomBubblesMod
-modReferences = ElementalDamage
-sortAfter = ElementalDamage
+modReferences = ElementalDamage, AttackSpeedMod
+sortAfter = ElementalDamage, AttackSpeedMod

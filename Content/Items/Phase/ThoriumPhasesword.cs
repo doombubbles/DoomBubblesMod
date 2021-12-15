@@ -2,7 +2,7 @@ namespace DoomBubblesMod.Content.Items.Phase;
 
 public abstract class ThoriumPhasesword : Phasesword
 {
-    public override int PhaseSaberID => ItemID.RedPhasesaber;
+    public override int PhaseSaberId => ItemID.RedPhasesaber;
 
     protected abstract string PhasesaberModItem { get; }
 

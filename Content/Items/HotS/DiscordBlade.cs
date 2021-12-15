@@ -4,7 +4,6 @@ using DoomBubblesMod.Content.Projectiles.HotS;
 using DoomBubblesMod.Utils;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.ID;
 
 namespace DoomBubblesMod.Content.Items.HotS;
 

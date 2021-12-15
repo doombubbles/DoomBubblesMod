@@ -11,10 +11,8 @@ public class LivingBombWand : ModItemWithTalents<TalentPyromaniac, TalentSunKing
     protected override Color? TalentColor => Color.LimeGreen;
 
     public int Verdant => Main.player[Item.playerIndexTheItemIsReservedFor].GetModPlayer<HotSPlayer>().superVerdant
-        ?
-        2
-        :
-        Main.player[Item.playerIndexTheItemIsReservedFor].GetModPlayer<HotSPlayer>().verdant
+        ? 2
+        : Main.player[Item.playerIndexTheItemIsReservedFor].GetModPlayer<HotSPlayer>().verdant
             ? 1
             : 0;
 

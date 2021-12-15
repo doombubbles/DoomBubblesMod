@@ -31,14 +31,14 @@ internal class HeavenlyEmblem : ModItem
         if (DoomBubblesMod.ThoriumMod != null)
         {
             var recipe = CreateRecipe();
-            addThoriumRecipe(ref recipe);
+            AddThoriumRecipe(ref recipe);
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.ReplaceResult(this);
             recipe.Register();
         }
     }
 
-    public void addThoriumRecipe(ref Recipe recipe)
+    public void AddThoriumRecipe(ref Recipe recipe)
     {
         var thoriumMod = DoomBubblesMod.ThoriumMod;
         recipe.AddIngredient(thoriumMod.Find<ModItem>("ClericEmblem"));

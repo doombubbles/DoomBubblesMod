@@ -10,11 +10,11 @@ namespace DoomBubblesMod.Common.UI;
 
 public class InfinityGauntletUI : UIState
 {
+    private const float PanelHeight = 84f;
+    private const float PanelWidth = 117f;
     private UIImage backgroundPanel;
 
     private List<UIImageButton> buttonList;
-    private const float PanelHeight = 84f;
-    private const float PanelWidth = 117f;
 
     public int mouseX;
     public int mouseY;
@@ -23,7 +23,8 @@ public class InfinityGauntletUI : UIState
     public override void OnInitialize()
     {
         backgroundPanel =
-            new UIImage(ModContent.Request<Texture2D>("DoomBubblesMod/Assets/Textures/UI/Gauntlet", AssetRequestMode.ImmediateLoad));
+            new UIImage(ModContent.Request<Texture2D>("DoomBubblesMod/Assets/Textures/UI/Gauntlet",
+                AssetRequestMode.ImmediateLoad));
         backgroundPanel.SetPadding(0);
         backgroundPanel.Left.Set(mouseX / Main.UIScale - PanelWidth / 2f, 0f);
         backgroundPanel.Top.Set(mouseY / Main.UIScale - PanelHeight / 2f, 0f);

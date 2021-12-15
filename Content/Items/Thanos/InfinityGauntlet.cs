@@ -3,11 +3,8 @@ using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Common.Systems;
 using DoomBubblesMod.Common.UI;
 using DoomBubblesMod.Content.Buffs;
-using DoomBubblesMod.Content.Projectiles.Thanos;
 using DoomBubblesMod.Utils;
 using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.ID;
 
 namespace DoomBubblesMod.Content.Items.Thanos;
 
@@ -264,7 +261,7 @@ internal class InfinityGauntlet : ModItem
 
         base.HoldItem(player);
     }
-    
+
 
     public override void AddRecipes()
     {

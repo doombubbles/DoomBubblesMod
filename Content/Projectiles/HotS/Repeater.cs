@@ -3,7 +3,6 @@ using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Buffs;
 using Terraria.Audio;
 using Terraria.GameContent;
-using Terraria.ID;
 
 namespace DoomBubblesMod.Content.Projectiles.HotS;
 
@@ -127,7 +126,8 @@ public class Repeater : ModProjectile
         var num293 = Main.rand.Next(3, 7);
         for (var num294 = 0; num294 < num293; num294++)
         {
-            var num295 = Dust.NewDust(Projectile.Center - Projectile.velocity / 2f, 0, 0, DustID.WhiteTorch, 0f, 0f, 100,
+            var num295 = Dust.NewDust(Projectile.Center - Projectile.velocity / 2f, 0, 0, DustID.WhiteTorch, 0f, 0f,
+                100,
                 Color.Lavender, 2.1f);
             var dust = Main.dust[num295];
             dust.velocity *= 2f;

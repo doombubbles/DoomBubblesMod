@@ -3,7 +3,6 @@ using DoomBubblesMod.Content.Projectiles.Ranged;
 using DoomBubblesMod.Utils;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.ID;
 
 namespace DoomBubblesMod.Content.Items.Weapons;
 

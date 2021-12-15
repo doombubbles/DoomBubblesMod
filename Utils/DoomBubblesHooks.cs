@@ -20,7 +20,7 @@ public class DoomBubblesHooks : ILoadable
     public void Unload()
     {
     }
-    
+
 
     private static void MainOnDrawCursor(Main.orig_DrawCursor orig, Vector2 bonus, bool smart)
     {

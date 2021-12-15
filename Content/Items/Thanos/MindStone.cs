@@ -73,7 +73,7 @@ public class MindStonePacket : CustomPacket<MindStonePacket>
         if (NpcId > -1)
         {
             var npc = Main.npc[NpcId];
-            npc.GetGlobalNPC<ThanosGlobalNPC>().MindStoneFriendly = true;
+            npc.GetGlobalNPC<ThanosGlobalNPC>().mindStoneFriendly = true;
             npc.damage = 0;
         }
 

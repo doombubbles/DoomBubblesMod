@@ -7,7 +7,6 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameInput;
 using PowerStone = DoomBubblesMod.Content.Buffs.PowerStone;
-using Terraria.ID;
 
 namespace DoomBubblesMod.Common.Players;
 

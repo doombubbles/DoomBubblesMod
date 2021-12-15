@@ -3,7 +3,6 @@ using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Buffs;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.ID;
 
 namespace DoomBubblesMod.Content.Projectiles.HotS;
 

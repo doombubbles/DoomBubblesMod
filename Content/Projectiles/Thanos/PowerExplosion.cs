@@ -1,7 +1,6 @@
 using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Buffs;
 using DoomBubblesMod.Content.Items.Thanos;
-using Terraria.ID;
 
 namespace DoomBubblesMod.Content.Projectiles.Thanos;
 
@@ -33,7 +32,8 @@ public class PowerExplosion : ModProjectile
         for (var i = 0; i < 1; i++)
         {
             var dust = Main.dust[
-                Dust.NewDust(Projectile.Center, 0, 0, DustID.BubbleBurst_White, 0, 0, 0, InfinityGauntlet.PowerColor, 1.5f)];
+                Dust.NewDust(Projectile.Center, 0, 0, DustID.BubbleBurst_White, 0, 0, 0, InfinityGauntlet.PowerColor,
+                    1.5f)];
             dust.velocity *= .5f;
             dust.noGravity = true;
         }

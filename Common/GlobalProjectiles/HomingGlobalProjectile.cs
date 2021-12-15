@@ -5,9 +5,8 @@ namespace DoomBubblesMod.Common.GlobalProjectiles;
 
 public class HomingGlobalProjectile : GlobalProjectile
 {
-    public override bool InstancePerEntity => true;
-
     private float db;
+    public override bool InstancePerEntity => true;
 
     public override bool PreAI(Projectile projectile)
     {

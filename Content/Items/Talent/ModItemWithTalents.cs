@@ -2,7 +2,6 @@
 using System.IO;
 using Terraria.Audio;
 using Terraria.ModLoader.IO;
-using Terraria.ID;
 
 namespace DoomBubblesMod.Content.Items.Talent;
 

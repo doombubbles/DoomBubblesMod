@@ -1,4 +1,5 @@
-﻿using DoomBubblesMod.Utils;
+﻿using AttackSpeedMod;
+using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.Accessories.Glove;
 
@@ -30,7 +31,7 @@ internal class ChromaticGauntlet : ModItem
         player.GetCritChance(DamageClass.Generic) += 5;
         player.endurance += .05f;
         player.armorPenetration += 5;
-        player.AttackSpeed(f => f + .05f);
+        player.GetAttackSpeed(DamageClass.Generic) += .05f;
     }
 
     public override void AddRecipes()

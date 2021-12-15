@@ -1,3 +1,4 @@
+using AttackSpeedMod;
 using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Items.Accessories.Glove;
 using DoomBubblesMod.Content.Items.Misc;
@@ -35,7 +36,7 @@ public class ChromaticEmblem : ThoriumRecipeItem
         player.GetCritChance(DamageClass.Generic) += 15;
         player.endurance += .15f;
         player.armorPenetration += 15;
-        player.AttackSpeed(f => f + .15f);
+        player.GetAttackSpeed(DamageClass.Generic) += .15f;
 
         player.gravControl2 = true;
         player.gravControl = true;

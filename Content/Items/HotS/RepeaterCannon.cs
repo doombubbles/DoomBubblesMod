@@ -3,13 +3,12 @@ using DoomBubblesMod.Content.Items.Talent;
 using DoomBubblesMod.Content.Projectiles.HotS;
 using DoomBubblesMod.Utils;
 using Terraria.DataStructures;
-using Terraria.ID;
 
 namespace DoomBubblesMod.Content.Items.HotS;
 
 public class RepeaterCannon : ModItemWithTalents<TalentMobileOffense, TalentOffensiveCadence, TalentArsenalOvercharge>
 {
-    private short m_Shot;
+    private short mShot;
 
     protected override Color? TalentColor => Color.Orange;
 
@@ -56,9 +55,9 @@ public class RepeaterCannon : ModItemWithTalents<TalentMobileOffense, TalentOffe
         int type,
         int damage, float knockback)
     {
-        m_Shot++;
+        mShot++;
 
-        if ((ChosenTalent == 2 || ChosenTalent == -1) && m_Shot == 3)
+        if ((ChosenTalent == 2 || ChosenTalent == -1) && mShot == 3)
         {
             Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<RepeaterBig>(),
                 damage * 2, knockback * 2f, player.whoAmI, 4, ChosenTalent);
@@ -66,12 +65,12 @@ public class RepeaterCannon : ModItemWithTalents<TalentMobileOffense, TalentOffe
         else
         {
             Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI,
-                m_Shot, ChosenTalent);
+                mShot, ChosenTalent);
         }
 
-        if (m_Shot >= 3)
+        if (mShot >= 3)
         {
-            m_Shot = 0;
+            mShot = 0;
         }
 
         return false;

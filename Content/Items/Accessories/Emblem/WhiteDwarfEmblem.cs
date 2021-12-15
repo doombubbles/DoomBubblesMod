@@ -31,7 +31,7 @@ internal class WhiteDwarfEmblem : ModItem
         if (DoomBubblesMod.ThoriumMod != null)
         {
             var recipe = CreateRecipe();
-            addThoriumRecipe(ref recipe);
+            AddThoriumRecipe(ref recipe);
             recipe.AddIngredient(ItemID.LunarBar, 5);
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.ReplaceResult(this);
@@ -39,7 +39,7 @@ internal class WhiteDwarfEmblem : ModItem
         }
     }
 
-    public void addThoriumRecipe(ref Recipe recipe)
+    public void AddThoriumRecipe(ref Recipe recipe)
     {
         var thoriumMod = DoomBubblesMod.ThoriumMod;
         recipe.AddIngredient(thoriumMod.Find<ModItem>("NinjaEmblem"));

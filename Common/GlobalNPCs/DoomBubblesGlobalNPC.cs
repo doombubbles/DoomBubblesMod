@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using DoomBubblesMod.Content.Buffs;
-using DoomBubblesMod.Content.Items;
 using DoomBubblesMod.Content.Items.HotS;
 using DoomBubblesMod.Content.Items.Misc;
 using DoomBubblesMod.Content.Items.Talent;

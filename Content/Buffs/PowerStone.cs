@@ -12,7 +12,7 @@ public class PowerStone : ModBuff
         Main.pvpBuff[Type] = true;
         Main.buffNoSave[Type] = true;
         Main.buffNoTimeDisplay[Type] = false;
-        LongerExpertDebuff = false;
+        BuffID.Sets.LongerExpertDebuff[Type] = false;
     }
 
     public override void Update(Player player, ref int buffIndex)

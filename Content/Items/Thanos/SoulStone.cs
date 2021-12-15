@@ -20,7 +20,7 @@ internal class SoulStone : InfinityStone
                            "-The Stonekeeper");
         Item.SetResearchAmount(1);
     }
-    
+
     public static void SoulAbility(Player player)
     {
         if (player.chest == -3)

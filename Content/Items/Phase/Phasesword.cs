@@ -4,7 +4,7 @@ namespace DoomBubblesMod.Content.Items.Phase;
 
 public abstract class Phasesword : ModItem
 {
-    public abstract int PhaseSaberID { get; }
+    public abstract int PhaseSaberId { get; }
 
     public override void SetStaticDefaults()
     {
@@ -13,7 +13,7 @@ public abstract class Phasesword : ModItem
 
     public override void SetDefaults()
     {
-        Item.CloneDefaults(PhaseSaberID);
+        Item.CloneDefaults(PhaseSaberId);
         Item.damage = 69;
         Item.scale = 1.3f;
         Item.useTime = (int) (Item.useTime * .8f);
@@ -24,7 +24,7 @@ public abstract class Phasesword : ModItem
     public override void AddRecipes()
     {
         var recipe = CreateRecipe();
-        recipe.AddIngredient(PhaseSaberID);
+        recipe.AddIngredient(PhaseSaberId);
         recipe.AddIngredient(ItemID.Ectoplasm, 25);
         recipe.AddTile(TileID.MythrilAnvil);
         recipe.Register();
@@ -33,35 +33,35 @@ public abstract class Phasesword : ModItem
 
 public class RedPhasesword : Phasesword
 {
-    public override int PhaseSaberID => ItemID.RedPhasesaber;
+    public override int PhaseSaberId => ItemID.RedPhasesaber;
 }
 
 public class BluePhasesword : Phasesword
 {
-    public override int PhaseSaberID => ItemID.BluePhasesaber;
+    public override int PhaseSaberId => ItemID.BluePhasesaber;
 }
 
 public class GreenPhasesword : Phasesword
 {
-    public override int PhaseSaberID => ItemID.GreenPhasesaber;
+    public override int PhaseSaberId => ItemID.GreenPhasesaber;
 }
 
 public class PurplePhasesword : Phasesword
 {
-    public override int PhaseSaberID => ItemID.PurplePhasesaber;
+    public override int PhaseSaberId => ItemID.PurplePhasesaber;
 }
 
 public class YellowPhasesword : Phasesword
 {
-    public override int PhaseSaberID => ItemID.YellowPhasesaber;
+    public override int PhaseSaberId => ItemID.YellowPhasesaber;
 }
 
 public class OrangePhasesword : Phasesword
 {
-    public override int PhaseSaberID => ItemID.OrangePhasesaber;
+    public override int PhaseSaberId => ItemID.OrangePhasesaber;
 }
 
 public class WhitePhasesword : Phasesword
 {
-    public override int PhaseSaberID => ItemID.WhitePhasesaber;
+    public override int PhaseSaberId => ItemID.WhitePhasesaber;
 }

@@ -1,7 +1,6 @@
 using System;
 using DoomBubblesMod.Common.GlobalProjectiles;
 using DoomBubblesMod.Content.Items.Thanos;
-using Terraria.ID;
 
 namespace DoomBubblesMod.Content.Projectiles.Thanos;
 
@@ -29,7 +28,7 @@ public class RealityBeam : ModProjectile
         var player = Main.player[Projectile.owner];
         var gauntlet = new Vector2(player.Center.X + 10 * player.direction, player.Center.Y - 25);
 
-        handleProjectiles(gauntlet);
+        HandleProjectiles(gauntlet);
 
         if (Math.Sqrt(Math.Pow(gauntlet.X - Projectile.position.X, 2) +
                       Math.Pow(gauntlet.Y - Projectile.position.Y, 2)) <
@@ -72,7 +71,7 @@ public class RealityBeam : ModProjectile
         Projectile.velocity.Y = (float) (40 * Math.Sin(theta));
     }
 
-    public void handleProjectiles(Vector2 gauntlet)
+    public void HandleProjectiles(Vector2 gauntlet)
     {
         foreach (var otherProjectile in Main.projectile)
         {
