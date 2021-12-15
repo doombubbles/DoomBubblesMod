@@ -29,9 +29,9 @@ public class CompuproHead : ModItem
     public override void AddRecipes()
     {
         var recipe = CreateRecipe();
-        recipe.AddIngredient(ItemID.MeteorHelmet);
-        recipe.AddIngredient(ItemID.CrystalShard, 10);
-        recipe.AddTile(TileID.MythrilAnvil);
+        recipe.AddIngredient(ItemID.TVHeadMask);
+        recipe.AddIngredient(ModContent.ItemType<Items.Accessories.FredericksGift>());
+        recipe.AddTile(TileID.WorkBenches);
         recipe.Register();
     }
 }
