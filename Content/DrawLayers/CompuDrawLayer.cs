@@ -17,10 +17,9 @@ public class CompuDrawLayer : PlayerDrawLayer
     protected override void Draw(ref PlayerDrawSet drawInfo)
     {
         compuproHeadTexture ??= Request<Texture2D>("DoomBubblesMod/Assets/Textures/CompuproEyes", AssetRequestMode.ImmediateLoad);
-        var drawX = (drawInfo.drawPlayer.width / 2) - (drawInfo.drawPlayer.bodyFrame.Width / 2);
-        var drawY = 4 + drawInfo.drawPlayer.height - drawInfo.drawPlayer.bodyFrame.Height;
-        var drawPosition = new Vector2(drawX, drawY) + drawInfo.drawPlayer.headPosition + drawInfo.headVect +
-                drawInfo.Position - Main.screenPosition + drawInfo.helmetOffset;
+        var drawX = (drawInfo.drawPlayer.width / 2) - (drawInfo.drawPlayer.bodyFrame.Width / 2) + drawInfo.Position.X - Main.screenPosition.X;
+        var drawY = 4 + drawInfo.drawPlayer.height - drawInfo.drawPlayer.bodyFrame.Height + drawInfo.Position.Y - Main.screenPosition.Y;
+        var drawPosition = new Vector2((int) drawX, (int) drawY) + drawInfo.drawPlayer.headPosition + drawInfo.headVect + drawInfo.helmetOffset;
 
         var drawData = new DrawData(compuproHeadTexture.Value, drawPosition, drawInfo.drawPlayer.bodyFrame, Color.White, drawInfo.drawPlayer.headRotation, drawInfo.headVect,
                 1f, drawInfo.playerEffect, 0);
