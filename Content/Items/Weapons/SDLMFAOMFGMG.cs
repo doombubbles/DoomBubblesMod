@@ -4,7 +4,7 @@ using Terraria.DataStructures;
 
 namespace DoomBubblesMod.Content.Items.Weapons;
 
-public class Sdlmfaomfgmg : ModItem
+public class SDLMFAOMFGMG : ModItem
 {
     public override void SetStaticDefaults()
     {
