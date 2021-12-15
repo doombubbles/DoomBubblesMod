@@ -3,6 +3,7 @@ global using Terraria.ModLoader;
 global using Terraria.ID;
 global using Microsoft.Xna.Framework;
 global using Microsoft.Xna.Framework.Graphics;
+global using static Terraria.ModLoader.ModContent;
 using System.Collections.Generic;
 using System.IO;
 using DoomBubblesMod.Utils;

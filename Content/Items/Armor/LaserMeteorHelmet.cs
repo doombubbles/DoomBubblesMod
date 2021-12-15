@@ -38,6 +38,7 @@ public class LaserMeteorHelmet : ModItem
     public override void UpdateEquip(Player player)
     {
         player.GetDamage(DamageClass.Magic) += .11f;
+        player.GetModPlayer<CompuPlayer>().showCompuGlow = true;
     }
 
     public override void AddRecipes()
