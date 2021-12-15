@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-    <Import Project="..\tModLoader.targets"/>
+    <Import Project="..\tModLoader.targets" />
     <PropertyGroup>
         <AssemblyName>DoomBubblesMod</AssemblyName>
         <TargetFramework>net6.0</TargetFramework>
@@ -8,19 +8,16 @@
         <LangVersion>latest</LangVersion>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*"/>
+        <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Remove="OldAssets\**"/>
-        <Compile Remove="lib\**"/>
+        <Compile Remove="OldAssets\**" />
     </ItemGroup>
     <ItemGroup>
-        <EmbeddedResource Remove="OldAssets\**"/>
-        <EmbeddedResource Remove="lib\**"/>
+        <EmbeddedResource Remove="OldAssets\**" />
     </ItemGroup>
     <ItemGroup>
-        <None Remove="OldAssets\**"/>
-        <None Remove="lib\**"/>
+        <None Remove="OldAssets\**" />
     </ItemGroup>
     <ItemGroup>
         <Reference Include="AttackSpeedMod, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">

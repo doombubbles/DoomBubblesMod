@@ -8,3 +8,4 @@ DoomBubblesMod.sln
 bin/
 obj/
 .vscode/
+!lib/**
