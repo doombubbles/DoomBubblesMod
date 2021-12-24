@@ -11,8 +11,10 @@ public class CompuproHead : ModItem
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Compupro Helmet");
-        Tooltip.SetDefault("Great for impersonating compupro");
+        DisplayName.SetDefault("Compupro's Terminal");
+        Tooltip.SetDefault("'Great for impersonating compupro!'\n" +
+                           "If you look deep into its eyes, you can just about make out the words...\n" +
+                           "'Civilization V has crashed.'");
         Item.SetResearchAmount(1);
     }
 
