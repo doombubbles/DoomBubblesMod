@@ -1,4 +1,3 @@
-using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.Armor;
