@@ -21,11 +21,6 @@ public class CompuproHead : ModItem
         Item.headSlot = realSlot;
     }
 
-    public override void UpdateEquip(Player player)
-    {
-        player.GetModPlayer<CompuPlayer>().showCompuGlow = true;
-    }
-
     public override void AddRecipes()
     {
         var recipe = CreateRecipe();
