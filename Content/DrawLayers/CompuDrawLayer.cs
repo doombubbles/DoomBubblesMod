@@ -2,6 +2,7 @@ using Terraria.DataStructures;
 using ReLogic.Content;
 using Microsoft.Xna.Framework;
 using DoomBubblesMod.Common.Players;
+using DoomBubblesMod.Content.Items.Armor;
 
 namespace DoomBubblesMod.Content.DrawLayers;
 
@@ -30,6 +31,6 @@ public class CompuDrawLayer : PlayerDrawLayer
 
     public override bool GetDefaultVisibility(PlayerDrawSet drawInfo)
     {
-        return drawInfo.drawPlayer.head == ModContent.GetModHeadSlot("DoomBubblesMod/Items/Armor/CompuproHead_Head");
+        return drawInfo.drawPlayer.head == CompuproHead.headSlot;
     }
 }

@@ -7,6 +7,8 @@ namespace DoomBubblesMod.Content.Items.Armor;
 
 public class CompuproHead : ModItem
 {
+    public static int headSlot;
+
     public override void SetStaticDefaults()
     {
         DisplayName.SetDefault("Compupro Helmet");
@@ -17,6 +19,7 @@ public class CompuproHead : ModItem
     public override void SetDefaults()
     {
         var realSlot = Item.headSlot;
+        headSlot = realSlot;
         Item.CloneDefaults(ItemID.TVHeadMask);
         Item.headSlot = realSlot;
     }
