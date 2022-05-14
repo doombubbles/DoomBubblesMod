@@ -9,7 +9,7 @@ namespace DoomBubblesMod.Utils;
 
 public static class ThoriumChanges
 {
-    private static ILog Logger => ModContent.GetInstance<DoomBubblesMod>().Logger;
+    private static ILog Logger => GetInstance<DoomBubblesMod>().Logger;
 
     // private Dictionary<MethodInfo, Action<ILContext>> thoriumILChanges;
 

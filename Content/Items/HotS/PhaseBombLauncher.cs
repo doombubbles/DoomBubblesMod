@@ -4,7 +4,6 @@ using DoomBubblesMod.Content.Buffs;
 using DoomBubblesMod.Content.Items.Talent;
 using DoomBubblesMod.Content.Projectiles.HotS;
 using DoomBubblesMod.Utils;
-using Terraria.DataStructures;
 
 namespace DoomBubblesMod.Content.Items.HotS;
 
@@ -27,7 +26,7 @@ public class
         Item.height = 34;
         Item.noMelee = true;
         Item.damage = 83;
-        Item.shoot = ModContent.ProjectileType<PhaseBomb>();
+        Item.shoot = ProjectileType<PhaseBomb>();
         Item.shootSpeed = 7f;
         Item.useAnimation = 38;
         Item.useTime = 38;
@@ -44,11 +43,11 @@ public class
         return new Vector2(-7, -3);
     }
 
-    public override void ModifyWeaponDamage(Player player, ref StatModifier damage, ref float flat)
+    public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
     {
         if (ChosenTalent is 3 or -1)
         {
-            flat += .5f;
+            damage.Base += .5f;
         }
     }
 
@@ -62,7 +61,7 @@ public class
         return base.UseTimeMultiplier(player);
     }
 
-    public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity,
+    public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity,
         int type,
         int damage, float knockback)
     {
@@ -83,9 +82,9 @@ public class
             Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, (float) time,
                 ChosenTalent);
 
-            if (player.HasBuff(ModContent.BuffType<FenixBombBuildUp>()))
+            if (player.HasBuff(BuffType<FenixBombBuildUp>()))
             {
-                player.DelBuff(player.FindBuffIndex(ModContent.BuffType<FenixBombBuildUp>()));
+                player.DelBuff(player.FindBuffIndex(BuffType<FenixBombBuildUp>()));
             }
 
             player.GetModPlayer<HotSPlayer>().phaseUseTime = Item.useTime;

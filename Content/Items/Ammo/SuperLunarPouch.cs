@@ -16,7 +16,7 @@ internal class SuperLunarPouch : ModItem
 
     public override void SetDefaults()
     {
-        Item.shoot = ModContent.ProjectileType<SuperLunarBullet>();
+        Item.shoot = ProjectileType<SuperLunarBullet>();
         Item.width = 26;
         Item.height = 34;
         Item.ammo = AmmoID.Bullet;
@@ -30,10 +30,10 @@ internal class SuperLunarPouch : ModItem
     public override void AddRecipes()
     {
         var recipe = CreateRecipe();
-        recipe.AddIngredient(ModContent.ItemType<SolarPouch>());
-        recipe.AddIngredient(ModContent.ItemType<NebulaPouch>());
-        recipe.AddIngredient(ModContent.ItemType<VortexPouch>());
-        recipe.AddIngredient(ModContent.ItemType<StardustPouch>());
+        recipe.AddIngredient(ItemType<SolarPouch>());
+        recipe.AddIngredient(ItemType<NebulaPouch>());
+        recipe.AddIngredient(ItemType<VortexPouch>());
+        recipe.AddIngredient(ItemType<StardustPouch>());
         recipe.AddIngredient(ItemID.GravityGlobe);
         recipe.ReplaceResult(this);
         recipe.AddTile(TileID.LunarCraftingStation);

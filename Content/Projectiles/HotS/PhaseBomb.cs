@@ -117,7 +117,7 @@ public class PhaseBomb : CenteredProjectile
         if (Projectile.localAI[0] > 0)
         {
             var player = Main.player[Projectile.owner];
-            player.AddBuff(ModContent.BuffType<FenixRepeaterBuff>(), 360);
+            player.AddBuff(BuffType<FenixRepeaterBuff>(), 360);
             player.GetModPlayer<HotSPlayer>().fenixRepeaterBuff += (int) Projectile.localAI[0];
             if (player.gravControl2)
             {

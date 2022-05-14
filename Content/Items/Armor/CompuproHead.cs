@@ -1,3 +1,4 @@
+using DoomBubblesMod.Content.Items.Accessories;
 using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.Armor;
@@ -29,7 +30,7 @@ public class CompuproHead : ModItem
     {
         var recipe = CreateRecipe();
         recipe.AddIngredient(ItemID.TVHeadMask);
-        recipe.AddIngredient(ModContent.ItemType<Items.Accessories.FredericksGift>());
+        recipe.AddIngredient(ItemType<FredericksGift>());
         recipe.AddTile(TileID.WorkBenches);
         recipe.Register();
     }

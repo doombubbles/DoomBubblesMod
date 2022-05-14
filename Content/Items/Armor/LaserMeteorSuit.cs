@@ -25,8 +25,8 @@ public class LaserMeteorSuit : ModItem
 
     public override bool IsArmorSet(Item head, Item body, Item legs)
     {
-        return head.type == ModContent.ItemType<LaserMeteorHelmet>() &&
-               legs.type == ModContent.ItemType<LaserMeteorLeggings>();
+        return head.type == ItemType<LaserMeteorHelmet>() &&
+               legs.type == ItemType<LaserMeteorLeggings>();
     }
 
     public override void UpdateEquip(Player player)

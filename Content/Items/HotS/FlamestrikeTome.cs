@@ -34,7 +34,7 @@ public class FlamestrikeTome : ModItemWithTalents<TalentConvection, TalentIgnite
         Item.useTime = 17;
         Item.useAnimation = 17;
         Item.mana = 17;
-        Item.shoot = ModContent.ProjectileType<FlameStrike>();
+        Item.shoot = ProjectileType<FlameStrike>();
         Item.value = Item.buyPrice(0, 69);
         Item.shootSpeed = 1f;
         Item.knockBack = 3f;
@@ -42,7 +42,7 @@ public class FlamestrikeTome : ModItemWithTalents<TalentConvection, TalentIgnite
         Item.autoReuse = true;
     }
 
-    public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity,
+    public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity,
         int type,
         int damage, float knockback)
     {
@@ -54,11 +54,11 @@ public class FlamestrikeTome : ModItemWithTalents<TalentConvection, TalentIgnite
         return false;
     }
 
-    public override void ModifyWeaponDamage(Player player, ref StatModifier damage, ref float flat)
+    public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
     {
         if (ChosenTalent is 1 or -1)
         {
-            flat += player.GetModPlayer<HotSPlayer>().convection;
+            damage.Base += player.GetModPlayer<HotSPlayer>().convection;
         }
     }
 }

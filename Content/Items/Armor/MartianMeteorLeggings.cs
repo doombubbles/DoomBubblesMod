@@ -24,8 +24,8 @@ public class MartianMeteorLeggings : ModItem
 
     public override bool IsArmorSet(Item head, Item body, Item legs)
     {
-        return head.type == ModContent.ItemType<MartianMeteorHelmet>() &&
-               body.type == ModContent.ItemType<MartianMeteorSuit>();
+        return head.type == ItemType<MartianMeteorHelmet>() &&
+               body.type == ItemType<MartianMeteorSuit>();
     }
 
     public override void UpdateEquip(Player player)
@@ -36,7 +36,7 @@ public class MartianMeteorLeggings : ModItem
     public override void AddRecipes()
     {
         var recipe = CreateRecipe();
-        recipe.AddIngredient(ModContent.ItemType<LaserMeteorLeggings>());
+        recipe.AddIngredient(ItemType<LaserMeteorLeggings>());
         recipe.AddIngredient(ItemID.MartianConduitPlating, 75);
         recipe.AddTile(TileID.MythrilAnvil);
         recipe.Register();

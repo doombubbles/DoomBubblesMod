@@ -1,5 +1,4 @@
-﻿using AttackSpeedMod;
-using DoomBubblesMod.Utils;
+﻿using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.Accessories.Glove;
 

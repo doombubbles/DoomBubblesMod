@@ -41,9 +41,9 @@ public class PowerExplosion : ModProjectile
 
     public override bool? CanHitNPC(NPC target)
     {
-        if (target.HasBuff(ModContent.BuffType<PowerStoneDebuff>()))
+        if (target.HasBuff(BuffType<PowerStoneDebuff>()))
         {
-            if (target.buffTime[target.FindBuffIndex(ModContent.BuffType<PowerStoneDebuff>())] > 260 &&
+            if (target.buffTime[target.FindBuffIndex(BuffType<PowerStoneDebuff>())] > 260 &&
                 Main.player[Projectile.owner].GetModPlayer<ThanosPlayer>().powerStoning.Contains(target.whoAmI))
             {
                 return false;
@@ -55,7 +55,7 @@ public class PowerExplosion : ModProjectile
 
     public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
     {
-        target.AddBuff(ModContent.BuffType<PowerStoneDebuff>(), 300);
+        target.AddBuff(BuffType<PowerStoneDebuff>(), 300);
         if (!Main.player[Projectile.owner].GetModPlayer<ThanosPlayer>().powerStoning.Contains(target.whoAmI))
         {
             Main.player[Projectile.owner].GetModPlayer<ThanosPlayer>().powerStoning.Add(target.whoAmI);

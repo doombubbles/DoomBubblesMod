@@ -11,7 +11,7 @@ public abstract class Phaseclaymore<T> : ModItem where T : Phasesword
 
     public override void SetDefaults()
     {
-        Item.CloneDefaults(ModContent.GetInstance<T>().PhaseSaberId);
+        Item.CloneDefaults(GetInstance<T>().PhaseSaberId);
         Item.damage = 169;
         Item.scale = 1.45f;
         Item.useTime = (int) (Item.useTime * .8f * .8f);
@@ -22,7 +22,7 @@ public abstract class Phaseclaymore<T> : ModItem where T : Phasesword
     public override void AddRecipes()
     {
         var recipe = CreateRecipe();
-        recipe.AddIngredient(ModContent.ItemType<T>());
+        recipe.AddIngredient(ItemType<T>());
         recipe.AddIngredient(ItemID.FragmentNebula, 5);
         recipe.AddIngredient(ItemID.FragmentSolar, 5);
         recipe.AddIngredient(ItemID.FragmentStardust, 5);

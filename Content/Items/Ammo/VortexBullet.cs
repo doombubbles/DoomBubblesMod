@@ -14,7 +14,7 @@ public class VortexBullet : ModItem
     public override void SetDefaults()
     {
         Item.CloneDefaults(ItemID.MoonlordBullet);
-        Item.shoot = ModContent.ProjectileType<Projectiles.Ranged.VortexBullet>();
+        Item.shoot = ProjectileType<Projectiles.Ranged.VortexBullet>();
         Item.shootSpeed = 1.5f;
         Item.damage = 17;
     }

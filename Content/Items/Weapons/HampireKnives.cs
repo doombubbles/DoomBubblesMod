@@ -1,6 +1,5 @@
 ﻿using DoomBubblesMod.Content.Projectiles.Ranged;
 using DoomBubblesMod.Utils;
-using Terraria.DataStructures;
 
 namespace DoomBubblesMod.Content.Items.Weapons;
 
@@ -19,11 +18,11 @@ public class HampireKnives : ModItem
         Item.CloneDefaults(ItemID.VampireKnives);
         //Item.DamageType = DamageClass.Melee;
         Item.DamageType = DamageClass.Ranged;
-        Item.shoot = ModContent.ProjectileType<HampireKnife>();
+        Item.shoot = ProjectileType<HampireKnife>();
     }
 
 
-    public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity,
+    public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity,
         int type,
         int damage, float knockback)
     {
@@ -38,22 +37,22 @@ public class HampireKnives : ModItem
             float distance = (float)Math.Sqrt(dX * dX + dY * dY);
             */
         var numKnives = 4;
-        if (Main.rand.Next(2) == 0)
+        if (Main.rand.NextBool(2))
         {
             numKnives++;
         }
 
-        if (Main.rand.Next(4) == 0)
+        if (Main.rand.NextBool(4))
         {
             numKnives++;
         }
 
-        if (Main.rand.Next(8) == 0)
+        if (Main.rand.NextBool(8))
         {
             numKnives++;
         }
 
-        if (Main.rand.Next(16) == 0)
+        if (Main.rand.NextBool(16))
         {
             numKnives++;
         }

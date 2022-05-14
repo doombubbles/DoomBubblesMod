@@ -8,9 +8,9 @@ namespace DoomBubblesMod.Content.Items.Talent;
 public abstract class ModItemWithTalents<T1, T2, T3> : ModItemWithTalents
     where T1 : ModItem where T2 : ModItem where T3 : ModItem
 {
-    public override ModItem Talent1Item => ModContent.GetInstance<T1>();
-    public override ModItem Talent2Item => ModContent.GetInstance<T2>();
-    public override ModItem Talent3Item => ModContent.GetInstance<T3>();
+    public override ModItem Talent1Item => GetInstance<T1>();
+    public override ModItem Talent2Item => GetInstance<T2>();
+    public override ModItem Talent3Item => GetInstance<T3>();
 }
 
 public abstract class ModItemWithTalents : ModItem
@@ -166,7 +166,7 @@ public abstract class ModItemWithTalents : ModItem
             tooltips.Add(new TooltipLine(Mod, "talent1",
                 Talent1Item.DisplayName.GetDefault().Replace("Talent: ", "") + ":")
             {
-                overrideColor = TalentColor
+                OverrideColor = TalentColor
             });
             tooltips.Add(
                 new TooltipLine(Mod, "1", Talent1Item.Tooltip.GetDefault().Split('\n')[1]));
@@ -177,7 +177,7 @@ public abstract class ModItemWithTalents : ModItem
             tooltips.Add(new TooltipLine(Mod, "talent2",
                 Talent2Item.DisplayName.GetDefault().Replace("Talent: ", "") + ":")
             {
-                overrideColor = TalentColor
+                OverrideColor = TalentColor
             });
             tooltips.Add(
                 new TooltipLine(Mod, "2", Talent2Item.Tooltip.GetDefault().Split('\n')[1]));
@@ -188,7 +188,7 @@ public abstract class ModItemWithTalents : ModItem
             tooltips.Add(new TooltipLine(Mod, "talent3",
                 Talent3Item.DisplayName.GetDefault().Replace("Talent: ", "") + ":")
             {
-                overrideColor = TalentColor
+                OverrideColor = TalentColor
             });
             tooltips.Add(
                 new TooltipLine(Mod, "3", Talent3Item.Tooltip.GetDefault().Split('\n')[1]));

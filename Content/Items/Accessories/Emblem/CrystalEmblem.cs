@@ -32,7 +32,7 @@ internal class CrystalEmblem : ModItem
     {
         var recipe = CreateRecipe();
         recipe.AddIngredient(ItemID.AvengerEmblem);
-        recipe.AddIngredient(ModContent.ItemType<CrystalCore>());
+        recipe.AddIngredient(ItemType<CrystalCore>());
         recipe.AddTile(TileID.TinkerersWorkbench);
         recipe.Register();
     }

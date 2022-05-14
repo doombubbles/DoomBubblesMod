@@ -1,6 +1,5 @@
 using DoomBubblesMod.Content.Projectiles.Ranged;
 using DoomBubblesMod.Utils;
-using Terraria.DataStructures;
 
 namespace DoomBubblesMod.Content.Items.Weapons;
 
@@ -51,7 +50,7 @@ public class SDLMFAOMFGMG : ModItem
         damage.Scale(player.bulletDamage);
     }*/
 
-    public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity,
+    public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity,
         int type,
         int damage, float knockback)
     {
@@ -61,7 +60,7 @@ public class SDLMFAOMFGMG : ModItem
             case > .66:
             {
                 var projecitle = Projectile.NewProjectileDirect(source, position, velocity * 1.5f,
-                    ModContent.ProjectileType<TerraBullet>(),
+                    ProjectileType<TerraBullet>(),
                     damage, knockback, player.whoAmI);
                 projecitle.netUpdate = true;
                 break;
@@ -69,7 +68,7 @@ public class SDLMFAOMFGMG : ModItem
             case < .33:
             {
                 var projecitle = Projectile.NewProjectileDirect(source, position, velocity * 1.5f,
-                    ModContent.ProjectileType<TrueHomingBullet>(),
+                    ProjectileType<TrueHomingBullet>(),
                     damage, knockback, player.whoAmI);
                 projecitle.netUpdate = true;
                 break;
@@ -77,7 +76,7 @@ public class SDLMFAOMFGMG : ModItem
             default:
             {
                 var projecitle = Projectile.NewProjectileDirect(source, position, velocity * 1.5f,
-                    ModContent.ProjectileType<TruePiercingBullet>(),
+                    ProjectileType<TruePiercingBullet>(),
                     damage, knockback, player.whoAmI);
                 projecitle.netUpdate = true;
                 break;
@@ -93,7 +92,7 @@ public class SDLMFAOMFGMG : ModItem
         return base.Shoot(player, source, position, velocity, type, damage, knockback);
     }
 
-    private void FireCalamityProjectiles(ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity,
+    private void FireCalamityProjectiles(EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity,
         int damage, float knockBack,
         Player player)
     {
@@ -136,8 +135,8 @@ public class SDLMFAOMFGMG : ModItem
         recipe.AddIngredient(DoomBubblesMod.CalamityMod.Find<ModItem>("ClaretCannon"));
         recipe.AddIngredient(DoomBubblesMod.CalamityMod.Find<ModItem>("StormDragoon"));
         recipe.AddIngredient(DoomBubblesMod.CalamityMod.Find<ModItem>("AstralBlaster"));
-        recipe.AddIngredient(ModContent.ItemType<TerraRifle>());
-        recipe.AddIngredient(ModContent.ItemType<Ultrashark>());
+        recipe.AddIngredient(ItemType<TerraRifle>());
+        recipe.AddIngredient(ItemType<Ultrashark>());
         recipe.AddIngredient(DoomBubblesMod.CalamityMod.Find<ModItem>("NightmareFuel"), 5);
         recipe.AddIngredient(DoomBubblesMod.CalamityMod.Find<ModItem>("EndothermicEnergy"), 5);
         recipe.AddIngredient(DoomBubblesMod.CalamityMod.Find<ModItem>("CosmiliteBar"), 5);

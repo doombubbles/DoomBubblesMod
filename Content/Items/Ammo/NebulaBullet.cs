@@ -14,7 +14,7 @@ public class NebulaBullet : ModItem
     public override void SetDefaults()
     {
         Item.CloneDefaults(ItemID.MoonlordBullet);
-        Item.shoot = ModContent.ProjectileType<Projectiles.Ranged.NebulaBullet>();
+        Item.shoot = ProjectileType<Projectiles.Ranged.NebulaBullet>();
         Item.shootSpeed = 1.5f;
         Item.damage = 17;
     }

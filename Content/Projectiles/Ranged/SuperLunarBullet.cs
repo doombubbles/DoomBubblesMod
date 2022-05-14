@@ -10,22 +10,22 @@ public class SuperLunarBullet : LunarBullet
         {
             if (Projectile.frame == 0)
             {
-                return ModContent.DustType<Solar229>();
+                return DustType<Solar229>();
             }
 
             if (Projectile.frame == 1)
             {
-                return ModContent.DustType<Vortex229>();
+                return DustType<Vortex229>();
             }
 
             if (Projectile.frame == 2)
             {
-                return ModContent.DustType<Nebula229>();
+                return DustType<Nebula229>();
             }
 
             if (Projectile.frame == 3)
             {
-                return ModContent.DustType<Stardust229>();
+                return DustType<Stardust229>();
             }
 
             return 229;

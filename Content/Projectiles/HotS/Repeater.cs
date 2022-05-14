@@ -27,7 +27,7 @@ public class Repeater : ModProjectile
         if (Projectile.owner == Main.myPlayer)
         {
             var player = Main.player[Projectile.owner];
-            player.AddBuff(ModContent.BuffType<FenixBombBuildUp>(), 360);
+            player.AddBuff(BuffType<FenixBombBuildUp>(), 360);
             if ((Projectile.ai[1] == 3 || Projectile.ai[1] == -1) &&
                 player.GetModPlayer<HotSPlayer>().fenixBombBuildUp == 14 ||
                 !(Projectile.ai[1] == 3 || Projectile.ai[1] == -1) &&

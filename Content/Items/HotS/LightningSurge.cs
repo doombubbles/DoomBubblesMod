@@ -3,7 +3,6 @@ using System.Linq;
 using DoomBubblesMod.Content.Items.Talent;
 using DoomBubblesMod.Content.Projectiles.HotS;
 using DoomBubblesMod.Utils;
-using Terraria.DataStructures;
 
 namespace DoomBubblesMod.Content.Items.HotS;
 
@@ -27,7 +26,7 @@ public class LightningSurge : ModItemWithTalents<TalentSustainingPower, TalentLi
         Item.noMelee = true;
         Item.noUseGraphic = true;
         Item.damage = 62;
-        Item.shoot = ModContent.ProjectileType<AlarakLightning>();
+        Item.shoot = ProjectileType<AlarakLightning>();
         Item.useAnimation = 25;
         Item.useTime = 25;
         Item.DamageType = DamageClass.Magic;
@@ -44,7 +43,7 @@ public class LightningSurge : ModItemWithTalents<TalentSustainingPower, TalentLi
         return FindNpcs(player) != null;
     }
 
-    public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity,
+    public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity,
         int type,
         int damage, float knockback)
     {

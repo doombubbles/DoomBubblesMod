@@ -15,7 +15,7 @@ public class VampireKnifeBat : ModBuff
     public override void Update(Player player, ref int buffIndex)
     {
         var modPlayer = player.GetModPlayer<DoomBubblesPlayer>();
-        if (player.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.Summon.VampireKnifeBat>()] > 0)
+        if (player.ownedProjectileCounts[ProjectileType<Projectiles.Summon.VampireKnifeBat>()] > 0)
         {
             modPlayer.vampireKnifeBat = true;
         }

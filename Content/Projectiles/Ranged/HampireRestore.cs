@@ -89,7 +89,7 @@ public class HampireRestore : ModProjectile
             var num501 = Projectile.velocity.X * 0.334f * num500;
             var num502 = (0f - Projectile.velocity.Y * 0.334f) * num500;
             var num503 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width,
-                Projectile.height, ModContent.DustType<HampireDust2>(), 0f, 0f, 100, default, 1.1f);
+                Projectile.height, DustType<HampireDust2>(), 0f, 0f, 100, default, 1.1f);
             Main.dust[num503].noGravity = true;
             var dust3 = Main.dust[num503];
             dust3.velocity *= 0f;

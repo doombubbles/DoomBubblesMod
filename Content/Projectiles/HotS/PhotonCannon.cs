@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Items.HotS;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 
 namespace DoomBubblesMod.Content.Projectiles.HotS;
@@ -49,7 +48,7 @@ public class PhotonCannon : ModProjectile
             foreach (var proj in Main.projectile)
             {
                 if (proj.active &&
-                    proj.type == ModContent.ProjectileType<PhotonCannon>() &&
+                    proj.type == ProjectileType<PhotonCannon>() &&
                     proj.owner == Projectile.owner &&
                     (oldest == null || oldest.timeLeft > proj.timeLeft) &&
                     proj.whoAmI != Projectile.whoAmI)
@@ -183,13 +182,13 @@ public class PhotonCannon : ModProjectile
     private void CreateDust()
     {
         if (Main.player[Projectile.owner].inventory[Main.player[Projectile.owner].selectedItem].type ==
-            ModContent.ItemType<PhotonCannonStaff>() &&
+            ItemType<PhotonCannonStaff>() &&
             Projectile.owner == Main.myPlayer ||
             Projectile.Hitbox.Contains(Main.MouseWorld.ToPoint()))
         {
             for (var i = 0; i < 360; i++)
             {
-                if (Main.rand.Next(4) == 1)
+                if (Main.rand.NextBool(4))
                 {
                     var x = Projectile.Center.X + ShootDistance * Math.Cos(i * Math.PI / 180f);
                     var y = Projectile.Center.Y + ShootDistance * Math.Sin(i * Math.PI / 180f);
@@ -244,8 +243,8 @@ public class PhotonCannon : ModProjectile
             var theta = Math.Atan2(target.Center.Y - y, target.Center.X - x);
             var dX = ProjSpeed * Math.Cos(theta);
             var dY = ProjSpeed * Math.Sin(theta);
-            var proj = Projectile.NewProjectile(new ProjectileSource_ProjectileParent(Projectile), x, y, (float) dX,
-                (float) dY, ModContent.ProjectileType<Photon>(),
+            var proj = Projectile.NewProjectile(new EntitySource_Parent(Projectile), x, y, (float) dX,
+                (float) dY, ProjectileType<Photon>(),
                 (int) (Projectile.damage + (ChosenTalent == 1 || ChosenTalent == -1 ? Projectile.ai[1] : 0)),
                 Projectile.knockBack, Projectile.owner, ChosenTalent, target.whoAmI);
 

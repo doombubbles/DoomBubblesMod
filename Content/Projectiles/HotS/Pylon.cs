@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Items.HotS;
 using Terraria.Audio;
-using Terraria.DataStructures;
 
 namespace DoomBubblesMod.Content.Projectiles.HotS;
 
@@ -107,13 +106,13 @@ public class Pylon : ModProjectile
     private void CreateDust()
     {
         if (Main.player[Projectile.owner].inventory[Main.player[Projectile.owner].selectedItem].type ==
-            ModContent.ItemType<PylonStaff>() &&
+            ItemType<PylonStaff>() &&
             Projectile.owner == Main.myPlayer ||
             Projectile.Hitbox.Contains(Main.MouseWorld.ToPoint()))
         {
             for (var i = 0; i < 360; i++)
             {
-                if (Main.rand.Next(4) == 1)
+                if (Main.rand.NextBool(4))
                 {
                     var x = Projectile.Center.X + PowerDistance * Math.Cos(i * Math.PI / 180f);
                     var y = Projectile.Center.Y + PowerDistance * Math.Sin(i * Math.PI / 180f);
@@ -127,7 +126,7 @@ public class Pylon : ModProjectile
             {
                 for (var i = 0; i < 360; i++)
                 {
-                    if (Main.rand.Next(4) == 1)
+                    if (Main.rand.NextBool(4))
                     {
                         var x = Projectile.Center.X + ShootDistance * Math.Cos(i * Math.PI / 180f);
                         var y = Projectile.Center.Y + ShootDistance * Math.Sin(i * Math.PI / 180f);
@@ -147,8 +146,7 @@ public class Pylon : ModProjectile
         {
             if (player.active && player.Distance(Projectile.Center) < PowerDistance)
             {
-                var buffType = ModContent
-                    .Find<ModBuff>("Pylon" + (ChosenTalent == 3 || ChosenTalent == -1 ? "Super" : "") + "Power")
+                var buffType = Find<ModBuff>("Pylon" + (ChosenTalent == 3 || ChosenTalent == -1 ? "Super" : "") + "Power")
                     .Type;
                 player.AddBuff(buffType, 5);
             }
@@ -201,8 +199,8 @@ public class Pylon : ModProjectile
             var y = Projectile.Center.Y - 23;
             var dX = (target.Center.X - x) / 200f;
             var dY = (target.Center.Y - y) / 200f;
-            var proj = Projectile.NewProjectile(new ProjectileSource_ProjectileParent(Projectile), x, y, dX, dY,
-                ModContent.ProjectileType<PylonLaser>(),
+            var proj = Projectile.NewProjectile(new EntitySource_Parent(Projectile), x, y, dX, dY,
+                ProjectileType<PylonLaser>(),
                 Projectile.damage,
                 Projectile.knockBack, Projectile.owner);
 
@@ -219,7 +217,7 @@ public class Pylon : ModProjectile
             var proj = Main.projectile[i];
             if (proj.active &&
                 proj.Distance(Projectile.Center) < PowerDistance &&
-                proj.type == ModContent.ProjectileType<PhotonCannon>())
+                proj.type == ProjectileType<PhotonCannon>())
             {
                 proj.ai[1] = 100;
             }

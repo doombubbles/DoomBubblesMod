@@ -13,8 +13,6 @@ public class DiscordBlade : ModItemWithTalents<TalentChaosReigns, TalentDissonan
 
     private float Length => ChosenTalent == 2 || ChosenTalent == -1 ? 600f : 300f;
 
-    public override bool OnlyShootOnSwing => false;
-
     public override void SetStaticDefaults()
     {
         DisplayName.SetDefault("Discord Blade");
@@ -37,7 +35,7 @@ public class DiscordBlade : ModItemWithTalents<TalentChaosReigns, TalentDissonan
         Item.rare = ItemRarityID.Yellow;
         Item.autoReuse = true;
         Item.useTurn = true;
-        Item.shoot = ModContent.ProjectileType<DiscordStrike>();
+        Item.shoot = ProjectileType<DiscordStrike>();
         Item.shootSpeed = 10f;
         Item.scale = 1.2f;
     }
@@ -53,7 +51,9 @@ public class DiscordBlade : ModItemWithTalents<TalentChaosReigns, TalentDissonan
         }
     }
 
-    public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity,
+    
+    
+    public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity,
         int type,
         int damage, float knockback)
     {

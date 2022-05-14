@@ -1,5 +1,4 @@
-﻿using AttackSpeedMod;
-using DoomBubblesMod.Utils;
+﻿using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.Accessories.Glove;
 
@@ -29,25 +28,25 @@ internal class ChromaticGauntlet : ModItem
     {
         player.GetDamage(DamageClass.Generic) += .05f;
         player.GetCritChance(DamageClass.Generic) += 5;
-        player.endurance += .05f;
-        player.armorPenetration += 5;
+        player.GetArmorPenetration(DamageClass.Generic) += 5;
         player.GetAttackSpeed(DamageClass.Generic) += .05f;
+        player.endurance += .05f;
     }
 
     public override void AddRecipes()
     {
         var recipe = CreateRecipe();
-        recipe.AddIngredient(ModContent.ItemType<CrimsonGauntlet>());
-        recipe.AddIngredient(ModContent.ItemType<AzureGauntlet>());
-        recipe.AddIngredient(ModContent.ItemType<JadeGauntlet>());
-        recipe.AddIngredient(ModContent.ItemType<SaffronGauntlet>());
-        recipe.AddIngredient(ModContent.ItemType<MeteorGauntlet>());
-        recipe.AddIngredient(ModContent.ItemType<SepiaGauntlet>());
-        recipe.AddIngredient(ModContent.ItemType<IndigoGauntlet>());
-        recipe.AddIngredient(ModContent.ItemType<QuartzGauntlet>());
-        recipe.AddIngredient(ModContent.ItemType<EbonyGauntlet>());
-        recipe.AddIngredient(ModContent.ItemType<RoseGauntlet>());
-        recipe.AddIngredient(ModContent.ItemType<AquamarineGauntlet>());
+        recipe.AddIngredient(ItemType<CrimsonGauntlet>());
+        recipe.AddIngredient(ItemType<AzureGauntlet>());
+        recipe.AddIngredient(ItemType<JadeGauntlet>());
+        recipe.AddIngredient(ItemType<SaffronGauntlet>());
+        recipe.AddIngredient(ItemType<MeteorGauntlet>());
+        recipe.AddIngredient(ItemType<SepiaGauntlet>());
+        recipe.AddIngredient(ItemType<IndigoGauntlet>());
+        recipe.AddIngredient(ItemType<QuartzGauntlet>());
+        recipe.AddIngredient(ItemType<EbonyGauntlet>());
+        recipe.AddIngredient(ItemType<RoseGauntlet>());
+        recipe.AddIngredient(ItemType<AquamarineGauntlet>());
         recipe.AddTile(TileID.WorkBenches);
         recipe.Register();
     }

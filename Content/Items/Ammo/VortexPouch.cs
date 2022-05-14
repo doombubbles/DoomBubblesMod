@@ -13,7 +13,7 @@ internal class VortexPouch : ModItem
 
     public override void SetDefaults()
     {
-        Item.shoot = ModContent.ProjectileType<Projectiles.Ranged.VortexBullet>();
+        Item.shoot = ProjectileType<Projectiles.Ranged.VortexBullet>();
         Item.width = 26;
         Item.height = 34;
         Item.ammo = AmmoID.Bullet;
@@ -27,7 +27,7 @@ internal class VortexPouch : ModItem
     public override void AddRecipes()
     {
         var recipe = CreateRecipe();
-        recipe.AddIngredient(ModContent.ItemType<VortexBullet>(), 3996);
+        recipe.AddIngredient(ItemType<VortexBullet>(), 3996);
         recipe.ReplaceResult(this);
         recipe.AddTile(TileID.LunarCraftingStation);
         recipe.Register();

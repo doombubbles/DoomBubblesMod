@@ -45,12 +45,12 @@ internal class CharmOfEpics : ModItem
     public override void AddRecipes()
     {
         var recipe = CreateRecipe();
-        recipe.AddIngredient(ModContent.ItemType<CharmOfLegends>());
+        recipe.AddIngredient(ItemType<CharmOfLegends>());
         recipe.AddIngredient(ItemID.ShinyStone);
-        recipe.AddIngredient(ModContent.ItemType<CrimsonVoodooDoll>());
-        recipe.AddIngredient(ModContent.ItemType<PalladiumVoodooDoll>());
+        recipe.AddIngredient(ItemType<CrimsonVoodooDoll>());
+        recipe.AddIngredient(ItemType<PalladiumVoodooDoll>());
         recipe.AddIngredient(ItemID.CelestialCuffs);
-        recipe.AddIngredient(ModContent.ItemType<CardiopulmonaryMagnet>());
+        recipe.AddIngredient(ItemType<CardiopulmonaryMagnet>());
         recipe.AddIngredient(ItemID.GravityGlobe);
         recipe.AddTile(TileID.LunarCraftingStation);
         recipe.Register();

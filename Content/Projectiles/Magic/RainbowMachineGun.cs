@@ -1,6 +1,5 @@
 ﻿using System;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 
 namespace DoomBubblesMod.Content.Projectiles.Magic;
@@ -177,9 +176,9 @@ public class RainbowMachineGun : ModProjectile
                         spinningpoint2 = -Vector2.UnitY;
                     }
 
-                    var proj = Projectile.NewProjectile(new ProjectileSource_ProjectileParent(Projectile), vector2.X,
+                    var proj = Projectile.NewProjectile(new EntitySource_Parent(Projectile), vector2.X,
                         vector2.Y, spinningpoint2.X, spinningpoint2.Y,
-                        ModContent.ProjectileType<Rainbow>(), Projectile.damage, Projectile.knockBack,
+                        ProjectileType<Rainbow>(), Projectile.damage, Projectile.knockBack,
                         Projectile.owner);
                     Main.projectile[proj].netUpdate = true;
                 }

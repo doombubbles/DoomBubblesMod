@@ -17,7 +17,7 @@ public class TruePiercingBullet : ModProjectile
         Projectile.aiStyle = 1;
         Projectile.friendly = true;
         Projectile.hostile = false;
-        Projectile.DamageType = ModContent.GetInstance<RangedHoly>();
+        Projectile.DamageType = GetInstance<RangedHoly>();
         Projectile.penetrate = 3;
         Projectile.timeLeft = 600;
         Projectile.alpha = 255;

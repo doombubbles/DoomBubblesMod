@@ -1,4 +1,3 @@
-using AttackSpeedMod;
 using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Items.Accessories.Glove;
 using DoomBubblesMod.Content.Items.Misc;
@@ -34,9 +33,9 @@ public class ChromaticEmblem : ThoriumRecipeItem
     {
         player.GetDamage(DamageClass.Generic) += .15f;
         player.GetCritChance(DamageClass.Generic) += 15;
-        player.endurance += .15f;
-        player.armorPenetration += 15;
+        player.GetArmorPenetration(DamageClass.Generic) += 15;
         player.GetAttackSpeed(DamageClass.Generic) += .15f;
+        player.endurance += .15f;
 
         player.gravControl2 = true;
         player.gravControl = true;
@@ -52,16 +51,16 @@ public class ChromaticEmblem : ThoriumRecipeItem
     {
         var recipe = CreateRecipe();
         recipe.AddTile(TileID.LunarCraftingStation);
-        recipe.AddIngredient(ModContent.ItemType<TimsRegret>());
-        recipe.AddIngredient(ModContent.ItemType<ChromaticGauntlet>());
+        recipe.AddIngredient(ItemType<TimsRegret>());
+        recipe.AddIngredient(ItemType<ChromaticGauntlet>());
         recipe.AddIngredient(thoriumMod.Find<ModItem>("TheRing"));
-        recipe.AddIngredient(ModContent.ItemType<NebulaEmblem>());
-        recipe.AddIngredient(ModContent.ItemType<SolarEmblem>());
-        recipe.AddIngredient(ModContent.ItemType<StardustEmblem>());
-        recipe.AddIngredient(ModContent.ItemType<VortexEmblem>());
-        recipe.AddIngredient(ModContent.ItemType<ShootingStarEmblem>());
-        recipe.AddIngredient(ModContent.ItemType<HeavenlyEmblem>());
-        recipe.AddIngredient(ModContent.ItemType<WhiteDwarfEmblem>());
+        recipe.AddIngredient(ItemType<NebulaEmblem>());
+        recipe.AddIngredient(ItemType<SolarEmblem>());
+        recipe.AddIngredient(ItemType<StardustEmblem>());
+        recipe.AddIngredient(ItemType<VortexEmblem>());
+        recipe.AddIngredient(ItemType<ShootingStarEmblem>());
+        recipe.AddIngredient(ItemType<HeavenlyEmblem>());
+        recipe.AddIngredient(ItemType<WhiteDwarfEmblem>());
         recipe.AddIngredient(ItemID.GravityGlobe);
         recipe.Register();
     }

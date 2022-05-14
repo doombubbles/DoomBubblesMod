@@ -1,6 +1,5 @@
 ﻿using System;
-using DoomBubblesMod.Utils;
-using static Terraria.ModLoader.ModContent;
+using DoomBubblesMod.Common.DamageClasses;
 
 namespace DoomBubblesMod.Content.Projectiles.HotS;
 

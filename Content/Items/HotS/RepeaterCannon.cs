@@ -2,7 +2,6 @@
 using DoomBubblesMod.Content.Items.Talent;
 using DoomBubblesMod.Content.Projectiles.HotS;
 using DoomBubblesMod.Utils;
-using Terraria.DataStructures;
 
 namespace DoomBubblesMod.Content.Items.HotS;
 
@@ -26,7 +25,7 @@ public class RepeaterCannon : ModItemWithTalents<TalentMobileOffense, TalentOffe
         Item.height = 26;
         Item.noMelee = true;
         Item.damage = 83;
-        Item.shoot = ModContent.ProjectileType<Repeater>();
+        Item.shoot = ProjectileType<Repeater>();
         Item.shootSpeed = 15f;
         Item.useAnimation = 15;
         Item.useTime = 15;
@@ -43,15 +42,15 @@ public class RepeaterCannon : ModItemWithTalents<TalentMobileOffense, TalentOffe
         return new Vector2(-10, 3);
     }
 
-    public override void ModifyWeaponDamage(Player player, ref StatModifier damage, ref float flat)
+    public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
     {
         if (ChosenTalent == 1 || ChosenTalent == -1)
         {
-            flat += player.velocity.Length() / 50f;
+            damage.Base += player.velocity.Length() / 50f;
         }
     }
 
-    public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity,
+    public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity,
         int type,
         int damage, float knockback)
     {
@@ -59,7 +58,7 @@ public class RepeaterCannon : ModItemWithTalents<TalentMobileOffense, TalentOffe
 
         if ((ChosenTalent == 2 || ChosenTalent == -1) && mShot == 3)
         {
-            Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<RepeaterBig>(),
+            Projectile.NewProjectile(source, position, velocity, ProjectileType<RepeaterBig>(),
                 damage * 2, knockback * 2f, player.whoAmI, 4, ChosenTalent);
         }
         else

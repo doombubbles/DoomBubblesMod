@@ -31,9 +31,9 @@ public class BulletGlobalProjectile : GlobalProjectile
             {
                 type = ProjectileID.CrystalShard;
             }
-            else if (projectile.type == ModContent.ProjectileType<TerraBullet>())
+            else if (projectile.type == ProjectileType<TerraBullet>())
             {
-                type = ModContent.ProjectileType<TerraShard>();
+                type = ProjectileType<TerraShard>();
             }
             else
             {
@@ -48,7 +48,7 @@ public class BulletGlobalProjectile : GlobalProjectile
                 var speedY =
                     (float) (-(double) projectile.velocity.Y * Main.rand.Next(40, 70) * 0.00999999977648258 +
                              Main.rand.Next(-20, 21) * 0.400000005960464);
-                Projectile.NewProjectile(new ProjectileSource_ProjectileParent(projectile),
+                Projectile.NewProjectile(new EntitySource_Parent(projectile),
                     projectile.position.X + speedX, projectile.position.Y + speedY, speedX,
                     speedY, type, (int) (projectile.damage * 0.5), 0.0f, projectile.owner);
             }

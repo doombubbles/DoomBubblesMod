@@ -2,7 +2,6 @@
 using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Buffs;
 using Terraria.Audio;
-using Terraria.DataStructures;
 
 namespace DoomBubblesMod.Content.Projectiles.HotS;
 
@@ -62,20 +61,20 @@ public class FlameStrike : CenteredProjectile
             var ai = Main.player[Projectile.owner].gravControl2 ? 1 : 0;
             if (Main.player[Projectile.owner].gravControl2)
             {
-                target.AddBuff(ModContent.BuffType<Buffs.LivingBomb>(), 152);
-                var proj = Projectile.NewProjectile(new ProjectileSource_ProjectileParent(Projectile), target.Center,
+                target.AddBuff(BuffType<Buffs.LivingBomb>(), 152);
+                var proj = Projectile.NewProjectile(new EntitySource_Parent(Projectile), target.Center,
                     new Vector2(0, 0),
-                    ModContent.ProjectileType<LivingBomb>(),
+                    ProjectileType<LivingBomb>(),
                     (int) (damage / 115f * 160f), 0, Projectile.owner, ai, target.whoAmI);
                 Main.projectile[proj].netUpdate = true;
                 SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/LivingBombWand2"), target.Center);
             }
-            else if (!target.HasBuff(ModContent.BuffType<Buffs.LivingBomb>()))
+            else if (!target.HasBuff(BuffType<Buffs.LivingBomb>()))
             {
-                target.AddBuff(ModContent.BuffType<Buffs.LivingBomb>(), 150);
-                var proj = Projectile.NewProjectile(new ProjectileSource_ProjectileParent(Projectile), target.Center,
+                target.AddBuff(BuffType<Buffs.LivingBomb>(), 150);
+                var proj = Projectile.NewProjectile(new EntitySource_Parent(Projectile), target.Center,
                     new Vector2(0, 0),
-                    ModContent.ProjectileType<LivingBomb>(),
+                    ProjectileType<LivingBomb>(),
                     (int) (damage / 115f * 160f), 0, Projectile.owner, ai, target.whoAmI);
                 Main.projectile[proj].netUpdate = true;
 
@@ -93,9 +92,9 @@ public class FlameStrike : CenteredProjectile
             Main.player[Projectile.owner].GetModPlayer<HotSPlayer>().convection < 100)
         {
             Main.player[Projectile.owner].GetModPlayer<HotSPlayer>().convection++;
-            if (!Main.player[Projectile.owner].HasBuff(ModContent.BuffType<Convection>()))
+            if (!Main.player[Projectile.owner].HasBuff(BuffType<Convection>()))
             {
-                Main.player[Projectile.owner].AddBuff(ModContent.BuffType<Convection>(), 10);
+                Main.player[Projectile.owner].AddBuff(BuffType<Convection>(), 10);
             }
         }
 

@@ -22,7 +22,7 @@ internal class EbonyGauntlet : ModItem
 
     public override void UpdateAccessory(Player player, bool hideVisual)
     {
-        player.armorPenetration += 5;
+        player.GetArmorPenetration(DamageClass.Generic) += 5;
     }
 
     public override void AddRecipes()

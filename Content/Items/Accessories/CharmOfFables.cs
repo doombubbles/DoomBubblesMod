@@ -35,7 +35,7 @@ internal class CharmOfFables : ModItem
     public override void AddRecipes()
     {
         var recipe = CreateRecipe();
-        recipe.AddIngredient(ModContent.ItemType<SorcerersStone>());
+        recipe.AddIngredient(ItemType<SorcerersStone>());
         recipe.AddIngredient(ItemID.ManaRegenerationBand);
         recipe.AddTile(TileID.TinkerersWorkbench);
         recipe.Register();

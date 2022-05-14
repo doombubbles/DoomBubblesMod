@@ -1,6 +1,5 @@
 using System;
 using Terraria.Audio;
-using Terraria.DataStructures;
 
 namespace DoomBubblesMod.Content.Projectiles.HotS;
 
@@ -31,21 +30,21 @@ public class LivingFireball : ModProjectile
     public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit,
         ref int hitDirection)
     {
-        if (!target.HasBuff(ModContent.BuffType<Buffs.LivingBomb>()))
+        if (!target.HasBuff(BuffType<Buffs.LivingBomb>()))
         {
-            target.buffImmune[ModContent.BuffType<Buffs.LivingBomb>()] = false;
-            target.AddBuff(ModContent.BuffType<Buffs.LivingBomb>(), 150);
-            var proj = Projectile.NewProjectile(new ProjectileSource_ProjectileParent(Projectile), target.Center,
-                new Vector2(0, 0), ModContent.ProjectileType<LivingBomb>(),
+            target.buffImmune[BuffType<Buffs.LivingBomb>()] = false;
+            target.AddBuff(BuffType<Buffs.LivingBomb>(), 150);
+            var proj = Projectile.NewProjectile(new EntitySource_Parent(Projectile), target.Center,
+                new Vector2(0, 0), ProjectileType<LivingBomb>(),
                 damage * 2, 0, Projectile.owner, ChosenTalent, target.whoAmI);
             Main.projectile[proj].netUpdate = true;
             SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/LivingBombWand2"), target.Center);
         }
         else if (ChosenTalent == 1 || ChosenTalent == -1)
         {
-            target.buffTime[target.FindBuffIndex(ModContent.BuffType<Buffs.LivingBomb>())] = 151;
-            var proj = Projectile.NewProjectile(new ProjectileSource_ProjectileParent(Projectile), target.Center,
-                new Vector2(0, 0), ModContent.ProjectileType<LivingBomb>(),
+            target.buffTime[target.FindBuffIndex(BuffType<Buffs.LivingBomb>())] = 151;
+            var proj = Projectile.NewProjectile(new EntitySource_Parent(Projectile), target.Center,
+                new Vector2(0, 0), ProjectileType<LivingBomb>(),
                 damage * 2, 0, Projectile.owner, ChosenTalent, target.whoAmI);
             Main.projectile[proj].netUpdate = true;
             SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/LivingBombWand2"), target.Center);

@@ -5,6 +5,7 @@ using DoomBubblesMod.Content.Items.HotS;
 using DoomBubblesMod.Content.Items.Misc;
 using DoomBubblesMod.Content.Items.Talent;
 using DoomBubblesMod.Content.Items.Weapons;
+using Terraria.DataStructures;
 
 namespace DoomBubblesMod.Common.GlobalNPCs;
 
@@ -26,7 +27,7 @@ internal class DoomBubblesGlobalNPC : GlobalNPC
 
         if (npc.boss)
         {
-            npc.buffImmune[ModContent.BuffType<LivingBomb>()] = false;
+            npc.buffImmune[BuffType<LivingBomb>()] = false;
         }
     }
 
@@ -37,7 +38,7 @@ internal class DoomBubblesGlobalNPC : GlobalNPC
         {
             if (npc.type == NPCID.Mothron && Main.rand.Next(1, 3) == 1)
             {
-                Item.NewItem(npc.position, ModContent.ItemType<BrokenHeroGun>());
+                Item.NewItem(new EntitySource_Loot(npc), npc.position, ItemType<BrokenHeroGun>());
             }
         }
         else
@@ -45,13 +46,13 @@ internal class DoomBubblesGlobalNPC : GlobalNPC
             switch (npc.type)
             {
                 case NPCID.Mothron when Main.rand.Next(1, 4) == 1:
-                    Item.NewItem(npc.position, ModContent.ItemType<BrokenHeroGun>());
+                    Item.NewItem(new EntitySource_Loot(npc), npc.position, ItemType<BrokenHeroGun>());
                     break;
                 case NPCID.Plantera:
                     //Item.NewItem(npc.position, ModContent.ItemType<HeartOfTerraria>());
                     break;
                 case NPCID.DukeFishron when Main.rand.Next(1, 5) == 1:
-                    Item.NewItem(npc.position, ModContent.ItemType<Ultrashark>());
+                    Item.NewItem(new EntitySource_Loot(npc), npc.position, ItemType<Ultrashark>());
                     break;
             }
         }
@@ -63,10 +64,10 @@ internal class DoomBubblesGlobalNPC : GlobalNPC
         {
             var items = new List<ModItem>
             {
-                ModContent.GetInstance<LightningSurge>(), ModContent.GetInstance<DiscordBlade>(),
-                ModContent.GetInstance<RepeaterCannon>(), ModContent.GetInstance<PhaseBombLauncher>(),
-                ModContent.GetInstance<ShieldCapacitor>(),
-                ModContent.GetInstance<PylonStaff>(), ModContent.GetInstance<PhotonCannonStaff>()
+                GetInstance<LightningSurge>(), GetInstance<DiscordBlade>(),
+                GetInstance<RepeaterCannon>(), GetInstance<PhaseBombLauncher>(),
+                GetInstance<ShieldCapacitor>(),
+                GetInstance<PylonStaff>(), GetInstance<PhotonCannonStaff>()
             };
 
             foreach (var modItem in items)
@@ -105,8 +106,8 @@ internal class DoomBubblesGlobalNPC : GlobalNPC
         {
             var items = new List<ModItem>
             {
-                ModContent.GetInstance<FlamestrikeTome>(), ModContent.GetInstance<LivingBombWand>(),
-                ModContent.GetInstance<VerdantSpheres>()
+                GetInstance<FlamestrikeTome>(), GetInstance<LivingBombWand>(),
+                GetInstance<VerdantSpheres>()
             };
 
             foreach (var modItem in items)

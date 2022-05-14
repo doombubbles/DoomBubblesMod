@@ -1,6 +1,5 @@
 ﻿using System;
 using DoomBubblesMod.Common.Players;
-using Terraria.DataStructures;
 
 namespace DoomBubblesMod.Content.Projectiles.Summon;
 
@@ -270,22 +269,22 @@ public class VampireKnifeBat : ModProjectile
             if (player.gravControl2)
             {
                 var numKnives = 4;
-                if (Main.rand.Next(2) == 0)
+                if (Main.rand.NextBool(2))
                 {
                     numKnives++;
                 }
 
-                if (Main.rand.Next(4) == 0)
+                if (Main.rand.NextBool(4))
                 {
                     numKnives++;
                 }
 
-                if (Main.rand.Next(8) == 0)
+                if (Main.rand.NextBool(8))
                 {
                     numKnives++;
                 }
 
-                if (Main.rand.Next(16) == 0)
+                if (Main.rand.NextBool(16))
                 {
                     numKnives++;
                 }
@@ -296,7 +295,7 @@ public class VampireKnifeBat : ModProjectile
                     // If you want to randomize the speed to stagger the projectiles
                     // float scale = 1f - (Main.rand.NextFloat() * .3f);
                     // perturbedSpeed = perturbedSpeed * scale; 
-                    var proj = Projectile.NewProjectile(new ProjectileSource_ProjectileParent(Projectile),
+                    var proj = Projectile.NewProjectile(new EntitySource_Parent(Projectile),
                         Projectile.Center, perturbedSpeed,
                         ProjectileID.VampireKnife, Projectile.damage, Projectile.knockBack, player.whoAmI);
                     Main.projectile[proj].netUpdate = true;
@@ -304,7 +303,7 @@ public class VampireKnifeBat : ModProjectile
             }
             else
             {
-                var proj = Projectile.NewProjectile(new ProjectileSource_ProjectileParent(Projectile),
+                var proj = Projectile.NewProjectile(new EntitySource_Parent(Projectile),
                     Projectile.Center, speed, ProjectileID.VampireKnife,
                     Projectile.damage,
                     Projectile.knockBack, Projectile.owner);

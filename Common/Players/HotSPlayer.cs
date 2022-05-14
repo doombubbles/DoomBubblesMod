@@ -27,22 +27,22 @@ public class HotSPlayer : ModPlayer
 
     public override void ResetEffects()
     {
-        if (!Player.HasBuff(ModContent.BuffType<FenixBombBuildUp>()))
+        if (!Player.HasBuff(BuffType<FenixBombBuildUp>()))
         {
             fenixBombBuildUp = 0;
         }
 
-        if (!Player.HasBuff(ModContent.BuffType<FenixRepeaterBuff>()))
+        if (!Player.HasBuff(BuffType<FenixRepeaterBuff>()))
         {
             fenixRepeaterBuff = 0;
         }
 
-        if (!Player.HasBuff(ModContent.BuffType<PhotonCannon>()))
+        if (!Player.HasBuff(BuffType<PhotonCannon>()))
         {
             photonCannon = false;
         }
 
-        if (!Player.HasBuff(ModContent.BuffType<Convection>()))
+        if (!Player.HasBuff(BuffType<Convection>()))
         {
             convection = 0;
         }
@@ -201,11 +201,11 @@ public class HotSPlayer : ModPlayer
         convection = 0;
     }
 
-    public override void ModifyWeaponDamage(Item item, ref StatModifier damage, ref float flat)
+    public override void ModifyWeaponDamage(Item item, ref StatModifier damage)
     {
         if (item.CountsAsClass(DamageClass.Magic) && manaTap && item.mana > 0)
         {
-            flat += item.mana * (float) damage;
+            damage.Base += item.mana;
         }
     }
 }

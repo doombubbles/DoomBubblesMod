@@ -15,7 +15,7 @@ public class PhotonCannon : ModBuff
     public override void Update(Player player, ref int buffIndex)
     {
         var modPlayer = player.GetModPlayer<HotSPlayer>();
-        if (player.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.HotS.PhotonCannon>()] > 0)
+        if (player.ownedProjectileCounts[ProjectileType<Projectiles.HotS.PhotonCannon>()] > 0)
         {
             modPlayer.photonCannon = true;
         }

@@ -1,6 +1,5 @@
 using DoomBubblesMod.Utils;
 using Terraria.Audio;
-using Terraria.DataStructures;
 
 namespace DoomBubblesMod.Content.Items.Weapons;
 
@@ -43,7 +42,7 @@ public class MidnightMaelstrom : ModItem
         recipe.Register();
 
         var recipe2 = CreateRecipe();
-        recipe2.AddIngredient(ModContent.ItemType<BloodburstBlunderbuss>());
+        recipe2.AddIngredient(ItemType<BloodburstBlunderbuss>());
         recipe2.AddTile(TileID.DemonAltar);
         recipe2.Register();
     }
@@ -68,7 +67,7 @@ public class MidnightMaelstrom : ModItem
     // What if I wanted it to shoot like a shotgun?
     // Shotgun style: Multiple Projectiles, Random spread 
 
-    public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity,
+    public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity,
         int type,
         int damage, float knockback)
     {

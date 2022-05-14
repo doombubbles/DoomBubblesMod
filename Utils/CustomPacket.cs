@@ -119,7 +119,7 @@ public abstract class CustomPacket<T> : CustomPacket where T : CustomPacket<T>
         {
             packetInfo.mod.Logger.Info($"Sending packet {GetType().Name} on netMode {Main.netMode}");
 
-            var packet = ModContent.GetInstance<DoomBubblesMod>().GetPacket();
+            var packet = GetInstance<DoomBubblesMod>().GetPacket();
 
             packet.Write(packetInfo.type);
 
@@ -143,7 +143,7 @@ public abstract class CustomPacket<T> : CustomPacket where T : CustomPacket<T>
         }
         else
         {
-            ModContent.GetInstance<DoomBubblesMod>().Logger
+            GetInstance<DoomBubblesMod>().Logger
                 .Error($"Failed sending packet {GetType().Name} because packet info is wrong type");
         }
     }

@@ -3,7 +3,7 @@ using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Projectiles.Thanos;
 using DoomBubblesMod.Utils;
 using Terraria.Audio;
-using Terraria.DataStructures;
+using Terraria.ID;
 
 namespace DoomBubblesMod.Content.Items.Thanos;
 
@@ -35,7 +35,7 @@ internal class PowerStone : InfinityStone
                 player.GetModPlayer<ThanosPlayer>().powerStoneCharge += 1;
                 if (Main.time % 10 == 0)
                 {
-                    SoundEngine.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 34,
+                    SoundEngine.PlaySound(SoundID.Item, (int) gauntlet.X, (int) gauntlet.Y, 34,
                         .3f + (float) (.05 * Math.Sqrt(player.GetModPlayer<ThanosPlayer>().powerStoneCharge)));
                 }
             }
@@ -57,7 +57,7 @@ internal class PowerStone : InfinityStone
             {
                 if (Main.time % 10 == 0)
                 {
-                    SoundEngine.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 15);
+                    SoundEngine.PlaySound(SoundID.Item, (int) gauntlet.X, (int) gauntlet.Y, 15);
                     for (var i = 0; i <= 360; i += 4)
                     {
                         var rad = Math.PI * i / 180;
@@ -87,20 +87,20 @@ internal class PowerStone : InfinityStone
         }
         else
         {
-            SoundEngine.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 74, 2f);
-            SoundEngine.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 89, 2f);
-            SoundEngine.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 93, .5f);
+            SoundEngine.PlaySound(SoundID.Item, (int) gauntlet.X, (int) gauntlet.Y, 74, 2f);
+            SoundEngine.PlaySound(SoundID.Item, (int) gauntlet.X, (int) gauntlet.Y, 89, 2f);
+            SoundEngine.PlaySound(SoundID.Item, (int) gauntlet.X, (int) gauntlet.Y, 93, .5f);
             player.itemAnimation = 1;
 
-            player.AddBuff(ModContent.BuffType<Buffs.PowerStone>(),
+            player.AddBuff(BuffType<Buffs.PowerStone>(),
                 6 * player.GetModPlayer<ThanosPlayer>().powerStoneCharge);
             for (var i = 0; i <= 360; i += 5)
             {
                 var rad = Math.PI * i / 180;
                 var dX = (float) (20 * Math.Cos(rad));
                 var dY = (float) (20 * Math.Sin(rad));
-                Projectile.NewProjectile(new ProjectileSource_Item(player, item), gauntlet, new Vector2(dX, dY),
-                    ModContent.ProjectileType<PowerExplosion>(),
+                Projectile.NewProjectile(new EntitySource_ItemUse(player, item), gauntlet, new Vector2(dX, dY),
+                    ProjectileType<PowerExplosion>(),
                     (int) (player.GetModPlayer<ThanosPlayer>().powerStoneCharge * 3.33333333f), 5, player.whoAmI);
             }
 

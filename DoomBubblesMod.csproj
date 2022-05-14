@@ -20,9 +20,6 @@
         <None Remove="OldAssets\**" />
     </ItemGroup>
     <ItemGroup>
-        <Reference Include="AttackSpeedMod, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-            <HintPath>..\..\..\tModLoader\Mod Sources\DoomBubblesMod\lib\AttackSpeedMod.dll</HintPath>
-        </Reference>
         <Reference Include="ElementalDamage, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
             <HintPath>lib\ElementalDamage.dll</HintPath>
         </Reference>

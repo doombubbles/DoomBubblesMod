@@ -2,7 +2,6 @@ using DoomBubblesMod.Content.Projectiles.Ranged;
 using DoomBubblesMod.Utils;
 using ElementalDamage.Elements;
 using Terraria.Audio;
-using Terraria.DataStructures;
 
 namespace DoomBubblesMod.Content.Items.Weapons;
 
@@ -19,7 +18,7 @@ public class TerraRifle : ModItem
     public override void SetDefaults()
     {
         Item.damage = 42;
-        Item.DamageType = ModContent.GetInstance<RangedNature>();
+        Item.DamageType = GetInstance<RangedNature>();
         Item.width = 64;
         Item.height = 22;
         Item.useTime = 9;
@@ -45,8 +44,8 @@ public class TerraRifle : ModItem
     public override void AddRecipes()
     {
         var recipe = CreateRecipe();
-        recipe.AddIngredient(ModContent.ItemType<TrueMidnightMaelstrom>());
-        recipe.AddIngredient(ModContent.ItemType<TrueTrigun>());
+        recipe.AddIngredient(ItemType<TrueMidnightMaelstrom>());
+        recipe.AddIngredient(ItemType<TrueTrigun>());
         //recipe.AddIngredient(ModContent.ItemType<HeartOfTerraria>());
         recipe.AddTile(TileID.MythrilAnvil);
         recipe.Register();
@@ -58,16 +57,16 @@ public class TerraRifle : ModItem
         return Main.rand.NextFloat() >= .50f;
     }
 
-    public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity,
+    public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity,
         int type,
         int damage, float knockback)
     {
-        type = ModContent.ProjectileType<TerraBullet>();
+        type = ProjectileType<TerraBullet>();
 
 
         if (Main.rand.NextFloat() <= .2)
         {
-            Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<MidnightBlast>(),
+            Projectile.NewProjectile(source, position, velocity, ProjectileType<MidnightBlast>(),
                 damage * 2, knockback, player.whoAmI);
             SoundEngine.PlaySound(SoundID.Item38, position);
         }

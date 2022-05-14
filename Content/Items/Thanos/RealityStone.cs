@@ -2,7 +2,7 @@
 using DoomBubblesMod.Content.Projectiles.Thanos;
 using DoomBubblesMod.Utils;
 using Terraria.Audio;
-using Terraria.DataStructures;
+using Terraria.ID;
 
 namespace DoomBubblesMod.Content.Items.Thanos;
 
@@ -30,7 +30,7 @@ internal class RealityStone : InfinityStone
         {
             if (Main.time % 15 == 0)
             {
-                SoundEngine.PlaySound(2, (int) player.Center.X, (int) player.Center.Y, 103);
+                SoundEngine.PlaySound(SoundID.Item, (int) player.Center.X, (int) player.Center.Y, 103);
             }
 
             player.itemAnimation = player.itemAnimationMax;
@@ -39,8 +39,8 @@ internal class RealityStone : InfinityStone
             var theta = Main.rand.NextDouble() * 2 * Math.PI;
             var x = mousePos.X + Main.rand.NextDouble() * 40 * Math.Cos(theta);
             var y = mousePos.Y + Main.rand.NextDouble() * 40 * Math.Sin(theta);
-            Projectile.NewProjectile(new ProjectileSource_Item(player, item), (float) x, (float) y, 0f, 0f,
-                ModContent.ProjectileType<RealityBeam>(), 100, 0,
+            Projectile.NewProjectile(new EntitySource_ItemUse(player, item), (float) x, (float) y, 0f, 0f,
+                ProjectileType<RealityBeam>(), 100, 0,
                 player.whoAmI);
         }
         else

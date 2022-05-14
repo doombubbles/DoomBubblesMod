@@ -23,7 +23,7 @@ public class InfinityGauntletUI : UIState
     public override void OnInitialize()
     {
         backgroundPanel =
-            new UIImage(ModContent.Request<Texture2D>("DoomBubblesMod/Assets/Textures/UI/Gauntlet",
+            new UIImage(Request<Texture2D>("DoomBubblesMod/Assets/Textures/UI/Gauntlet",
                 AssetRequestMode.ImmediateLoad));
         backgroundPanel.SetPadding(0);
         backgroundPanel.Left.Set(mouseX / Main.UIScale - PanelWidth / 2f, 0f);
@@ -40,17 +40,17 @@ public class InfinityGauntletUI : UIState
     private void InitializeGems()
     {
         buttonList = new List<UIImageButton>();
-        AddButton(0, ModContent.GetInstance<PowerStone>().Texture, 52, 9);
-        AddButton(1, ModContent.GetInstance<SpaceStone>().Texture, 37, 7);
-        AddButton(2, ModContent.GetInstance<RealityStone>().Texture, 22, 7);
-        AddButton(3, ModContent.GetInstance<SoulStone>().Texture, 8, 11);
-        AddButton(4, ModContent.GetInstance<TimeStone>().Texture, 70, 28);
-        AddButton(5, ModContent.GetInstance<MindStone>().Texture, 29, 26);
+        AddButton(0, GetInstance<PowerStone>().Texture, 52, 9);
+        AddButton(1, GetInstance<SpaceStone>().Texture, 37, 7);
+        AddButton(2, GetInstance<RealityStone>().Texture, 22, 7);
+        AddButton(3, GetInstance<SoulStone>().Texture, 8, 11);
+        AddButton(4, GetInstance<TimeStone>().Texture, 70, 28);
+        AddButton(5, GetInstance<MindStone>().Texture, 29, 26);
     }
 
     private void AddButton(int i, string texture, int x, int y)
     {
-        var buttonTexture = ModContent.Request<Texture2D>(texture, AssetRequestMode.ImmediateLoad);
+        var buttonTexture = Request<Texture2D>(texture, AssetRequestMode.ImmediateLoad);
         buttonList.Add(new UIImageButton(buttonTexture));
         var index = i;
         buttonList[i].OnClick += (_, _) => ChooseGem(index);
@@ -65,14 +65,14 @@ public class InfinityGauntletUI : UIState
         base.Update(gameTime);
         if (!backgroundPanel.ContainsPoint(Main.MouseScreen / Main.UIScale))
         {
-            ModContent.GetInstance<UISystem>().InfinityGauntlet.SetState(null);
+            GetInstance<UISystem>().InfinityGauntlet.SetState(null);
         }
     }
 
     private static void ChooseGem(int gem)
     {
         Main.LocalPlayer.GetModPlayer<ThanosPlayer>().gem = gem;
-        ModContent.GetInstance<UISystem>().InfinityGauntlet.SetState(null);
+        GetInstance<UISystem>().InfinityGauntlet.SetState(null);
     }
 
     protected override void DrawSelf(SpriteBatch spriteBatch)

@@ -1,7 +1,6 @@
 using System;
 using DoomBubblesMod.Content.Dusts;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.WorldBuilding;
 
@@ -168,7 +167,7 @@ public abstract class LunarBullet : ModProjectile
 
             for (double theta = 0; theta < Math.PI * 2; theta += 2 * Math.PI / 5)
             {
-                var dust = Dust.NewDust(Projectile.Center, 0, 0, ModContent.DustType<Solar229>(),
+                var dust = Dust.NewDust(Projectile.Center, 0, 0, DustType<Solar229>(),
                     (float) Math.Cos(theta),
                     (float) Math.Sin(theta));
                 Main.dust[dust].noGravity = true;
@@ -241,11 +240,11 @@ public abstract class LunarBullet : ModProjectile
             {
                 var dust1 = Dust.NewDust(
                     Projectile.Center + new Vector2((float) (10 * Math.Cos(theta)), (float) (10 * Math.Sin(theta))),
-                    0, 0, ModContent.DustType<Nebula229>(), (float) Math.Cos(theta + Math.PI),
+                    0, 0, DustType<Nebula229>(), (float) Math.Cos(theta + Math.PI),
                     (float) Math.Sin(theta + Math.PI));
                 Main.dust[dust1].noGravity = true;
 
-                var dust2 = Dust.NewDust(newPos, 0, 0, ModContent.DustType<Nebula229>(), (float) Math.Cos(theta),
+                var dust2 = Dust.NewDust(newPos, 0, 0, DustType<Nebula229>(), (float) Math.Cos(theta),
                     (float) Math.Sin(theta));
                 Main.dust[dust2].noGravity = true;
             }
@@ -261,8 +260,8 @@ public abstract class LunarBullet : ModProjectile
                   new Vector2(Main.rand.NextFloat(-20, 20), Main.rand.NextFloat(-30, 30));
         var v = 7f * (target.Center - pos).ToRotation().ToRotationVector2();
 
-        var proj = Projectile.NewProjectile(new ProjectileSource_ProjectileParent(Projectile), pos, v,
-            ModContent.ProjectileType<VortexBullet2>(),
+        var proj = Projectile.NewProjectile(new EntitySource_Parent(Projectile), pos, v,
+            ProjectileType<VortexBullet2>(),
             Projectile.damage / 2, Projectile.knockBack / 2, Projectile.owner);
         Main.projectile[proj].netUpdate = true;
     }
@@ -276,13 +275,13 @@ public abstract class LunarBullet : ModProjectile
             newPos += Projectile.oldVelocity / 5f;
         }
 
-        Projectile.NewProjectile(new ProjectileSource_ProjectileParent(Projectile), newPos,
+        Projectile.NewProjectile(new EntitySource_Parent(Projectile), newPos,
             Projectile.oldVelocity.RotatedByRandom(Math.PI / 15) / 2,
-            ModContent.ProjectileType<StardustBullet2>(), Projectile.damage / 2, Projectile.knockBack / 2,
+            ProjectileType<StardustBullet2>(), Projectile.damage / 2, Projectile.knockBack / 2,
             Projectile.owner, 0, target.whoAmI);
-        Projectile.NewProjectile(new ProjectileSource_ProjectileParent(Projectile), newPos,
+        Projectile.NewProjectile(new EntitySource_Parent(Projectile), newPos,
             Projectile.oldVelocity.RotatedByRandom(Math.PI / 15) / 2,
-            ModContent.ProjectileType<StardustBullet2>(), Projectile.damage / 2, Projectile.knockBack / 2,
+            ProjectileType<StardustBullet2>(), Projectile.damage / 2, Projectile.knockBack / 2,
             Projectile.owner, 0, target.whoAmI);
     }
 }

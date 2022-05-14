@@ -3,7 +3,6 @@ using DoomBubblesMod.Content.Buffs;
 using DoomBubblesMod.Content.Projectiles.Thanos;
 using DoomBubblesMod.Utils;
 using Terraria.Audio;
-using Terraria.DataStructures;
 
 namespace DoomBubblesMod.Content.Items.Thanos;
 
@@ -25,8 +24,8 @@ internal class SpaceStone : InfinityStone
     {
         var newPos = Main.MouseWorld;
 
-        Projectile.NewProjectileDirect(new ProjectileSource_Item(player, item), player.Center, new Vector2(0, 0),
-            ModContent.ProjectileType<SpaceStoneWormhole>(),
+        Projectile.NewProjectileDirect(new EntitySource_ItemUse(player, item), player.Center, new Vector2(0, 0),
+            ProjectileType<SpaceStoneWormhole>(),
             0, 0, player.whoAmI);
         for (var i = 0; i <= 360; i += 4)
         {
@@ -40,8 +39,8 @@ internal class SpaceStone : InfinityStone
 
         player.Teleport(newPos, -1);
 
-        Projectile.NewProjectileDirect(new ProjectileSource_Item(player, item), player.Center, new Vector2(0, 0),
-            ModContent.ProjectileType<SpaceStoneWormhole>(),
+        Projectile.NewProjectileDirect(new EntitySource_ItemUse(player, item), player.Center, new Vector2(0, 0),
+            ProjectileType<SpaceStoneWormhole>(),
             0, 0, player.whoAmI);
         for (var i = 0; i <= 360; i += 4)
         {
@@ -53,7 +52,7 @@ internal class SpaceStone : InfinityStone
             dust.noGravity = true;
         }
 
-        player.AddBuff(ModContent.BuffType<SpaceStoneCooldown>(), 360);
+        player.AddBuff(BuffType<SpaceStoneCooldown>(), 360);
         SoundEngine.PlaySound(SoundID.Item8, player.Center);
     }
 }

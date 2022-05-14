@@ -2,7 +2,6 @@ using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Items.Talent;
 using DoomBubblesMod.Content.Projectiles.HotS;
 using DoomBubblesMod.Utils;
-using Terraria.DataStructures;
 
 namespace DoomBubblesMod.Content.Items.HotS;
 
@@ -28,7 +27,7 @@ public class LivingBombWand : ModItemWithTalents<TalentPyromaniac, TalentSunKing
         Item.width = 40;
         Item.height = 40;
         Item.value = Item.buyPrice(0, 69);
-        Item.shoot = ModContent.ProjectileType<LivingFireball>();
+        Item.shoot = ProjectileType<LivingFireball>();
         Item.damage = 80;
         Item.knockBack = 6;
         Item.useStyle = ItemUseStyleID.Shoot;
@@ -44,7 +43,7 @@ public class LivingBombWand : ModItemWithTalents<TalentPyromaniac, TalentSunKing
         Item.rare = ItemRarityID.Lime;
     }
 
-    public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity,
+    public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity,
         int type,
         int damage, float knockback)
     {

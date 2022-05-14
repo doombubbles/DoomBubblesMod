@@ -103,7 +103,7 @@ internal class InfinityGauntlet : ModItem
             if (Item.Name.Contains("(Space)"))
             {
                 var newPos = Main.MouseWorld;
-                if (player.HasBuff(ModContent.BuffType<SpaceStoneCooldown>()) ||
+                if (player.HasBuff(BuffType<SpaceStoneCooldown>()) ||
                     Collision.SolidCollision(newPos,
                         player.width, player.height) ||
                     !(newPos.X > 50f &&
@@ -119,14 +119,14 @@ internal class InfinityGauntlet : ModItem
             {
                 var previousHp = player.GetModPlayer<ThanosPlayer>().timeHealth[300];
                 if (previousHp == 0 ||
-                    player.HasBuff(ModContent.BuffType<TimeStoneCooldown>()) ||
+                    player.HasBuff(BuffType<TimeStoneCooldown>()) ||
                     previousHp <= player.statLife)
                 {
                     return false;
                 }
             }
 
-            if (Item.Name.Contains("(Mind)") && player.HasBuff(ModContent.BuffType<MindStoneCooldown>()))
+            if (Item.Name.Contains("(Mind)") && player.HasBuff(BuffType<MindStoneCooldown>()))
             {
                 return false;
             }
@@ -177,7 +177,7 @@ internal class InfinityGauntlet : ModItem
         {
             //switchGem();
 
-            ModContent.GetInstance<UISystem>().InfinityGauntlet.SetState(
+            GetInstance<UISystem>().InfinityGauntlet.SetState(
                 new InfinityGauntletUI
                 {
                     mouseX = Main.mouseX,
@@ -267,12 +267,12 @@ internal class InfinityGauntlet : ModItem
     {
         var recipe = CreateRecipe();
         recipe.AddIngredient(ItemID.PowerGlove);
-        recipe.AddIngredient(ModContent.ItemType<PowerStone>());
-        recipe.AddIngredient(ModContent.ItemType<SpaceStone>());
-        recipe.AddIngredient(ModContent.ItemType<RealityStone>());
-        recipe.AddIngredient(ModContent.ItemType<SoulStone>());
-        recipe.AddIngredient(ModContent.ItemType<TimeStone>());
-        recipe.AddIngredient(ModContent.ItemType<MindStone>());
+        recipe.AddIngredient(ItemType<PowerStone>());
+        recipe.AddIngredient(ItemType<SpaceStone>());
+        recipe.AddIngredient(ItemType<RealityStone>());
+        recipe.AddIngredient(ItemType<SoulStone>());
+        recipe.AddIngredient(ItemType<TimeStone>());
+        recipe.AddIngredient(ItemType<MindStone>());
         recipe.AddIngredient(ItemID.LunarBar, 20);
         recipe.AddTile(TileID.LunarCraftingStation);
         recipe.Register();

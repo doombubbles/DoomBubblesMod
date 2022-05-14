@@ -77,7 +77,7 @@ public class RealityBeam : ModProjectile
         {
             if (otherProjectile.Distance(Projectile.Center) < 16f &&
                 !otherProjectile.GetGlobalProjectile<DoomBubblesGlobalProjectile>().realityStoned &&
-                otherProjectile.type != ModContent.ProjectileType<RealityBeam>() &&
+                otherProjectile.type != ProjectileType<RealityBeam>() &&
                 (!otherProjectile.friendly || otherProjectile.hostile))
             {
                 otherProjectile.friendly = true;

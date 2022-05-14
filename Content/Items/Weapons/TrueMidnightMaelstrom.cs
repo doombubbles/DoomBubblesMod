@@ -2,7 +2,6 @@ using DoomBubblesMod.Content.Items.Misc;
 using DoomBubblesMod.Content.Projectiles.Ranged;
 using DoomBubblesMod.Utils;
 using Terraria.Audio;
-using Terraria.DataStructures;
 
 namespace DoomBubblesMod.Content.Items.Weapons;
 
@@ -44,13 +43,13 @@ public class TrueMidnightMaelstrom : ModItem
     public override void AddRecipes()
     {
         var recipe = CreateRecipe();
-        recipe.AddIngredient(ModContent.ItemType<MidnightMaelstrom>());
-        recipe.AddIngredient(ModContent.ItemType<BrokenHeroGun>());
+        recipe.AddIngredient(ItemType<MidnightMaelstrom>());
+        recipe.AddIngredient(ItemType<BrokenHeroGun>());
         recipe.AddTile(TileID.MythrilAnvil);
         recipe.Register();
     }
 
-    public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity,
+    public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity,
         int type,
         int damage, float knockback)
     {
@@ -66,7 +65,7 @@ public class TrueMidnightMaelstrom : ModItem
                 (int) (damage / 2.0), knockback, player.whoAmI);
         }
 
-        Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<MidnightBlast>(),
+        Projectile.NewProjectile(source, position, velocity, ProjectileType<MidnightBlast>(),
             damage, knockback, player.whoAmI);
 
 

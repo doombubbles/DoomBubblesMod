@@ -14,7 +14,7 @@ public class StardustBullet : ModItem
     public override void SetDefaults()
     {
         Item.CloneDefaults(ItemID.MoonlordBullet);
-        Item.shoot = ModContent.ProjectileType<Projectiles.Ranged.StardustBullet>();
+        Item.shoot = ProjectileType<Projectiles.Ranged.StardustBullet>();
         Item.shootSpeed = 1.5f;
         Item.damage = 17;
     }

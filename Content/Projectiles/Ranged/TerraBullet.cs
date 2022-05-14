@@ -1,7 +1,6 @@
 using System;
 using ElementalDamage.Elements;
 using Terraria.Audio;
-using Terraria.DataStructures;
 
 namespace DoomBubblesMod.Content.Projectiles.Ranged;
 
@@ -19,7 +18,7 @@ public class TerraBullet : ModProjectile
         Projectile.aiStyle = 1;
         Projectile.friendly = true;
         Projectile.hostile = false;
-        Projectile.DamageType = ModContent.GetInstance<RangedNature>();
+        Projectile.DamageType = GetInstance<RangedNature>();
         Projectile.penetrate = 1;
         Projectile.timeLeft = 600;
         Projectile.alpha = 255;
@@ -164,9 +163,9 @@ public class TerraBullet : ModProjectile
                 var speedY =
                     (float) (-(double) Projectile.velocity.Y * Main.rand.Next(40, 70) * 0.00999999977648258 +
                              Main.rand.Next(-20, 21) * 0.400000005960464);
-                Projectile.NewProjectile(new ProjectileSource_ProjectileParent(Projectile),
+                Projectile.NewProjectile(new EntitySource_Parent(Projectile),
                     Projectile.position.X + speedX, Projectile.position.Y + speedY, speedX,
-                    speedY, ModContent.ProjectileType<TerraShard>(), (int) (Projectile.damage * 0.5), 0.0f,
+                    speedY, ProjectileType<TerraShard>(), (int) (Projectile.damage * 0.5), 0.0f,
                     Projectile.owner);
             }
         }

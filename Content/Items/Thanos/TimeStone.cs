@@ -3,6 +3,7 @@ using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Buffs;
 using DoomBubblesMod.Utils;
 using Terraria.Audio;
+using Terraria.ID;
 
 namespace DoomBubblesMod.Content.Items.Thanos;
 
@@ -36,7 +37,7 @@ internal class TimeStone : InfinityStone
             dust.noGravity = true;
         }
 
-        SoundEngine.PlaySound(2, (int) gauntlet.X, (int) gauntlet.Y, 15, 2f);
-        player.AddBuff(ModContent.BuffType<TimeStoneCooldown>(), 1800);
+        SoundEngine.PlaySound(SoundID.Item, (int) gauntlet.X, (int) gauntlet.Y, 15, 2f);
+        player.AddBuff(BuffType<TimeStoneCooldown>(), 1800);
     }
 }

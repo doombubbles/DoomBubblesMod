@@ -38,7 +38,7 @@ internal class CharmOfLegends : ModItem
     {
         var recipe = CreateRecipe();
         recipe.AddIngredient(ItemID.CharmofMyths);
-        recipe.AddIngredient(ModContent.ItemType<CharmOfFables>());
+        recipe.AddIngredient(ItemType<CharmOfFables>());
         recipe.AddTile(TileID.TinkerersWorkbench);
         recipe.Register();
     }

@@ -1,6 +1,5 @@
 using System;
 using Terraria.Audio;
-using Terraria.DataStructures;
 
 namespace DoomBubblesMod.Content.Projectiles.HotS;
 
@@ -44,24 +43,24 @@ public class LivingBomb : CenteredProjectile
     {
         if (target.whoAmI != Target.whoAmI && (knockback < .5 || ChosenTalent is 3 or -1))
         {
-            target.buffImmune[ModContent.BuffType<Buffs.LivingBomb>()] = false;
-            if (!target.HasBuff(ModContent.BuffType<Buffs.LivingBomb>()))
+            target.buffImmune[BuffType<Buffs.LivingBomb>()] = false;
+            if (!target.HasBuff(BuffType<Buffs.LivingBomb>()))
             {
-                target.AddBuff(ModContent.BuffType<Buffs.LivingBomb>(), 150);
-                var proj = Projectile.NewProjectile(new ProjectileSource_ProjectileParent(Projectile), target.Center,
+                target.AddBuff(BuffType<Buffs.LivingBomb>(), 150);
+                var proj = Projectile.NewProjectile(new EntitySource_Parent(Projectile), target.Center,
                     new Vector2(0, 0),
-                    ModContent.ProjectileType<LivingBomb>(),
+                    ProjectileType<LivingBomb>(),
                     Damage, ++Projectile.knockBack, Projectile.owner, ChosenTalent, target.whoAmI);
                 Main.projectile[proj].netUpdate = true;
                 SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/LivingBombWand2"), target.Center);
             }
             else if (ChosenTalent is 1 or -1 &&
-                     target.buffTime[target.FindBuffIndex(ModContent.BuffType<Buffs.LivingBomb>())] < 150)
+                     target.buffTime[target.FindBuffIndex(BuffType<Buffs.LivingBomb>())] < 150)
             {
-                target.buffTime[target.FindBuffIndex(ModContent.BuffType<Buffs.LivingBomb>())] = 152;
-                var proj = Projectile.NewProjectile(new ProjectileSource_ProjectileParent(Projectile), target.Center,
+                target.buffTime[target.FindBuffIndex(BuffType<Buffs.LivingBomb>())] = 152;
+                var proj = Projectile.NewProjectile(new EntitySource_Parent(Projectile), target.Center,
                     new Vector2(0, 0),
-                    ModContent.ProjectileType<LivingBomb>(),
+                    ProjectileType<LivingBomb>(),
                     Damage, ++Projectile.knockBack, Projectile.owner, ChosenTalent, target.whoAmI);
                 Main.projectile[proj].netUpdate = true;
                 SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/LivingBombWand2"), target.Center);
@@ -80,11 +79,11 @@ public class LivingBomb : CenteredProjectile
         }
 
         Projectile.Center = Target.Center;
-        if (Target.HasBuff(ModContent.BuffType<Buffs.LivingBomb>()) &&
+        if (Target.HasBuff(BuffType<Buffs.LivingBomb>()) &&
             Projectile.timeLeft > 10 &&
             Projectile.timeLeft < 295 &&
-            (Target.buffTime[Target.FindBuffIndex(ModContent.BuffType<Buffs.LivingBomb>())] == 1 ||
-             Target.buffTime[Target.FindBuffIndex(ModContent.BuffType<Buffs.LivingBomb>())] == 151))
+            (Target.buffTime[Target.FindBuffIndex(BuffType<Buffs.LivingBomb>())] == 1 ||
+             Target.buffTime[Target.FindBuffIndex(BuffType<Buffs.LivingBomb>())] == 151))
         {
             Projectile.timeLeft = 10;
             Projectile.alpha = 0;

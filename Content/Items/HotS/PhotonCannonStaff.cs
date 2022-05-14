@@ -2,7 +2,6 @@
 using DoomBubblesMod.Content.Items.Talent;
 using DoomBubblesMod.Content.Projectiles.HotS;
 using DoomBubblesMod.Utils;
-using Terraria.DataStructures;
 
 namespace DoomBubblesMod.Content.Items.HotS;
 
@@ -28,10 +27,10 @@ public class PhotonCannonStaff : ModItemWithTalents<TalentWarpResonance, TalentT
         Item.useStyle = ItemUseStyleID.Swing;
         Item.noMelee = true;
         Item.damage = 96;
-        Item.shoot = ModContent.ProjectileType<PhotonCannon>();
+        Item.shoot = ProjectileType<PhotonCannon>();
         Item.value = Item.buyPrice(0, 69);
         Item.rare = ItemRarityID.Yellow;
-        Item.buffType = ModContent.BuffType<Buffs.PhotonCannon>();
+        Item.buffType = BuffType<Buffs.PhotonCannon>();
         Item.buffTime = 3600;
     }
 
@@ -51,7 +50,7 @@ public class PhotonCannonStaff : ModItemWithTalents<TalentWarpResonance, TalentT
         return base.UseItem(player);
     }
 
-    public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity,
+    public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity,
         int type,
         int damage, float knockback)
     {

@@ -1,6 +1,5 @@
 ﻿using System;
 using DoomBubblesMod.Content.Dusts;
-using Terraria.DataStructures;
 
 namespace DoomBubblesMod.Content.Projectiles.Magic;
 
@@ -59,9 +58,9 @@ public class ManapireKnife : ModProjectile
             target.lifeMax > 5 &&
             damage > 0)
         {
-            Projectile.NewProjectile(new ProjectileSource_ProjectileParent(Projectile), target.Center.X,
+            Projectile.NewProjectile(new EntitySource_Parent(Projectile), target.Center.X,
                 target.Center.Y, 0f, 0f,
-                ModContent.ProjectileType<ManapireRestore>(), 0, 0f, Projectile.owner, Projectile.owner, damage);
+                ProjectileType<ManapireRestore>(), 0, 0f, Projectile.owner, Projectile.owner, damage);
         }
     }
 
@@ -70,7 +69,7 @@ public class ManapireKnife : ModProjectile
         for (var num401 = 0; num401 < 3; num401++)
         {
             var num402 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width,
-                Projectile.height, ModContent.DustType<ManapireDust>(), 0f, 0f, 100, default, 0.8f);
+                Projectile.height, DustType<ManapireDust>(), 0f, 0f, 100, default, 0.8f);
             Main.dust[num402].noGravity = true;
             var dust = Main.dust[num402];
             dust.velocity *= 1.2f;

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Items.Weapons;
+using Terraria.DataStructures;
 
 namespace DoomBubblesMod.Common.GlobalItems;
 
@@ -48,13 +49,13 @@ public class DoomBubblesGlobalItem : GlobalItem
         return base.CanUseItem(item, player);
     }
 
-    public override void ModifyWeaponCrit(Item item, Player player, ref int crit)
+    public override void ModifyWeaponCrit(Item item, Player player, ref float crit)
     {
         crit = (int) (crit * player.GetModPlayer<DoomBubblesPlayer>().critChanceMult);
         base.ModifyWeaponCrit(item, player, ref crit);
     }
 
-    public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage, ref float flat)
+    public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
     {
         if ((item.type == ItemID.ExplodingBullet || item.Name == "Endless Explosive Pouch") &&
             player.GetModPlayer<DoomBubblesPlayer>().explosionBulletBonus)
@@ -62,9 +63,8 @@ public class DoomBubblesGlobalItem : GlobalItem
             damage *= 2;
         }
 
-        base.ModifyWeaponDamage(item, player, ref damage, ref flat);
+        base.ModifyWeaponDamage(item, player, ref damage);
     }
-
 
     public override void OpenVanillaBag(string context, Player player, int arg)
     {
@@ -77,7 +77,7 @@ public class DoomBubblesGlobalItem : GlobalItem
         {
             if (Main.rand.Next(1, 5) == 1)
             {
-                player.QuickSpawnItem(ModContent.ItemType<Ultrashark>());
+                player.QuickSpawnItem(new EntitySource_ItemOpen(player, ItemID.FishronBossBag), ItemType<Ultrashark>());
             }
         }
 
@@ -98,11 +98,11 @@ public class DoomBubblesGlobalItem : GlobalItem
         {
             tooltips.Add(new TooltipLine(Mod, "Secret", "Now has certain special properties...")
             {
-                overrideColor = Color.MediumPurple
+                OverrideColor = Color.MediumPurple
             });
             tooltips.Add(new TooltipLine(Mod, "Secret2", "  -doombubbles")
             {
-                overrideColor = Color.MediumPurple
+                OverrideColor = Color.MediumPurple
             });
         }
 
@@ -115,7 +115,7 @@ public class DoomBubblesGlobalItem : GlobalItem
         {
             for (var i = 0; i < tooltips.Count; i++)
             {
-                if (tooltips[i].Name == "UseMana" && tooltips[i].mod.Equals("Terraria"))
+                if (tooltips[i].Name == "UseMana" && tooltips[i].Mod.Equals("Terraria"))
                 {
                     tooltips.RemoveAt(i);
                     i--;

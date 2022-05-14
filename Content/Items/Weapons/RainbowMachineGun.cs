@@ -20,7 +20,7 @@ public class RainbowMachineGun : ModItem
         Item.rare = ItemRarityID.Yellow;
         Item.autoReuse = true;
         Item.shootSpeed = 20f;
-        Item.shoot = ModContent.ProjectileType<Projectiles.Magic.RainbowMachineGun>();
+        Item.shoot = ProjectileType<Projectiles.Magic.RainbowMachineGun>();
         Item.channel = true;
         Item.noUseGraphic = true;
     }

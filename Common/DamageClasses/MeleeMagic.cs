@@ -1,4 +1,4 @@
-namespace DoomBubblesMod.Utils;
+namespace DoomBubblesMod.Common.DamageClasses;
 
 public class MeleeMagic : DamageClass
 {
@@ -7,12 +7,12 @@ public class MeleeMagic : DamageClass
         ClassName.SetDefault("melee/magic damage");
     }
 
-    protected override float GetBenefitFrom(DamageClass damageClass)
+    public override StatInheritanceData GetModifierInheritance(DamageClass damageClass)
     {
-        return damageClass == Melee || damageClass == Magic || damageClass == Generic ? 1 : 0;
+        return damageClass == Melee || damageClass == Magic || damageClass == Generic ? StatInheritanceData.Full : StatInheritanceData.None;
     }
 
-    public override bool CountsAs(DamageClass damageClass)
+    public override bool GetEffectInheritance(DamageClass damageClass)
     {
         return damageClass == Melee || damageClass == Magic;
     }

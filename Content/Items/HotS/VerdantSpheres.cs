@@ -44,6 +44,6 @@ public class VerdantSpheres : ModItemWithTalents<TalentFelInfusion, TalentManaTa
             player.GetModPlayer<HotSPlayer>().superVerdant = true;
         }
 
-        player.GetModPlayer<DoomBubblesPlayer>().noManaItems.Add(ModContent.ItemType<LivingBombWand>());
+        player.GetModPlayer<DoomBubblesPlayer>().noManaItems.Add(ItemType<LivingBombWand>());
     }
 }

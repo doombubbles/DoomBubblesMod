@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using DoomBubblesMod.Content.Projectiles.Summon;
 using DoomBubblesMod.Utils;
-using Terraria.DataStructures;
 
 namespace DoomBubblesMod.Content.Items.Weapons;
 
@@ -29,9 +28,9 @@ public class VampireKnifeBatStaff : ModItem
         Item.rare = ItemRarityID.Yellow;
         Item.damage = 29;
         Item.UseSound = SoundID.Item44;
-        Item.shoot = ModContent.ProjectileType<VampireKnifeBat>();
+        Item.shoot = ProjectileType<VampireKnifeBat>();
         Item.shootSpeed = 10f;
-        Item.buffType = ModContent.BuffType<Buffs.VampireKnifeBat>();
+        Item.buffType = BuffType<Buffs.VampireKnifeBat>();
         Item.buffTime = 3600;
     }
 
@@ -40,7 +39,7 @@ public class VampireKnifeBatStaff : ModItem
         return true;
     }
 
-    public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity,
+    public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity,
         int type,
         int damage, float knockback)
     {

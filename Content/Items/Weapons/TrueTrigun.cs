@@ -3,7 +3,6 @@ using DoomBubblesMod.Content.Items.Misc;
 using DoomBubblesMod.Content.Projectiles.Ranged;
 using DoomBubblesMod.Utils;
 using ElementalDamage.Elements;
-using Terraria.DataStructures;
 
 namespace DoomBubblesMod.Content.Items.Weapons;
 
@@ -19,7 +18,7 @@ public class TrueTrigun : ModItem
     public override void SetDefaults()
     {
         Item.damage = 45;
-        Item.DamageType = ModContent.GetInstance<RangedHoly>();
+        Item.DamageType = GetInstance<RangedHoly>();
         Item.width = 56;
         Item.height = 26;
         Item.useTime = 3;
@@ -53,7 +52,7 @@ public class TrueTrigun : ModItem
         {
             var recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.HallowedBar, 9);
-            recipe.AddIngredient(ModContent.ItemType<BrokenHeroGun>());
+            recipe.AddIngredient(ItemType<BrokenHeroGun>());
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.ReplaceResult(this);
             recipe.Register();
@@ -64,7 +63,7 @@ public class TrueTrigun : ModItem
     {
         var recipe = CreateRecipe();
         recipe.AddIngredient(DoomBubblesMod.ThoriumMod.Find<ModItem>("Trigun"));
-        recipe.AddIngredient(ModContent.ItemType<BrokenHeroGun>());
+        recipe.AddIngredient(ItemType<BrokenHeroGun>());
         recipe.AddTile(TileID.MythrilAnvil);
         recipe.Register();
     }
@@ -79,7 +78,7 @@ public class TrueTrigun : ModItem
         return player.itemAnimation < Item.useAnimation - 2 && base.CanConsumeAmmo(player);
     }
 
-    public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity,
+    public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity,
         int type,
         int damage, float knockback)
     {
@@ -92,11 +91,11 @@ public class TrueTrigun : ModItem
 
         if (closest == to8)
         {
-            type = ModContent.ProjectileType<TruePiercingBullet>();
+            type = ProjectileType<TruePiercingBullet>();
         }
         else if (closest == to2)
         {
-            type = ModContent.ProjectileType<TrueHomingBullet>();
+            type = ProjectileType<TrueHomingBullet>();
         }
 
         return base.Shoot(player, source, position, perturbedSpeed, type, damage, knockback);

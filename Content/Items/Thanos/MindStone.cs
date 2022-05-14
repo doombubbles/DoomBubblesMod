@@ -58,7 +58,7 @@ internal class MindStone : InfinityStone
         }
 
 
-        player.AddBuff(ModContent.BuffType<MindStoneCooldown>(), 1200);
+        player.AddBuff(BuffType<MindStoneCooldown>(), 1200);
     }
 }
 
