@@ -1,4 +1,5 @@
 using System;
+using DoomBubblesMod.Utils;
 using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Projectiles.HotS;
@@ -52,7 +53,7 @@ public class LivingBomb : CenteredProjectile
                     ProjectileType<LivingBomb>(),
                     Damage, ++Projectile.knockBack, Projectile.owner, ChosenTalent, target.whoAmI);
                 Main.projectile[proj].netUpdate = true;
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/LivingBombWand2"), target.Center);
+                SoundEngine.PlaySound(Mod.Sound("LivingBombWand2"), target.Center);
             }
             else if (ChosenTalent is 1 or -1 &&
                      target.buffTime[target.FindBuffIndex(BuffType<Buffs.LivingBomb>())] < 150)
@@ -63,7 +64,7 @@ public class LivingBomb : CenteredProjectile
                     ProjectileType<LivingBomb>(),
                     Damage, ++Projectile.knockBack, Projectile.owner, ChosenTalent, target.whoAmI);
                 Main.projectile[proj].netUpdate = true;
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/LivingBombWand2"), target.Center);
+                SoundEngine.PlaySound(Mod.Sound("LivingBombWand2"), target.Center);
             }
         }
 
@@ -87,7 +88,7 @@ public class LivingBomb : CenteredProjectile
         {
             Projectile.timeLeft = 10;
             Projectile.alpha = 0;
-            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/LivingBoom"), Projectile.Center);
+            SoundEngine.PlaySound(Mod.Sound("LivingBoom"), Projectile.Center);
         }
 
         if (Projectile.timeLeft < 10)

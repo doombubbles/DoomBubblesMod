@@ -1,6 +1,5 @@
 using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Projectiles.Ranged;
-using Terraria.DataStructures;
 
 namespace DoomBubblesMod.Common.GlobalProjectiles;
 

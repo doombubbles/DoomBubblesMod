@@ -79,8 +79,7 @@ public class HotSPlayer : ModPlayer
 
                 if (i == 119 && shieldHealth == 24)
                 {
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/ShieldRecharge"),
-                        Player.Center);
+                    SoundEngine.PlaySound(Mod.Sound("ShieldRecharge"), Player.Center);
                 }
 
                 return i;

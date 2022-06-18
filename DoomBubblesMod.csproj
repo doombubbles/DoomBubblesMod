@@ -24,4 +24,9 @@
             <HintPath>lib\ElementalDamage.dll</HintPath>
         </Reference>
     </ItemGroup>
+
+    <Target Name="CopyDll" AfterTargets="Build" Condition="Exists('$(TargetDir)$(TargetName).dll')" BeforeTargets="BuildMod">
+        <Message Text="Copying $(TargetName).dll to DoomBubblesWoWModFolder..." Importance="High" />
+        <Copy SourceFiles="$(TargetDir)$(TargetName).dll" DestinationFolder="$(ProjectDir)..\DoomBubblesWoWMod\lib" />
+    </Target>
 </Project>

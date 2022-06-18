@@ -1,4 +1,5 @@
 using System;
+using DoomBubblesMod.Common.Configs;
 using DoomBubblesMod.Common.Players;
 using MonoMod.Cil;
 using Main = On.Terraria.Main;
@@ -13,9 +14,14 @@ public class DoomBubblesHooks : ILoadable
         Player.UpdateLifeRegen += PlayerOnUpdateLifeRegen;
         Player.UpdateManaRegen += PlayerOnUpdateManaRegen;
         IL.Terraria.Player.Update += PlayerOnUpdate;
-        Main.DamageVar += (_, dmg, luck) => (int) Math.Round(dmg * (1 + luck / 20));
+        Main.DamageVar += MainOnDamageVar;
         Main.DrawCursor += MainOnDrawCursor;
     }
+
+    private int MainOnDamageVar(Main.orig_DamageVar orig, float dmg, float luck) =>
+        GetInstance<ServerConfig>().DisableDamageVariance
+            ? (int) Math.Round(dmg * (1 + luck / 20))
+            : orig(dmg, luck);
 
     public void Unload()
     {
@@ -33,7 +39,7 @@ public class DoomBubblesHooks : ILoadable
         var hasRainbowCursor = Terraria.Main.LocalPlayer.hasRainbowCursor;
 
         Terraria.Main.gameMenu = false;
-        Terraria.Main.LocalPlayer.hasRainbowCursor = true;
+        Terraria.Main.LocalPlayer.hasRainbowCursor |= GetInstance<ClientConfig>().PermanentRainbowCursor;
 
         orig(bonus, smart);
 

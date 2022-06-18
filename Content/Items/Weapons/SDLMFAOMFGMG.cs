@@ -40,9 +40,9 @@ public class SDLMFAOMFGMG : ModItem
         return new Vector2(0, -5);
     }
 
-    public override bool CanConsumeAmmo(Player player)
+    public override bool CanConsumeAmmo(Item ammo, Player player)
     {
-        return !(Main.rand.NextDouble() <= .75) && base.CanConsumeAmmo(player);
+        return Main.rand.NextDouble() <= .75 && base.CanConsumeAmmo(ammo, player);
     }
 
     /*public override void ModifyWeaponDamage(Player player, ref StatModifier damage, ref float flat)

@@ -3,7 +3,6 @@ using DoomBubblesMod.Content.Items.Talent;
 using DoomBubblesMod.Content.Projectiles.HotS;
 using DoomBubblesMod.Utils;
 using Terraria.Audio;
-using Terraria.DataStructures;
 
 namespace DoomBubblesMod.Content.Items.HotS;
 
@@ -85,7 +84,7 @@ public class DiscordBlade : ModItemWithTalents<TalentChaosReigns, TalentDissonan
             }
         }
 
-        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/DiscordStrike"), position);
+        SoundEngine.PlaySound(Mod.Sound("DiscordStrike"), position);
 
         return false;
     }

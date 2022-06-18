@@ -1,5 +1,4 @@
 using System;
-using Terraria.DataStructures;
 
 namespace DoomBubblesMod.Content.Items.Thanos;
 

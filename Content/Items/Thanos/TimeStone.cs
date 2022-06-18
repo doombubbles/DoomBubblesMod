@@ -3,7 +3,6 @@ using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Buffs;
 using DoomBubblesMod.Utils;
 using Terraria.Audio;
-using Terraria.ID;
 
 namespace DoomBubblesMod.Content.Items.Thanos;
 
@@ -23,21 +22,25 @@ internal class TimeStone : InfinityStone
 
     public static void TimeAbility(Player player)
     {
-        var gauntlet = new Vector2(player.Center.X + 10 * player.direction, player.Center.Y - 25);
+        var gauntletPos = new Vector2(player.Center.X + 10 * player.direction, player.Center.Y - 25);
         var previousHp = player.GetModPlayer<ThanosPlayer>().timeHealth[300];
-        player.HealEffect(previousHp - player.statLife);
-        player.statLife = previousHp;
-        for (var i = 0; i <= 360; i += 4)
-        {
-            var rad = Math.PI * i / 180;
-            var dX = (float) (5 * Math.Cos(rad));
-            var dY = (float) (5 * Math.Sin(rad));
-            var dust = Dust.NewDustPerfect(new Vector2(player.Center.X, player.Center.Y), 212, new Vector2(dX, dY),
-                0, InfinityGauntlet.TimeColor);
-            dust.noGravity = true;
-        }
 
-        SoundEngine.PlaySound(SoundID.Item, (int) gauntlet.X, (int) gauntlet.Y, 15, 2f);
-        player.AddBuff(BuffType<TimeStoneCooldown>(), 1800);
+        if (previousHp > player.statLife && !player.HasBuff(BuffType<TimeStoneCooldown>()))
+        {
+            player.HealEffect(previousHp - player.statLife);
+            player.statLife = previousHp;
+            for (var i = 0; i <= 360; i += 4)
+            {
+                var rad = Math.PI * i / 180;
+                var dX = (float) (5 * Math.Cos(rad));
+                var dY = (float) (5 * Math.Sin(rad));
+                var dust = Dust.NewDustPerfect(new Vector2(player.Center.X, player.Center.Y), 212, new Vector2(dX, dY),
+                    0, InfinityGauntlet.TimeColor);
+                dust.noGravity = true;
+            }
+
+            SoundEngine.PlaySound(SoundID.Item15, gauntletPos).Volume(2f);
+            player.AddBuff(BuffType<TimeStoneCooldown>(), 1800);
+        }
     }
 }

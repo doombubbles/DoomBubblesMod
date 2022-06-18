@@ -1,8 +1,8 @@
 author = doombubbles
-version = 1.34.0
+version = 1.34.3
 displayName = Doombubbles' Mod
 includeSource = false
 buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*
 homepage=https://github.com/doombubbles/DoomBubblesMod
-modReferences = ElementalDamage, AttackSpeedMod
-sortAfter = ElementalDamage, AttackSpeedMod
+modReferences = ElementalDamage
+sortAfter = ElementalDamage

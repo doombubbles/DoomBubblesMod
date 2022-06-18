@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Items.HotS;
+using DoomBubblesMod.Utils;
 using Terraria.Audio;
 using Terraria.GameContent;
 
@@ -123,7 +124,7 @@ public class PhotonCannon : ModProjectile
     {
         if (Projectile.alpha == 69)
         {
-            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/PhotonCannonWarpIn"),
+            SoundEngine.PlaySound(Mod.Sound("PhotonCannonWarpIn"),
                 Projectile.Center);
             Projectile.alpha = 0;
         }
@@ -250,7 +251,7 @@ public class PhotonCannon : ModProjectile
 
             Main.projectile[proj].netUpdate = true;
             Projectile.netUpdate = true;
-            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/PhotonShoot"), (int) x, (int) y);
+            SoundEngine.PlaySound(Mod.Sound("PhotonShoot"), new Vector2(x, y));
         }
     }
 

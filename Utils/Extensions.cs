@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using DoomBubblesMod.Common.Players;
+using ReLogic.Utilities;
+using Terraria.Audio;
 using Terraria.GameContent.Creative;
 
 namespace DoomBubblesMod.Utils;
@@ -171,7 +174,7 @@ public static class Extensions
     public static void HandleCustomPacket(this Mod mod, BinaryReader reader, int whoAmI)
     {
         var type = reader.ReadInt32();
-        var customPacket = mod.GetContent<CustomPacket>().FirstOrDefault(packet => packet.Type == type);
+        var customPacket = GetContent<CustomPacket>().FirstOrDefault(packet => packet.Type == type);
         if (customPacket != null)
         {
             customPacket.Receive(reader, whoAmI);
@@ -181,4 +184,62 @@ public static class Extensions
             mod.Logger.Warn($"Couldn't find ModPacket with type {type}");
         }
     }
+
+    /// <summary>
+    /// Gets the element of the array at the given index, or null/default if the index is negative or out of bounds
+    /// </summary>
+    public static T GetOrDefault<T>(this T[] array, int index) =>
+        index < 0 || index >= array.Length ? default : array[index];
+
+    public static string SoundPath(this Mod mod, string assetPath) => $"{mod.Name}/Assets/Sounds/{assetPath}";
+
+    public static SoundStyle Sound(this Mod mod, string assetPath) => new(mod.SoundPath(assetPath));
+
+    public static ActiveSound GetSound(this SlotId slotId) =>
+        slotId.IsValid && SoundEngine.TryGetActiveSound(slotId, out var sound) ? sound : null;
+
+    public static SlotId Volume(this SlotId slotId, float volume)
+    {
+        if (slotId.IsValid && SoundEngine.TryGetActiveSound(slotId, out var sound))
+        {
+            sound.Volume = volume;
+        }
+
+        return slotId;
+    }
+
+    public static SlotId Volume(this SlotId slotId, double volume) => slotId.Volume((float) volume);
+
+    private static void InsertSpecifically(this List<TooltipLine> lines, TooltipLine tooltipLine,
+        Func<TooltipPlacement, bool> func)
+    {
+        var index = lines.FindIndex(line =>
+            Enum.TryParse(line.Name, out TooltipPlacement placement) && func(placement));
+        if (index == -1)
+        {
+            index = lines.Count;
+        }
+
+        lines.Insert(index, tooltipLine);
+    }
+
+    /// <summary>
+    /// Inserts a TooltipLine at the latest position that is before the given placement or anything that comes after it
+    /// </summary>
+    public static void InsertBefore(this List<TooltipLine> lines, TooltipPlacement justBefore, TooltipLine tooltipLine)
+        => lines.InsertSpecifically(tooltipLine, placement => placement >= justBefore);
+
+    /// <summary>
+    /// Inserts a TooltipLine at the latest position that's still before anything that comes after the given placement
+    /// </summary>
+    public static void InsertAfter(this List<TooltipLine> lines, TooltipPlacement justAfter, TooltipLine tooltipLine)
+        => lines.InsertSpecifically(tooltipLine, placement => placement > justAfter);
+
+    public static int GetIndex(this List<TooltipLine> lines, TooltipPlacement placement) =>
+        lines.FindIndex(line => line.Name == placement.ToString());
+
+    public static ref int FrameCount(this Projectile projectile) => ref Main.projFrames[projectile.type];
+
+    public static Player Owner(this Projectile projectile) =>
+        projectile.owner >= 255 ? null : Main.player[projectile.owner];
 }

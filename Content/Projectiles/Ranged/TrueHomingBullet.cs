@@ -1,5 +1,5 @@
 using System;
-using ElementalDamage.Elements;
+using ElementalDamage.Content.DamageClasses;
 using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Projectiles.Ranged;

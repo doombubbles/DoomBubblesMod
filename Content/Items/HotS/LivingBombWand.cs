@@ -31,7 +31,7 @@ public class LivingBombWand : ModItemWithTalents<TalentPyromaniac, TalentSunKing
         Item.damage = 80;
         Item.knockBack = 6;
         Item.useStyle = ItemUseStyleID.Shoot;
-        Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/LivingBombWand");
+        Item.UseSound = Mod.Sound("LivingBombWand");
         Item.autoReuse = true;
         Item.noMelee = true;
         Item.DamageType = DamageClass.Magic;

@@ -1,4 +1,3 @@
-using Terraria.DataStructures;
 using ReLogic.Content;
 using DoomBubblesMod.Content.Items.Armor;
 

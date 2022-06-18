@@ -45,7 +45,7 @@ internal class MindStone : InfinityStone
             dust.noGravity = true;
         }
 
-        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(mod, "Sounds/MindStone"), player.position);
+        SoundEngine.PlaySound(mod.Sound("MindStone"), player.position);
 
         foreach (var npc in Main.npc)
         {
@@ -53,7 +53,7 @@ internal class MindStone : InfinityStone
             {
                 npc.damage = 0;
 
-                new MindStonePacket {NpcId = npc.whoAmI}.HandleForAll();
+                new MindStonePacket {npc = npc}.HandleForAll();
             }
         }
 
@@ -64,22 +64,27 @@ internal class MindStone : InfinityStone
 
 public class MindStonePacket : CustomPacket<MindStonePacket>
 {
-    public int NpcId { get; set; } = -1;
+    public NPC npc { get; set; }
 
-    public int ProjectileId { get; set; } = -1;
+    public Projectile projectile { get; set; }
 
-    public override void HandlePacket(int playerId)
+    protected override void SetDefaults()
     {
-        if (NpcId > -1)
+        npc = null;
+        projectile = null;
+    }
+
+    public override void HandlePacket()
+    {
+        if (npc != null)
         {
-            var npc = Main.npc[NpcId];
             npc.GetGlobalNPC<ThanosGlobalNPC>().mindStoneFriendly = true;
             npc.damage = 0;
         }
 
-        if (ProjectileId > -1)
+        if (projectile != null)
         {
-            Main.projectile[ProjectileId].hostile = false;
+            projectile.hostile = false;
         }
     }
 }

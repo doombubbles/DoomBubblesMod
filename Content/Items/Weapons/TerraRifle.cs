@@ -1,6 +1,6 @@
 using DoomBubblesMod.Content.Projectiles.Ranged;
 using DoomBubblesMod.Utils;
-using ElementalDamage.Elements;
+using ElementalDamage.Content.DamageClasses;
 using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Items.Weapons;
@@ -51,10 +51,9 @@ public class TerraRifle : ModItem
         recipe.Register();
     }
 
-    // What if I wanted this gun to have a 38% chance not to consume ammo?
-    public override bool CanConsumeAmmo(Player player)
+    public override bool CanConsumeAmmo(Item ammo, Player player)
     {
-        return Main.rand.NextFloat() >= .50f;
+        return Main.rand.NextFloat() >= .50f && base.CanConsumeAmmo(ammo, player);
     }
 
     public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity,

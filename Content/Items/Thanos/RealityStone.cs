@@ -2,7 +2,6 @@
 using DoomBubblesMod.Content.Projectiles.Thanos;
 using DoomBubblesMod.Utils;
 using Terraria.Audio;
-using Terraria.ID;
 
 namespace DoomBubblesMod.Content.Items.Thanos;
 
@@ -28,24 +27,29 @@ internal class RealityStone : InfinityStone
     {
         if (player.channel)
         {
-            if (Main.time % 15 == 0)
-            {
-                SoundEngine.PlaySound(SoundID.Item, (int) player.Center.X, (int) player.Center.Y, 103);
-            }
-
-            player.itemAnimation = player.itemAnimationMax;
-
-            var mousePos = Main.MouseWorld;
-            var theta = Main.rand.NextDouble() * 2 * Math.PI;
-            var x = mousePos.X + Main.rand.NextDouble() * 40 * Math.Cos(theta);
-            var y = mousePos.Y + Main.rand.NextDouble() * 40 * Math.Sin(theta);
-            Projectile.NewProjectile(new EntitySource_ItemUse(player, item), (float) x, (float) y, 0f, 0f,
-                ProjectileType<RealityBeam>(), 100, 0,
-                player.whoAmI);
+            RealityChannel(player, item);
         }
         else
         {
             player.itemAnimation = 1;
         }
+    }
+
+    public static void RealityChannel(Player player, Item item)
+    {
+        if (Main.time % 15 == 0)
+        {
+            SoundEngine.PlaySound(SoundID.Item103, player.Center);
+        }
+
+        player.itemAnimation = player.itemAnimationMax;
+
+        var mousePos = Main.MouseWorld;
+        var theta = Main.rand.NextDouble() * 2 * Math.PI;
+        var x = mousePos.X + Main.rand.NextDouble() * 40 * Math.Cos(theta);
+        var y = mousePos.Y + Main.rand.NextDouble() * 40 * Math.Sin(theta);
+        Projectile.NewProjectile(new EntitySource_ItemUse(player, item), (float) x, (float) y, 0f, 0f,
+            ProjectileType<RealityBeam>(), 100, 0,
+            player.whoAmI);
     }
 }

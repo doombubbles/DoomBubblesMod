@@ -1,20 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reflection;
 
 namespace DoomBubblesMod.Utils;
 
+/// <summary>
+/// A definable ModType for a specific set of information that's send-able in multiplayer via packets
+/// </summary>
 public abstract class CustomPacket : ModType
 {
-    internal static Dictionary<Type, ModPacketInfo> packetInfo = new();
+    internal static Dictionary<Type, CustomPacketInfo> packetInfo = new();
 
     public int Type { get; internal set; }
 
     public override void Load()
     {
-        packetInfo ??= new Dictionary<Type, ModPacketInfo>();
+        packetInfo ??= new Dictionary<Type, CustomPacketInfo>();
         base.Load();
     }
 
@@ -24,14 +25,27 @@ public abstract class CustomPacket : ModType
         packetInfo = null;
     }
 
-    public abstract void HandlePacket(int playerId);
+    /// <summary>
+    /// Applies the results of this packet
+    /// </summary>
+    public abstract void HandlePacket();
+
+    /// <summary>
+    /// Initialize the default values of your custom packet properties
+    /// </summary>
+    protected virtual void SetDefaults()
+    {
+    }
 
     public sealed override void SetupContent()
     {
-        SetStaticDefaults();
     }
 
-    public abstract void Receive(BinaryReader reader, int whoAmI);
+    public sealed override void SetStaticDefaults()
+    {
+    }
+
+    public abstract void Receive(BinaryReader reader, int sender);
 
     public abstract void Send(int toClient = -1, int ignoreClient = -1);
 
@@ -42,70 +56,51 @@ public abstract class CustomPacket : ModType
     /// </summary>
     public void HandleForAll()
     {
-        if (Main.netMode == NetmodeID.MultiplayerClient)
+        switch (Main.netMode)
         {
-            Send(-1, Main.myPlayer);
+            case NetmodeID.MultiplayerClient:
+                Send(-1, Main.myPlayer);
+                break;
+            case NetmodeID.Server:
+                Send();
+                break;
         }
-
-        HandlePacket(Main.myPlayer);
+        
+        HandlePacket();
     }
 }
 
+/// <inheritdoc cref="CustomPacket"/>
 public abstract class CustomPacket<T> : CustomPacket where T : CustomPacket<T>
 {
     protected sealed override void Register()
     {
         var packetType = GetType();
-        var packetInfo = new ModPacketInfo<T>
-        {
-            mod = Mod,
-            type = CustomPacket.packetInfo.Count
-        };
-        Type = packetInfo.type;
-        var properties = packetType.GetProperties(BindingFlags.Public |
-                                                  BindingFlags.NonPublic |
-                                                  BindingFlags.DeclaredOnly |
-                                                  BindingFlags.Instance);
+        var info = new CustomPacketInfo<T>(Mod, packetType);
+        Type = info.type = packetInfo.Count;
 
-        packetInfo.byteSetters = GetSetters<byte>(properties);
-        packetInfo.byteGetters = GetGetters<byte>(properties);
-
-        packetInfo.boolSetters = GetSetters<bool>(properties);
-        packetInfo.boolGetters = GetGetters<bool>(properties);
-
-        packetInfo.intSetters = GetSetters<int>(properties);
-        packetInfo.intGetters = GetGetters<int>(properties);
-
-        CustomPacket.packetInfo[packetType] = packetInfo;
+        packetInfo[packetType] = info;
 
         ModTypeLookup<CustomPacket>.Register(this);
 
-        Mod.Logger.Info($"Registered ModPacket {GetType().Name} with {properties.Length} properties");
+        Mod.Logger.Info($"Registered ModPacket {GetType().Name} with {info.NumProperties} properties as type {info.type}");
     }
 
-    public sealed override void Receive(BinaryReader reader, int whoAmI)
+    public sealed override void Receive(BinaryReader reader, int sender)
     {
-        if (CustomPacket.packetInfo[GetType()] is ModPacketInfo<T> packetInfo)
+        if (packetInfo[GetType()] is CustomPacketInfo<T> info)
         {
-            Mod.Logger.Info($"Receiving packet {GetType().Name} on netMode {Main.netMode}");
+            // Mod.Logger.Info($"Receiving packet {GetType().Name} on netMode {Main.netMode}");
 
-            foreach (var byteSetter in packetInfo.byteSetters)
+            SetDefaults();
+            info.ReadAll(reader, (T) this);
+            if (Main.netMode == NetmodeID.Server)
             {
-                byteSetter((T) this, reader.ReadByte());
+                Send(-1, sender);
             }
-
-            foreach (var boolSetter in packetInfo.boolSetters)
-            {
-                boolSetter((T) this, reader.ReadBoolean());
-            }
-
-            foreach (var intSetter in packetInfo.intSetters)
-            {
-                intSetter((T) this, reader.ReadInt32());
-            }
-
-            HandlePacket(whoAmI);
-            Mod.Logger.Info($"Handled packet {GetType().Name} on netMode {Main.netMode}");
+            HandlePacket();
+            
+            // Mod.Logger.Info($"Handled packet {GetType().Name} on netMode {Main.netMode}");
         }
         else
         {
@@ -115,30 +110,13 @@ public abstract class CustomPacket<T> : CustomPacket where T : CustomPacket<T>
 
     public sealed override void Send(int toClient = -1, int ignoreClient = -1)
     {
-        if (CustomPacket.packetInfo[GetType()] is ModPacketInfo<T> packetInfo)
+        if (packetInfo[GetType()] is CustomPacketInfo<T> info)
         {
-            packetInfo.mod.Logger.Info($"Sending packet {GetType().Name} on netMode {Main.netMode}");
+            // info.Mod.Logger.Info($"Sending packet {GetType().Name} on netMode {Main.netMode} with type {info.type}");
 
             var packet = GetInstance<DoomBubblesMod>().GetPacket();
-
-            packet.Write(packetInfo.type);
-
-
-            foreach (var byteGetter in packetInfo.byteGetters)
-            {
-                packet.Write(byteGetter((T) this));
-            }
-
-            foreach (var boolGetter in packetInfo.boolGetters)
-            {
-                packet.Write(boolGetter((T) this));
-            }
-
-            foreach (var intGetter in packetInfo.intGetters)
-            {
-                packet.Write(intGetter((T) this));
-            }
-
+            packet.Write(info.type);
+            info.WriteAll(packet, (T) this);
             packet.Send(toClient, ignoreClient);
         }
         else
@@ -147,41 +125,16 @@ public abstract class CustomPacket<T> : CustomPacket where T : CustomPacket<T>
                 .Error($"Failed sending packet {GetType().Name} because packet info is wrong type");
         }
     }
-
-
-    private static List<Action<T, TValue>> GetSetters<TValue>(IEnumerable<PropertyInfo> properties)
-    {
-        return properties
-            .Where(info => info.PropertyType == typeof(TValue))
-            .Select(info => Delegate.CreateDelegate(typeof(Action<T, TValue>), null, info.GetSetMethod()!))
-            .Cast<Action<T, TValue>>()
-            .ToList();
-    }
-
-    private static List<Func<T, TValue>> GetGetters<TValue>(IEnumerable<PropertyInfo> properties)
-    {
-        return properties
-            .Where(info => info.PropertyType == typeof(TValue))
-            .Select(info => Delegate.CreateDelegate(typeof(Func<T, TValue>), null, info.GetGetMethod()!))
-            .Cast<Func<T, TValue>>()
-            .ToList();
-    }
 }
 
-public class ModPacketInfo
+/// <summary>
+/// A class that holds the static information about a custom packet, including the generated delegates for
+/// getting/setting values without doing repeated Reflection
+/// </summary>
+public class CustomPacketInfo
 {
-    public Mod mod;
+    public Mod Mod { get; protected init; }
     public int type;
-}
 
-public class ModPacketInfo<T> : ModPacketInfo where T : CustomPacket<T>
-{
-    public List<Func<T, bool>> boolGetters = new();
-
-    public List<Action<T, bool>> boolSetters = new();
-    public List<Func<T, byte>> byteGetters = new();
-    public List<Action<T, byte>> byteSetters = new();
-    public List<Func<T, int>> intGetters = new();
-
-    public List<Action<T, int>> intSetters = new();
+    protected static List<Type> DelegateTypes { get; set; }
 }

@@ -8,7 +8,7 @@ public class AngusBargain : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Angus' Bargain");
+        DisplayName.SetDefault("Angus's Bargain");
         Tooltip.SetDefault("Gives 100k Gold on use");
         Item.SetResearchAmount(1);
     }
@@ -35,7 +35,7 @@ public class AngusBargain : ModItem
     {
         if (CanUseItem(player))
         {
-            SoundEngine.PlaySound(SoundID.Roar, player.Center, 0);
+            SoundEngine.PlaySound(SoundID.Roar, player.Center);
             NPC.SpawnOnPlayer(player.whoAmI, NPCID.DD2Betsy);
 
             Main.NewText($"Whoops, {player.name} wasn't B-Hopping");

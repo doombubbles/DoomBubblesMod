@@ -8,6 +8,7 @@ global using Terraria.DataStructures;
 using System.Collections.Generic;
 using System.IO;
 using DoomBubblesMod.Utils;
+using Microsoft.Xna.Framework.Input;
 
 
 namespace DoomBubblesMod;
@@ -36,12 +37,12 @@ public class DoomBubblesMod : Mod
 
     public override void Load()
     {
-        powerStoneHotKey = KeybindLoader.RegisterKeybind(this, "Power Stone", "F2");
-        spaceStoneHotKey = KeybindLoader.RegisterKeybind(this, "Space Stone", "F3");
-        realityStoneHotKey = KeybindLoader.RegisterKeybind(this, "Reality Stone", "F4");
-        soulStoneHotKey = KeybindLoader.RegisterKeybind(this, "Soul Stone", "F5");
-        timeStoneHotKey = KeybindLoader.RegisterKeybind(this, "Time Stone", "F6");
-        mindStoneHotKey = KeybindLoader.RegisterKeybind(this, "Mind Stone", "OemTilde");
+        powerStoneHotKey = KeybindLoader.RegisterKeybind(this, "Power Stone", Keys.F2);
+        spaceStoneHotKey = KeybindLoader.RegisterKeybind(this, "Space Stone", Keys.F3);
+        realityStoneHotKey = KeybindLoader.RegisterKeybind(this, "Reality Stone", Keys.F4);
+        soulStoneHotKey = KeybindLoader.RegisterKeybind(this, "Soul Stone", Keys.F5);
+        timeStoneHotKey = KeybindLoader.RegisterKeybind(this, "Time Stone", Keys.F6);
+        mindStoneHotKey = KeybindLoader.RegisterKeybind(this, "Mind Stone", Keys.F7);
 
         if (!Main.dedServ)
         {
@@ -100,7 +101,7 @@ public class DoomBubblesMod : Mod
                 {
                     if (fargo.TryFind(badItem, out ModItem bad) && recipe.HasResult(bad))
                     {
-                        recipe.RemoveRecipe();
+                        recipe.DisableRecipe();
                     }
                 }
             }

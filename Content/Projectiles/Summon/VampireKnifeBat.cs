@@ -5,12 +5,12 @@ namespace DoomBubblesMod.Content.Projectiles.Summon;
 
 public class VampireKnifeBat : ModProjectile
 {
-    protected float chaseAccel = 6f;
-    protected float chaseDist = 200f;
-    protected float idleAccel = 0.05f;
-    protected float inertia = 40f;
-    protected float spacingMult = .5f;
-    protected float viewDist = 400f;
+    private const float ChaseAccel = 6f;
+    private const float ChaseDist = 200f;
+    private const float IdleAccel = 0.05f;
+    private const float Inertia = 40f;
+    private const float SpacingMult = .5f;
+    private const float ViewDist = 400f;
 
     public override void SetStaticDefaults()
     {
@@ -90,7 +90,7 @@ public class VampireKnifeBat : ModProjectile
     public void Behavior()
     {
         var player = Main.player[Projectile.owner];
-        var spacing = Projectile.width * spacingMult;
+        var spacing = Projectile.width * SpacingMult;
         for (var k = 0; k < 1000; k++)
         {
             var otherProj = Main.projectile[k];
@@ -104,26 +104,26 @@ public class VampireKnifeBat : ModProjectile
             {
                 if (Projectile.position.X < Main.projectile[k].position.X)
                 {
-                    Projectile.velocity.X -= idleAccel;
+                    Projectile.velocity.X -= IdleAccel;
                 }
                 else
                 {
-                    Projectile.velocity.X += idleAccel;
+                    Projectile.velocity.X += IdleAccel;
                 }
 
                 if (Projectile.position.Y < Main.projectile[k].position.Y)
                 {
-                    Projectile.velocity.Y -= idleAccel;
+                    Projectile.velocity.Y -= IdleAccel;
                 }
                 else
                 {
-                    Projectile.velocity.Y += idleAccel;
+                    Projectile.velocity.Y += IdleAccel;
                 }
             }
         }
 
         var targetPos = Projectile.position;
-        var targetDist = viewDist;
+        var targetDist = ViewDist;
         var target = false;
         Projectile.tileCollide = true;
         if (player.HasMinionAttackTargetNPC)
@@ -171,14 +171,14 @@ public class VampireKnifeBat : ModProjectile
         if (target && Projectile.ai[0] == 0f)
         {
             var direction = targetPos - Projectile.Center;
-            if (direction.Length() > chaseDist)
+            if (direction.Length() > ChaseDist)
             {
                 direction.Normalize();
-                Projectile.velocity = (Projectile.velocity * inertia + direction * chaseAccel) / (inertia + 1);
+                Projectile.velocity = (Projectile.velocity * Inertia + direction * ChaseAccel) / (Inertia + 1);
             }
             else
             {
-                Projectile.velocity *= (float) Math.Pow(0.97, 40.0 / inertia);
+                Projectile.velocity *= (float) Math.Pow(0.97, 40.0 / Inertia);
             }
         }
         else
@@ -233,13 +233,13 @@ public class VampireKnifeBat : ModProjectile
             {
                 direction.Normalize();
                 direction *= speed;
-                var temp = inertia / 2f;
+                var temp = Inertia / 2f;
                 Projectile.velocity = (Projectile.velocity * temp + direction) / (temp + 1);
             }
             else
             {
                 Projectile.direction = Main.player[Projectile.owner].direction;
-                Projectile.velocity *= (float) Math.Pow(0.9, 40.0 / inertia);
+                Projectile.velocity *= (float) Math.Pow(0.9, 40.0 / Inertia);
             }
         }
 

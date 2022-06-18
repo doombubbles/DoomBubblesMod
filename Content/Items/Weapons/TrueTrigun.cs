@@ -2,7 +2,7 @@ using System;
 using DoomBubblesMod.Content.Items.Misc;
 using DoomBubblesMod.Content.Projectiles.Ranged;
 using DoomBubblesMod.Utils;
-using ElementalDamage.Elements;
+using ElementalDamage.Content.DamageClasses;
 
 namespace DoomBubblesMod.Content.Items.Weapons;
 
@@ -68,14 +68,14 @@ public class TrueTrigun : ModItem
         recipe.Register();
     }
 
-    public override bool CanConsumeAmmo(Player player)
+    public override bool CanConsumeAmmo(Item ammo, Player player)
     {
         if (Main.rand.NextFloat() <= 25f)
         {
             return false;
         }
 
-        return player.itemAnimation < Item.useAnimation - 2 && base.CanConsumeAmmo(player);
+        return player.itemAnimation < Item.useAnimation - 2 && base.CanConsumeAmmo(ammo, player);
     }
 
     public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity,

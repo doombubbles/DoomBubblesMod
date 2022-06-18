@@ -1,4 +1,5 @@
 ﻿using System;
+using DoomBubblesMod.Utils;
 using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Projectiles.HotS;
@@ -74,8 +75,7 @@ public class AlarakLightning : ModProjectile
     {
         if (Projectile.alpha == 69)
         {
-            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/LightningSurge2"),
-                Projectile.position);
+            SoundEngine.PlaySound(Mod.Sound("LightningSurge2"), Projectile.position);
             Projectile.alpha = 255;
         }
 

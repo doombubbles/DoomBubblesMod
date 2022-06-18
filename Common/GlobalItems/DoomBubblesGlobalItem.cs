@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Items.Weapons;
-using Terraria.DataStructures;
 
 namespace DoomBubblesMod.Common.GlobalItems;
 

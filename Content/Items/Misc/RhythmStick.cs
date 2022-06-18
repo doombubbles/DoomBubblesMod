@@ -38,7 +38,7 @@ public class RhythmStick : ModItem
     {
         if (player.itemAnimation == player.itemAnimationMax - 1)
         {
-            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/DiscordStrike"));
+            SoundEngine.PlaySound(Mod.Sound("RhythmStick"));
         }
 
         return base.UseItem(player);

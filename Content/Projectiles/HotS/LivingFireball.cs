@@ -1,4 +1,5 @@
 using System;
+using DoomBubblesMod.Utils;
 using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Projectiles.HotS;
@@ -38,7 +39,7 @@ public class LivingFireball : ModProjectile
                 new Vector2(0, 0), ProjectileType<LivingBomb>(),
                 damage * 2, 0, Projectile.owner, ChosenTalent, target.whoAmI);
             Main.projectile[proj].netUpdate = true;
-            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/LivingBombWand2"), target.Center);
+            SoundEngine.PlaySound(Mod.Sound("LivingBombWand2"), target.Center);
         }
         else if (ChosenTalent == 1 || ChosenTalent == -1)
         {
@@ -47,7 +48,7 @@ public class LivingFireball : ModProjectile
                 new Vector2(0, 0), ProjectileType<LivingBomb>(),
                 damage * 2, 0, Projectile.owner, ChosenTalent, target.whoAmI);
             Main.projectile[proj].netUpdate = true;
-            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/LivingBombWand2"), target.Center);
+            SoundEngine.PlaySound(Mod.Sound("LivingBombWand2"), target.Center);
         }
 
         base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);

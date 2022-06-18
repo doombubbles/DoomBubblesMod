@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using DoomBubblesMod.Utils;
 using Terraria.Audio;
 using Terraria.ModLoader.IO;
 
@@ -146,7 +147,7 @@ public abstract class ModItemWithTalents : ModItem
 
                 if (ChosenTalent != ogTalent)
                 {
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/TalentChange"),
+                    SoundEngine.PlaySound(Mod.Sound("TalentChange"),
                         Main.player[Item.playerIndexTheItemIsReservedFor].position);
                 }
             }

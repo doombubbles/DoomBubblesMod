@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Items.HotS;
+using DoomBubblesMod.Utils;
 using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Projectiles.HotS;
@@ -76,7 +77,7 @@ public class Pylon : ModProjectile
 
         if (Projectile.alpha == 69)
         {
-            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/PylonWarpIn"), Projectile.Center);
+            SoundEngine.PlaySound(Mod.Sound("PylonWarpIn"), Projectile.Center);
             Projectile.alpha = 0;
         }
 
@@ -206,7 +207,7 @@ public class Pylon : ModProjectile
 
             Main.projectile[proj].netUpdate = true;
             Projectile.netUpdate = true;
-            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/PylonLaser"), (int) x, (int) y);
+            SoundEngine.PlaySound(Mod.Sound("PylonLaser"), new Vector2(x, y));
         }
     }
 

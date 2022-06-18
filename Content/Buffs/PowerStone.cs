@@ -2,7 +2,7 @@ using DoomBubblesMod.Common.Players;
 
 namespace DoomBubblesMod.Content.Buffs;
 
-public class PowerStone : ModBuff
+public class PowerStoneBuff : ModBuff
 {
     public override void SetStaticDefaults()
     {

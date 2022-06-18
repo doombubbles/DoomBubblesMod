@@ -1,6 +1,7 @@
 ﻿using System;
 using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Buffs;
+using DoomBubblesMod.Utils;
 using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Projectiles.HotS;
@@ -67,7 +68,7 @@ public class FlameStrike : CenteredProjectile
                     ProjectileType<LivingBomb>(),
                     (int) (damage / 115f * 160f), 0, Projectile.owner, ai, target.whoAmI);
                 Main.projectile[proj].netUpdate = true;
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/LivingBombWand2"), target.Center);
+                SoundEngine.PlaySound(Mod.Sound("LivingBombWand2"), target.Center);
             }
             else if (!target.HasBuff(BuffType<Buffs.LivingBomb>()))
             {
@@ -79,7 +80,7 @@ public class FlameStrike : CenteredProjectile
                 Main.projectile[proj].netUpdate = true;
 
                 Projectile.localAI[1] += 2 + ai * 2;
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/LivingBombWand2"), target.Center);
+                SoundEngine.PlaySound(Mod.Sound("LivingBombWand2"), target.Center);
             }
         }
 
@@ -118,11 +119,11 @@ public class FlameStrike : CenteredProjectile
                 Projectile.height = 178 + Verdant * 89;
                 Projectile.scale = 2f + Verdant;
                 Projectile.Center = center;
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Flame2"), Projectile.position);
+                SoundEngine.PlaySound(Mod.Sound("Flame2"), Projectile.position);
             }
             else
             {
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Flame"), Projectile.position);
+                SoundEngine.PlaySound(Mod.Sound("Flame"), Projectile.position);
             }
         }
         else if (Projectile.timeLeft == Visible)
@@ -130,11 +131,11 @@ public class FlameStrike : CenteredProjectile
             Projectile.alpha = 0;
             if (Verdant > 0)
             {
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Strike2"), Projectile.position);
+                SoundEngine.PlaySound(Mod.Sound("Strike2"), Projectile.position);
             }
             else
             {
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Strike"), Projectile.position);
+                SoundEngine.PlaySound(Mod.Sound("Strike"), Projectile.position);
             }
         }
         else if (Projectile.timeLeft < Visible)

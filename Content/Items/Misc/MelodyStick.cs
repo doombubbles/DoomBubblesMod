@@ -38,7 +38,12 @@ public class MelodyStick : ModItem
     {
         if (player.itemAnimation == player.itemAnimationMax - 1)
         {
-            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/MelodyStickSound"), player.position);
+            var sound = SoundEngine.PlaySound(Mod.Sound("MelodyStickSound"), player.position).GetSound();
+            var soundInstance = sound.Sound;
+            var note = Main.mouseX / (float) Main.screenWidth;
+            var dynamic = Main.mouseY / (float) Main.screenHeight;
+            soundInstance.Volume = dynamic;
+            soundInstance.Pitch = note;
         }
 
         return base.UseItem(player);

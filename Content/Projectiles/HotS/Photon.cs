@@ -1,4 +1,5 @@
 ﻿using System;
+using DoomBubblesMod.Utils;
 using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Projectiles.HotS;
@@ -34,7 +35,7 @@ public class Photon : CenteredProjectile
         if (target.whoAmI == (int) Projectile.ai[1])
         {
             Projectile.penetrate = 1;
-            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/PhotonHit"), Projectile.Center);
+            SoundEngine.PlaySound(Mod.Sound("PhotonHit"), Projectile.Center);
         }
 
         base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);

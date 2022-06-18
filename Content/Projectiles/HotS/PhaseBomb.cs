@@ -1,5 +1,6 @@
 ﻿using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Buffs;
+using DoomBubblesMod.Utils;
 using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Projectiles.HotS;
@@ -46,7 +47,7 @@ public class PhaseBomb : CenteredProjectile
     {
         if (Projectile.alpha == 69)
         {
-            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Phase"), Projectile.position);
+            SoundEngine.PlaySound(Mod.Sound("Phase"), Projectile.position);
         }
 
         if (Projectile.alpha > 0)
@@ -97,7 +98,7 @@ public class PhaseBomb : CenteredProjectile
                     Projectile.damage = (int) (Projectile.damage * 2 * Projectile.knockBack / 5f);
                 }
 
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Bomb"), Projectile.position);
+                SoundEngine.PlaySound(Mod.Sound("Bomb"), Projectile.position);
             }
 
             Projectile.velocity = new Vector2(0, 0);

@@ -1,4 +1,4 @@
-﻿using ElementalDamage.Elements;
+﻿using ElementalDamage.Content.DamageClasses;
 
 namespace DoomBubblesMod.Content.Projectiles.Ranged;
 

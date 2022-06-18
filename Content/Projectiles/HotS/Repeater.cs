@@ -1,6 +1,7 @@
 ﻿using System;
 using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Buffs;
+using DoomBubblesMod.Utils;
 using Terraria.Audio;
 using Terraria.GameContent;
 
@@ -33,7 +34,7 @@ public class Repeater : ModProjectile
                 !(Projectile.ai[1] == 3 || Projectile.ai[1] == -1) &&
                 player.GetModPlayer<HotSPlayer>().fenixBombBuildUp == 9)
             {
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Boung"), Projectile.position);
+                SoundEngine.PlaySound(Mod.Sound("Boung"), Projectile.position);
             }
 
             player.GetModPlayer<HotSPlayer>().fenixBombBuildUp++;
@@ -89,9 +90,7 @@ public class Repeater : ModProjectile
         if (Projectile.alpha == 69)
         {
             Projectile.alpha = 255;
-            SoundEngine.PlaySound(
-                SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Repeater" + Math.Min(3, Projectile.ai[0])),
-                Projectile.position);
+            SoundEngine.PlaySound(Mod.Sound("Sounds/Repeater" + Math.Min(3, Projectile.ai[0])), Projectile.position);
             /*SoundEngine.PlaySound(SoundLoader.customSoundType, (int) Projectile.position.X, (int) Projectile.position.Y,
                 Mod.GetSoundSlot(SoundType.Custom, "Sounds/Repeater" + Math.Min(3, Projectile.ai[0])), 1f,
                 Projectile.ai[0] == 4 ? -.25f : 0f);*/
@@ -134,7 +133,7 @@ public class Repeater : ModProjectile
             Main.dust[num295].noGravity = true;
         }
 
-        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Hit"), Projectile.position);
+        SoundEngine.PlaySound(Mod.Sound("Hit"), Projectile.position);
         base.Kill(timeLeft);
     }
 }

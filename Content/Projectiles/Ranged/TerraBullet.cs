@@ -1,5 +1,5 @@
 using System;
-using ElementalDamage.Elements;
+using ElementalDamage.Content.DamageClasses;
 using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Projectiles.Ranged;
@@ -143,11 +143,10 @@ public class TerraBullet : ModProjectile
 
     public override void Kill(int timeLeft)
     {
-        SoundEngine.PlaySound(SoundID.Dig, (int) Projectile.position.X, (int) Projectile.position.Y);
+        SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
         for (var index1 = 0; index1 < 5; ++index1)
         {
-            var index2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width,
-                Projectile.height, DustID.Plantera_Green);
+            var index2 = Dust.NewDust(Projectile.Center, Projectile.width, Projectile.height, DustID.Plantera_Green);
             Main.dust[index2].noGravity = true;
             Main.dust[index2].velocity *= 1.5f;
             Main.dust[index2].scale *= 0.9f;

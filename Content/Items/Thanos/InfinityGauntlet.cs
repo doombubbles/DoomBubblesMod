@@ -280,8 +280,7 @@ internal class InfinityGauntlet : ModItem
 
     public override void OnCraft(Recipe recipe)
     {
-        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/GauntletComplete"),
-            Main.player[Main.myPlayer].position);
+        SoundEngine.PlaySound(Mod.Sound("GauntletComplete"), Main.LocalPlayer.position);
         base.OnCraft(recipe);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using DoomBubblesMod.Content.Dusts;
+using DoomBubblesMod.Utils;
 using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Projectiles.Ranged;
@@ -46,11 +47,11 @@ public class HampireRestore : ModProjectile
                     }
                     else if (Main.rand.NextBool())
                     {
-                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Pig1"));
+                        SoundEngine.PlaySound(Mod.Sound("Pig1"));
                     }
                     else
                     {
-                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Pig2"));
+                        SoundEngine.PlaySound(Mod.Sound("Pig2"));
                     }
                 }
                 else if (!Main.player[Main.myPlayer].moonLeech &&

@@ -5,7 +5,6 @@ using DoomBubblesMod.Content.Items.HotS;
 using DoomBubblesMod.Content.Items.Misc;
 using DoomBubblesMod.Content.Items.Talent;
 using DoomBubblesMod.Content.Items.Weapons;
-using Terraria.DataStructures;
 
 namespace DoomBubblesMod.Common.GlobalNPCs;
 

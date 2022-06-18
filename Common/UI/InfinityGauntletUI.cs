@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Numerics;
 using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Common.Systems;
 using DoomBubblesMod.Content.Items.Thanos;
@@ -63,7 +64,11 @@ public class InfinityGauntletUI : UIState
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
-        if (!backgroundPanel.ContainsPoint(Main.MouseScreen / Main.UIScale))
+        if (backgroundPanel.ContainsPoint(Main.MouseScreen))
+        {
+            Main.LocalPlayer.mouseInterface = true;
+        }
+        else
         {
             GetInstance<UISystem>().InfinityGauntlet.SetState(null);
         }
@@ -73,14 +78,5 @@ public class InfinityGauntletUI : UIState
     {
         Main.LocalPlayer.GetModPlayer<ThanosPlayer>().gem = gem;
         GetInstance<UISystem>().InfinityGauntlet.SetState(null);
-    }
-
-    protected override void DrawSelf(SpriteBatch spriteBatch)
-    {
-        base.DrawSelf(spriteBatch);
-        if (backgroundPanel.ContainsPoint(Main.MouseScreen / Main.UIScale))
-        {
-            Main.LocalPlayer.mouseInterface = true;
-        }
     }
 }
