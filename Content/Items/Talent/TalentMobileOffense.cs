@@ -1,5 +1,3 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Talent;
 
 public class TalentMobileOffense : ModItem
@@ -10,7 +8,7 @@ public class TalentMobileOffense : ModItem
         Tooltip.SetDefault("Repeater Cannon Talent\n" +
                            "Damage increases with player velocity\n" +
                            "[Right Click on a Repeater Cannon with this to apply]");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

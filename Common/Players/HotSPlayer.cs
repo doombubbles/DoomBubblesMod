@@ -27,22 +27,22 @@ public class HotSPlayer : ModPlayer
 
     public override void ResetEffects()
     {
-        if (!Player.HasBuff(BuffType<FenixBombBuildUp>()))
+        if (!Player.HasBuff<FenixBombBuildUp>())
         {
             fenixBombBuildUp = 0;
         }
 
-        if (!Player.HasBuff(BuffType<FenixRepeaterBuff>()))
+        if (!Player.HasBuff<FenixRepeaterBuff>())
         {
             fenixRepeaterBuff = 0;
         }
 
-        if (!Player.HasBuff(BuffType<PhotonCannon>()))
+        if (!Player.HasBuff<PhotonCannon>())
         {
             photonCannon = false;
         }
 
-        if (!Player.HasBuff(BuffType<Convection>()))
+        if (!Player.HasBuff<Convection>())
         {
             convection = 0;
         }

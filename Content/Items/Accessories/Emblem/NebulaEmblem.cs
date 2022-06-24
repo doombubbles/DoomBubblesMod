@@ -1,14 +1,12 @@
-﻿using DoomBubblesMod.Utils;
+﻿namespace DoomBubblesMod.Content.Items.Accessories.Emblem;
 
-namespace DoomBubblesMod.Content.Items.Accessories.Emblem;
-
-internal class NebulaEmblem : ModItem
+public class NebulaEmblem : ModItem
 {
     public override void SetStaticDefaults()
     {
         DisplayName.SetDefault("Nebula Emblem");
         Tooltip.SetDefault("20% increased magic damage");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

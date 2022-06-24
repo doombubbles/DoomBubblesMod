@@ -1,14 +1,12 @@
-﻿using DoomBubblesMod.Utils;
+﻿namespace DoomBubblesMod.Content.Items.Ammo;
 
-namespace DoomBubblesMod.Content.Items.Ammo;
-
-internal class SolarPouch : ModItem
+public class SolarPouch : ModItem
 {
     public override void SetStaticDefaults()
     {
         DisplayName.SetDefault("Endless Solar Pouch");
         Tooltip.SetDefault("Deals bonus damage to airborne enemies");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

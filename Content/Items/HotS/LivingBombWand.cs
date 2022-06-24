@@ -19,7 +19,7 @@ public class LivingBombWand : ModItemWithTalents<TalentPyromaniac, TalentSunKing
     {
         DisplayName.SetDefault("Living Bomb Wand");
         Tooltip.SetDefault("Shoots fireballs that turn targets into Living Bombs");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

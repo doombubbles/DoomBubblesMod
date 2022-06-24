@@ -1,5 +1,3 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Talent;
 
 public class TalentPylonOvercharge : ModItem
@@ -10,7 +8,7 @@ public class TalentPylonOvercharge : ModItem
         Tooltip.SetDefault("Pylon Talent\n" +
                            "Your Pylons attack shit now\n" +
                            "[Right Click on a Pylon Staff with this to apply]");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

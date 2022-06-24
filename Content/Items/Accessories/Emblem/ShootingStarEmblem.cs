@@ -1,14 +1,14 @@
-﻿using DoomBubblesMod.Utils;
+﻿using DoomBubblesMod.Content.Items.Misc;
+using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.Accessories.Emblem;
 
-internal class ShootingStarEmblem : ModItem
+public class ShootingStarEmblem : ModItem, IHasThoriumRecipe
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Shooting Star Emblem");
         Tooltip.SetDefault("20% increased symphonic damage");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()
@@ -26,22 +26,9 @@ internal class ShootingStarEmblem : ModItem
         player.SymphonicDamage(f => f + .2f);
     }
 
-    public override void AddRecipes()
-    {
-        if (DoomBubblesMod.ThoriumMod != null)
-        {
-            var recipe = CreateRecipe();
-            AddThoriumRecipe(ref recipe);
-            recipe.AddTile(TileID.LunarCraftingStation);
-            recipe.ReplaceResult(this);
-            recipe.Register();
-        }
-    }
-
-    public void AddThoriumRecipe(ref Recipe recipe)
-    {
-        var thoriumMod = DoomBubblesMod.ThoriumMod;
-        recipe.AddIngredient(thoriumMod.Find<ModItem>("BardEmblem"));
-        recipe.AddIngredient(thoriumMod.Find<ModItem>("CometFragment"), 5);
-    }
+    public void AddThoriumRecipe(Mod thoriumMod) => CreateRecipe()
+        .AddTile(TileID.LunarCraftingStation)
+        .AddIngredient(thoriumMod.Find<ModItem>("BardEmblem"))
+        .AddIngredient(thoriumMod.Find<ModItem>("CometFragment"), 5)
+        .Register();
 }

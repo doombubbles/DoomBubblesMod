@@ -1,5 +1,3 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Talent;
 
 public class TalentDampeningField : ModItem
@@ -10,7 +8,7 @@ public class TalentDampeningField : ModItem
         Tooltip.SetDefault("Shield Capacitor Talent\n" +
                            "You take 25% less damage while Shield Capacitor is above half charge\n" +
                            "[Right Click on a Shield Capacitor with this to apply]");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

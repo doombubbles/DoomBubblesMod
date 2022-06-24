@@ -14,7 +14,7 @@ public class DoomBubblesPlayer : ModPlayer
     public bool luminiteBulletBonus;
     public bool noManaFlower;
 
-    public List<int> noManaItems = new();
+    public List<int> NoManaItems { get; } = new();
     public bool sStone;
     public bool united;
     public bool vampireKnifeBat;
@@ -32,14 +32,14 @@ public class DoomBubblesPlayer : ModPlayer
         vampireKnifeBat = false;
         united = false;
 
-        noManaItems = new List<int>();
+        NoManaItems.Clear();
     }
 
     public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit,
         ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
     {
         if (explosionBulletBonus &&
-            damageSource.SourceProjectileType == 286 &&
+            damageSource.SourceProjectileType == ProjectileID.ExplosiveBullet &&
             damageSource.SourcePlayerIndex == Player.whoAmI)
         {
             return false;

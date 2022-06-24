@@ -6,7 +6,7 @@ using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Items.Thanos;
 
-internal class TimeStone : InfinityStone
+public class TimeStone : InfinityStone
 {
     protected override int Rarity => ItemRarityID.Green;
     protected override int Gem => ItemID.Emerald;
@@ -17,7 +17,7 @@ internal class TimeStone : InfinityStone
         DisplayName.SetDefault("Time Stone");
         Tooltip.SetDefault("\"Dormammu, I've come to bargain.\"\n" +
                            "-Doctor Strange, multiple occasions");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public static void TimeAbility(Player player)
@@ -25,7 +25,7 @@ internal class TimeStone : InfinityStone
         var gauntletPos = new Vector2(player.Center.X + 10 * player.direction, player.Center.Y - 25);
         var previousHp = player.GetModPlayer<ThanosPlayer>().timeHealth[300];
 
-        if (previousHp > player.statLife && !player.HasBuff(BuffType<TimeStoneCooldown>()))
+        if (previousHp > player.statLife && !player.HasBuff<TimeStoneCooldown>())
         {
             player.HealEffect(previousHp - player.statLife);
             player.statLife = previousHp;

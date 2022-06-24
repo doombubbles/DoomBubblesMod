@@ -1,5 +1,3 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Phase;
 
 public abstract class Phasesword : ModItem
@@ -8,7 +6,7 @@ public abstract class Phasesword : ModItem
 
     public override void SetStaticDefaults()
     {
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

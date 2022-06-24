@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using DoomBubblesMod.Common.Players;
 using ReLogic.Utilities;
 using Terraria.Audio;
-using Terraria.GameContent.Creative;
 
 namespace DoomBubblesMod.Utils;
 
@@ -33,12 +33,12 @@ public static class Extensions
 
     public static void SetThoriumProperty<T>(this Player player, string name, Func<T, T> func)
     {
-        if (DoomBubblesMod.ThoriumMod == null)
+        if (ThoriumMod == null)
         {
             return;
         }
 
-        var thoriumPlayer = player.GetModPlayer(DoomBubblesMod.ThoriumMod.Find<ModPlayer>("ThoriumPlayer"));
+        var thoriumPlayer = player.GetModPlayer(ThoriumMod.Find<ModPlayer>("ThoriumPlayer"));
 
         var fieldInfo = thoriumPlayer.GetType().GetField(name);
         if (fieldInfo == null)
@@ -53,12 +53,12 @@ public static class Extensions
 
     public static T GetThoriumProperty<T>(this Player player, string name)
     {
-        if (DoomBubblesMod.ThoriumMod == null)
+        if (ThoriumMod == null)
         {
             return default;
         }
 
-        var thoriumPlayer = player.GetModPlayer(DoomBubblesMod.ThoriumMod.Find<ModPlayer>("ThoriumPlayer"));
+        var thoriumPlayer = player.GetModPlayer(ThoriumMod.Find<ModPlayer>("ThoriumPlayer"));
 
         var fieldInfo = thoriumPlayer.GetType().GetField(name);
         if (fieldInfo == null)
@@ -71,7 +71,7 @@ public static class Extensions
 
     public static void SetThoriumProperty<T>(this Projectile projectile, string name, Func<T, T> func)
     {
-        if (DoomBubblesMod.ThoriumMod == null)
+        if (ThoriumMod == null)
         {
             return;
         }
@@ -95,7 +95,7 @@ public static class Extensions
 
     public static T GetThoriumProperty<T>(this Projectile projectile, string name)
     {
-        if (DoomBubblesMod.ThoriumMod == null)
+        if (ThoriumMod == null)
         {
             return default;
         }
@@ -117,7 +117,7 @@ public static class Extensions
 
     public static void SetThoriumProperty<T>(this Item item, string name, Func<T, T> func)
     {
-        if (DoomBubblesMod.ThoriumMod == null)
+        if (ThoriumMod == null)
         {
             return;
         }
@@ -141,7 +141,7 @@ public static class Extensions
 
     public static T GetThoriumProperty<T>(this Item item, string name)
     {
-        if (DoomBubblesMod.ThoriumMod == null)
+        if (ThoriumMod == null)
         {
             return default;
         }
@@ -164,11 +164,6 @@ public static class Extensions
     public static DoomBubblesPlayer GetDoomBubblesPlayer(this Player player)
     {
         return player.GetModPlayer<DoomBubblesPlayer>();
-    }
-
-    public static void SetResearchAmount(this Item item, int amount)
-    {
-        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[item.type] = amount;
     }
 
     public static void HandleCustomPacket(this Mod mod, BinaryReader reader, int whoAmI)
@@ -217,6 +212,7 @@ public static class Extensions
             Enum.TryParse(line.Name, out TooltipPlacement placement) && func(placement));
         if (index == -1)
         {
+            // If all else fails, stick it at the end
             index = lines.Count;
         }
 
@@ -224,13 +220,17 @@ public static class Extensions
     }
 
     /// <summary>
-    /// Inserts a TooltipLine at the latest position that is before the given placement or anything that comes after it
+    /// Inserts a TooltipLine directly before the specified vanilla line
+    /// <br/>
+    /// If the specified vanilla line isn't present in the tooltip, it will be placed where that line would've been
     /// </summary>
     public static void InsertBefore(this List<TooltipLine> lines, TooltipPlacement justBefore, TooltipLine tooltipLine)
         => lines.InsertSpecifically(tooltipLine, placement => placement >= justBefore);
 
     /// <summary>
-    /// Inserts a TooltipLine at the latest position that's still before anything that comes after the given placement
+    /// Inserts a TooltipLine directly after the specified vanilla line
+    /// <br/>
+    /// If the specified vanilla line isn't present in the tooltip, it will be placed where that line would've been
     /// </summary>
     public static void InsertAfter(this List<TooltipLine> lines, TooltipPlacement justAfter, TooltipLine tooltipLine)
         => lines.InsertSpecifically(tooltipLine, placement => placement > justAfter);
@@ -242,4 +242,11 @@ public static class Extensions
 
     public static Player Owner(this Projectile projectile) =>
         projectile.owner >= 255 ? null : Main.player[projectile.owner];
+
+
+    public static string ToNameFormat(this string s) => Regex.Replace(
+        s,
+        "(?<!^)([A-Z][a-z]|(?<=[a-z])[A-Z])",
+        " $1",
+        RegexOptions.Compiled).Trim();
 }

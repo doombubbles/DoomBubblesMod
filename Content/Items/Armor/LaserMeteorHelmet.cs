@@ -1,5 +1,4 @@
 ﻿using DoomBubblesMod.Common.Players;
-using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.Armor;
 
@@ -10,7 +9,7 @@ public class LaserMeteorHelmet : ModItem
     {
         DisplayName.SetDefault("Laser Meteor Helmet");
         Tooltip.SetDefault("11% Increased Magic Damage");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()
@@ -32,7 +31,8 @@ public class LaserMeteorHelmet : ModItem
     public override void UpdateArmorSet(Player player)
     {
         player.setBonus = "Laser Rifle costs 0 mana";
-        player.GetModPlayer<DoomBubblesPlayer>().noManaItems.Add(ItemID.LaserRifle);
+        player.spaceGun = true;
+        player.GetModPlayer<DoomBubblesPlayer>().NoManaItems.Add(ItemID.LaserRifle);
     }
 
     public override void UpdateEquip(Player player)

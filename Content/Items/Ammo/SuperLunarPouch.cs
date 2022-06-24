@@ -1,16 +1,15 @@
 ﻿using DoomBubblesMod.Content.Projectiles.Ranged;
-using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.Ammo;
 
-internal class SuperLunarPouch : ModItem
+public class SuperLunarPouch : ModItem
 {
     public override void SetStaticDefaults()
     {
         DisplayName.SetDefault("Endless Super Lunar Pouch");
         Tooltip.SetDefault("Effects of all Lunar Bullets combined");
         Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(15, 4));
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

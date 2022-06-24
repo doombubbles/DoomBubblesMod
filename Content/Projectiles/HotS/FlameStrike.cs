@@ -93,7 +93,7 @@ public class FlameStrike : CenteredProjectile
             Main.player[Projectile.owner].GetModPlayer<HotSPlayer>().convection < 100)
         {
             Main.player[Projectile.owner].GetModPlayer<HotSPlayer>().convection++;
-            if (!Main.player[Projectile.owner].HasBuff(BuffType<Convection>()))
+            if (!Main.player[Projectile.owner].HasBuff<Convection>())
             {
                 Main.player[Projectile.owner].AddBuff(BuffType<Convection>(), 10);
             }

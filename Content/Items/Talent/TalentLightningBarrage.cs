@@ -1,5 +1,3 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Talent;
 
 public class TalentLightningBarrage : ModItem
@@ -10,7 +8,7 @@ public class TalentLightningBarrage : ModItem
         Tooltip.SetDefault("Lightning Surge Talent\n" +
                            "Can zap up to 2 enemies at once\n" +
                            "[Right Click on a Lightning Surge with this to apply]");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

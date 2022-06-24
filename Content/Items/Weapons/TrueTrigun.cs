@@ -1,7 +1,5 @@
 using System;
-using DoomBubblesMod.Content.Items.Misc;
 using DoomBubblesMod.Content.Projectiles.Ranged;
-using DoomBubblesMod.Utils;
 using ElementalDamage.Content.DamageClasses;
 
 namespace DoomBubblesMod.Content.Items.Weapons;
@@ -10,9 +8,8 @@ public class TrueTrigun : ModItem
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("25% chance not to consume ammo\n." + "Shoots in three round bursts with True Bullets\n");
-        DisplayName.SetDefault("True Trigun");
-        Item.SetResearchAmount(1);
+        Tooltip.SetDefault("25% chance not to consume ammo\nShoots in three round bursts with True Bullets");
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()
@@ -44,30 +41,23 @@ public class TrueTrigun : ModItem
 
     public override void AddRecipes()
     {
-        if (DoomBubblesMod.ThoriumMod != null)
+        var recipe = CreateRecipe();
+        if (ThoriumMod != null)
         {
-            AddThoriumRecipe();
+            recipe.AddIngredient(ThoriumMod.Find<ModItem>("Trigun"));
         }
         else
         {
-            var recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.HallowedBar, 9);
-            recipe.AddIngredient(ItemType<BrokenHeroGun>());
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.ReplaceResult(this);
-            recipe.Register();
         }
-    }
-
-    private void AddThoriumRecipe()
-    {
-        var recipe = CreateRecipe();
-        recipe.AddIngredient(DoomBubblesMod.ThoriumMod.Find<ModItem>("Trigun"));
-        recipe.AddIngredient(ItemType<BrokenHeroGun>());
+        recipe.AddIngredient(ItemID.SoulofFright, 5);
+        recipe.AddIngredient(ItemID.SoulofMight, 5);
+        recipe.AddIngredient(ItemID.SoulofSight, 5);
         recipe.AddTile(TileID.MythrilAnvil);
+        recipe.ReplaceResult(this);
         recipe.Register();
     }
-
+    
     public override bool CanConsumeAmmo(Item ammo, Player player)
     {
         if (Main.rand.NextFloat() <= 25f)

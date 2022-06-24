@@ -1,5 +1,3 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Talent;
 
 public class TalentArsenalOvercharge : ModItem
@@ -10,7 +8,7 @@ public class TalentArsenalOvercharge : ModItem
         Tooltip.SetDefault("Repeater Cannon Talent\n" +
                            "Buff stacks up to 15 shots\n" +
                            "[Right Click on a Repeater Cannon with this to apply]");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

@@ -1,14 +1,12 @@
-﻿using DoomBubblesMod.Utils;
+﻿namespace DoomBubblesMod.Content.Items.Ammo;
 
-namespace DoomBubblesMod.Content.Items.Ammo;
-
-internal class VortexPouch : ModItem
+public class VortexPouch : ModItem
 {
     public override void SetStaticDefaults()
     {
         DisplayName.SetDefault("Endless Vortex Pouch");
         Tooltip.SetDefault("Creates bullet echos on enemy hits");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

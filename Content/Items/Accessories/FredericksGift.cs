@@ -2,14 +2,14 @@
 
 namespace DoomBubblesMod.Content.Items.Accessories;
 
-internal class FredericksGift : ModItem
+public class FredericksGift : ModItem
 {
     public override void SetStaticDefaults()
     {
         DisplayName.SetDefault("Frederick's Gift");
         Tooltip.SetDefault("42% reduced mana usage\n" +
                            "Mana Flower's effects overriden");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

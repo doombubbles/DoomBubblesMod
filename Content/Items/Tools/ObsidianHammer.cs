@@ -1,12 +1,10 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Tools;
 
 public class ObsidianHammer : ModItem
 {
     public override void SetStaticDefaults()
     {
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

@@ -1,5 +1,3 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Talent;
 
 public class TalentOffensiveCadence : ModItem
@@ -10,7 +8,7 @@ public class TalentOffensiveCadence : ModItem
         Tooltip.SetDefault("Repeater Cannon Talent\n" +
                            "Every third shot is empowered\n" +
                            "[Right Click on a Repeater Cannon with this to apply]");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

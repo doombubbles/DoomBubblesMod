@@ -1,4 +1,6 @@
-﻿using Terraria.GameContent;
+﻿using ElementalDamage.Content.DamageClasses;
+using Terraria.GameContent;
+using Terraria.Graphics;
 
 namespace DoomBubblesMod.Content.Projectiles.Magic;
 
@@ -14,7 +16,7 @@ public class Rainbow : ModProjectile
         Projectile.extraUpdates = 2;
         Projectile.scale = 1f;
         Projectile.timeLeft = 600;
-        Projectile.DamageType = DamageClass.Magic;
+        Projectile.DamageType = GetInstance<MagicHoly>();
         Projectile.ignoreWater = true;
         Projectile.penetrate = -1;
         Projectile.usesLocalNPCImmunity = true;
@@ -56,6 +58,13 @@ public class Rainbow : ModProjectile
         return false;
     }
 
+    public override void PostDraw(Color lightColor)
+    {
+        
+        new RainbowRodDrawer().Draw(Projectile);
+
+    }
+
     public override void AI()
     {
         Projectile.ai[0] = 0;
@@ -87,7 +96,7 @@ public class Rainbow : ModProjectile
         {
             var num295 = Dust.NewDust(Projectile.Center - Projectile.velocity / 2f, 0, 0, DustID.WhiteTorch, 0f, 0f,
                 100,
-                DoomBubblesMod.RainbowColors[Main.rand.Next(0, 6)], 2.1f);
+                RainbowColors[Main.rand.Next(0, 6)], 2.1f);
             var dust = Main.dust[num295];
             dust.velocity *= 2f;
             Main.dust[num295].noGravity = true;

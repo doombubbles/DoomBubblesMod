@@ -1,5 +1,3 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Talent;
 
 public class TalentManaTap : ModItem
@@ -10,7 +8,7 @@ public class TalentManaTap : ModItem
         Tooltip.SetDefault("Verdant Spheres Talent\n" +
                            "Magic Weapons' base mana cost is added to their damage\n" +
                            "[Right Click on a Verdant Spheres with this to apply]");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

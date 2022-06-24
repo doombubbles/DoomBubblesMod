@@ -1,5 +1,3 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Ammo;
 
 public class NebulaBullet : ModItem
@@ -8,7 +6,7 @@ public class NebulaBullet : ModItem
     {
         DisplayName.SetDefault("Nebula Bullet");
         Tooltip.SetDefault("Teleports to enemies if close");
-        Item.SetResearchAmount(99);
+        SacrificeTotal = 99;
     }
 
     public override void SetDefaults()

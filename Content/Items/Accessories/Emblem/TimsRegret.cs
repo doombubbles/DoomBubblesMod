@@ -1,19 +1,19 @@
-﻿using DoomBubblesMod.Utils;
+﻿namespace DoomBubblesMod.Content.Items.Accessories.Emblem;
 
-namespace DoomBubblesMod.Content.Items.Accessories.Emblem;
-
-internal class TimsRegret : ModItem
+public class TimsRegret : ModItem
 {
+    private static float Factor => ThoriumMod != null ? .2f : .15f;
+
     public override void SetStaticDefaults()
     {
         DisplayName.SetDefault("Tim's Regret");
-        Tooltip.SetDefault("15% increased damage\n100% increased n00b regret");
-        Item.SetResearchAmount(1);
+        Tooltip.SetDefault($"{Factor:P0} increased damage\n100% increased n00b regret");
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()
     {
-        Item.value = 100000;
+        Item.value = Item.sellPrice(0, 10);
         Item.width = 28;
         Item.height = 28;
         Item.rare = ItemRarityID.LightPurple;
@@ -23,7 +23,7 @@ internal class TimsRegret : ModItem
 
     public override void UpdateAccessory(Player player, bool hideVisual)
     {
-        player.GetDamage(DamageClass.Generic) += .15f;
+        player.GetDamage(DamageClass.Generic) += Factor;
     }
 
     public override void AddRecipes()
@@ -34,21 +34,14 @@ internal class TimsRegret : ModItem
         recipe.AddIngredient(ItemID.RangerEmblem);
         recipe.AddIngredient(ItemID.SummonerEmblem);
 
-
-        if (DoomBubblesMod.ThoriumMod != null)
+        if (ThoriumMod != null)
         {
-            AddThoriumRecipes(ref recipe);
+            recipe.AddIngredient(ThoriumMod.Find<ModItem>("BardEmblem"));
+            recipe.AddIngredient(ThoriumMod.Find<ModItem>("NinjaEmblem"));
+            recipe.AddIngredient(ThoriumMod.Find<ModItem>("ClericEmblem"));
         }
 
         recipe.AddTile(TileID.TinkerersWorkbench);
         recipe.Register();
-    }
-
-    private void AddThoriumRecipes(ref Recipe recipe)
-    {
-        var thoriumMod = DoomBubblesMod.ThoriumMod;
-        recipe.AddIngredient(thoriumMod.Find<ModItem>("BardEmblem"));
-        recipe.AddIngredient(thoriumMod.Find<ModItem>("NinjaEmblem"));
-        recipe.AddIngredient(thoriumMod.Find<ModItem>("ClericEmblem"));
     }
 }

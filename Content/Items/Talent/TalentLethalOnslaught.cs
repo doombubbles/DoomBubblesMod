@@ -1,5 +1,3 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Talent;
 
 public class TalentLethalOnslaught : ModItem
@@ -10,7 +8,7 @@ public class TalentLethalOnslaught : ModItem
         Tooltip.SetDefault("Discord Strike Talent\n" +
                            "Discord Strike does bonus damage to low health enemies\n" +
                            "[Right Click on a Discord Blade with this to apply]");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

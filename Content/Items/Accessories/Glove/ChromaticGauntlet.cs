@@ -1,8 +1,8 @@
-﻿using DoomBubblesMod.Utils;
+﻿using DoomBubblesMod.Content.Items.Misc;
 
 namespace DoomBubblesMod.Content.Items.Accessories.Glove;
 
-internal class ChromaticGauntlet : ModItem
+public class ChromaticGauntlet : ModItem, IHasThoriumRecipe
 {
     public override void SetStaticDefaults()
     {
@@ -12,7 +12,7 @@ internal class ChromaticGauntlet : ModItem
                            "5% increased attack speed\n" +
                            "5% reduced damage taken\n" +
                            "Increases armor penetration by 5");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()
@@ -32,8 +32,8 @@ internal class ChromaticGauntlet : ModItem
         player.GetAttackSpeed(DamageClass.Generic) += .05f;
         player.endurance += .05f;
     }
-
-    public override void AddRecipes()
+    
+    public void AddThoriumRecipe(Mod thoriumMod)
     {
         var recipe = CreateRecipe();
         recipe.AddIngredient(ItemType<CrimsonGauntlet>());

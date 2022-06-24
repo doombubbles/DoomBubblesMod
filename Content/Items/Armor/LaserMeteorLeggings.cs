@@ -1,6 +1,4 @@
-﻿using DoomBubblesMod.Utils;
-
-namespace DoomBubblesMod.Content.Items.Armor;
+﻿namespace DoomBubblesMod.Content.Items.Armor;
 
 [AutoloadEquip(EquipType.Legs)]
 public class LaserMeteorLeggings : ModItem
@@ -9,7 +7,7 @@ public class LaserMeteorLeggings : ModItem
     {
         DisplayName.SetDefault("Laser Meteor Leggings");
         Tooltip.SetDefault("11% Increased Magic Damage");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()
@@ -20,12 +18,6 @@ public class LaserMeteorLeggings : ModItem
         Item.value = Item.sellPrice(0, 4, 50);
         Item.defense = 10;
         Item.legSlot = realSlot;
-    }
-
-    public override bool IsArmorSet(Item head, Item body, Item legs)
-    {
-        return head.type == ItemType<LaserMeteorHelmet>() &&
-               body.type == ItemType<LaserMeteorSuit>();
     }
 
     public override void UpdateEquip(Player player)

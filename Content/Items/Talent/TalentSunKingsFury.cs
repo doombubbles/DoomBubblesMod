@@ -1,5 +1,3 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Talent;
 
 public class TalentSunKingsFury : ModItem
@@ -10,7 +8,7 @@ public class TalentSunKingsFury : ModItem
         Tooltip.SetDefault("Living Bomb Talent\n" +
                            "Living Bombs deal more damage after spreading\n" +
                            "[Right Click on a Living Bomb Wand with this to apply]");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

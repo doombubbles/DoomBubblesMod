@@ -1,4 +1,6 @@
 ﻿using System;
+using ElementalDamage.Content.DamageClasses;
+using ReLogic.Content;
 using Terraria.Audio;
 using Terraria.GameContent;
 
@@ -21,7 +23,7 @@ public class RainbowMachineGun : ModProjectile
         Projectile.penetrate = -1;
         Projectile.tileCollide = false;
         Projectile.hide = true;
-        Projectile.DamageType = DamageClass.Magic;
+        Projectile.DamageType = GetInstance<MagicHoly>();
         Projectile.ignoreWater = true;
     }
 
@@ -44,7 +46,8 @@ public class RainbowMachineGun : ModProjectile
             spriteEffects, 0);
 
 
-        Main.EntitySpriteDraw(Mod.Assets.Request<Texture2D>("Projectiles/RainbowMachineGun_Glow").Value, vector27,
+        Main.EntitySpriteDraw(Request<Texture2D>(Texture + "_Glow", AssetRequestMode.ImmediateLoad).Value,
+            vector27,
             new Rectangle(0, y16, texture2D14.Width, num192),
             new Color(255, 255, 255, 0) * scale5, Projectile.rotation,
             new Vector2(texture2D14.Width / 2f, num192 / 2f), Projectile.scale, spriteEffects,
@@ -125,7 +128,7 @@ public class RainbowMachineGun : ModProjectile
             {
                 var num5 = Dust.NewDust(value - Vector2.One * 8f, 16, 16, DustID.WhiteTorch, Projectile.velocity.X / 2f,
                     Projectile.velocity.Y / 2f,
-                    100, DoomBubblesMod.RainbowColors[Main.rand.Next(0, 6)]);
+                    100, RainbowColors[Main.rand.Next(0, 6)]);
                 Main.dust[num5].velocity *= 0.66f;
                 Main.dust[num5].noGravity = true;
                 Main.dust[num5].scale = 1.4f;

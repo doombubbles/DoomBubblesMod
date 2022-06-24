@@ -1,5 +1,3 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Ammo;
 
 public class VortexBullet : ModItem
@@ -8,7 +6,7 @@ public class VortexBullet : ModItem
     {
         DisplayName.SetDefault("Vortex Bullet");
         Tooltip.SetDefault("Creates bullet echos on enemy hits");
-        Item.SetResearchAmount(99);
+        SacrificeTotal = 99;
     }
 
     public override void SetDefaults()

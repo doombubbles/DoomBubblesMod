@@ -1,5 +1,4 @@
 ﻿using DoomBubblesMod.Content.Projectiles.Ranged;
-using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.Weapons;
 
@@ -10,7 +9,7 @@ public class HampireKnives : ModItem
         DisplayName.SetDefault("Hampire Knives");
         Tooltip.SetDefault("Rapidly throw food stealing daggers;\n" +
                            "Or, life stealing if at max duration");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

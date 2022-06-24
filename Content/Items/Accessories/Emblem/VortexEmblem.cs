@@ -1,14 +1,12 @@
-﻿using DoomBubblesMod.Utils;
+﻿namespace DoomBubblesMod.Content.Items.Accessories.Emblem;
 
-namespace DoomBubblesMod.Content.Items.Accessories.Emblem;
-
-internal class VortexEmblem : ModItem
+public class VortexEmblem : ModItem
 {
     public override void SetStaticDefaults()
     {
         DisplayName.SetDefault("Vortex Emblem");
         Tooltip.SetDefault("20% increased ranged damage");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

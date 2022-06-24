@@ -1,5 +1,3 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Talent;
 
 public class TalentTwinSpheres : ModItem
@@ -10,7 +8,7 @@ public class TalentTwinSpheres : ModItem
         Tooltip.SetDefault("Verdant Spheres Talent\n" +
                            "Base Verdant Sphere bonuses are doubled\n" +
                            "[Right Click on a Verdant Spheres with this to apply]");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

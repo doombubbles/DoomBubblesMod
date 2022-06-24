@@ -1,5 +1,3 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Talent;
 
 public class TalentTowerDefense : ModItem
@@ -10,7 +8,7 @@ public class TalentTowerDefense : ModItem
         Tooltip.SetDefault("Photon Cannon Talent\n" +
                            "Cannons only take up half a minion slot\n" +
                            "[Right Click on a Photon Cannon Staff with this to apply]");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

@@ -1,12 +1,11 @@
 ﻿using System;
 using DoomBubblesMod.Content.Buffs;
 using DoomBubblesMod.Content.Projectiles.Thanos;
-using DoomBubblesMod.Utils;
 using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Items.Thanos;
 
-internal class SpaceStone : InfinityStone
+public class SpaceStone : InfinityStone
 {
     protected override int Rarity => ItemRarityID.Blue;
     protected override int Gem => ItemID.Sapphire;
@@ -17,7 +16,7 @@ internal class SpaceStone : InfinityStone
         DisplayName.SetDefault("Space Stone");
         Tooltip.SetDefault("\"A lifetime ago, I too sought the stones. I even held one in my hand.\"\n" +
                            "-Red Skull to Thanos");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public static void SpaceAbility(Player player, Item item)

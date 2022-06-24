@@ -6,7 +6,7 @@ using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Items.Thanos;
 
-internal class MindStone : InfinityStone
+public class MindStone : InfinityStone
 {
     protected override int Rarity => ItemRarityID.Yellow;
     protected override int Gem => ItemID.Topaz;
@@ -19,7 +19,7 @@ internal class MindStone : InfinityStone
                            "few years. It's not a coincidence. Someone has been playing an intricate\n" +
                            "game and has made pawns of us.\"\n" +
                            "-Thor");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public static void MindAbility(Mod mod, Player player)

@@ -1,6 +1,5 @@
 ﻿using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Items.Talent;
-using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.HotS;
 
@@ -13,7 +12,7 @@ public class VerdantSpheres : ModItemWithTalents<TalentFelInfusion, TalentManaTa
         DisplayName.SetDefault("Verdant Spheres");
         Tooltip.SetDefault("Flamestrike has increased radius and damage\n" +
                            "Living Bomb has extra pierce and costs no mana");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()
@@ -44,6 +43,6 @@ public class VerdantSpheres : ModItemWithTalents<TalentFelInfusion, TalentManaTa
             player.GetModPlayer<HotSPlayer>().superVerdant = true;
         }
 
-        player.GetModPlayer<DoomBubblesPlayer>().noManaItems.Add(ItemType<LivingBombWand>());
+        player.GetModPlayer<DoomBubblesPlayer>().NoManaItems.Add(ItemType<LivingBombWand>());
     }
 }

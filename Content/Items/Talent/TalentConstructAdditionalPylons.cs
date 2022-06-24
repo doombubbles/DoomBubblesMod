@@ -1,5 +1,3 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Talent;
 
 public class TalentConstructAdditionalPylons : ModItem
@@ -10,7 +8,7 @@ public class TalentConstructAdditionalPylons : ModItem
         Tooltip.SetDefault("Pylon Talent\n" +
                            "Up to 3 Pylons with bigger range\n" +
                            "[Right Click on a Pylon Staff with this to apply]");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

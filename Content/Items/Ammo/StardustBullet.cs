@@ -1,5 +1,3 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Ammo;
 
 public class StardustBullet : ModItem
@@ -8,7 +6,7 @@ public class StardustBullet : ModItem
     {
         DisplayName.SetDefault("Stardust Bullet");
         Tooltip.SetDefault("Splits into smaller bullets on hit");
-        Item.SetResearchAmount(99);
+        SacrificeTotal = 99;
     }
 
     public override void SetDefaults()

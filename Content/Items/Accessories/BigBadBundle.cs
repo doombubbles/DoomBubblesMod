@@ -1,15 +1,13 @@
-﻿using DoomBubblesMod.Utils;
-
-namespace DoomBubblesMod.Content.Items.Accessories;
+﻿namespace DoomBubblesMod.Content.Items.Accessories;
 
 [AutoloadEquip(EquipType.Balloon)]
-internal class BigBadBundle : ModItem
+public class BigBadBundle : ModItem
 {
     public override void SetStaticDefaults()
     {
         DisplayName.SetDefault("Big Bad Blessed Bundle of Balloons");
         Tooltip.SetDefault("Allows the holder to septuple jump\nReleases bees when damaged");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

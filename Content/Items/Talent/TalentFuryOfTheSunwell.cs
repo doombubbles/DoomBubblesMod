@@ -1,5 +1,3 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Talent;
 
 public class TalentFuryOfTheSunwell : ModItem
@@ -10,7 +8,7 @@ public class TalentFuryOfTheSunwell : ModItem
         Tooltip.SetDefault("Flamestrike Talent\n" +
                            "Flamestrikes explode a second time\n" +
                            "[Right Click on a Flamestrike Tome with this to apply]");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

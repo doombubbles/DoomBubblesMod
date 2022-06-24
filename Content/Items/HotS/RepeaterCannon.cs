@@ -1,7 +1,6 @@
 ﻿using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Items.Talent;
 using DoomBubblesMod.Content.Projectiles.HotS;
-using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.HotS;
 
@@ -16,7 +15,7 @@ public class RepeaterCannon : ModItemWithTalents<TalentMobileOffense, TalentOffe
         DisplayName.SetDefault("Repeater Cannon");
         Tooltip.SetDefault("Shots build up to empower your next Phase Bomb\n" +
                            "(Stacks up to 10)");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

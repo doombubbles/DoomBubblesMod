@@ -1,9 +1,8 @@
 ﻿using DoomBubblesMod.Common.Players;
-using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.Thanos;
 
-internal class SoulStone : InfinityStone
+public class SoulStone : InfinityStone
 {
     protected override int Rarity => ItemRarityID.Quest;
     protected override int Gem => ItemID.Amber;
@@ -18,7 +17,7 @@ internal class SoulStone : InfinityStone
                            "demands a sacrifice. In order to take the stone, you\n" +
                            "must lose that which you love. A soul for a soul.\"\n" +
                            "-The Stonekeeper");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public static void SoulAbility(Player player)

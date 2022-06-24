@@ -1,14 +1,13 @@
-﻿using DoomBubblesMod.Utils;
+﻿using DoomBubblesMod.Content.Items.Misc;
 
 namespace DoomBubblesMod.Content.Items.Accessories.Emblem;
 
-internal class WhiteDwarfEmblem : ModItem
+public class WhiteDwarfEmblem : ModItem, IHasThoriumRecipe
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("White Dwarf Emblem");
         Tooltip.SetDefault("20% increased throwing damage");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()
@@ -20,28 +19,14 @@ internal class WhiteDwarfEmblem : ModItem
         Item.accessory = true;
     }
 
-
     public override void UpdateAccessory(Player player, bool hideVisual)
     {
         player.GetDamage(DamageClass.Throwing) += .2f;
     }
 
-    public override void AddRecipes()
-    {
-        if (DoomBubblesMod.ThoriumMod != null)
-        {
-            var recipe = CreateRecipe();
-            AddThoriumRecipe(ref recipe);
-            recipe.AddIngredient(ItemID.LunarBar, 5);
-            recipe.AddTile(TileID.LunarCraftingStation);
-            recipe.ReplaceResult(this);
-            recipe.Register();
-        }
-    }
-
-    public void AddThoriumRecipe(ref Recipe recipe)
-    {
-        var thoriumMod = DoomBubblesMod.ThoriumMod;
-        recipe.AddIngredient(thoriumMod.Find<ModItem>("NinjaEmblem"));
-    }
+    public void AddThoriumRecipe(Mod thoriumMod) => CreateRecipe()
+        .AddTile(TileID.LunarCraftingStation)
+        .AddIngredient(thoriumMod.Find<ModItem>("NinjaEmblem"))
+        .AddIngredient(ItemID.LunarBar, 5)
+        .Register();
 }

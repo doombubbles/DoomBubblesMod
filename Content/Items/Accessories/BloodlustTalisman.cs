@@ -1,6 +1,4 @@
-﻿using DoomBubblesMod.Utils;
-
-namespace DoomBubblesMod.Content.Items.Accessories;
+﻿namespace DoomBubblesMod.Content.Items.Accessories;
 
 public class BloodlustTalisman : ModItem
 {
@@ -8,7 +6,7 @@ public class BloodlustTalisman : ModItem
     {
         DisplayName.SetDefault("Bloodlust Talisman");
         Tooltip.SetDefault("Your lifesteal is uncapped");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

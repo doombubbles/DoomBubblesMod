@@ -7,7 +7,7 @@ namespace DoomBubblesMod.Utils;
 /// <summary>
 /// A class that holds a getter and setter for a specific Property of a custom packet
 /// </summary>
-internal abstract class CustomPacketDelegate
+public abstract class CustomPacketDelegate
 {
     public static CustomPacketDelegate<T> Create<T>(PropertyInfo info, Type type) where T : CustomPacket<T>
     {
@@ -21,7 +21,7 @@ internal abstract class CustomPacketDelegate
 /// <inheritdoc cref="CustomPacketDelegate"/>
 /// </summary>
 /// <typeparam name="T">The packet type that this is a delegate for</typeparam>
-internal abstract class CustomPacketDelegate<T> : CustomPacketDelegate where T : CustomPacket<T>
+public abstract class CustomPacketDelegate<T> : CustomPacketDelegate where T : CustomPacket<T>
 {
     public virtual void Read(BinaryReader reader, T customPacket)
     {
@@ -39,7 +39,7 @@ internal abstract class CustomPacketDelegate<T> : CustomPacketDelegate where T :
 /// </summary>
 /// <typeparam name="TPacket">The packet type that this is a delegate for</typeparam>
 /// <typeparam name="TType">The type that this is a delegate for</typeparam>
-internal abstract class CustomPacketDelegate<TPacket, TType> : CustomPacketDelegate<TPacket>
+public abstract class CustomPacketDelegate<TPacket, TType> : CustomPacketDelegate<TPacket>
     where TPacket : CustomPacket<TPacket>
 {
     private Action<TPacket, TType> setter;
@@ -53,7 +53,18 @@ internal abstract class CustomPacketDelegate<TPacket, TType> : CustomPacketDeleg
             Delegate.CreateDelegate(typeof(Func<TPacket, TType>), null, property.GetGetMethod()!);
     }
 
+    /// <summary>
+    /// Reads information from the binary reader and stores it in the packet
+    /// </summary>
+    /// <param name="reader"></param>
+    /// <param name="customPacket"></param>
     public sealed override void Read(BinaryReader reader, TPacket customPacket) => setter(customPacket, Read(reader));
+    
+    /// <summary>
+    /// Gets the information from the packet and writes it into the ModPacket
+    /// </summary>
+    /// <param name="packet"></param>
+    /// <param name="customPacket"></param>
     public sealed override void Write(ModPacket packet, TPacket customPacket) => Write(packet, getter(customPacket));
 
     protected abstract TType Read(BinaryReader reader);

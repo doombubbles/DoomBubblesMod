@@ -1,15 +1,14 @@
 ﻿using DoomBubblesMod.Common.Players;
-using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.Accessories;
 
-internal class SorcerersStone : ModItem
+public class SorcerersStone : ModItem
 {
     public override void SetStaticDefaults()
     {
         DisplayName.SetDefault("Sorcerer's Stone");
         Tooltip.SetDefault("Your health and mana always regenerate as if you weren't moving");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

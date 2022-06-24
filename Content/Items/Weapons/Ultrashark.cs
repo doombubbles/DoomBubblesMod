@@ -1,5 +1,3 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Weapons;
 
 public class Ultrashark : ModItem
@@ -8,8 +6,7 @@ public class Ultrashark : ModItem
     {
         Tooltip.SetDefault("50% chance to not consume ammo\n" +
                            "'It came from the edge of Minishark's cool uncle'");
-        DisplayName.SetDefault("Ultrashark");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

@@ -1,14 +1,12 @@
-﻿using DoomBubblesMod.Utils;
+﻿namespace DoomBubblesMod.Content.Items.Ammo;
 
-namespace DoomBubblesMod.Content.Items.Ammo;
-
-internal class NebulaPouch : ModItem
+public class NebulaPouch : ModItem
 {
     public override void SetStaticDefaults()
     {
         DisplayName.SetDefault("Endless Nebula Pouch");
         Tooltip.SetDefault("Teleports to enemies if close");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

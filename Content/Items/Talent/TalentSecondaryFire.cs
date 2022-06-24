@@ -1,5 +1,3 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Talent;
 
 public class TalentSecondaryFire : ModItem
@@ -10,7 +8,7 @@ public class TalentSecondaryFire : ModItem
         Tooltip.SetDefault("Phase Bomb Launcher Talent\n" +
                            "Bombs also hit enemies they pass through\n" +
                            "[Right Click on a Phase Bomb Launcher with this to apply]");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

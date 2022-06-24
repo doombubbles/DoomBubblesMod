@@ -90,7 +90,7 @@ public class Repeater : ModProjectile
         if (Projectile.alpha == 69)
         {
             Projectile.alpha = 255;
-            SoundEngine.PlaySound(Mod.Sound("Sounds/Repeater" + Math.Min(3, Projectile.ai[0])), Projectile.position);
+            SoundEngine.PlaySound(Mod.Sound("Repeater" + Math.Min(3, Projectile.ai[0])), Projectile.position);
             /*SoundEngine.PlaySound(SoundLoader.customSoundType, (int) Projectile.position.X, (int) Projectile.position.Y,
                 Mod.GetSoundSlot(SoundType.Custom, "Sounds/Repeater" + Math.Min(3, Projectile.ai[0])), 1f,
                 Projectile.ai[0] == 4 ? -.25f : 0f);*/

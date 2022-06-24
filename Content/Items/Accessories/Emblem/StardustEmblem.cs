@@ -1,14 +1,12 @@
-﻿using DoomBubblesMod.Utils;
+﻿namespace DoomBubblesMod.Content.Items.Accessories.Emblem;
 
-namespace DoomBubblesMod.Content.Items.Accessories.Emblem;
-
-internal class StardustEmblem : ModItem
+public class StardustEmblem : ModItem
 {
     public override void SetStaticDefaults()
     {
         DisplayName.SetDefault("Stardust Emblem");
         Tooltip.SetDefault("20% increased summon damage");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

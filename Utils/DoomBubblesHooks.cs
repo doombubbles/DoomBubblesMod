@@ -16,7 +16,45 @@ public class DoomBubblesHooks : ILoadable
         IL.Terraria.Player.Update += PlayerOnUpdate;
         Main.DamageVar += MainOnDamageVar;
         Main.DrawCursor += MainOnDrawCursor;
+
+        Player.checkDPSTime += PlayerOncheckDPSTime;
+        Player.getDPS += PlayerOngetDPS;
     }
+
+    private int PlayerOngetDPS(Player.orig_getDPS orig, Terraria.Player self)
+    {
+        var config = GetInstance<ClientConfig>();
+        if (!config.SmoothDPSReading) return orig(self);
+
+        var timeSpan = self.dpsEnd - self.dpsStart;
+        var num = timeSpan.TotalSeconds;
+        if (num >= config.DpsSeconds)
+        {
+            self.dpsStart = DateTime.Now.AddSeconds(num / -2);
+            self.dpsDamage /= 2;
+            timeSpan = self.dpsEnd - self.dpsStart;
+            num = timeSpan.TotalSeconds;
+        }
+
+        if (num < 1f)
+            num = 1f;
+
+        return (int) (self.dpsDamage / num);
+    }
+
+    private void PlayerOncheckDPSTime(Player.orig_checkDPSTime orig, Terraria.Player self)
+    {
+        var config = GetInstance<ClientConfig>();
+        if (!config.SmoothDPSReading)
+        {
+            orig(self);
+            return;
+        }
+
+        if (self.dpsStarted && (DateTime.Now - self.dpsLastHit).Seconds >= config.DpsSeconds)
+            self.dpsStarted = false;
+    }
+
 
     private int MainOnDamageVar(Main.orig_DamageVar orig, float dmg, float luck) =>
         GetInstance<ServerConfig>().DisableDamageVariance

@@ -6,11 +6,13 @@ namespace DoomBubblesMod.Content.Items.Armor;
 [AutoloadEquip(EquipType.Head)]
 public class MartianMeteorHelmet : ModItem
 {
+    private const string SetBonus = "Laser Machinegun costs 0 mana";
+
     public override void SetStaticDefaults()
     {
         DisplayName.SetDefault("Martian Meteor Helmet");
         Tooltip.SetDefault("17% Increased Magic Damage");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()
@@ -29,10 +31,18 @@ public class MartianMeteorHelmet : ModItem
                legs.type == ItemType<MartianMeteorLeggings>();
     }
 
+    public override void Load()
+    {
+        SetBonusAccessories?.Call(Mod, "Martian Meteor", typeof(MartianMeteorHelmet), typeof(MartianMeteorSuit),
+            typeof(MartianMeteorLeggings), SetBonus);
+    }
+
     public override void UpdateArmorSet(Player player)
     {
-        player.setBonus = "Laser Machinegun costs 0 mana";
-        player.GetModPlayer<DoomBubblesPlayer>().noManaItems.Add(ItemID.LaserMachinegun);
+        player.setBonus = SetBonus;
+        player.spaceGun = true;
+        player.GetModPlayer<DoomBubblesPlayer>().NoManaItems.Add(ItemID.LaserRifle);
+        player.GetModPlayer<DoomBubblesPlayer>().NoManaItems.Add(ItemID.LaserMachinegun);
     }
 
     public override void UpdateEquip(Player player)

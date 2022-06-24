@@ -1,5 +1,3 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Talent;
 
 public class TalentDivertPowerWeapons : ModItem
@@ -10,7 +8,7 @@ public class TalentDivertPowerWeapons : ModItem
         Tooltip.SetDefault("Phase Bomb Launcher Talent\n" +
                            "Slower use time; Higher damage\n" +
                            "[Right Click on a Phase Bomb Launcher with this to apply]");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

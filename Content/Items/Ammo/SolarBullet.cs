@@ -1,5 +1,3 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Ammo;
 
 public class SolarBullet : ModItem
@@ -8,7 +6,7 @@ public class SolarBullet : ModItem
     {
         DisplayName.SetDefault("Solar Bullet");
         Tooltip.SetDefault("Deals bonus damage to airborne enemies");
-        Item.SetResearchAmount(99);
+        SacrificeTotal = 99;
     }
 
     public override void SetDefaults()

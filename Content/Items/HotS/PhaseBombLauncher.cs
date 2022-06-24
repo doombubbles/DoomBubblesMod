@@ -3,7 +3,6 @@ using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Buffs;
 using DoomBubblesMod.Content.Items.Talent;
 using DoomBubblesMod.Content.Projectiles.HotS;
-using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.HotS;
 
@@ -17,7 +16,7 @@ public class
         DisplayName.SetDefault("Phase Bomb Launcher");
         Tooltip.SetDefault("Buffs Repeater Cannon attack speed for each enemy hit\n" +
                            "(Up to 10)");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()
@@ -82,7 +81,7 @@ public class
             Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, (float) time,
                 ChosenTalent);
 
-            if (player.HasBuff(BuffType<FenixBombBuildUp>()))
+            if (player.HasBuff<FenixBombBuildUp>())
             {
                 player.DelBuff(player.FindBuffIndex(BuffType<FenixBombBuildUp>()));
             }

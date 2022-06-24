@@ -2,7 +2,6 @@
 using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Items.Talent;
 using DoomBubblesMod.Content.Projectiles.HotS;
-using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.HotS;
 
@@ -16,7 +15,7 @@ public class PylonStaff : ModItemWithTalents<TalentPylonOvercharge, TalentConstr
         DisplayName.SetDefault("Pylon Staff");
         Tooltip.SetDefault("Warps in Pylons that power Photon Cannons and give regen\n" +
                            "Max 2");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

@@ -1,5 +1,3 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Talent;
 
 public class TalentConvection : ModItem
@@ -10,7 +8,7 @@ public class TalentConvection : ModItem
         Tooltip.SetDefault("Flamestrike Talent\n" +
                            "Flamestrike hits give a stacking buff that's lost on death\n" +
                            "[Right Click on a Flamestrike Tome with this to apply]");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

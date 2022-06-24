@@ -1,14 +1,12 @@
-﻿using DoomBubblesMod.Utils;
+﻿namespace DoomBubblesMod.Content.Items.Ammo;
 
-namespace DoomBubblesMod.Content.Items.Ammo;
-
-internal class TheObservableUniverse : ModItem
+public class TheObservableUniverse : ModItem
 {
     public override void SetStaticDefaults()
     {
         DisplayName.SetDefault("Pocket Galaxy");
         Tooltip.SetDefault("An endless amount of stars");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

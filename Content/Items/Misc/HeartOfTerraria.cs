@@ -1,5 +1,3 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Misc;
 
 public class HeartOfTerraria : ModItem
@@ -7,7 +5,7 @@ public class HeartOfTerraria : ModItem
     public override void SetStaticDefaults()
     {
         DisplayName.SetDefault("Heart of Terraria");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

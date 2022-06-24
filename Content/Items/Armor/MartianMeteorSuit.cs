@@ -1,6 +1,4 @@
-﻿using DoomBubblesMod.Utils;
-
-namespace DoomBubblesMod.Content.Items.Armor;
+﻿namespace DoomBubblesMod.Content.Items.Armor;
 
 [AutoloadEquip(EquipType.Body)]
 public class MartianMeteorSuit : ModItem
@@ -9,7 +7,7 @@ public class MartianMeteorSuit : ModItem
     {
         DisplayName.SetDefault("Martian Meteor Suit");
         Tooltip.SetDefault("17% Increased Magic Damage");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()
@@ -21,12 +19,7 @@ public class MartianMeteorSuit : ModItem
         Item.defense = 18;
         Item.bodySlot = realSlot;
     }
-
-    public override bool IsArmorSet(Item head, Item body, Item legs)
-    {
-        return head.type == ItemType<MartianMeteorHelmet>() &&
-               legs.type == ItemType<MartianMeteorLeggings>();
-    }
+    
 
     public override void UpdateEquip(Player player)
     {

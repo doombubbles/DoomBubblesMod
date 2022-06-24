@@ -1,5 +1,3 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Talent;
 
 public class TalentNegativelyCharged : ModItem
@@ -10,7 +8,7 @@ public class TalentNegativelyCharged : ModItem
         Tooltip.SetDefault("Lightning Surge Talent\n" +
                            "Further increased center damage bonus\n" +
                            "[Right Click on a Lightning Surge with this to apply]");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

@@ -17,7 +17,7 @@ public static class ThoriumChanges
     {
         //thoriumILChanges = new Dictionary<MethodInfo, Action<ILContext>>();
 
-        var thoriumMod = DoomBubblesMod.ThoriumMod;
+        var thoriumMod = ThoriumMod;
         if (thoriumMod != null)
         {
             /* TODO THORIUM
@@ -114,7 +114,7 @@ public static class ThoriumChanges
         var test = 0;
         while (true)
         {
-            var fieldInfo = DoomBubblesMod.ThoriumMod
+            var fieldInfo = ThoriumMod
                 .GetType()
                 .Assembly.GetTypes()
                 .First(type => type.Name == "ThoriumPlayer")
@@ -182,7 +182,7 @@ public static class ThoriumChanges
 
     internal static void ModifyThoriumRecipes()
     {
-        var thoriumMod = DoomBubblesMod.ThoriumMod;
+        var thoriumMod = ThoriumMod;
         if (thoriumMod == null)
         {
             return;

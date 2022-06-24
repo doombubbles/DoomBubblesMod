@@ -1,5 +1,4 @@
 using DoomBubblesMod.Content.Projectiles.Ranged;
-using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.Weapons;
 
@@ -10,7 +9,7 @@ public class SDLMFAOMFGMG : ModItem
         DisplayName.SetDefault("S.D.L.M.F.A.O.M.F.G.M.G.");
         Tooltip.SetDefault("It came from the edge of Calamity\n" +
                            "75% chance to not consume ammo");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()
@@ -84,7 +83,7 @@ public class SDLMFAOMFGMG : ModItem
         }
 
 
-        if (DoomBubblesMod.CalamityMod != null)
+        if (CalamityMod != null)
         {
             FireCalamityProjectiles(source, position, velocity, damage, knockback, player);
         }
@@ -100,21 +99,21 @@ public class SDLMFAOMFGMG : ModItem
         if (dub > .66)
         {
             var projecitle = Projectile.NewProjectileDirect(source, position, velocity * 3,
-                DoomBubblesMod.CalamityMod.Find<ModProjectile>("FishronRPG").Type,
+                CalamityMod.Find<ModProjectile>("FishronRPG").Type,
                 damage, knockBack, player.whoAmI);
             projecitle.netUpdate = true;
         }
         else if (dub < .33)
         {
             var projecitle = Projectile.NewProjectileDirect(source, position, velocity * 2,
-                DoomBubblesMod.CalamityMod.Find<ModProjectile>("BloodfireBullet").Type,
+                CalamityMod.Find<ModProjectile>("BloodfireBullet").Type,
                 damage, knockBack, player.whoAmI);
             projecitle.netUpdate = true;
         }
         else
         {
             var projecitle = Projectile.NewProjectileDirect(source, position, velocity * 2,
-                DoomBubblesMod.CalamityMod.Find<ModProjectile>("AstralRound").Type,
+                CalamityMod.Find<ModProjectile>("AstralRound").Type,
                 damage, knockBack, player.whoAmI);
             projecitle.netUpdate = true;
         }
@@ -122,7 +121,7 @@ public class SDLMFAOMFGMG : ModItem
 
     public override void AddRecipes()
     {
-        if (DoomBubblesMod.CalamityMod != null)
+        if (CalamityMod != null)
         {
             AddCalamityRecipe();
         }
@@ -131,20 +130,20 @@ public class SDLMFAOMFGMG : ModItem
     private void AddCalamityRecipe()
     {
         var recipe = CreateRecipe();
-        recipe.AddIngredient(DoomBubblesMod.CalamityMod.Find<ModItem>("SDFMG"));
-        recipe.AddIngredient(DoomBubblesMod.CalamityMod.Find<ModItem>("ClaretCannon"));
-        recipe.AddIngredient(DoomBubblesMod.CalamityMod.Find<ModItem>("StormDragoon"));
-        recipe.AddIngredient(DoomBubblesMod.CalamityMod.Find<ModItem>("AstralBlaster"));
+        recipe.AddIngredient(CalamityMod.Find<ModItem>("SDFMG"));
+        recipe.AddIngredient(CalamityMod.Find<ModItem>("ClaretCannon"));
+        recipe.AddIngredient(CalamityMod.Find<ModItem>("StormDragoon"));
+        recipe.AddIngredient(CalamityMod.Find<ModItem>("AstralBlaster"));
         recipe.AddIngredient(ItemType<TerraRifle>());
         recipe.AddIngredient(ItemType<Ultrashark>());
-        recipe.AddIngredient(DoomBubblesMod.CalamityMod.Find<ModItem>("NightmareFuel"), 5);
-        recipe.AddIngredient(DoomBubblesMod.CalamityMod.Find<ModItem>("EndothermicEnergy"), 5);
-        recipe.AddIngredient(DoomBubblesMod.CalamityMod.Find<ModItem>("CosmiliteBar"), 5);
-        recipe.AddIngredient(DoomBubblesMod.CalamityMod.Find<ModItem>("Phantoplasm"), 5);
-        recipe.AddIngredient(DoomBubblesMod.CalamityMod.Find<ModItem>("HellcasterFragment"), 3);
-        recipe.AddIngredient(DoomBubblesMod.CalamityMod.Find<ModItem>("DarksunFragment"), 5);
-        recipe.AddIngredient(DoomBubblesMod.CalamityMod.Find<ModItem>("AuricOre"), 25);
-        recipe.AddTile(DoomBubblesMod.CalamityMod.Find<ModTile>("DraedonsForge").Type);
+        recipe.AddIngredient(CalamityMod.Find<ModItem>("NightmareFuel"), 5);
+        recipe.AddIngredient(CalamityMod.Find<ModItem>("EndothermicEnergy"), 5);
+        recipe.AddIngredient(CalamityMod.Find<ModItem>("CosmiliteBar"), 5);
+        recipe.AddIngredient(CalamityMod.Find<ModItem>("Phantoplasm"), 5);
+        recipe.AddIngredient(CalamityMod.Find<ModItem>("HellcasterFragment"), 3);
+        recipe.AddIngredient(CalamityMod.Find<ModItem>("DarksunFragment"), 5);
+        recipe.AddIngredient(CalamityMod.Find<ModItem>("AuricOre"), 25);
+        recipe.AddTile(CalamityMod.Find<ModTile>("DraedonsForge").Type);
         recipe.Register();
     }
 }

@@ -1,15 +1,14 @@
 ﻿using DoomBubblesMod.Common.Players;
-using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.Accessories;
 
-internal class CrystalCore : ModItem
+public class CrystalCore : ModItem
 {
     public override void SetStaticDefaults()
     {
         DisplayName.SetDefault("Crystal Core");
         Tooltip.SetDefault("Crystal Bullets release extra shards");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()
@@ -30,8 +29,8 @@ internal class CrystalCore : ModItem
     public override void AddRecipes()
     {
         var recipe = CreateRecipe();
-        recipe.AddIngredient(ItemID.CrystalShard, 100);
-        recipe.AddIngredient(ItemID.SoulofNight, 10);
+        recipe.AddIngredient(ItemID.CrystalShard, 25);
+        recipe.AddIngredient(ItemID.SoulofLight, 10);
         recipe.AddTile(TileID.MythrilAnvil);
         recipe.Register();
     }

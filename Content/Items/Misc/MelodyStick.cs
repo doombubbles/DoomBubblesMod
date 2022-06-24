@@ -8,7 +8,7 @@ public class MelodyStick : ModItem
     public override void SetStaticDefaults()
     {
         Tooltip.SetDefault("Time to play chopsticks with these bad boys.");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

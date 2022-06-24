@@ -5,4 +5,5 @@ includeSource = false
 buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*
 homepage=https://github.com/doombubbles/DoomBubblesMod
 modReferences = ElementalDamage
+sortBefore = SetBonusAccessories
 sortAfter = ElementalDamage

@@ -1,10 +1,9 @@
 ﻿using DoomBubblesMod.Common.Players;
-using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.Accessories;
 
 [AutoloadEquip(EquipType.HandsOn)]
-internal class CharmOfLegends : ModItem
+public class CharmOfLegends : ModItem
 {
     public override void SetStaticDefaults()
     {
@@ -13,7 +12,7 @@ internal class CharmOfLegends : ModItem
                            "Health/mana always regenerates as if you weren't moving\n" +
                            "Incrases maximum mana by 20\n" +
                            "Increases mana and life regeneration rate");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

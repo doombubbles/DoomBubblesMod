@@ -13,7 +13,7 @@ public class ShieldCapacitor : ModItemWithTalents<TalentUnconqueredSpirit, Talen
     {
         DisplayName.SetDefault("Shield Capacitor");
         Tooltip.SetDefault("You quickly and constantly generate a 50 life shield.");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

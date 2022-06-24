@@ -1,7 +1,6 @@
 ﻿using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Items.Talent;
 using DoomBubblesMod.Content.Projectiles.HotS;
-using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.HotS;
 
@@ -19,7 +18,7 @@ public class FlamestrikeTome : ModItemWithTalents<TalentConvection, TalentIgnite
     {
         DisplayName.SetDefault("Flamestrike Tome");
         Tooltip.SetDefault("After a delay, deal damage in an area");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

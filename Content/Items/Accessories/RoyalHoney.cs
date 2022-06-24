@@ -1,8 +1,6 @@
-﻿using DoomBubblesMod.Utils;
+﻿namespace DoomBubblesMod.Content.Items.Accessories;
 
-namespace DoomBubblesMod.Content.Items.Accessories;
-
-internal class RoyalHoney : ModItem
+public class RoyalHoney : ModItem
 {
     public override void SetDefaults()
     {
@@ -17,7 +15,7 @@ internal class RoyalHoney : ModItem
     {
         DisplayName.SetDefault("Royal Honey");
         Tooltip.SetDefault("Bees are friendly");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
 

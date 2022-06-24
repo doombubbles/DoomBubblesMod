@@ -1,14 +1,12 @@
-﻿using DoomBubblesMod.Utils;
+﻿namespace DoomBubblesMod.Content.Items.Ammo;
 
-namespace DoomBubblesMod.Content.Items.Ammo;
-
-internal class StardustPouch : ModItem
+public class StardustPouch : ModItem
 {
     public override void SetStaticDefaults()
     {
         DisplayName.SetDefault("Endless Stardust Pouch");
         Tooltip.SetDefault("Splits into smaller bullets on hit");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

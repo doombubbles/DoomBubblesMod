@@ -1,9 +1,8 @@
 ﻿using DoomBubblesMod.Common.Players;
-using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.Accessories;
 
-internal class TargetingComputer : ModItem
+public class TargetingComputer : ModItem
 {
     public override void SetDefaults()
     {
@@ -18,7 +17,7 @@ internal class TargetingComputer : ModItem
     {
         DisplayName.SetDefault("Targeting Computer");
         Tooltip.SetDefault("Who needs the Force anyway?");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
 

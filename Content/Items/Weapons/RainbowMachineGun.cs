@@ -1,4 +1,4 @@
-using DoomBubblesMod.Utils;
+using ElementalDamage.Content.DamageClasses;
 
 namespace DoomBubblesMod.Content.Items.Weapons;
 
@@ -7,7 +7,7 @@ public class RainbowMachineGun : ModItem
     public override void SetDefaults()
     {
         Item.damage = 105;
-        Item.DamageType = DamageClass.Magic;
+        Item.DamageType = GetInstance<MagicHoly>();
         Item.mana = 5;
         Item.width = 20;
         Item.height = 12;
@@ -28,7 +28,7 @@ public class RainbowMachineGun : ModItem
     public override void SetStaticDefaults()
     {
         DisplayName.SetDefault("Rainbow Machinegun");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
 

@@ -1,10 +1,9 @@
 ﻿using DoomBubblesMod.Common.Players;
-using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.Accessories;
 
 [AutoloadEquip(EquipType.HandsOn)]
-internal class CharmOfEpics : ModItem
+public class CharmOfEpics : ModItem
 {
     public override void SetStaticDefaults()
     {
@@ -14,7 +13,7 @@ internal class CharmOfEpics : ModItem
                            "Improves life/mana regen in many ways\n" +
                            "Increases heart/star pickup range\n" +
                            "Regenerate mana on taking damage; health on dealing");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()
@@ -22,7 +21,7 @@ internal class CharmOfEpics : ModItem
         var real = Item.handOnSlot;
         Item.CloneDefaults(ItemID.CharmofMyths);
         Item.handOnSlot = real;
-        Item.value = Item.sellPrice(1);
+        Item.value = Item.sellPrice(0, 10);
     }
 
 
@@ -47,8 +46,16 @@ internal class CharmOfEpics : ModItem
         var recipe = CreateRecipe();
         recipe.AddIngredient(ItemType<CharmOfLegends>());
         recipe.AddIngredient(ItemID.ShinyStone);
-        recipe.AddIngredient(ItemType<CrimsonVoodooDoll>());
-        recipe.AddIngredient(ItemType<PalladiumVoodooDoll>());
+        if (SetBonusAccessories is Mod mod)
+        {
+            recipe.AddIngredient(mod, "Palladium");
+            recipe.AddIngredient(mod, "Crimson");
+        }
+        else
+        {
+            recipe.AddIngredient(ItemType<CrimsonVoodooDoll>());
+            recipe.AddIngredient(ItemType<PalladiumVoodooDoll>());
+        }
         recipe.AddIngredient(ItemID.CelestialCuffs);
         recipe.AddIngredient(ItemType<CardiopulmonaryMagnet>());
         recipe.AddIngredient(ItemID.GravityGlobe);

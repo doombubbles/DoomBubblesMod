@@ -1,5 +1,3 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Talent;
 
 public class TalentFelInfusion : ModItem
@@ -10,7 +8,7 @@ public class TalentFelInfusion : ModItem
         Tooltip.SetDefault("Verdant Spheres Talent\n" +
                            "10% reduced damage; 25% increased magic damage\n" +
                            "[Right Click on a Verdant Spheres with this to apply]");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

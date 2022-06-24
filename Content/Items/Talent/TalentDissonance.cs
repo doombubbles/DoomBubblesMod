@@ -1,5 +1,3 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Talent;
 
 public class TalentDissonance : ModItem
@@ -10,7 +8,7 @@ public class TalentDissonance : ModItem
         Tooltip.SetDefault("Discord Strike Talent\n" +
                            "Discord Strike has signficantly longer range\n" +
                            "[Right Click on a Discord Blade with this to apply]");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

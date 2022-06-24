@@ -1,6 +1,4 @@
-using DoomBubblesMod.Content.Items.Misc;
 using DoomBubblesMod.Content.Projectiles.Ranged;
-using DoomBubblesMod.Utils;
 using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Items.Weapons;
@@ -11,7 +9,7 @@ public class TrueMidnightMaelstrom : ModItem
     {
         //Tooltip.SetDefault("This is a modded gun.");
         DisplayName.SetDefault("True Midnight Maelstrom");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()
@@ -28,7 +26,7 @@ public class TrueMidnightMaelstrom : ModItem
         Item.value = Item.sellPrice(0, 10);
         Item.rare = ItemRarityID.Yellow;
         Item.UseSound = SoundID.Item41;
-        Item.autoReuse = false;
+        Item.autoReuse = true;
         Item.shoot = ProjectileID.PurificationPowder; //idk why but all the guns in the vanilla source have this
         Item.shootSpeed = 10f;
         Item.useAmmo = AmmoID.Bullet;
@@ -44,7 +42,9 @@ public class TrueMidnightMaelstrom : ModItem
     {
         var recipe = CreateRecipe();
         recipe.AddIngredient(ItemType<MidnightMaelstrom>());
-        recipe.AddIngredient(ItemType<BrokenHeroGun>());
+        recipe.AddIngredient(ItemID.SoulofFright, 5);
+        recipe.AddIngredient(ItemID.SoulofMight, 5);
+        recipe.AddIngredient(ItemID.SoulofSight, 5);
         recipe.AddTile(TileID.MythrilAnvil);
         recipe.Register();
     }

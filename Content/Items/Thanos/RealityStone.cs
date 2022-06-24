@@ -1,11 +1,10 @@
 ﻿using System;
 using DoomBubblesMod.Content.Projectiles.Thanos;
-using DoomBubblesMod.Utils;
 using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Items.Thanos;
 
-internal class RealityStone : InfinityStone
+public class RealityStone : InfinityStone
 {
     protected override int Rarity => ItemRarityID.Red;
     protected override int Gem => ItemID.Ruby;
@@ -20,7 +19,7 @@ internal class RealityStone : InfinityStone
                            "night. Such evil was possible through the power of the Aether, an ancient\n" +
                            "force of infinite destruction.\"\n" +
                            "-Odin");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public static void RealityAbility(Player player, Item item)

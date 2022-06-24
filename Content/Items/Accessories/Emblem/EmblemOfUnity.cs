@@ -1,16 +1,15 @@
 using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Items.Misc;
-using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.Accessories.Emblem;
 
-public class EmblemOfUnity : ThoriumRecipeItem
+public class EmblemOfUnity : ModItem, IHasThoriumRecipe
 {
     public override void SetStaticDefaults()
     {
         Tooltip.SetDefault("10% increased damage\n" +
                            "+10% damage for each other player wearing this");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()
@@ -27,7 +26,7 @@ public class EmblemOfUnity : ThoriumRecipeItem
         player.GetModPlayer<DoomBubblesPlayer>().united = true;
     }
 
-    public override void AddThoriumRecipe(Mod thoriumMod)
+    public void AddThoriumRecipe(Mod thoriumMod)
     {
         var recipe = CreateRecipe();
         recipe.AddIngredient(thoriumMod.Find<ModItem>("RingofUnity"));

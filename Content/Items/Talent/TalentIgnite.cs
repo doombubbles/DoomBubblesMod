@@ -1,5 +1,3 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Talent;
 
 public class TalentIgnite : ModItem
@@ -10,7 +8,7 @@ public class TalentIgnite : ModItem
         Tooltip.SetDefault("Flamestrike Talent\n" +
                            "Flamestrike applies Living Bomb to 1 enemy\n" +
                            "[Right Click on a Flamestrike Tome with this to apply]");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

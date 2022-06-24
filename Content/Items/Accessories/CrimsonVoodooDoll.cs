@@ -1,6 +1,4 @@
-﻿using DoomBubblesMod.Utils;
-
-namespace DoomBubblesMod.Content.Items.Accessories;
+﻿namespace DoomBubblesMod.Content.Items.Accessories;
 
 public class CrimsonVoodooDoll : ModItem
 {
@@ -8,14 +6,16 @@ public class CrimsonVoodooDoll : ModItem
     {
         DisplayName.SetDefault("Crimson Voodoo Doll");
         Tooltip.SetDefault("Your life regenerates crimsonly");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()
     {
         Item.CloneDefaults(ItemID.GuideVoodooDoll);
     }
-
+    
+    public override bool IsLoadingEnabled(Mod mod) => SetBonusAccessories == null;
+    
     public override void UpdateAccessory(Player player, bool hideVisual)
     {
         player.crimsonRegen = true;

@@ -33,7 +33,17 @@ public class CustomPacketInfo<T> : CustomPacketInfo where T : CustomPacket<T>
             .ToList();
     }
 
+    /// <summary>
+    /// Reads all information from the binary reader and stores it in the custom packet
+    /// </summary>
+    /// <param name="reader"></param>
+    /// <param name="customPacket"></param>
     public void ReadAll(BinaryReader reader, T customPacket) => delegates.ForEach(d => d.Read(reader, customPacket));
 
+    /// <summary>
+    /// Writes all custom information in the custom packet into the ModPacket
+    /// </summary>
+    /// <param name="packet"></param>
+    /// <param name="customPacket"></param>
     public void WriteAll(ModPacket packet, T customPacket) => delegates.ForEach(d => d.Write(packet, customPacket));
 }

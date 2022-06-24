@@ -1,5 +1,3 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Accessories;
 
 public class CardiopulmonaryMagnet : ModItem
@@ -8,7 +6,7 @@ public class CardiopulmonaryMagnet : ModItem
     {
         DisplayName.SetDefault("Cardiopullmonary Magnet");
         Tooltip.SetDefault("Increases pickup range for life hearts");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

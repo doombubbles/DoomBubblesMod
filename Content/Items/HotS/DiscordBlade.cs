@@ -1,4 +1,5 @@
 using System;
+using DoomBubblesMod.Common.DamageClasses;
 using DoomBubblesMod.Content.Items.Talent;
 using DoomBubblesMod.Content.Projectiles.HotS;
 using DoomBubblesMod.Utils;
@@ -17,13 +18,13 @@ public class DiscordBlade : ModItemWithTalents<TalentChaosReigns, TalentDissonan
         DisplayName.SetDefault("Discord Blade");
         Tooltip.SetDefault("Makes a very hard to code triangle attack\n" +
                            "Magic and Melee Weapon");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()
     {
         Item.damage = 75;
-        Item.DamageType = DamageClass.Magic;
+        Item.DamageType = GetInstance<MeleeMagic>();
         Item.width = 36;
         Item.height = 44;
         Item.useTime = 30;

@@ -8,7 +8,7 @@ using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Items.Thanos;
 
-internal class InfinityGauntlet : ModItem
+public class InfinityGauntlet : ModItem
 {
     public static readonly Color PowerColor = new(123, 0, 255);
     public static readonly Color SpaceColor = new(0, 38, 255);
@@ -25,7 +25,7 @@ internal class InfinityGauntlet : ModItem
                            "...as all things should be.\"\n" +
                            "-Thanos");
 
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()
@@ -103,7 +103,7 @@ internal class InfinityGauntlet : ModItem
             if (Item.Name.Contains("(Space)"))
             {
                 var newPos = Main.MouseWorld;
-                if (player.HasBuff(BuffType<SpaceStoneCooldown>()) ||
+                if (player.HasBuff<SpaceStoneCooldown>() ||
                     Collision.SolidCollision(newPos,
                         player.width, player.height) ||
                     !(newPos.X > 50f &&
@@ -119,14 +119,14 @@ internal class InfinityGauntlet : ModItem
             {
                 var previousHp = player.GetModPlayer<ThanosPlayer>().timeHealth[300];
                 if (previousHp == 0 ||
-                    player.HasBuff(BuffType<TimeStoneCooldown>()) ||
+                    player.HasBuff<TimeStoneCooldown>() ||
                     previousHp <= player.statLife)
                 {
                     return false;
                 }
             }
 
-            if (Item.Name.Contains("(Mind)") && player.HasBuff(BuffType<MindStoneCooldown>()))
+            if (Item.Name.Contains("(Mind)") && player.HasBuff<MindStoneCooldown>())
             {
                 return false;
             }

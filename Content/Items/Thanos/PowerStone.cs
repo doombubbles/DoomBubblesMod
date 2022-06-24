@@ -7,7 +7,7 @@ using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Items.Thanos;
 
-internal class PowerStone : InfinityStone
+public class PowerStone : InfinityStone
 {
     protected override int Rarity => ItemRarityID.Purple;
     protected override int Gem => ItemID.Amethyst;
@@ -20,7 +20,7 @@ internal class PowerStone : InfinityStone
                            "the target, the bigger the power surge.\"\n" +
                            "-Gamora");
 
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
 

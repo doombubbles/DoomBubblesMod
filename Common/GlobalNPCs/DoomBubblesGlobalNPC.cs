@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using DoomBubblesMod.Content.Buffs;
 using DoomBubblesMod.Content.Items.HotS;
 using DoomBubblesMod.Content.Items.Misc;
 using DoomBubblesMod.Content.Items.Talent;
 using DoomBubblesMod.Content.Items.Weapons;
+using Terraria.GameContent.ItemDropRules;
 
 namespace DoomBubblesMod.Common.GlobalNPCs;
 
-internal class DoomBubblesGlobalNPC : GlobalNPC
+public class DoomBubblesGlobalNPC : GlobalNPC
 {
     //public List<int> cleavedby = new List<int> { };
 
@@ -33,7 +35,32 @@ internal class DoomBubblesGlobalNPC : GlobalNPC
 
     public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
     {
-        if (Main.expertMode)
+        switch (npc.type)
+        {
+            case NPCID.DukeFishron:
+                var fishronLoot = npcLoot.Get().OfType<LeadingConditionRule>().SelectMany(rule => rule.ChainedRules)
+                    .OfType<Chains.TryIfSucceeded>().Select(succeeded => succeeded.RuleToChain)
+                    .OfType<OneFromOptionsDropRule>()
+                    .FirstOrDefault(rule => rule.dropIds.Contains(ItemID.RazorbladeTyphoon));
+
+                if (fishronLoot != null)
+                {
+                    fishronLoot.dropIds = fishronLoot.dropIds.Append(ItemType<Ultrashark>()).ToArray();
+                }
+                else
+                {
+                    Mod.Logger.Warn("Failed to modify Duke Fishron Loot");
+                }
+
+                break;
+            case NPCID.Mothron:
+                npcLoot.Add(
+                    new LeadingConditionRule(new Conditions.DownedAllMechBosses()).OnSuccess(
+                        ItemDropRule.ExpertGetsRerolls(ItemType<BrokenHeroGun>(), 4, 1)));
+                break;
+        }
+
+        /*if (Main.expertMode)
         {
             if (npc.type == NPCID.Mothron && Main.rand.Next(1, 3) == 1)
             {
@@ -44,17 +71,11 @@ internal class DoomBubblesGlobalNPC : GlobalNPC
         {
             switch (npc.type)
             {
-                case NPCID.Mothron when Main.rand.Next(1, 4) == 1:
-                    Item.NewItem(new EntitySource_Loot(npc), npc.position, ItemType<BrokenHeroGun>());
-                    break;
-                case NPCID.Plantera:
-                    //Item.NewItem(npc.position, ModContent.ItemType<HeartOfTerraria>());
-                    break;
-                case NPCID.DukeFishron when Main.rand.Next(1, 5) == 1:
+                case NPCID.DukeFishron:
                     Item.NewItem(new EntitySource_Loot(npc), npc.position, ItemType<Ultrashark>());
                     break;
             }
-        }
+        }*/
     }
 
     public override void SetupShop(int type, Chest shop, ref int nextSlot)

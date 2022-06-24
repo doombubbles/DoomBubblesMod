@@ -2,7 +2,6 @@
 using System.Linq;
 using DoomBubblesMod.Content.Items.Talent;
 using DoomBubblesMod.Content.Projectiles.HotS;
-using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.HotS;
 
@@ -16,7 +15,7 @@ public class LightningSurge : ModItemWithTalents<TalentSustainingPower, TalentLi
         DisplayName.SetDefault("Lightning Surge");
         Tooltip.SetDefault("Shoots lightning at an enemy by your cursor\n" +
                            "Enemies hit along the way take bonus damage");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

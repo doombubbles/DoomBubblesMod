@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using DoomBubblesMod.Content.Projectiles.Summon;
-using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.Weapons;
 
@@ -10,7 +9,7 @@ public class VampireKnifeBatStaff : ModItem
     {
         DisplayName.SetDefault("Vampire Knife Bat Staff");
         Tooltip.SetDefault("Summons Bats that shoot Vampire Knives as you do");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

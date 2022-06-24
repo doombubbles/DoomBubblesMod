@@ -28,7 +28,7 @@ public class ThanosPlayer : ModPlayer
             powerStoned--;
         }
 
-        powerStoning.RemoveWhere(i => !Main.npc[i].HasBuff(BuffType<PowerStoneDebuff>()));
+        powerStoning.RemoveWhere(i => !Main.npc[i].HasBuff<PowerStoneDebuff>());
         infinityGauntlet = null;
     }
 
@@ -39,16 +39,16 @@ public class ThanosPlayer : ModPlayer
 
         if (infinityGauntlet != null && Player.itemTime == 0 && Player.itemAnimation == 0)
         {
-            if (DoomBubblesMod.powerStoneHotKey.Current)
+            if (PowerStoneHotKey.Current)
             {
                 PowerStone.PowerChargeUp(Player, gauntletPos);
             }
-            else if (DoomBubblesMod.powerStoneHotKey.JustReleased)
+            else if (PowerStoneHotKey.JustReleased)
             {
                 PowerStone.PowerRelease(Player, infinityGauntlet, gauntletPos);
             }
-            else if (DoomBubblesMod.spaceStoneHotKey.JustPressed &&
-                     !Player.HasBuff(BuffType<SpaceStoneCooldown>()) &&
+            else if (SpaceStoneHotKey.JustPressed &&
+                     !Player.HasBuff<SpaceStoneCooldown>() &&
                      !Collision.SolidCollision(Main.MouseWorld, Player.width, Player.height) &&
                      Main.MouseWorld.X > 50f &&
                      Main.MouseWorld.X < Main.maxTilesX * 16 - 50 &&
@@ -57,20 +57,20 @@ public class ThanosPlayer : ModPlayer
             {
                 SpaceStone.SpaceAbility(Player, infinityGauntlet);
             }
-            else if (DoomBubblesMod.realityStoneHotKey.Current)
+            else if (RealityStoneHotKey.Current)
             {
                 RealityStone.RealityChannel(Player, infinityGauntlet);
             }
-            else if (DoomBubblesMod.soulStoneHotKey.JustPressed)
+            else if (SoulStoneHotKey.JustPressed)
             {
                 SoulStone.SoulAbility(Player);
             }
-            else if (DoomBubblesMod.timeStoneHotKey.JustPressed)
+            else if (TimeStoneHotKey.JustPressed)
             {
                 TimeStone.TimeAbility(Player);
             }
-            else if (DoomBubblesMod.mindStoneHotKey.JustPressed &&
-                     !Player.HasBuff(BuffType<MindStoneCooldown>()))
+            else if (MindStoneHotKey.JustPressed &&
+                     !Player.HasBuff<MindStoneCooldown>())
             {
                 MindStone.MindAbility(Mod, Player);
             }
@@ -141,7 +141,7 @@ public class ThanosPlayer : ModPlayer
     {
         if (Player.GetModPlayer<ThanosPlayer>().powerStone)
         {
-            if (target.HasBuff(BuffType<PowerStoneDebuff>()))
+            if (target.HasBuff<PowerStoneDebuff>())
             {
                 Player.GetModPlayer<ThanosPlayer>().PowerStoneDamage(target.whoAmI, .01f);
             }

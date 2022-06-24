@@ -8,7 +8,7 @@ public class RhythmStick : ModItem
     public override void SetStaticDefaults()
     {
         Tooltip.SetDefault("\"Hit me with your rhythm stick.\"\n\t-some song I listened to");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

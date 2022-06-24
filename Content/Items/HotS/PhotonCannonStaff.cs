@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using DoomBubblesMod.Content.Items.Talent;
 using DoomBubblesMod.Content.Projectiles.HotS;
-using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.HotS;
 
@@ -14,7 +13,7 @@ public class PhotonCannonStaff : ModItemWithTalents<TalentWarpResonance, TalentT
         DisplayName.SetDefault("Photon Cannon Staff");
         Tooltip.SetDefault("Warps Photon Cannons as stationary minions\n" +
                            "Photon Cannons require a Pylon power field");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

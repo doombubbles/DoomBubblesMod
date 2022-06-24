@@ -1,15 +1,14 @@
 ﻿using DoomBubblesMod.Common.Players;
-using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.Accessories;
 
-internal class ExplosiveCharm : ModItem
+public class ExplosiveCharm : ModItem
 {
     public override void SetStaticDefaults()
     {
         DisplayName.SetDefault("Explosive Charm");
-        Tooltip.SetDefault("Explosive Bullets deal more damage and can no longer hurt you");
-        Item.SetResearchAmount(1);
+        Tooltip.SetDefault("Explosive Bullets no longer hurt you");
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()
@@ -31,7 +30,7 @@ internal class ExplosiveCharm : ModItem
     {
         var recipe = CreateRecipe();
         recipe.AddIngredient(ItemID.ExplosivePowder, 100);
-        recipe.AddIngredient(ItemID.SoulofLight, 10);
+        recipe.AddIngredient(ItemID.SoulofNight, 10);
         recipe.AddTile(TileID.MythrilAnvil);
         recipe.Register();
     }

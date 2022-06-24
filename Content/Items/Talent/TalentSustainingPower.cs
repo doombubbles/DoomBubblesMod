@@ -1,5 +1,3 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Talent;
 
 public class TalentSustainingPower : ModItem
@@ -10,7 +8,7 @@ public class TalentSustainingPower : ModItem
         Tooltip.SetDefault("Lightning Surge Talent\n" +
                            "Heal for enemies hit other than the target\n" +
                            "[Right Click on a Lightning Surge with this to apply]");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

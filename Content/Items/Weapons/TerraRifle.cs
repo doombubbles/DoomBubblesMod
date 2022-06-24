@@ -1,5 +1,5 @@
+using DoomBubblesMod.Content.Items.Misc;
 using DoomBubblesMod.Content.Projectiles.Ranged;
-using DoomBubblesMod.Utils;
 using ElementalDamage.Content.DamageClasses;
 using Terraria.Audio;
 
@@ -12,7 +12,7 @@ public class TerraRifle : ModItem
         Tooltip.SetDefault("50% chance to not consume ammo\n" +
                            "Turns Bullets into Terra Bullets");
         DisplayName.SetDefault("Terra Rifle");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()
@@ -46,7 +46,7 @@ public class TerraRifle : ModItem
         var recipe = CreateRecipe();
         recipe.AddIngredient(ItemType<TrueMidnightMaelstrom>());
         recipe.AddIngredient(ItemType<TrueTrigun>());
-        //recipe.AddIngredient(ModContent.ItemType<HeartOfTerraria>());
+        recipe.AddIngredient(ItemType<BrokenHeroGun>());
         recipe.AddTile(TileID.MythrilAnvil);
         recipe.Register();
     }

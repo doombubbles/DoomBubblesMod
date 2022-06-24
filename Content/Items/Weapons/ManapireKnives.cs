@@ -1,5 +1,4 @@
 ﻿using DoomBubblesMod.Content.Projectiles.Magic;
-using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.Weapons;
 
@@ -10,7 +9,7 @@ public class ManapireKnives : ModItem
         DisplayName.SetDefault("Manapire Knives");
         Tooltip.SetDefault("Rapidly throw mana stealing daggers;\n" +
                            "Or, life stealing if at max");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

@@ -1,5 +1,4 @@
 using DoomBubblesMod.Content.Items.Accessories;
-using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.Armor;
 
@@ -15,7 +14,7 @@ public class CompuproHead : ModItem
         Tooltip.SetDefault("'Great for impersonating compupro!'\n" +
                            "If you look deep into its eyes, you can just about make out the words...\n" +
                            "'Civilization V has crashed.'");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

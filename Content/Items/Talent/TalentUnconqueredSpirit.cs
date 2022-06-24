@@ -1,5 +1,3 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Talent;
 
 public class TalentUnconqueredSpirit : ModItem
@@ -10,7 +8,7 @@ public class TalentUnconqueredSpirit : ModItem
         Tooltip.SetDefault("Shield Capacitor Talent\n" +
                            "Upon taking fatal damage, prevent it and refresh Shield Capacitor. 2 min cooldown.\n" +
                            "[Right Click on a Shield Capacitor with this to apply]");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

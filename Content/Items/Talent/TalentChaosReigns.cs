@@ -1,5 +1,3 @@
-using DoomBubblesMod.Utils;
-
 namespace DoomBubblesMod.Content.Items.Talent;
 
 public class TalentChaosReigns : ModItem
@@ -10,7 +8,7 @@ public class TalentChaosReigns : ModItem
         Tooltip.SetDefault("Discord Strike Talent\n" +
                            "Discord Strike does increasing damage as it passes through enemies\n" +
                            "[Right Click on a Discord Blade with this to apply]");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

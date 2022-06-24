@@ -1,14 +1,12 @@
-﻿using DoomBubblesMod.Utils;
+﻿namespace DoomBubblesMod.Content.Items.Accessories.Emblem;
 
-namespace DoomBubblesMod.Content.Items.Accessories.Emblem;
-
-internal class SolarEmblem : ModItem
+public class SolarEmblem : ModItem
 {
     public override void SetStaticDefaults()
     {
         DisplayName.SetDefault("Solar Emblem");
         Tooltip.SetDefault("20% increased melee damage");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()

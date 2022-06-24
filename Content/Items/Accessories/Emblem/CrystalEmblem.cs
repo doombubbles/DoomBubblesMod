@@ -1,16 +1,15 @@
 ﻿using DoomBubblesMod.Common.Players;
-using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.Accessories.Emblem;
 
-internal class CrystalEmblem : ModItem
+public class CrystalEmblem : ModItem
 {
     public override void SetStaticDefaults()
     {
         DisplayName.SetDefault("Crystal Emblem");
         Tooltip.SetDefault("15% increased ranged damage\n" +
                            "Crystal Bullets release extra shards");
-        Item.SetResearchAmount(1);
+        SacrificeTotal = 1;
     }
 
     public override void SetDefaults()
