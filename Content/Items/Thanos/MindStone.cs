@@ -61,7 +61,7 @@ public class MindStone : InfinityStone
     }
 }
 
-public class MindStonePacket : CustomPacket<MindStonePacket>
+public class MindStonePacket : ModCustomPacket
 {
     public NPC NPC { get; set; }
 

@@ -103,7 +103,6 @@ public class ThanosPlayer : ModPlayer
 
     public override void PostUpdate()
     {
-
         base.PostUpdate();
     }
 

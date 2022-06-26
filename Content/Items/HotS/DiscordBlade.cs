@@ -23,7 +23,7 @@ public class DiscordBlade : ModItemWithTalents<ChaosReigns, Dissonance, LethalOn
     public override void SetDefaults()
     {
         Item.damage = 75;
-        Item.DamageType = GetInstance<MeleeMagic>();
+        Item.DamageType = GetInstance<MagicMeleeSpeed>();
         Item.width = 36;
         Item.height = 44;
         Item.useTime = 30;

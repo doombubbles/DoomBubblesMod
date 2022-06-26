@@ -34,7 +34,7 @@ public class DiscordStrike : HotsProjectile
     {
         Projectile.width = Size;
         Projectile.height = Size;
-        Projectile.DamageType = GetInstance<MeleeMagic>();
+        Projectile.DamageType = GetInstance<MagicMeleeSpeed>();
         Projectile.friendly = true;
         Projectile.tileCollide = false;
         Projectile.alpha = 69;

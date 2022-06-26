@@ -168,23 +168,8 @@ public static class Extensions
 
     public static void HandleCustomPacket(this Mod mod, BinaryReader reader, int whoAmI)
     {
-        var type = reader.ReadInt32();
-        var customPacket = GetContent<CustomPacket>().FirstOrDefault(packet => packet.Type == type);
-        if (customPacket != null)
-        {
-            customPacket.Receive(reader, whoAmI);
-        }
-        else
-        {
-            mod.Logger.Warn($"Couldn't find ModPacket with type {type}");
-        }
+        ModCustomPacket.Handle(mod, reader, whoAmI);
     }
-
-    /// <summary>
-    /// Gets the element of the array at the given index, or null/default if the index is negative or out of bounds
-    /// </summary>
-    public static T GetOrDefault<T>(this T[] array, int index) =>
-        index < 0 || index >= array.Length ? default : array[index];
 
     public static string SoundPath(this Mod mod, string assetPath) => $"{mod.Name}/Assets/Sounds/{assetPath}";
 

@@ -1,72 +1,92 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace DoomBubblesMod.Utils;
 
 /// <summary>
-/// A class that holds a getter and setter for a specific Property of a custom packet
+/// A class that holds the required info to serialize a custom packet type
 /// </summary>
-public abstract class CustomPacketSerializer
+internal abstract class CustomPacketSerializer
 {
-    public static CustomPacketSerializer<T> Create<T>(PropertyInfo info, Type type) where T : CustomPacket<T>
+    public Mod Mod { get; private set; }
+    public int Type { get; private set; }
+
+    public static CustomPacketSerializer Create(ModCustomPacket packet)
     {
-        var cpd = (CustomPacketSerializer<T>) Activator.CreateInstance(type.MakeGenericType(typeof(T)));
-        cpd!.Init(info);
-        return cpd;
+        var serializationType = typeof(CustomPacketSerializer<>).MakeGenericType(packet.GetType());
+        var serializer = ((CustomPacketSerializer) Activator.CreateInstance(serializationType))!;
+        serializer.Mod = packet.Mod;
+        serializer.Type = packet.type;
+        serializer.Init(packet.GetType());
+
+        return serializer;
     }
 
-    protected abstract void Init(PropertyInfo property);
-}
+    protected abstract void Init(Type packetType);
 
-/// <summary>
-/// <inheritdoc cref="CustomPacketSerializer"/>
-/// </summary>
-/// <typeparam name="T">The packet type that this is a delegate for</typeparam>
-public abstract class CustomPacketSerializer<T> : CustomPacketSerializer where T : CustomPacket<T>
-{
+    public abstract int PropertyCount { get; }
+
     /// <summary>
-    /// Reads information from the binary reader and stores it in the packet
+    /// Reads all information from the binary reader and stores it in the custom packet
     /// </summary>
     /// <param name="reader"></param>
-    /// <param name="customPacket"></param>
-    public virtual void Read(BinaryReader reader, T customPacket)
-    {
-    }
+    /// <param name="modCustomPacket"></param>
+    public abstract void Deserialize(BinaryReader reader, ModCustomPacket modCustomPacket);
 
     /// <summary>
-    /// Gets the information from the packet and writes it into the ModPacket
+    /// Writes all custom information from the custom packet into the ModPacket
     /// </summary>
     /// <param name="packet"></param>
-    /// <param name="customPacket"></param>
-    public virtual void Write(ModPacket packet, T customPacket)
-    {
-    }
+    /// <param name="modCustomPacket"></param>
+    public abstract void Serialize(ModPacket packet, ModCustomPacket modCustomPacket);
 }
 
-/// <summary>
 /// <inheritdoc cref="CustomPacketSerializer"/>
-/// </summary>
-/// <typeparam name="TPacket">The packet type that this is a delegate for</typeparam>
-/// <typeparam name="TType">The type that this is a delegate for</typeparam>
-public abstract class CustomPacketSerializer<TPacket, TType> : CustomPacketSerializer<TPacket>
-    where TPacket : CustomPacket<TPacket>
+/// <typeparam name="T">The ModCustomPacket this serializes</typeparam>
+internal class CustomPacketSerializer<T> : CustomPacketSerializer where T : ModCustomPacket
 {
-    private Action<TPacket, TType> setter;
-    private Func<TPacket, TType> getter;
+    private List<PacketPropertySerializer<T>> serializers;
 
-    protected sealed override void Init(PropertyInfo property)
+    public override int PropertyCount => serializers.Count;
+
+    protected override void Init(Type packetType)
     {
-        setter = (Action<TPacket, TType>)
-            Delegate.CreateDelegate(typeof(Action<TPacket, TType>), null, property.GetSetMethod(true)!);
-        getter = (Func<TPacket, TType>)
-            Delegate.CreateDelegate(typeof(Func<TPacket, TType>), null, property.GetGetMethod(true)!);
+        var properties = packetType.GetProperties(BindingFlags.Public |
+                                                  BindingFlags.NonPublic |
+                                                  BindingFlags.DeclaredOnly |
+                                                  BindingFlags.Instance);
+
+        serializers = properties
+            .Where(info => info.CanRead && info.CanWrite)
+            .Select(PacketPropertySerializer.Create<T>)
+            .OrderBy(d => d.GetType().Name)
+            .ToList();
     }
 
-    public sealed override void Read(BinaryReader reader, TPacket customPacket) => setter(customPacket, Read(reader));
-    
-    public sealed override void Write(ModPacket packet, TPacket customPacket) => Write(packet, getter(customPacket));
+    public override void Deserialize(BinaryReader reader, ModCustomPacket modCustomPacket)
+    {
+        if (modCustomPacket is not T)
+        {
+            Mod.Logger.Error(
+                $"CustomPacket tried to deserialize as wrong type, was {modCustomPacket.GetType().Name} but expected {typeof(T).Name}");
+            return;
+        }
 
-    protected abstract TType Read(BinaryReader reader);
-    protected abstract void Write(ModPacket packet, TType value);
+        serializers.ForEach(s => s.Deserialize(reader, modCustomPacket as T));
+    }
+
+    public override void Serialize(ModPacket packet, ModCustomPacket modCustomPacket)
+    {
+        if (modCustomPacket is not T)
+        {
+            Mod.Logger.Error(
+                $"CustomPacket tried to serialize as wrong type, was {modCustomPacket.GetType().Name} but expected {typeof(T).Name}");
+            return;
+        }
+
+        serializers.ForEach(s => s.Serialize(packet, modCustomPacket as T));
+    }
 }

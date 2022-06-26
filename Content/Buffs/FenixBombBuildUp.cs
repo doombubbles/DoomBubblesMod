@@ -24,13 +24,7 @@ public class FenixBombBuildUp : ModBuff
         tip = "Stacks: " + shots;
     }
 
-    public override bool ReApply(NPC npc, int time, int buffIndex)
-    {
-        return false;
-    }
+    public override bool ReApply(NPC npc, int time, int buffIndex) => false;
 
-    public override bool ReApply(Player player, int time, int buffIndex)
-    {
-        return false;
-    }
+    public override bool ReApply(Player player, int time, int buffIndex) => false;
 }

@@ -70,8 +70,6 @@ public class DoomBubblesPlayer : ModPlayer
         itemsByMod["Terraria"][0] = item;
     }
 
-    public override bool CanConsumeAmmo(Item weapon, Item ammo)
-    {
-        return !Player.GetModPlayer<DoomBubblesPlayer>().homing && base.CanConsumeAmmo(weapon, ammo);
-    }
+    public override bool CanConsumeAmmo(Item weapon, Item ammo) =>
+        !Player.GetModPlayer<DoomBubblesPlayer>().homing && base.CanConsumeAmmo(weapon, ammo);
 }
