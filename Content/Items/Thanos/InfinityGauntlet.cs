@@ -19,7 +19,6 @@ public class InfinityGauntlet : ModItem
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Infinity Gauntlet");
         Tooltip.SetDefault("Right click to select stone\n" +
                            "\"Perfectly balanced...\n" +
                            "...as all things should be.\"\n" +

@@ -5,7 +5,6 @@ public class MartianMeteorSuit : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Martian Meteor Suit");
         Tooltip.SetDefault("17% Increased Magic Damage");
         SacrificeTotal = 1;
     }

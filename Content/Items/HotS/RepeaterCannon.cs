@@ -4,7 +4,7 @@ using DoomBubblesMod.Content.Projectiles.HotS;
 
 namespace DoomBubblesMod.Content.Items.HotS;
 
-public class RepeaterCannon : ModItemWithTalents<TalentMobileOffense, TalentOffensiveCadence, TalentArsenalOvercharge>
+public class RepeaterCannon : ModItemWithTalents<MobileOffense, OffensiveCadence, ArsenalOvercharge>
 {
     private short mShot;
 
@@ -12,7 +12,6 @@ public class RepeaterCannon : ModItemWithTalents<TalentMobileOffense, TalentOffe
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Repeater Cannon");
         Tooltip.SetDefault("Shots build up to empower your next Phase Bomb\n" +
                            "(Stacks up to 10)");
         SacrificeTotal = 1;
@@ -76,6 +75,6 @@ public class RepeaterCannon : ModItemWithTalents<TalentMobileOffense, TalentOffe
 
     public override float UseTimeMultiplier(Player player)
     {
-        return base.UseTimeMultiplier(player) * (1f + .1f * player.GetModPlayer<HotSPlayer>().fenixRepeaterBuff);
+        return base.UseTimeMultiplier(player) * (1f + .1f * player.GetModPlayer<HotsPlayer>().fenixRepeaterBuff);
     }
 }

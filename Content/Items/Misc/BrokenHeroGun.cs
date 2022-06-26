@@ -4,7 +4,6 @@ public class BrokenHeroGun : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Broken Hero Gun");
         SacrificeTotal = 1;
     }
 

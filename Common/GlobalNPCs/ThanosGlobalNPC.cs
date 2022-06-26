@@ -105,7 +105,7 @@ public class ThanosGlobalNPC : GlobalNPC
                     var projectile = Main.projectile[i];
                     if (!projectile.friendly)
                     {
-                        new MindStonePacket {projectile = projectile}.HandleForAll();
+                        new MindStonePacket {Projectile = projectile}.HandleForAll();
                     }
                 }
             }
@@ -117,7 +117,7 @@ public class ThanosGlobalNPC : GlobalNPC
                     var n = Main.npc[i];
                     if (!n.friendly && !n.boss)
                     {
-                        new MindStonePacket {npc = npc}.HandleForAll();
+                        new MindStonePacket {NPC = npc}.HandleForAll();
                     }
                 }
             }

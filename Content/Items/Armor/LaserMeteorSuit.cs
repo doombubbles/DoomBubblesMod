@@ -5,7 +5,6 @@ public class LaserMeteorSuit : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Laser Meteor Suit");
         Tooltip.SetDefault("11% Increased Magic Damage");
         SacrificeTotal = 1;
     }

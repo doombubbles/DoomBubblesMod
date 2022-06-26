@@ -4,7 +4,6 @@ public class SolarBullet : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Solar Bullet");
         Tooltip.SetDefault("Deals bonus damage to airborne enemies");
         SacrificeTotal = 99;
     }

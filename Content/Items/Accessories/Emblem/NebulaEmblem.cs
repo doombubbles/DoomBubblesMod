@@ -4,7 +4,6 @@ public class NebulaEmblem : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Nebula Emblem");
         Tooltip.SetDefault("20% increased magic damage");
         SacrificeTotal = 1;
     }

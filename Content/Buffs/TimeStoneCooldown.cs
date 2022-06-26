@@ -4,7 +4,6 @@ public class TimeStoneCooldown : ModBuff
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Time Stone Cooldown");
         Description.SetDefault("");
         Main.debuff[Type] = true;
         Main.pvpBuff[Type] = true;

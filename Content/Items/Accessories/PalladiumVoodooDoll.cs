@@ -4,7 +4,6 @@ public class PalladiumVoodooDoll : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Palladium Voodoo Doll");
         Tooltip.SetDefault("Your life regenerates palladiumly");
         SacrificeTotal = 1;
     }

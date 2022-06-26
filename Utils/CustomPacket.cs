@@ -31,7 +31,7 @@ public abstract class CustomPacket : ModType
     public abstract void HandlePacket();
 
     /// <summary>
-    /// Initialize the default values of your custom packet properties
+    /// Initialize the default values of your custom packet properties. Useful if information might need to be reset
     /// </summary>
     protected virtual void SetDefaults()
     {
@@ -50,9 +50,9 @@ public abstract class CustomPacket : ModType
     public abstract void Send(int toClient = -1, int ignoreClient = -1);
 
     /// <summary>
-    ///     Causes all clients and the server to handle the results of this packet
-    ///     <br />
-    ///     Works for single-player or multiplayer
+    /// Causes all clients and the server to handle the results of this packet
+    /// <br />
+    /// Works for single-player or multiplayer
     /// </summary>
     public void HandleForAll()
     {
@@ -65,7 +65,7 @@ public abstract class CustomPacket : ModType
                 Send();
                 break;
         }
-        
+
         HandlePacket();
     }
 }
@@ -83,9 +83,10 @@ public abstract class CustomPacket<T> : CustomPacket where T : CustomPacket<T>
 
         ModTypeLookup<CustomPacket>.Register(this);
 
-        Mod.Logger.Info($"Registered ModPacket {GetType().Name} with {info.NumProperties} properties as type {info.type}");
+        Mod.Logger.Info(
+            $"Registered ModPacket {GetType().Name} with {info.NumProperties} properties as type {info.type}");
     }
-
+    
     public sealed override void Receive(BinaryReader reader, int sender)
     {
         if (packetInfo[GetType()] is CustomPacketInfo<T> info)
@@ -98,8 +99,9 @@ public abstract class CustomPacket<T> : CustomPacket where T : CustomPacket<T>
             {
                 Send(-1, sender);
             }
+
             HandlePacket();
-            
+
             // Mod.Logger.Info($"Handled packet {GetType().Name} on netMode {Main.netMode}");
         }
         else
@@ -125,16 +127,4 @@ public abstract class CustomPacket<T> : CustomPacket where T : CustomPacket<T>
                 .Error($"Failed sending packet {GetType().Name} because packet info is wrong type");
         }
     }
-}
-
-/// <summary>
-/// A class that holds the static information about a custom packet, including the generated delegates for
-/// getting/setting values without doing repeated Reflection
-/// </summary>
-public class CustomPacketInfo
-{
-    public Mod Mod { get; protected init; }
-    public int type;
-
-    protected static List<Type> DelegateTypes { get; set; }
 }

@@ -122,6 +122,7 @@ public class DoomBubblesGlobalItem : GlobalItem
             tooltips.ForEach(line => line.Text = line.Text.Replace("Allows to use", "Allows you to use"));
             tooltips.ForEach(line => line.Text = line.Text.Replace("not to consume potion", "to not consume potions"));
             tooltips.ForEach(line => line.Text = line.Text.Replace("have better chance", "have a better chance"));
+            tooltips.ForEach(line => line.Text = line.Text.Replace("Piggy Bank by Quick Buff", "your Piggy Bank via Quick Buff"));
         }
     }
 

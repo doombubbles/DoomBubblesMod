@@ -7,18 +7,15 @@ using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Projectiles.HotS;
 
-public class Pylon : ModProjectile
+public class Pylon : HotsProjectile
 {
-    public static readonly float AttackSpeed = 30f;
+    private const float AttackSpeed = 30f;
 
-    public float ShootDistance => ChosenTalent is 2 or -1 ? 900f : 600f;
-    public float PowerDistance => ChosenTalent is 2 or -1 ? 450f : 300f;
-
-    public int ChosenTalent => (int) Math.Round(Projectile.ai[0]);
+    private float ShootDistance => ChosenTalent is 2 or -1 ? 900f : 600f;
+    private float PowerDistance => ChosenTalent is 2 or -1 ? 450f : 300f;
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Pylon");
         Main.projFrames[Projectile.type] = 6;
     }
 
@@ -61,14 +58,14 @@ public class Pylon : ModProjectile
 
     public override void Kill(int timeLeft)
     {
-        Main.player[Projectile.owner].GetModPlayer<HotSPlayer>().pylons
+        Main.player[Projectile.owner].GetModPlayer<HotsPlayer>().pylons
             .RemoveAll(i => i == Projectile.whoAmI);
         base.Kill(timeLeft);
     }
 
     public override void AI()
     {
-        if (!Main.player[Projectile.owner].GetModPlayer<HotSPlayer>().pylons.Contains(Projectile.whoAmI) &&
+        if (!Main.player[Projectile.owner].GetModPlayer<HotsPlayer>().pylons.Contains(Projectile.whoAmI) &&
             Projectile.owner == Main.myPlayer)
         {
             Projectile.Kill();

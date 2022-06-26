@@ -6,11 +6,6 @@ namespace DoomBubblesMod.Content.Projectiles.Ranged;
 
 public class TrueHomingBullet : ModProjectile
 {
-    public override void SetStaticDefaults()
-    {
-        DisplayName.SetDefault("True Homing Bullet");
-    }
-
     public override void SetDefaults()
     {
         Projectile.width = 8;

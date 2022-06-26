@@ -15,7 +15,6 @@ public class TargetingComputer : ModItem
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Targeting Computer");
         Tooltip.SetDefault("Who needs the Force anyway?");
         SacrificeTotal = 1;
     }

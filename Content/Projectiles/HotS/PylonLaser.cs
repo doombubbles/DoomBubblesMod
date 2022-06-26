@@ -2,12 +2,6 @@
 
 public class PylonLaser : ModProjectile
 {
-    public override void SetStaticDefaults()
-    {
-        DisplayName.SetDefault("Pylon Laser");
-        ProjectileID.Sets.SentryShot[Projectile.type] = true;
-    }
-
     public override void SetDefaults()
     {
         Projectile.width = 5;
@@ -20,8 +14,7 @@ public class PylonLaser : ModProjectile
         Projectile.tileCollide = false;
         Projectile.alpha = 255;
     }
-
-
+    
     public override void AI()
     {
         var dust = Dust.NewDustPerfect(new Vector2(Projectile.position.X, Projectile.position.Y), 180);

@@ -15,7 +15,6 @@ public class PowerStone : InfinityStone
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Power Stone");
         Tooltip.SetDefault("\"The stone reacts to anything organic, the bigger\n" +
                            "the target, the bigger the power surge.\"\n" +
                            "-Gamora");

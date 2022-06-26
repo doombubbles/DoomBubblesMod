@@ -8,12 +8,6 @@ namespace DoomBubblesMod.Content.Projectiles.Magic;
 
 public class RainbowMachineGun : ModProjectile
 {
-    public override void SetStaticDefaults()
-    {
-        Main.projFrames[Projectile.type] = 6;
-        DisplayName.SetDefault("Rainbow Machine Gun");
-    }
-
     public override void SetDefaults()
     {
         Projectile.width = 22;

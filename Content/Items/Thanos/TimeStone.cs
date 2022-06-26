@@ -14,7 +14,6 @@ public class TimeStone : InfinityStone
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Time Stone");
         Tooltip.SetDefault("\"Dormammu, I've come to bargain.\"\n" +
                            "-Doctor Strange, multiple occasions");
         SacrificeTotal = 1;

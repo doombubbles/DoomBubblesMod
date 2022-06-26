@@ -4,7 +4,6 @@ public class PylonSuperPower : ModBuff
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Pylon Super Power");
         Description.SetDefault("Increased Life/Mana Regen and Damage");
         Main.debuff[Type] = false;
         Main.pvpBuff[Type] = true;

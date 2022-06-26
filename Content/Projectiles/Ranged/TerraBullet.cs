@@ -6,11 +6,6 @@ namespace DoomBubblesMod.Content.Projectiles.Ranged;
 
 public class TerraBullet : ModProjectile
 {
-    public override void SetStaticDefaults()
-    {
-        DisplayName.SetDefault("Terra Bullet");
-    }
-
     public override void SetDefaults()
     {
         Projectile.width = 8;

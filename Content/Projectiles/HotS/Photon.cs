@@ -6,11 +6,8 @@ namespace DoomBubblesMod.Content.Projectiles.HotS;
 
 public class Photon : CenteredProjectile
 {
-    public int ChosenTalent => (int) Math.Round(Projectile.ai[0]);
-
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Photon");
         Main.projFrames[Projectile.type] = 5;
         ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
         ProjectileID.Sets.MinionShot[Projectile.type] = true;

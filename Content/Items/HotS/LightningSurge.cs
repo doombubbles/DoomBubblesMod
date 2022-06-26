@@ -5,14 +5,13 @@ using DoomBubblesMod.Content.Projectiles.HotS;
 
 namespace DoomBubblesMod.Content.Items.HotS;
 
-public class LightningSurge : ModItemWithTalents<TalentSustainingPower, TalentLightningBarrage, TalentNegativelyCharged>
+public class LightningSurge : ModItemWithTalents<SustainingPower, LightningBarrage, NegativelyCharged>
 {
     protected override Color? TalentColor => Color.Red;
 
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Lightning Surge");
         Tooltip.SetDefault("Shoots lightning at an enemy by your cursor\n" +
                            "Enemies hit along the way take bonus damage");
         SacrificeTotal = 1;

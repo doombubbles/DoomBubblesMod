@@ -4,7 +4,6 @@ public class StardustBullet : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Stardust Bullet");
         Tooltip.SetDefault("Splits into smaller bullets on hit");
         SacrificeTotal = 99;
     }

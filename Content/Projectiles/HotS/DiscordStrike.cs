@@ -3,14 +3,15 @@ using DoomBubblesMod.Common.DamageClasses;
 
 namespace DoomBubblesMod.Content.Projectiles.HotS;
 
-public class DiscordStrike : CenteredProjectile
+public class DiscordStrike : HotsProjectile
 {
     private int Size =>
         (int) (Math.Sqrt(Projectile.velocity.Length() * (ChosenTalent == 2 || ChosenTalent == -1 ? 1.5f : 3f)) *
                Math.Sqrt(60));
 
+    protected override bool Centered => true;
+
     private float Length => Projectile.velocity.Length() * 15f;
-    private int ChosenTalent => (int) Math.Round(Projectile.ai[0]);
     private float DistanceFactor => (Origin - Projectile.Center).Length() / Length;
 
     private Vector2 Origin

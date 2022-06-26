@@ -4,7 +4,6 @@ public class NebulaBullet : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Nebula Bullet");
         Tooltip.SetDefault("Teleports to enemies if close");
         SacrificeTotal = 99;
     }

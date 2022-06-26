@@ -7,7 +7,7 @@ using Terraria.GameContent;
 
 namespace DoomBubblesMod.Content.Projectiles.HotS;
 
-public class Repeater : ModProjectile
+public class Repeater : HotsProjectile2
 {
     public override void SetDefaults()
     {
@@ -29,25 +29,25 @@ public class Repeater : ModProjectile
         {
             var player = Main.player[Projectile.owner];
             player.AddBuff(BuffType<FenixBombBuildUp>(), 360);
-            if ((Projectile.ai[1] == 3 || Projectile.ai[1] == -1) &&
-                player.GetModPlayer<HotSPlayer>().fenixBombBuildUp == 14 ||
-                !(Projectile.ai[1] == 3 || Projectile.ai[1] == -1) &&
-                player.GetModPlayer<HotSPlayer>().fenixBombBuildUp == 9)
+            if (ChosenTalent is 3 or -1 &&
+                player.GetModPlayer<HotsPlayer>().fenixBombBuildUp == 14 ||
+                ChosenTalent is not (3 or -1) &&
+                player.GetModPlayer<HotsPlayer>().fenixBombBuildUp == 9)
             {
                 SoundEngine.PlaySound(Mod.Sound("Boung"), Projectile.position);
             }
 
-            player.GetModPlayer<HotSPlayer>().fenixBombBuildUp++;
-            if (Projectile.ai[1] == 3 || Projectile.ai[1] == -1)
+            player.GetModPlayer<HotsPlayer>().fenixBombBuildUp++;
+            if (ChosenTalent is 3 or -1)
             {
-                if (player.GetModPlayer<HotSPlayer>().fenixBombBuildUp > 15)
+                if (player.GetModPlayer<HotsPlayer>().fenixBombBuildUp > 15)
                 {
-                    player.GetModPlayer<HotSPlayer>().fenixBombBuildUp = 15;
+                    player.GetModPlayer<HotsPlayer>().fenixBombBuildUp = 15;
                 }
             }
-            else if (player.GetModPlayer<HotSPlayer>().fenixBombBuildUp > 10)
+            else if (player.GetModPlayer<HotsPlayer>().fenixBombBuildUp > 10)
             {
-                player.GetModPlayer<HotSPlayer>().fenixBombBuildUp = 10;
+                player.GetModPlayer<HotsPlayer>().fenixBombBuildUp = 10;
             }
         }
     }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,10 +7,23 @@ using Terraria.ModLoader.Core;
 
 namespace DoomBubblesMod.Utils;
 
+/// <summary>
+/// A class that holds the static information about a custom packet, including the generated delegates for
+/// getting/setting values without doing repeated Reflection
+/// </summary>
+public class CustomPacketInfo
+{
+    public Mod Mod { get; protected init; }
+    public int type;
+
+    protected static List<Type> DelegateTypes { get; set; }
+}
+
+
 /// <inheritdoc cref="CustomPacketInfo"/>
 public class CustomPacketInfo<T> : CustomPacketInfo where T : CustomPacket<T>
 {
-    private readonly List<CustomPacketDelegate<T>> delegates;
+    private readonly List<CustomPacketSerializer<T>> delegates;
 
     public int NumProperties => delegates.Count;
 
@@ -23,12 +37,12 @@ public class CustomPacketInfo<T> : CustomPacketInfo where T : CustomPacket<T>
 
         DelegateTypes ??= AssemblyManager
             .GetLoadableTypes(GetInstance<DoomBubblesMod>().Code)
-            .Where(t => !t.IsAbstract && t.IsSubclassOf(typeof(CustomPacketDelegate)))
+            .Where(t => !t.IsAbstract && t.IsSubclassOf(typeof(CustomPacketSerializer)))
             .ToList();
 
         delegates = properties
             .Join(DelegateTypes, info => info.PropertyType, t => t.BaseType!.GenericTypeArguments[1],
-                CustomPacketDelegate.Create<T>)
+                CustomPacketSerializer.Create<T>)
             .OrderBy(d => d.GetType().Name)
             .ToList();
     }

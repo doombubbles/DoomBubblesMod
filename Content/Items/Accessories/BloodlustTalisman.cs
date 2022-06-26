@@ -4,7 +4,6 @@ public class BloodlustTalisman : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Bloodlust Talisman");
         Tooltip.SetDefault("Your lifesteal is uncapped");
         SacrificeTotal = 1;
     }

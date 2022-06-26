@@ -1,5 +1,4 @@
 ﻿using DoomBubblesMod.Common.Players;
-using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.Armor;
 
@@ -10,7 +9,6 @@ public class MartianMeteorHelmet : ModItem
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Martian Meteor Helmet");
         Tooltip.SetDefault("17% Increased Magic Damage");
         SacrificeTotal = 1;
     }

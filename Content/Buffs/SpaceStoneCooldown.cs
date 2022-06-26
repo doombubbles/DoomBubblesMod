@@ -4,7 +4,6 @@ public class SpaceStoneCooldown : ModBuff
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Space Stone Cooldown");
         Description.SetDefault("");
         Main.debuff[Type] = true;
         Main.pvpBuff[Type] = true;

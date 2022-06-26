@@ -5,11 +5,12 @@ using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Projectiles.HotS;
 
-public class PhaseBomb : CenteredProjectile
+public class PhaseBomb : HotsProjectile2
 {
+    protected override bool Centered => true;
+
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Phase Bomb");
         Main.projFrames[Projectile.type] = 9;
     }
 
@@ -119,17 +120,17 @@ public class PhaseBomb : CenteredProjectile
         {
             var player = Main.player[Projectile.owner];
             player.AddBuff(BuffType<FenixRepeaterBuff>(), 360);
-            player.GetModPlayer<HotSPlayer>().fenixRepeaterBuff += (int) Projectile.localAI[0];
+            player.GetModPlayer<HotsPlayer>().fenixRepeaterBuff += (int) Projectile.localAI[0];
             if (player.gravControl2)
             {
-                if (player.GetModPlayer<HotSPlayer>().fenixRepeaterBuff > 15)
+                if (player.GetModPlayer<HotsPlayer>().fenixRepeaterBuff > 15)
                 {
-                    player.GetModPlayer<HotSPlayer>().fenixRepeaterBuff = 15;
+                    player.GetModPlayer<HotsPlayer>().fenixRepeaterBuff = 15;
                 }
             }
-            else if (player.GetModPlayer<HotSPlayer>().fenixRepeaterBuff > 10)
+            else if (player.GetModPlayer<HotsPlayer>().fenixRepeaterBuff > 10)
             {
-                player.GetModPlayer<HotSPlayer>().fenixRepeaterBuff = 10;
+                player.GetModPlayer<HotsPlayer>().fenixRepeaterBuff = 10;
             }
         }
 

@@ -6,7 +6,6 @@ public class ChromaticGauntlet : ModItem, IHasThoriumRecipe
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Chromatic Gauntlet");
         Tooltip.SetDefault("5% increased damage\n" +
                            "5% increased crit chance\n" +
                            "5% increased attack speed\n" +

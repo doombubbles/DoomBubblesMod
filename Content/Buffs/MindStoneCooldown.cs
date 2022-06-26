@@ -4,7 +4,6 @@ public class MindStoneCooldown : ModBuff
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Mind Stone Cooldown");
         Description.SetDefault("");
         Main.debuff[Type] = true;
         Main.pvpBuff[Type] = true;

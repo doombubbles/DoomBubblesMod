@@ -9,9 +9,4 @@ public class TerraShard : ModProjectile
         Projectile.CloneDefaults(ProjectileID.CrystalShard);
         Projectile.DamageType = GetInstance<RangedNature>();
     }
-
-    public override void SetStaticDefaults()
-    {
-        DisplayName.SetDefault("Terra Shard");
-    }
 }

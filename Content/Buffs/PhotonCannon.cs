@@ -6,7 +6,6 @@ public class PhotonCannon : ModBuff
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Photon Cannon");
         Description.SetDefault("Make sure they're in Power Fields");
         Main.buffNoSave[Type] = true;
         Main.buffNoTimeDisplay[Type] = true;
@@ -14,7 +13,7 @@ public class PhotonCannon : ModBuff
 
     public override void Update(Player player, ref int buffIndex)
     {
-        var modPlayer = player.GetModPlayer<HotSPlayer>();
+        var modPlayer = player.GetModPlayer<HotsPlayer>();
         if (player.ownedProjectileCounts[ProjectileType<Projectiles.HotS.PhotonCannon>()] > 0)
         {
             modPlayer.photonCannon = true;

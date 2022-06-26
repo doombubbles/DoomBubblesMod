@@ -6,7 +6,6 @@ public class Convection : ModBuff
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Convection");
         Description.SetDefault("Flamestrike Damage Bonus: 0");
         Main.debuff[Type] = false;
         Main.pvpBuff[Type] = true;
@@ -22,7 +21,7 @@ public class Convection : ModBuff
 
     public override void ModifyBuffTip(ref string tip, ref int rare)
     {
-        var shots = Main.LocalPlayer.GetModPlayer<HotSPlayer>().convection;
+        var shots = Main.LocalPlayer.GetModPlayer<HotsPlayer>().convection;
         tip = "Flamestrike Damage Bonus: " + shots;
     }
 

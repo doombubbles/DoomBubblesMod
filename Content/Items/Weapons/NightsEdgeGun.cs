@@ -1,13 +1,19 @@
+using ElementalDamage.Content.DamageClasses;
 using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Items.Weapons;
 
 public abstract class NightsEdgeGun : ModItem
 {
+    public override void SetStaticDefaults()
+    {
+        SacrificeTotal = 1;
+    }
+
     public override void SetDefaults()
     {
         Item.damage = 20;
-        Item.DamageType = DamageClass.Ranged;
+        Item.DamageType = GetInstance<RangedShadow>();
         Item.width = 52;
         Item.height = 20;
         Item.useTime = 30;
@@ -29,13 +35,12 @@ public abstract class NightsEdgeGun : ModItem
         int damage, float knockback)
     {
         SoundEngine.PlaySound(SoundID.Item36, position);
-        var numberProjectiles = 2 + Main.rand.Next(2);
-        for (var i = 0; i < numberProjectiles; i++)
+        for (var i = 0; i < 2; i++)
         {
-            var perturbedSpeed = velocity.RotatedByRandom(MathHelper.ToRadians(10)); // 30 degree spread.
+            var perturbedSpeed = velocity.RotatedByRandom(MathHelper.ToRadians(15));
             // If you want to randomize the speed to stagger the projectiles
             var scale = 1f - Main.rand.NextFloat() * .1f;
-            perturbedSpeed = perturbedSpeed * scale;
+            perturbedSpeed *= scale;
             Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type,
                 (int) (damage / 2.0), knockback, player.whoAmI);
         }

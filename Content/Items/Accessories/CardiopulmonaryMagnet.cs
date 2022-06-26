@@ -4,7 +4,6 @@ public class CardiopulmonaryMagnet : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Cardiopullmonary Magnet");
         Tooltip.SetDefault("Increases pickup range for life hearts");
         SacrificeTotal = 1;
     }

@@ -4,7 +4,6 @@ public class StardustEmblem : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Stardust Emblem");
         Tooltip.SetDefault("20% increased summon damage");
         SacrificeTotal = 1;
     }

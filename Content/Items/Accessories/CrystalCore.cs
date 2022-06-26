@@ -6,7 +6,6 @@ public class CrystalCore : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Crystal Core");
         Tooltip.SetDefault("Crystal Bullets release extra shards");
         SacrificeTotal = 1;
     }

@@ -5,11 +5,6 @@ namespace DoomBubblesMod.Content.Projectiles.Magic;
 
 public class ManapireKnife : ModProjectile
 {
-    public override void SetStaticDefaults()
-    {
-        DisplayName.SetDefault("Manapire Knife");
-    }
-
     public override void SetDefaults()
     {
         Projectile.CloneDefaults(ProjectileID.VampireKnife);

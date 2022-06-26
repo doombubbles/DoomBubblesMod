@@ -6,7 +6,6 @@ public class CrystalEmblem : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Crystal Emblem");
         Tooltip.SetDefault("15% increased ranged damage\n" +
                            "Crystal Bullets release extra shards");
         SacrificeTotal = 1;

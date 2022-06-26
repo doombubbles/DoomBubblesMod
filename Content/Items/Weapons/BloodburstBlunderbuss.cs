@@ -1,14 +1,9 @@
-using System;
-using Terraria.Audio;
-
 namespace DoomBubblesMod.Content.Items.Weapons;
 
 public class BloodburstBlunderbuss : NightsEdgeGun
 {
     public override void SetStaticDefaults()
     {
-        //Tooltip.SetDefault("This is a modded gun.");
-        DisplayName.SetDefault("Bloodburst Blunderbuss");
         SacrificeTotal = 1;
     }
 
@@ -25,5 +20,10 @@ public class BloodburstBlunderbuss : NightsEdgeGun
         recipe2.AddIngredient(ItemType<MidnightMaelstrom>());
         recipe2.AddTile(TileID.DemonAltar);
         recipe2.Register();
+    }
+    
+    public override Vector2? HoldoutOffset()
+    {
+        return new Vector2(-5, 0);
     }
 }

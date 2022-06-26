@@ -4,7 +4,6 @@ public class VortexBullet : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Vortex Bullet");
         Tooltip.SetDefault("Creates bullet echos on enemy hits");
         SacrificeTotal = 99;
     }

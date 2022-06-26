@@ -39,7 +39,7 @@ public class BulletGlobalProjectile : GlobalProjectile
                 return;
             }
 
-            for (var index = 0; index < 3; ++index)
+            for (var index = 0; index < 2; ++index)
             {
                 var speedX =
                     (float) (-(double) projectile.velocity.X * Main.rand.Next(40, 70) * 0.00999999977648258 +

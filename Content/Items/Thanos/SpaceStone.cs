@@ -13,7 +13,6 @@ public class SpaceStone : InfinityStone
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Space Stone");
         Tooltip.SetDefault("\"A lifetime ago, I too sought the stones. I even held one in my hand.\"\n" +
                            "-Red Skull to Thanos");
         SacrificeTotal = 1;

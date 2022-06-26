@@ -4,13 +4,12 @@ using DoomBubblesMod.Content.Projectiles.HotS;
 
 namespace DoomBubblesMod.Content.Items.HotS;
 
-public class PhotonCannonStaff : ModItemWithTalents<TalentWarpResonance, TalentTowerDefense, TalentShootEmUp>
+public class PhotonCannonStaff : ModItemWithTalents<WarpResonance, TowerDefense, ShootEmUp>
 {
     protected override Color? TalentColor => Color.Blue;
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Photon Cannon Staff");
         Tooltip.SetDefault("Warps Photon Cannons as stationary minions\n" +
                            "Photon Cannons require a Pylon power field");
         SacrificeTotal = 1;

@@ -7,7 +7,6 @@ public class VampireKnifeBatStaff : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Vampire Knife Bat Staff");
         Tooltip.SetDefault("Summons Bats that shoot Vampire Knives as you do");
         SacrificeTotal = 1;
     }

@@ -5,11 +5,6 @@ namespace DoomBubblesMod.Content.Projectiles.Magic;
 
 public class ManapireRestore : ModProjectile
 {
-    public override void SetStaticDefaults()
-    {
-        DisplayName.SetDefault("Manapire Restore");
-    }
-
     public override void SetDefaults()
     {
         Projectile.CloneDefaults(ProjectileID.VampireHeal);

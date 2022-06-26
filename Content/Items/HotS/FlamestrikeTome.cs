@@ -4,19 +4,12 @@ using DoomBubblesMod.Content.Projectiles.HotS;
 
 namespace DoomBubblesMod.Content.Items.HotS;
 
-public class FlamestrikeTome : ModItemWithTalents<TalentConvection, TalentIgnite, TalentFuryOfTheSunwell>
+public class FlamestrikeTome : ModItemWithTalents<Convection, Ignite, FuryOfTheSunwell>
 {
     protected override Color? TalentColor => Color.LimeGreen;
 
-    public int Verdant => Main.player[Item.playerIndexTheItemIsReservedFor].GetModPlayer<HotSPlayer>().superVerdant
-        ? 2
-        : Main.player[Item.playerIndexTheItemIsReservedFor].GetModPlayer<HotSPlayer>().verdant
-            ? 1
-            : 0;
-
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Flamestrike Tome");
         Tooltip.SetDefault("After a delay, deal damage in an area");
         SacrificeTotal = 1;
     }
@@ -47,7 +40,7 @@ public class FlamestrikeTome : ModItemWithTalents<TalentConvection, TalentIgnite
         position.X = Main.MouseWorld.X;
         position.Y = Main.MouseWorld.Y;
         var proj = Projectile.NewProjectile(source, position, new Vector2(0, 0), type, damage, knockback, player.whoAmI,
-            ChosenTalent, Verdant);
+            ChosenTalent, player.GetModPlayer<HotsPlayer>().verdant);
         Main.projectile[proj].netUpdate = true;
         return false;
     }
@@ -56,7 +49,7 @@ public class FlamestrikeTome : ModItemWithTalents<TalentConvection, TalentIgnite
     {
         if (ChosenTalent is 1 or -1)
         {
-            damage.Base += player.GetModPlayer<HotSPlayer>().convection;
+            damage.Base += player.GetModPlayer<HotsPlayer>().convection;
         }
     }
 }

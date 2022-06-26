@@ -27,7 +27,6 @@ public class RainbowMachineGun : ModItem
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Rainbow Machinegun");
         SacrificeTotal = 1;
     }
 

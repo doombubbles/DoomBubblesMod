@@ -5,19 +5,12 @@ using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.HotS;
 
-public class LivingBombWand : ModItemWithTalents<TalentPyromaniac, TalentSunKingsFury, TalentMasterOfFlame>
+public class LivingBombWand : ModItemWithTalents<Pyromaniac, SunKingsFury, MasterOfFlame>
 {
     protected override Color? TalentColor => Color.LimeGreen;
 
-    public int Verdant => Main.player[Item.playerIndexTheItemIsReservedFor].GetModPlayer<HotSPlayer>().superVerdant
-        ? 2
-        : Main.player[Item.playerIndexTheItemIsReservedFor].GetModPlayer<HotSPlayer>().verdant
-            ? 1
-            : 0;
-
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Living Bomb Wand");
         Tooltip.SetDefault("Shoots fireballs that turn targets into Living Bombs");
         SacrificeTotal = 1;
     }
@@ -48,7 +41,7 @@ public class LivingBombWand : ModItemWithTalents<TalentPyromaniac, TalentSunKing
         int damage, float knockback)
     {
         var proj = Projectile.NewProjectile(source, position, velocity, type, damage, knockback,
-            player.whoAmI, ChosenTalent, Verdant);
+            player.whoAmI, ChosenTalent, player.GetModPlayer<HotsPlayer>().verdant);
         Main.projectile[proj].netUpdate = true;
         return false;
     }

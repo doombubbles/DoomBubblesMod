@@ -4,7 +4,6 @@ public class UnconqueredSpiritCooldown : ModBuff
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Unconquered Spirit Cooldown");
         Description.SetDefault("");
         Main.debuff[Type] = true;
         Main.pvpBuff[Type] = true;

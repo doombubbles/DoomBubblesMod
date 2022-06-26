@@ -7,15 +7,14 @@ using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Items.HotS;
 
-public class DiscordBlade : ModItemWithTalents<TalentChaosReigns, TalentDissonance, TalentLethalOnslaught>
+public class DiscordBlade : ModItemWithTalents<ChaosReigns, Dissonance, LethalOnslaught>
 {
     protected override Color? TalentColor => Color.Red;
 
-    private float Length => ChosenTalent == 2 || ChosenTalent == -1 ? 600f : 300f;
+    private float Length => ChosenTalent is 2 or -1 ? 600f : 300f;
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Discord Blade");
         Tooltip.SetDefault("Makes a very hard to code triangle attack\n" +
                            "Magic and Melee Weapon");
         SacrificeTotal = 1;

@@ -4,7 +4,6 @@ public class SolarEmblem : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Solar Emblem");
         Tooltip.SetDefault("20% increased melee damage");
         SacrificeTotal = 1;
     }

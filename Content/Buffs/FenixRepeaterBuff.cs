@@ -20,7 +20,7 @@ public class FenixRepeaterBuff : ModBuff
 
     public override void ModifyBuffTip(ref string tip, ref int rare)
     {
-        var shots = Main.LocalPlayer.GetModPlayer<HotSPlayer>().fenixRepeaterBuff;
+        var shots = Main.LocalPlayer.GetModPlayer<HotsPlayer>().fenixRepeaterBuff;
         tip = "Stacks: " + shots;
     }
 

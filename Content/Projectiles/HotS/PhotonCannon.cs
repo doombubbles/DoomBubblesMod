@@ -8,18 +8,15 @@ using Terraria.GameContent;
 
 namespace DoomBubblesMod.Content.Projectiles.HotS;
 
-public class PhotonCannon : ModProjectile
+public class PhotonCannon : HotsProjectile
 {
-    private static readonly float ProjSpeed = 10f;
-
-    private int ChosenTalent => (int) Math.Round(Projectile.ai[0]);
-
-    private float ShootDistance => 600f;
-    private float AttackSpeed => ChosenTalent == 3 || ChosenTalent == -1 ? 30f : 60f;
+    private const float ProjSpeed = 10f;
+    private const float ShootDistance = 600f;
+    
+    private float AttackSpeed => ChosenTalent is 3 or -1 ? 30f : 60f;
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Photon Cannon");
         Main.projFrames[Projectile.type] = 6;
     }
 
@@ -150,7 +147,7 @@ public class PhotonCannon : ModProjectile
     public void CheckActive()
     {
         var player = Main.player[Projectile.owner];
-        var modPlayer = player.GetModPlayer<HotSPlayer>();
+        var modPlayer = player.GetModPlayer<HotsPlayer>();
         if (player.dead)
         {
             modPlayer.photonCannon = false;

@@ -4,11 +4,6 @@ namespace DoomBubblesMod.Content.Projectiles.Ranged;
 
 public class MidnightBlast : ModProjectile
 {
-    public override void SetStaticDefaults()
-    {
-        DisplayName.SetDefault("Midnight Blast");
-    }
-
     public override void SetDefaults()
     {
         Projectile.width = 10;

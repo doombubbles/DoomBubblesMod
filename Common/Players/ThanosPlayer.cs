@@ -91,18 +91,6 @@ public class ThanosPlayer : ModPlayer
             }
         }
 
-        if (soulStone) // TODO: DO SOUL STONE BETTER
-        {
-            Player.chestX = (int) (Player.position.X / 16f);
-            Player.chestY = (int) (Player.position.Y / 16f);
-            soulStoneTile = Main.tile[(int) (Player.position.X / 16f), (int) (Player.position.Y / 16f)];
-            soulStoneTileActive = soulStoneTile.HasTile;
-            if (!soulStoneTileActive)
-            {
-            }
-        }
-
-
         for (var i = 300; i > 0; i--)
         {
             timeHealth[i] = timeHealth[i - 1];
@@ -115,19 +103,6 @@ public class ThanosPlayer : ModPlayer
 
     public override void PostUpdate()
     {
-        if (soulStone)
-        {
-            if (!soulStoneTileActive)
-            {
-            }
-        }
-
-
-        if (Player.chest != -3)
-        {
-            soulStone = false;
-        }
-
 
         base.PostUpdate();
     }

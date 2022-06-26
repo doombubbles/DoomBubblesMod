@@ -4,13 +4,13 @@ using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Projectiles.HotS;
 
-public class LivingBomb : CenteredProjectile
+public class LivingBomb : HotsProjectile
 {
-    public int ChosenTalent => (int) Math.Round(Projectile.ai[0]);
-    public NPC Target => Main.npc[(int) Math.Round(Projectile.ai[1])];
+    protected override bool Centered => true;
 
-    public int Damage =>
-        (int) (ChosenTalent == 2 || ChosenTalent == -1 ? Projectile.damage * 1.35 : Projectile.damage);
+    private NPC Target => Main.npc[(int) Math.Round(Projectile.ai[1])];
+
+    private int Damage => (int) (ChosenTalent is 2 or -1 ? Projectile.damage * 1.35 : Projectile.damage);
 
     public override void SetStaticDefaults()
     {

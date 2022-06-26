@@ -6,7 +6,6 @@ public class ExplosiveCharm : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Explosive Charm");
         Tooltip.SetDefault("Explosive Bullets no longer hurt you");
         SacrificeTotal = 1;
     }

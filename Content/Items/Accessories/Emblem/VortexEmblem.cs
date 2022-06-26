@@ -4,7 +4,6 @@ public class VortexEmblem : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Vortex Emblem");
         Tooltip.SetDefault("20% increased ranged damage");
         SacrificeTotal = 1;
     }

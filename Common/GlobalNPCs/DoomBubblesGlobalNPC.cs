@@ -80,29 +80,27 @@ public class DoomBubblesGlobalNPC : GlobalNPC
 
     public override void SetupShop(int type, Chest shop, ref int nextSlot)
     {
-        if (type == NPCID.Cyborg && NPC.downedPlantBoss)
+        switch (type)
         {
-            var items = new List<ModItem>
+            case NPCID.Cyborg when NPC.downedPlantBoss:
             {
-                GetInstance<LightningSurge>(), GetInstance<DiscordBlade>(),
-                GetInstance<RepeaterCannon>(), GetInstance<PhaseBombLauncher>(),
-                GetInstance<ShieldCapacitor>(),
-                GetInstance<PylonStaff>(), GetInstance<PhotonCannonStaff>()
-            };
+                var items = new List<ModItemWithTalents>
+                {
+                    GetInstance<LightningSurge>(), GetInstance<DiscordBlade>(),
+                    GetInstance<RepeaterCannon>(), GetInstance<PhaseBombLauncher>(),
+                    GetInstance<ShieldCapacitor>(),
+                    GetInstance<PylonStaff>(), GetInstance<PhotonCannonStaff>()
+                };
 
-            foreach (var modItem in items)
-            {
-                shop.item[nextSlot].SetDefaults(modItem.Item.type);
-                nextSlot++;
-            }
+                foreach (var modItem in items)
+                {
+                    shop.item[nextSlot].SetDefaults(modItem.Item.type);
+                    nextSlot++;
+                }
 
-            var hash = Math.Abs(Main.LocalPlayer.name.GetHashCode());
+                var hash = Math.Abs(Main.LocalPlayer.name.GetHashCode());
 
-            foreach (var modItem in items)
-            {
-                var talentItem = (ModItemWithTalents) modItem;
-
-                if (Main.LocalPlayer.HasItem(talentItem.Item.type))
+                foreach (var talentItem in items.Where(talentItem => Main.LocalPlayer.HasItem(talentItem.Item.type)))
                 {
                     if (NPC.downedHalloweenKing && NPC.downedHalloweenTree)
                     {
@@ -119,30 +117,27 @@ public class DoomBubblesGlobalNPC : GlobalNPC
                         AddTalent(talentItem, (hash + 2) % 3 + 1, shop, ref nextSlot);
                     }
                 }
+
+                break;
             }
-        }
-
-        if (type == NPCID.Wizard && NPC.downedPlantBoss)
-        {
-            var items = new List<ModItem>
+            case NPCID.Wizard when NPC.downedPlantBoss:
             {
-                GetInstance<FlamestrikeTome>(), GetInstance<LivingBombWand>(),
-                GetInstance<VerdantSpheres>()
-            };
+                var items = new List<ModItemWithTalents>
+                {
+                    GetInstance<FlamestrikeTome>(), GetInstance<LivingBombWand>(),
+                    GetInstance<VerdantSpheres>()
+                };
 
-            foreach (var modItem in items)
-            {
-                shop.item[nextSlot].SetDefaults(modItem.Item.type);
-                nextSlot++;
-            }
+                foreach (var modItem in items)
+                {
+                    shop.item[nextSlot].SetDefaults(modItem.Item.type);
+                    nextSlot++;
+                }
 
-            var hash = Math.Abs(Main.LocalPlayer.name.GetHashCode());
+                var hash = Math.Abs(Main.LocalPlayer.name.GetHashCode());
 
-            foreach (var modItem in items)
-            {
-                var talentItem = (ModItemWithTalents) modItem;
-
-                if (Main.LocalPlayer.HasItem(talentItem.Item.type))
+                foreach (var talentItem in items
+                             .Where(talentItem => Main.LocalPlayer.HasItem(talentItem.Item.type)))
                 {
                     if (NPC.downedHalloweenKing && NPC.downedHalloweenTree)
                     {
@@ -159,6 +154,13 @@ public class DoomBubblesGlobalNPC : GlobalNPC
                         AddTalent(talentItem, (hash + 2) % 3 + 1, shop, ref nextSlot);
                     }
                 }
+
+                break;
+            }
+            case NPCID.DyeTrader when Main.hardMode:
+            {
+                shop.item[nextSlot++].SetDefaults(ItemType<BlankDye>());
+                break;
             }
         }
 
@@ -177,16 +179,13 @@ public class DoomBubblesGlobalNPC : GlobalNPC
         switch (i)
         {
             case 1:
-                shop.item[nextSlot].SetDefaults(modItemWithTalents.Talent1Item.Type);
-                nextSlot++;
+                shop.item[nextSlot++].SetDefaults(modItemWithTalents.Talent1Item.Type);
                 break;
             case 2:
-                shop.item[nextSlot].SetDefaults(modItemWithTalents.Talent1Item.Type);
-                nextSlot++;
+                shop.item[nextSlot++].SetDefaults(modItemWithTalents.Talent1Item.Type);
                 break;
             case 3:
-                shop.item[nextSlot].SetDefaults(modItemWithTalents.Talent3Item.Type);
-                nextSlot++;
+                shop.item[nextSlot++].SetDefaults(modItemWithTalents.Talent3Item.Type);
                 break;
         }
     }

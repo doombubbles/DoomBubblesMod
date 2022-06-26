@@ -3,13 +3,12 @@ using DoomBubblesMod.Content.Items.Talent;
 
 namespace DoomBubblesMod.Content.Items.HotS;
 
-public class VerdantSpheres : ModItemWithTalents<TalentFelInfusion, TalentManaTap, TalentTwinSpheres>
+public class VerdantSpheres : ModItemWithTalents<FelInfusion, ManaTap, TwinSpheres>
 {
     protected override Color? TalentColor => Color.Lime;
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Verdant Spheres");
         Tooltip.SetDefault("Flamestrike has increased radius and damage\n" +
                            "Living Bomb has extra pierce and costs no mana");
         SacrificeTotal = 1;
@@ -26,7 +25,7 @@ public class VerdantSpheres : ModItemWithTalents<TalentFelInfusion, TalentManaTa
 
     public override void UpdateAccessory(Player player, bool hideVisual)
     {
-        player.GetModPlayer<HotSPlayer>().verdant = true;
+        player.GetModPlayer<HotsPlayer>().verdant++;
         if (ChosenTalent is 1 or -1)
         {
             player.GetDamage(DamageClass.Generic) -= .1f;
@@ -35,12 +34,12 @@ public class VerdantSpheres : ModItemWithTalents<TalentFelInfusion, TalentManaTa
 
         if (ChosenTalent is 2 or -1)
         {
-            player.GetModPlayer<HotSPlayer>().manaTap = true;
+            player.GetModPlayer<HotsPlayer>().manaTap = true;
         }
 
         if (ChosenTalent is 3 or -1)
         {
-            player.GetModPlayer<HotSPlayer>().superVerdant = true;
+            player.GetModPlayer<HotsPlayer>().verdant++;
         }
 
         player.GetModPlayer<DoomBubblesPlayer>().NoManaItems.Add(ItemType<LivingBombWand>());

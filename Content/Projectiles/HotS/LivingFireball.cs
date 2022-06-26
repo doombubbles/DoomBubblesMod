@@ -1,14 +1,10 @@
-using System;
 using DoomBubblesMod.Utils;
 using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Projectiles.HotS;
 
-public class LivingFireball : ModProjectile
+public class LivingFireball : KaelThasProjectile
 {
-    public int ChosenTalent => (int) Math.Round(Projectile.ai[0]);
-    public int Verdant => (int) Math.Round(Projectile.ai[1]);
-
     public override void SetDefaults()
     {
         Projectile.width = 16;

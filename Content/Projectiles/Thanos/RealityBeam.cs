@@ -6,11 +6,6 @@ namespace DoomBubblesMod.Content.Projectiles.Thanos;
 
 public class RealityBeam : ModProjectile
 {
-    public override void SetStaticDefaults()
-    {
-        DisplayName.SetDefault("Reality Beam");
-    }
-
     public override void SetDefaults()
     {
         Projectile.width = 16;

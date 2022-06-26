@@ -6,14 +6,12 @@ using DoomBubblesMod.Content.Projectiles.HotS;
 
 namespace DoomBubblesMod.Content.Items.HotS;
 
-public class
-    PhaseBombLauncher : ModItemWithTalents<TalentSecondaryFire, TalentSingularityCharge, TalentDivertPowerWeapons>
+public class PhaseBombLauncher : ModItemWithTalents<SecondaryFire, SingularityCharge, DivertPowerWeapons>
 {
     protected override Color? TalentColor => Color.Orange;
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Phase Bomb Launcher");
         Tooltip.SetDefault("Buffs Repeater Cannon attack speed for each enemy hit\n" +
                            "(Up to 10)");
         SacrificeTotal = 1;
@@ -69,9 +67,9 @@ public class
             var dX = position.X - Main.MouseWorld.X;
             var dY = position.Y - Main.MouseWorld.Y;
             var distance = Math.Sqrt(dX * dX + dY * dY);
-            velocity *= 1f + player.GetModPlayer<HotSPlayer>().fenixBombBuildUp * .1f;
-            knockback *= 1f + player.GetModPlayer<HotSPlayer>().fenixBombBuildUp * .1f;
-            damage = (int) (damage * Math.Pow(1.1f, player.GetModPlayer<HotSPlayer>().fenixBombBuildUp));
+            velocity *= 1f + player.GetModPlayer<HotsPlayer>().fenixBombBuildUp * .1f;
+            knockback *= 1f + player.GetModPlayer<HotsPlayer>().fenixBombBuildUp * .1f;
+            damage = (int) (damage * Math.Pow(1.1f, player.GetModPlayer<HotsPlayer>().fenixBombBuildUp));
 
 
             var speedFactor = 1.015;
@@ -86,7 +84,7 @@ public class
                 player.DelBuff(player.FindBuffIndex(BuffType<FenixBombBuildUp>()));
             }
 
-            player.GetModPlayer<HotSPlayer>().phaseUseTime = Item.useTime;
+            player.GetModPlayer<HotsPlayer>().phaseUseTime = Item.useTime;
             player.itemAnimation = 10;
             player.itemTime = 10;
         }
@@ -96,6 +94,6 @@ public class
 
     public override bool CanUseItem(Player player)
     {
-        return player.GetModPlayer<HotSPlayer>().phaseUseTime == 0;
+        return player.GetModPlayer<HotsPlayer>().phaseUseTime == 0;
     }
 }

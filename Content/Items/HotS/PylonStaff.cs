@@ -5,14 +5,12 @@ using DoomBubblesMod.Content.Projectiles.HotS;
 
 namespace DoomBubblesMod.Content.Items.HotS;
 
-public class PylonStaff : ModItemWithTalents<TalentPylonOvercharge, TalentConstructAdditionalPylons,
-    TalentPowerOverflowing>
+public class PylonStaff : ModItemWithTalents<PylonOvercharge, ConstructAdditionalPylons, PowerOverflowing>
 {
     protected override Color? TalentColor => Color.Blue;
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Pylon Staff");
         Tooltip.SetDefault("Warps in Pylons that power Photon Cannons and give regen\n" +
                            "Max 2");
         SacrificeTotal = 1;
@@ -77,11 +75,11 @@ public class PylonStaff : ModItemWithTalents<TalentPylonOvercharge, TalentConstr
             var pylon = Projectile.NewProjectile(source, Main.mouseX + Main.screenPosition.X, num145 * 16 - 12, 0f, 15f,
                 type, damage, knockback, player.whoAmI, ChosenTalent);
             Main.projectile[pylon].netUpdate = true;
-            player.GetModPlayer<HotSPlayer>().pylons.Add(pylon);
+            player.GetModPlayer<HotsPlayer>().pylons.Add(pylon);
             var maxPylons = ChosenTalent == 2 || ChosenTalent == -1 ? 3 : 2;
-            while (player.GetModPlayer<HotSPlayer>().pylons.Count > maxPylons)
+            while (player.GetModPlayer<HotsPlayer>().pylons.Count > maxPylons)
             {
-                player.GetModPlayer<HotSPlayer>().pylons.RemoveAt(0);
+                player.GetModPlayer<HotsPlayer>().pylons.RemoveAt(0);
             }
         }
 

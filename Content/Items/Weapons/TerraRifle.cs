@@ -10,8 +10,7 @@ public class TerraRifle : ModItem
     public override void SetStaticDefaults()
     {
         Tooltip.SetDefault("50% chance to not consume ammo\n" +
-                           "Turns Bullets into Terra Bullets");
-        DisplayName.SetDefault("Terra Rifle");
+                           "Turns Musket Balls into Terra Bullets");
         SacrificeTotal = 1;
     }
 
@@ -44,11 +43,19 @@ public class TerraRifle : ModItem
     public override void AddRecipes()
     {
         var recipe = CreateRecipe();
-        recipe.AddIngredient(ItemType<TrueMidnightMaelstrom>());
+        recipe.AddIngredient(ItemType<TrueNightsEdgeGun>());
         recipe.AddIngredient(ItemType<TrueTrigun>());
         recipe.AddIngredient(ItemType<BrokenHeroGun>());
         recipe.AddTile(TileID.MythrilAnvil);
         recipe.Register();
+
+
+        var recipe2 = CreateRecipe();
+        recipe2.AddIngredient(ItemType<TrueBloodburstBlunderbuss>());
+        recipe2.AddIngredient(ItemType<TrueTrigun>());
+        recipe2.AddIngredient(ItemType<BrokenHeroGun>());
+        recipe2.AddTile(TileID.MythrilAnvil);
+        recipe2.Register();
     }
 
     public override bool CanConsumeAmmo(Item ammo, Player player)
@@ -57,16 +64,18 @@ public class TerraRifle : ModItem
     }
 
     public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity,
-        int type,
-        int damage, float knockback)
+        int type, int damage, float knockback)
     {
-        type = ProjectileType<TerraBullet>();
-
-
-        if (Main.rand.NextFloat() <= .2)
+        if (type == ProjectileID.Bullet)
         {
-            Projectile.NewProjectile(source, position, velocity, ProjectileType<MidnightBlast>(),
+            type = ProjectileType<TerraBullet>();
+        }
+
+        if (Main.rand.NextFloat() <= .2 && player.whoAmI == Main.myPlayer)
+        {
+            var proj = Projectile.NewProjectileDirect(source, position, velocity, ProjectileType<MidnightBlast>(),
                 damage * 2, knockback, player.whoAmI);
+            proj.netUpdate = true;
             SoundEngine.PlaySound(SoundID.Item38, position);
         }
         /* Other implementation
@@ -86,9 +95,7 @@ public class TerraRifle : ModItem
 
         return base.Shoot(player, source, position, velocity, type, damage, knockback);
     }
-
-
-    // Help, my gun isn't being held at the handle! Adjust these 2 numbers until it looks right.
+    
     public override Vector2? HoldoutOffset()
     {
         return new Vector2(-2, 0);

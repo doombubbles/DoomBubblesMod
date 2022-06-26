@@ -14,7 +14,6 @@ public class MindStone : InfinityStone
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Mind Stone");
         Tooltip.SetDefault("\"The Mind Stone is the fourth of the Infinity Stones to show up in the last\n" +
                            "few years. It's not a coincidence. Someone has been playing an intricate\n" +
                            "game and has made pawns of us.\"\n" +
@@ -53,7 +52,7 @@ public class MindStone : InfinityStone
             {
                 npc.damage = 0;
 
-                new MindStonePacket {npc = npc}.HandleForAll();
+                new MindStonePacket {NPC = npc}.HandleForAll();
             }
         }
 
@@ -64,27 +63,27 @@ public class MindStone : InfinityStone
 
 public class MindStonePacket : CustomPacket<MindStonePacket>
 {
-    public NPC npc { get; set; }
+    public NPC NPC { get; set; }
 
-    public Projectile projectile { get; set; }
+    public Projectile Projectile { get; set; }
 
     protected override void SetDefaults()
     {
-        npc = null;
-        projectile = null;
+        NPC = null;
+        Projectile = null;
     }
 
     public override void HandlePacket()
     {
-        if (npc != null)
+        if (NPC != null)
         {
-            npc.GetGlobalNPC<ThanosGlobalNPC>().mindStoneFriendly = true;
-            npc.damage = 0;
+            NPC.GetGlobalNPC<ThanosGlobalNPC>().mindStoneFriendly = true;
+            NPC.damage = 0;
         }
 
-        if (projectile != null)
+        if (Projectile != null)
         {
-            projectile.hostile = false;
+            Projectile.hostile = false;
         }
     }
 }

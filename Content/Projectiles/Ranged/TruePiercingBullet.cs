@@ -5,11 +5,6 @@ namespace DoomBubblesMod.Content.Projectiles.Ranged;
 
 public class TruePiercingBullet : ModProjectile
 {
-    public override void SetStaticDefaults()
-    {
-        DisplayName.SetDefault("True Piercing Bullet");
-    }
-
     public override void SetDefaults()
     {
         Projectile.width = 8;

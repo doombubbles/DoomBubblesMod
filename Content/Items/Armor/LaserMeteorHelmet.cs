@@ -5,9 +5,10 @@ namespace DoomBubblesMod.Content.Items.Armor;
 [AutoloadEquip(EquipType.Head)]
 public class LaserMeteorHelmet : ModItem
 {
+    private const string SetBonus = "Laser Rifle costs 0 mana";
+
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Laser Meteor Helmet");
         Tooltip.SetDefault("11% Increased Magic Damage");
         SacrificeTotal = 1;
     }
@@ -22,6 +23,12 @@ public class LaserMeteorHelmet : ModItem
         Item.headSlot = realSlot;
     }
 
+    public override void Load()
+    {
+        SetBonusAccessories?.Call(this, "Laser Meteor", typeof(LaserMeteorHelmet), typeof(LaserMeteorLeggings),
+            typeof(LaserMeteorLeggings), SetBonus);
+    }
+
     public override bool IsArmorSet(Item head, Item body, Item legs)
     {
         return body.type == ItemType<LaserMeteorSuit>() &&
@@ -30,7 +37,7 @@ public class LaserMeteorHelmet : ModItem
 
     public override void UpdateArmorSet(Player player)
     {
-        player.setBonus = "Laser Rifle costs 0 mana";
+        player.setBonus = SetBonus;
         player.spaceGun = true;
         player.GetModPlayer<DoomBubblesPlayer>().NoManaItems.Add(ItemID.LaserRifle);
     }

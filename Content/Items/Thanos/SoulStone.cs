@@ -10,7 +10,6 @@ public class SoulStone : InfinityStone
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Soul Stone");
         Tooltip.SetDefault("\"Soul holds a special place among the Infinity Stones.\n" +
                            "You might say, it is a certain wisdom. To ensure that\n" +
                            "whoever possesses it understands its power, the stone\n" +

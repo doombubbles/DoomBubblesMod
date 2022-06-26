@@ -13,7 +13,6 @@ public class RoyalHoney : ModItem
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Royal Honey");
         Tooltip.SetDefault("Bees are friendly");
         SacrificeTotal = 1;
     }

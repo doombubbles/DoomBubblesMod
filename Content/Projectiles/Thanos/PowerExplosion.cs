@@ -6,11 +6,6 @@ namespace DoomBubblesMod.Content.Projectiles.Thanos;
 
 public class PowerExplosion : ModProjectile
 {
-    public override void SetStaticDefaults()
-    {
-        DisplayName.SetDefault("Power Explosion");
-    }
-
     public override void SetDefaults()
     {
         Projectile.width = 16;

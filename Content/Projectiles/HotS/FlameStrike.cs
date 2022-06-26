@@ -6,14 +6,14 @@ using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Projectiles.HotS;
 
-public class FlameStrike : CenteredProjectile
+public class FlameStrike : KaelThasProjectile
 {
-    public static readonly int Delay = 60;
-    public static readonly int Visible = 10;
+    private const int Delay = 60;
+    private const int Visible = 10;
 
-    public float Size => 75f + Verdant * 37.5f;
-    public int ChosenTalent => (int) Math.Round(Projectile.ai[0]);
-    public int Verdant => (int) Math.Round(Projectile.ai[1]);
+    private float Size => 75f + Verdant * 37.5f;
+
+    protected override bool Centered => true;
 
     public override void SetStaticDefaults()
     {
@@ -90,9 +90,9 @@ public class FlameStrike : CenteredProjectile
         }
 
         if ((ChosenTalent == 1 || ChosenTalent == -1) &&
-            Main.player[Projectile.owner].GetModPlayer<HotSPlayer>().convection < 100)
+            Main.player[Projectile.owner].GetModPlayer<HotsPlayer>().convection < 100)
         {
-            Main.player[Projectile.owner].GetModPlayer<HotSPlayer>().convection++;
+            Main.player[Projectile.owner].GetModPlayer<HotsPlayer>().convection++;
             if (!Main.player[Projectile.owner].HasBuff<Convection>())
             {
                 Main.player[Projectile.owner].AddBuff(BuffType<Convection>(), 10);

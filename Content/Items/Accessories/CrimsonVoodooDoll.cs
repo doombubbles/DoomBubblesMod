@@ -4,7 +4,6 @@ public class CrimsonVoodooDoll : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Crimson Voodoo Doll");
         Tooltip.SetDefault("Your life regenerates crimsonly");
         SacrificeTotal = 1;
     }

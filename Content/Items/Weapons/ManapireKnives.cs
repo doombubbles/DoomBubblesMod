@@ -6,7 +6,6 @@ public class ManapireKnives : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Manapire Knives");
         Tooltip.SetDefault("Rapidly throw mana stealing daggers;\n" +
                            "Or, life stealing if at max");
         SacrificeTotal = 1;

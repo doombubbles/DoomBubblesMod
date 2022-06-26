@@ -11,7 +11,6 @@ public class ChromaticEmblem : ModItem, IHasThoriumRecipe
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Chromatic Emblem");
         Tooltip.SetDefault($"{Factor:P0} increased damage\n" +
                            $"{Factor:P0} increased crit chance\n" +
                            $"{Factor:P0} increased attack speed\n" +

@@ -6,7 +6,6 @@ public class HampireKnives : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Hampire Knives");
         Tooltip.SetDefault("Rapidly throw food stealing daggers;\n" +
                            "Or, life stealing if at max duration");
         SacrificeTotal = 1;

@@ -4,13 +4,8 @@ using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Projectiles.HotS;
 
-public class AlarakLightning : ModProjectile
+public class AlarakLightning : HotsProjectile
 {
-    public override void SetStaticDefaults()
-    {
-        DisplayName.SetDefault("Alarak Lightning");
-    }
-
     public override void SetDefaults()
     {
         Projectile.width = 8;

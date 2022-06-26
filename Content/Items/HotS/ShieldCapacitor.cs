@@ -4,14 +4,13 @@ using DoomBubblesMod.Utils;
 
 namespace DoomBubblesMod.Content.Items.HotS;
 
-public class ShieldCapacitor : ModItemWithTalents<TalentUnconqueredSpirit, TalentDampeningField, TalentPhotonicWeaponry>
+public class ShieldCapacitor : ModItemWithTalents<UnconqueredSpirit, DampeningField, PhotonicWeaponry>
 {
     protected override Color? TalentColor => Color.Orange;
 
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Shield Capacitor");
         Tooltip.SetDefault("You quickly and constantly generate a 50 life shield.");
         SacrificeTotal = 1;
     }
@@ -27,8 +26,8 @@ public class ShieldCapacitor : ModItemWithTalents<TalentUnconqueredSpirit, Talen
 
     public override void UpdateAccessory(Player player, bool hideVisual)
     {
-        player.GetModPlayer<HotSPlayer>().shieldCapacitorChosenTalent = ChosenTalent;
+        player.GetModPlayer<HotsPlayer>().shieldCapacitorChosenTalent = ChosenTalent;
         player.SetThoriumProperty<int>("metalShieldMax", i => i + 50);
-        player.GetModPlayer<HotSPlayer>().newShieldCapactior = true;
+        player.GetModPlayer<HotsPlayer>().newShieldCapacitor = true;
     }
 }

@@ -4,7 +4,6 @@ public class MidnightMaelstrom : NightsEdgeGun
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Midnight Maelstrom");
         SacrificeTotal = 1;
     }
 
@@ -23,9 +22,8 @@ public class MidnightMaelstrom : NightsEdgeGun
         recipe2.Register();
     }
 
-    // Help, my gun isn't being held at the handle! Adjust these 2 numbers until it looks right.
     public override Vector2? HoldoutOffset()
     {
-        return new Vector2(-2, 0);
+        return new Vector2(-5, 0);
     }
 }
