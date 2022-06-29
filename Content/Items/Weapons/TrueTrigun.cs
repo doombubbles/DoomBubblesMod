@@ -14,22 +14,22 @@ public class TrueTrigun : ModItem
 
     public override void SetDefaults()
     {
-        Item.damage = 45;
+        Item.damage = 40;
         Item.DamageType = GetInstance<RangedHoly>();
         Item.width = 56;
         Item.height = 26;
-        Item.useTime = 3;
-        Item.useAnimation = 9;
-        Item.reuseDelay = 14;
+        Item.useTime = 4;
+        Item.useAnimation = 12;
+        Item.reuseDelay = 18;
         Item.useStyle = ItemUseStyleID.Shoot;
         Item.noMelee = true; //so the item's animation doesn't do damage
         Item.knockBack = 4;
         Item.value = Item.sellPrice(0, 10);
         Item.rare = ItemRarityID.Yellow;
         Item.UseSound = SoundID.Item11;
-        Item.autoReuse = false;
+        Item.autoReuse = true;
         Item.shoot = ProjectileID.PurificationPowder; //idk why but all the guns in the vanilla source have this
-        Item.shootSpeed = 11f;
+        Item.shootSpeed = 12f;
         Item.useAmmo = AmmoID.Bullet;
     }
 
@@ -48,8 +48,9 @@ public class TrueTrigun : ModItem
         }
         else
         {
-            recipe.AddIngredient(ItemID.HallowedBar, 9);
+            recipe.AddIngredient(ItemID.HallowedBar, 12);
         }
+
         recipe.AddIngredient(ItemID.SoulofFright, 5);
         recipe.AddIngredient(ItemID.SoulofMight, 5);
         recipe.AddIngredient(ItemID.SoulofSight, 5);
@@ -57,7 +58,7 @@ public class TrueTrigun : ModItem
         recipe.ReplaceResult(this);
         recipe.Register();
     }
-    
+
     public override bool CanConsumeAmmo(Item ammo, Player player)
     {
         if (Main.rand.NextFloat() <= 25f)
@@ -67,28 +68,19 @@ public class TrueTrigun : ModItem
 
         return player.itemAnimation < Item.useAnimation - 2 && base.CanConsumeAmmo(ammo, player);
     }
-
-    public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity,
-        int type,
-        int damage, float knockback)
+    
+    public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage,
+        ref float knockback)
     {
-        var perturbedSpeed = velocity.RotatedByRandom(MathHelper.ToRadians(5));
+        velocity = velocity.RotatedByRandom(MathHelper.ToRadians(3));
 
-        var to8 = Math.Abs(player.itemAnimation - 8);
-        var to5 = Math.Abs(player.itemAnimation - 5);
-        var to2 = Math.Abs(player.itemAnimation - 2);
-        var closest = Math.Min(Math.Min(to2, to5), to8);
-
-        if (closest == to8)
+        var progress = player.itemAnimation / (float) player.itemAnimationMax;
+        type = progress switch
         {
-            type = ProjectileType<TruePiercingBullet>();
-        }
-        else if (closest == to2)
-        {
-            type = ProjectileType<TrueHomingBullet>();
-        }
-
-        return base.Shoot(player, source, position, perturbedSpeed, type, damage, knockback);
+            < .34f => ProjectileType<TruePiercingBullet>(),
+            < .67f => ProjectileType<TrueHomingBullet>(),
+            _ => type
+        };
     }
 
     public override Vector2? HoldoutOffset()

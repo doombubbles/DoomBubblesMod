@@ -6,6 +6,7 @@ global using Microsoft.Xna.Framework.Graphics;
 global using static Terraria.ModLoader.ModContent;
 global using Terraria.DataStructures;
 global using Terraria.Localization;
+global using EasyNetworkingLib;
 global using static DoomBubblesMod.DoomBubblesMod;
 using System.Collections.Generic;
 using System.IO;
@@ -13,6 +14,7 @@ using System.Linq;
 using DoomBubblesMod.Content.Items.Misc;
 using DoomBubblesMod.Utils;
 using Microsoft.Xna.Framework.Input;
+using Terraria.GameContent.ItemDropRules;
 
 
 namespace DoomBubblesMod;
@@ -110,9 +112,11 @@ public class DoomBubblesMod : Mod
                 recipe.AddIngredient(ItemID.SoulofMight, 5);
                 recipe.AddIngredient(ItemID.SoulofSight, 5);
             }
-            
-            if (recipe.HasResult(ItemID.TrueNightsEdge) && recipe.HasIngredient(ItemID.SoulofFright)
-                &&recipe.HasIngredient(ItemID.SoulofMight) && recipe.HasIngredient(ItemID.SoulofSight))
+
+            if (recipe.HasResult(ItemID.TrueNightsEdge) &&
+                recipe.HasIngredient(ItemID.SoulofFright) &&
+                recipe.HasIngredient(ItemID.SoulofMight) &&
+                recipe.HasIngredient(ItemID.SoulofSight))
             {
                 recipe.RemoveIngredient(ItemID.ChlorophyteBar);
                 recipe.RemoveIngredient(ItemID.SoulofFright);
@@ -145,10 +149,26 @@ public class DoomBubblesMod : Mod
                 item.AddThoriumRecipe(ThoriumMod);
             }
         }
+
+        /*var mimicDrops = Main.ItemDropsDB
+            .GetRulesForNPCID(NPCID.Mimic, false)
+            .OfType<OneFromOptionsDropRule>()
+            .SelectMany(rule => rule.dropIds)
+            .ToList();
+        foreach (var item in mimicDrops)
+        {
+            var otherDrops = mimicDrops.Where(i => i != item).ToArray();
+            var group = RecipeGroup.RegisterGroup("AnyOtherMimicDropBut" + item,
+                new RecipeGroup(() => "Any Other Mimic Drop", otherDrops));
+            var recipe = CreateRecipe(item);
+            recipe.AddRecipeGroup(group);
+            recipe.AddTile(TileID.CrystalBall);
+            recipe.Register();
+        }*/
     }
 
     public override void HandlePacket(BinaryReader reader, int whoAmI)
     {
-        this.HandleCustomPacket(reader, whoAmI);
+        ModCustomPacket.Handle(this, reader, whoAmI);
     }
 }

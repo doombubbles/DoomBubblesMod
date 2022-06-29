@@ -4,6 +4,9 @@ namespace DoomBubblesMod.Content.Projectiles.Ranged;
 
 public class MidnightBlast : ModProjectile
 {
+    protected virtual int DustId => DustID.GreenTorch;
+    protected virtual int DustId2 => DustID.TerraBlade;
+    
     public override void SetDefaults()
     {
         Projectile.width = 10;
@@ -24,7 +27,7 @@ public class MidnightBlast : ModProjectile
         {
             for (var index1 = 0; index1 < 3; ++index1)
             {
-                var index2 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.TerraBlade,
+                var index2 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustId2,
                     0.0f, 0.0f,
                     0, new Color(0, 0, 0));
                 Main.dust[index2].noGravity = true;
@@ -47,7 +50,7 @@ public class MidnightBlast : ModProjectile
                         (Vector2.UnitX * 0.0f +
                          -Vector2.UnitY.RotatedBy(index1 * (6.28318548202515 / num)) *
                          new Vector2(1f, 4f)).RotatedBy(Projectile.velocity.ToRotation());
-                    var index2 = Dust.NewDust(Projectile.Center, 0, 0, DustID.GreenTorch);
+                    var index2 = Dust.NewDust(Projectile.Center, 0, 0, DustId);
                     Main.dust[index2].scale = 1.5f;
                     Main.dust[index2].noLight = true;
                     Main.dust[index2].noGravity = true;
@@ -85,7 +88,7 @@ public class MidnightBlast : ModProjectile
         var height = width;
         for (var index1 = 0; index1 < 4; ++index1)
         {
-            var index2 = Dust.NewDust(position, width, height, DustID.TerraBlade, 0.0f, 0.0f, 100, new Color(), .75f);
+            var index2 = Dust.NewDust(position, width, height, DustId2, 0.0f, 0.0f, 100, new Color(), .75f);
             Main.dust[index2].position = Projectile.Center +
                                          Vector2.UnitY.RotatedByRandom(3.14159274101257) *
                                          (float) Main.rand.NextDouble() *
@@ -95,7 +98,7 @@ public class MidnightBlast : ModProjectile
 
         for (var index1 = 0; index1 < 20; ++index1)
         {
-            var index2 = Dust.NewDust(position, width, height, DustID.TerraBlade, 0.0f, 0.0f, 200, new Color(), 1.5f);
+            var index2 = Dust.NewDust(position, width, height, DustId2, 0.0f, 0.0f, 200, new Color(), 1.5f);
             Main.dust[index2].position = Projectile.Center +
                                          Vector2.UnitY.RotatedByRandom(3.14159274101257) *
                                          (float) Main.rand.NextDouble() *
@@ -106,7 +109,7 @@ public class MidnightBlast : ModProjectile
             Main.dust[index2].velocity *= 1.5f;
             Main.dust[index2].velocity += Projectile.DirectionTo(Main.dust[index2].position) *
                                           (float) (2.0 + Main.rand.NextFloat() * 2.0);
-            var index3 = Dust.NewDust(position, width, height, DustID.GreenTorch, 0.0f, 0.0f, 100, new Color(), 1.5f);
+            var index3 = Dust.NewDust(position, width, height, DustId, 0.0f, 0.0f, 100, new Color(), 1.5f);
             Main.dust[index3].position = Projectile.Center +
                                          Vector2.UnitY.RotatedByRandom(3.14159274101257) *
                                          (float) Main.rand.NextDouble() *
@@ -121,7 +124,7 @@ public class MidnightBlast : ModProjectile
 
         for (var index1 = 0; index1 < 20; ++index1)
         {
-            var index2 = Dust.NewDust(position, width, height, DustID.TerraBlade, 0.0f, 0.0f, 0, new Color(), 1.3f);
+            var index2 = Dust.NewDust(position, width, height, DustId2, 0.0f, 0.0f, 0, new Color(), 1.3f);
             Main.dust[index2].position = Projectile.Center +
                                          Vector2.UnitX.RotatedByRandom(3.14159274101257)
                                              .RotatedBy(Projectile.velocity.ToRotation()) *
@@ -135,7 +138,7 @@ public class MidnightBlast : ModProjectile
 
         for (var index1 = 0; index1 < 70; ++index1)
         {
-            var index2 = Dust.NewDust(position, width, height, DustID.TerraBlade, 0.0f, 0.0f, 0, new Color(), .75f);
+            var index2 = Dust.NewDust(position, width, height, DustId2, 0.0f, 0.0f, 0, new Color(), .75f);
             Main.dust[index2].position = Projectile.Center +
                                          Vector2.UnitX.RotatedByRandom(3.14159274101257)
                                              .RotatedBy(Projectile.velocity.ToRotation()) *

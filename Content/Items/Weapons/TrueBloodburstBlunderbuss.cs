@@ -1,6 +1,8 @@
+using DoomBubblesMod.Content.Projectiles.Ranged;
+
 namespace DoomBubblesMod.Content.Items.Weapons;
 
-public class TrueBloodburstBlunderbuss : TrueNightsEdgeGun
+public class TrueBloodburstBlunderbuss : TrueNightsEdgeGun<BloodburstBlast>
 {
     public override void AddRecipes()
     {

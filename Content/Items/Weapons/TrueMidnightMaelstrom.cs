@@ -1,6 +1,8 @@
+using DoomBubblesMod.Content.Projectiles.Ranged;
+
 namespace DoomBubblesMod.Content.Items.Weapons;
 
-public class TrueMidnightMaelstrom : TrueNightsEdgeGun
+public class TrueMidnightMaelstrom : TrueNightsEdgeGun<MidnightBlast>
 {
     public override void AddRecipes()
     {

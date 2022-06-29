@@ -4,7 +4,7 @@ using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Items.Weapons;
 
-public abstract class TrueNightsEdgeGun : ModItem
+public abstract class TrueNightsEdgeGun<T> : ModItem where T : MidnightBlast
 {
     public override void SetStaticDefaults()
     {
@@ -13,12 +13,12 @@ public abstract class TrueNightsEdgeGun : ModItem
 
     public override void SetDefaults()
     {
-        Item.damage = 50;
+        Item.damage = 40;
         Item.DamageType = GetInstance<RangedShadow>();
         Item.width = 58;
         Item.height = 24;
-        Item.useTime = 27;
-        Item.useAnimation = 27;
+        Item.useTime = 30;
+        Item.useAnimation = 30;
         Item.useStyle = ItemUseStyleID.Shoot;
         Item.noMelee = true;
         Item.knockBack = 4;
@@ -27,7 +27,7 @@ public abstract class TrueNightsEdgeGun : ModItem
         Item.UseSound = SoundID.Item41;
         Item.autoReuse = true;
         Item.shoot = ProjectileID.PurificationPowder;
-        Item.shootSpeed = 10f;
+        Item.shootSpeed = 12f;
         Item.useAmmo = AmmoID.Bullet;
     }
 
@@ -48,7 +48,7 @@ public abstract class TrueNightsEdgeGun : ModItem
                 (int) (damage / 2.0), knockback, player.whoAmI);
         }
 
-        Projectile.NewProjectile(source, position, velocity, ProjectileType<MidnightBlast>(),
+        Projectile.NewProjectile(source, position, velocity, ProjectileType<T>(),
             damage, knockback, player.whoAmI);
         
         return false;

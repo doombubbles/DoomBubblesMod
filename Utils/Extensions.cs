@@ -165,12 +165,7 @@ public static class Extensions
     {
         return player.GetModPlayer<DoomBubblesPlayer>();
     }
-
-    public static void HandleCustomPacket(this Mod mod, BinaryReader reader, int whoAmI)
-    {
-        ModCustomPacket.Handle(mod, reader, whoAmI);
-    }
-
+    
     public static string SoundPath(this Mod mod, string assetPath) => $"{mod.Name}/Assets/Sounds/{assetPath}";
 
     public static SoundStyle Sound(this Mod mod, string assetPath) => new(mod.SoundPath(assetPath));

@@ -20,8 +20,8 @@ public class TerraRifle : ModItem
         Item.DamageType = GetInstance<RangedNature>();
         Item.width = 64;
         Item.height = 22;
-        Item.useTime = 9;
-        Item.useAnimation = 9;
+        Item.useTime = 10;
+        Item.useAnimation = 10;
         Item.useStyle = ItemUseStyleID.Shoot;
         Item.noMelee = true; //so the item's animation doesn't do damage
         Item.knockBack = 6;
@@ -43,7 +43,7 @@ public class TerraRifle : ModItem
     public override void AddRecipes()
     {
         var recipe = CreateRecipe();
-        recipe.AddIngredient(ItemType<TrueNightsEdgeGun>());
+        recipe.AddIngredient(ItemType<TrueMidnightMaelstrom>());
         recipe.AddIngredient(ItemType<TrueTrigun>());
         recipe.AddIngredient(ItemType<BrokenHeroGun>());
         recipe.AddTile(TileID.MythrilAnvil);
@@ -66,11 +66,6 @@ public class TerraRifle : ModItem
     public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity,
         int type, int damage, float knockback)
     {
-        if (type == ProjectileID.Bullet)
-        {
-            type = ProjectileType<TerraBullet>();
-        }
-
         if (Main.rand.NextFloat() <= .2 && player.whoAmI == Main.myPlayer)
         {
             var proj = Projectile.NewProjectileDirect(source, position, velocity, ProjectileType<MidnightBlast>(),
@@ -78,24 +73,21 @@ public class TerraRifle : ModItem
             proj.netUpdate = true;
             SoundEngine.PlaySound(SoundID.Item38, position);
         }
-        /* Other implementation
-        else
-        {
-            int numberProjectiles = 2;
-            for (int i = 0; i < numberProjectiles; i++)
-            {
-                Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(5));
-                // If you want to randomize the speed to stagger the projectiles
-                float scale = 1f - (Main.rand.NextFloat() * .1f);
-                perturbedSpeed = perturbedSpeed * scale; 
-                Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<TerraBullet>(), (int)(.5 * damage), knockBack, player.whoAmI);
-            }
-        }
-        */
 
         return base.Shoot(player, source, position, velocity, type, damage, knockback);
     }
-    
+
+    public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage,
+        ref float knockback)
+    {
+        if (type == ProjectileID.Bullet)
+        {
+            type = ProjectileType<TerraBullet>();
+        }
+        
+        base.ModifyShootStats(player, ref position, ref velocity, ref type, ref damage, ref knockback);
+    }
+
     public override Vector2? HoldoutOffset()
     {
         return new Vector2(-2, 0);

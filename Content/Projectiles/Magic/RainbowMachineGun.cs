@@ -8,6 +8,11 @@ namespace DoomBubblesMod.Content.Projectiles.Magic;
 
 public class RainbowMachineGun : ModProjectile
 {
+    public override void SetStaticDefaults()
+    {
+        Main.projFrames[Projectile.type] = 6;
+    }
+
     public override void SetDefaults()
     {
         Projectile.width = 22;
@@ -120,9 +125,8 @@ public class RainbowMachineGun : ModProjectile
             var value = Projectile.Center + spinningpoint;
             for (var i = 0; i < 2; i++)
             {
-                var num5 = Dust.NewDust(value - Vector2.One * 8f, 16, 16, DustID.WhiteTorch, Projectile.velocity.X / 2f,
-                    Projectile.velocity.Y / 2f,
-                    100, RainbowColors[Main.rand.Next(0, 6)]);
+                var num5 = Dust.NewDust(value - Vector2.One * 8f, 16, 16, DustID.RainbowMk2, Projectile.velocity.X / 2f,
+                    Projectile.velocity.Y / 2f, 100, RainbowColors[Main.rand.Next(0, 6)]);
                 Main.dust[num5].velocity *= 0.66f;
                 Main.dust[num5].noGravity = true;
                 Main.dust[num5].scale = 1.4f;
