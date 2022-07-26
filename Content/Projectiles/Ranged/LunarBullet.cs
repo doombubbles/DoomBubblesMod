@@ -1,15 +1,16 @@
 using System;
+using System.Linq;
 using DoomBubblesMod.Content.Dusts;
+using DoomBubblesMod.Utils;
 using Terraria.Audio;
 using Terraria.GameContent;
-using Terraria.WorldBuilding;
 
 namespace DoomBubblesMod.Content.Projectiles.Ranged;
 
 public abstract class LunarBullet : ModProjectile
 {
-    private readonly float nebulaDistance = 100f;
-    public abstract int DustType { get; }
+    private const float NebulaDistance = 100f;
+    protected abstract int DustType { get; }
 
     public override void SetDefaults()
     {
@@ -59,7 +60,7 @@ public abstract class LunarBullet : ModProjectile
                 var num121 = Dust.NewDust(Projectile.Center, 0, 0, DustType, 0f, 0f, 100, default, 0.8f);
                 Main.dust[num121].velocity *= 1.6f;
                 var dust12 = Main.dust[num121];
-                dust12.velocity.Y = dust12.velocity.Y - 1f;
+                dust12.velocity.Y -= 1f;
                 Main.dust[num121].velocity += Projectile.velocity;
                 Main.dust[num121].noGravity = true;
             }
@@ -158,85 +159,43 @@ public abstract class LunarBullet : ModProjectile
         return new Color(255, 255, 255, 100) * Projectile.Opacity;
     }
 
-    public void SolarEffect(ref int damage)
+    protected void SolarEffect()
     {
-        if (!WorldUtils.Find(Projectile.Center.ToTileCoordinates(),
-                Searches.Chain(new Searches.Down(12), new Conditions.IsSolid()), out var _))
-        {
-            damage = (int) (damage * 1.5f);
-
-            for (double theta = 0; theta < Math.PI * 2; theta += 2 * Math.PI / 5)
-            {
-                var dust = Dust.NewDust(Projectile.Center, 0, 0, DustType<Solar229>(),
-                    (float) Math.Cos(theta),
-                    (float) Math.Sin(theta));
-                Main.dust[dust].noGravity = true;
-                Main.dust[dust].scale = 2f;
-            }
-        }
+        var explosion = Projectile.NewProjectileDirect(new EntitySource_Parent(Projectile), Projectile.Center,
+            Vector2.Zero, ProjectileID.SolarWhipSwordExplosion, Projectile.damage / 5, Projectile.knockBack / 2,
+            Projectile.owner, 0, 0.5f + Main.rand.NextFloat() * .5f);
+        explosion.netUpdate = true;
+        explosion.DamageType = Projectile.DamageType;
     }
 
-    public void NebulaEffect()
+    protected void NebulaEffect()
     {
-        var targetI = -1;
-        for (var i = 0; i < 200; i++)
+        if (Main.npc.Any(npc =>
+                npc is {active: true, dontTakeDamage: false} &&
+                npc.immune[Projectile.owner] == 0 &&
+                npc.Hitbox.Intersects(Projectile.Hitbox)))
         {
-            var nPc = Main.npc[i];
-            if (nPc != null &&
-                nPc.active &&
-                nPc.immune[Projectile.owner] == 0 &&
-                (!Projectile.usesLocalNPCImmunity || Projectile.localNPCImmunity[i] == 0) &&
-                nPc.CanBeChasedBy(Projectile) &&
-                nPc.Hitbox.Distance(Projectile.Center) < nebulaDistance)
-            {
-                targetI = nPc.whoAmI;
-                break;
-            }
+            return;
         }
 
-        if (targetI != -1)
+        var target = Main.npc
+            .FirstOrDefault(npc =>
+                npc.CanBeChasedBy(Projectile) &&
+                npc.immune[Projectile.owner] == 0 &&
+                (!Projectile.usesLocalNPCImmunity ||
+                 Projectile.localNPCImmunity[npc.whoAmI] == 0) &&
+                npc.Hitbox.Distance(Projectile.Center) < NebulaDistance);
+
+
+        if (target != null)
         {
-            var target = Main.npc[targetI];
-            var newPos = new Vector2();
-
-            var dX = Projectile.width / 4;
-            var dY = Projectile.height / 4;
-
-            var leftLeft = target.Hitbox.Left < Projectile.Center.X;
-            var rightRight = target.Hitbox.Right > Projectile.Center.X;
-            var upUp = target.Hitbox.Top < Projectile.Center.Y;
-            var downDown = target.Hitbox.Bottom > Projectile.Center.Y;
-
-            if (leftLeft && rightRight)
+            var newPos = Projectile.Center;
+            while (!target.Hitbox.Contains(newPos.ToPoint()))
             {
-                newPos.X = Projectile.Center.X;
-            }
-            else if (leftLeft)
-            {
-                newPos.X = target.Hitbox.Right - dX;
-            }
-            else if (rightRight)
-            {
-                newPos.X = target.Hitbox.Left + dX;
+                newPos += newPos.DirectionTo(target.Center);
             }
 
-            if (upUp && downDown)
-            {
-                newPos.Y = Projectile.Center.Y;
-            }
-            else if (upUp)
-            {
-                newPos.Y = target.Hitbox.Bottom - dY;
-            }
-            else if (downDown)
-            {
-                newPos.Y = target.Hitbox.Top + dY;
-            }
-
-            var newDx = Projectile.velocity.Length() * Math.Cos((newPos - Projectile.Center).ToRotation());
-            var newDy = Projectile.velocity.Length() * Math.Sin((newPos - Projectile.Center).ToRotation());
-
-            for (double theta = 0; theta < Math.PI * 2; theta += Math.PI / 12)
+            for (double theta = 0; theta < Math.PI * 2; theta += Math.PI / 6)
             {
                 var dust1 = Dust.NewDust(
                     Projectile.Center + new Vector2((float) (10 * Math.Cos(theta)), (float) (10 * Math.Sin(theta))),
@@ -249,24 +208,24 @@ public abstract class LunarBullet : ModProjectile
                 Main.dust[dust2].noGravity = true;
             }
 
+            Projectile.velocity = Projectile.Center.DirectionTo(newPos);
             Projectile.Center = newPos;
-            Projectile.velocity = new Vector2((float) newDx, (float) newDy);
         }
     }
 
-    public void VortexEffect(NPC target)
+    protected void VortexEffect(NPC target)
     {
-        var pos = Main.player[Projectile.owner].Center +
-                  new Vector2(Main.rand.NextFloat(-20, 20), Main.rand.NextFloat(-30, 30));
+        var owner = Projectile.Owner();
+        var pos = owner.Center +
+                  new Vector2(Main.rand.NextFloat(0, 20) * owner.direction, Main.rand.NextFloat(-30, 30));
         var v = 7f * (target.Center - pos).ToRotation().ToRotationVector2();
 
-        var proj = Projectile.NewProjectile(new EntitySource_Parent(Projectile), pos, v,
-            ProjectileType<VortexBullet2>(),
-            Projectile.damage / 2, Projectile.knockBack / 2, Projectile.owner);
-        Main.projectile[proj].netUpdate = true;
+        var proj = Projectile.NewProjectileDirect(new EntitySource_Parent(Projectile), pos, v,
+            ProjectileType<VortexBullet2>(), Projectile.damage / 5, Projectile.knockBack / 5, Projectile.owner);
+        proj.netUpdate = true;
     }
 
-    public void StardustEffect(NPC target)
+    protected void StardustEffect(NPC target)
     {
         var newPos = Projectile.position;
         newPos += Projectile.oldVelocity / 5f;
@@ -275,13 +234,13 @@ public abstract class LunarBullet : ModProjectile
             newPos += Projectile.oldVelocity / 5f;
         }
 
-        Projectile.NewProjectile(new EntitySource_Parent(Projectile), newPos,
-            Projectile.oldVelocity.RotatedByRandom(Math.PI / 15) / 2,
-            ProjectileType<StardustBullet2>(), Projectile.damage / 2, Projectile.knockBack / 2,
-            Projectile.owner, 0, target.whoAmI);
-        Projectile.NewProjectile(new EntitySource_Parent(Projectile), newPos,
-            Projectile.oldVelocity.RotatedByRandom(Math.PI / 15) / 2,
-            ProjectileType<StardustBullet2>(), Projectile.damage / 2, Projectile.knockBack / 2,
-            Projectile.owner, 0, target.whoAmI);
+        for (var i = 0; i < 3; i++)
+        {
+            var proj = Projectile.NewProjectileDirect(new EntitySource_Parent(Projectile), newPos,
+                Projectile.oldVelocity.RotatedByRandom(Math.PI / 15) / 2,
+                ProjectileType<StardustBullet2>(), Projectile.damage / 2, Projectile.knockBack / 2,
+                Projectile.owner, 0, target.whoAmI);
+            proj.netUpdate = true;
+        }
     }
 }

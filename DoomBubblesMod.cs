@@ -35,6 +35,8 @@ public class DoomBubblesMod : Mod
     public static List<Color> RainbowColors => new()
         {Color.Red, Color.Orange, Color.Yellow, Color.LimeGreen, Color.Blue, Color.Indigo, Color.Violet};
 
+    public static ushort[] RopesForWalls => new[] { TileID.Rope, TileID.VineRope, TileID.Chain, TileID.SilkRope};
+
     public override void AddRecipeGroups()
     {
         var recipeGroup = new RecipeGroup(() => "Any Palladium Helmet", ItemID.PalladiumHeadgear,
@@ -55,6 +57,11 @@ public class DoomBubblesMod : Mod
         {
             //TextureAssets.Projectile[ProjectileID.MoonlordBullet]. TODO texture changing
             //Main.dustTexture = GetTexture("Dusts/Dust"); TODO dust changing
+        }
+
+        foreach (var ropesForWall in RopesForWalls)
+        {
+            TileID.Sets.HousingWalls[ropesForWall] = true;
         }
 
         ThoriumChanges.Load();

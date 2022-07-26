@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using DoomBubblesMod.Content.Buffs;
+using DoomBubblesMod.Content.Items.Accessories;
 using DoomBubblesMod.Content.Items.HotS;
 using DoomBubblesMod.Content.Items.Misc;
 using DoomBubblesMod.Content.Items.Talent;
@@ -58,24 +59,15 @@ public class DoomBubblesGlobalNPC : GlobalNPC
                     new LeadingConditionRule(new Conditions.DownedAllMechBosses()).OnSuccess(
                         ItemDropRule.ExpertGetsRerolls(ItemType<BrokenHeroGun>(), 4, 1)));
                 break;
+            case NPCID.ShortBones:
+            case NPCID.BigBoned:
+            case NPCID.AngryBones:
+            case NPCID.AngryBonesBig:
+            case NPCID.AngryBonesBigMuscle:
+            case NPCID.AngryBonesBigHelmet:
+                npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<TriggerFinger>(), 100, 50));
+                break;
         }
-
-        /*if (Main.expertMode)
-        {
-            if (npc.type == NPCID.Mothron && Main.rand.Next(1, 3) == 1)
-            {
-                Item.NewItem(new EntitySource_Loot(npc), npc.position, ItemType<BrokenHeroGun>());
-            }
-        }
-        else
-        {
-            switch (npc.type)
-            {
-                case NPCID.DukeFishron:
-                    Item.NewItem(new EntitySource_Loot(npc), npc.position, ItemType<Ultrashark>());
-                    break;
-            }
-        }*/
     }
 
     public override void SetupShop(int type, Chest shop, ref int nextSlot)
@@ -160,6 +152,11 @@ public class DoomBubblesGlobalNPC : GlobalNPC
             case NPCID.DyeTrader when Main.hardMode:
             {
                 shop.item[nextSlot++].SetDefaults(ItemType<BlankDye>());
+                break;
+            }
+            case NPCID.Merchant:
+            {
+                shop.item[nextSlot++].SetDefaults(ItemType<SprayPaint>());
                 break;
             }
         }

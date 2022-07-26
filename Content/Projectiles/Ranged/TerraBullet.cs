@@ -21,8 +21,8 @@ public class TerraBullet : ModProjectile
         Projectile.tileCollide = true;
         Projectile.extraUpdates = 1;
         Projectile.light = 0.3f;
+        Projectile.scale = 1f;
         AIType = ProjectileID.Bullet;
-        Projectile.scale = .75f;
     }
 
     public override bool PreAI()

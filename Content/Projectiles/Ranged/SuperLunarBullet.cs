@@ -4,33 +4,14 @@ namespace DoomBubblesMod.Content.Projectiles.Ranged;
 
 public class SuperLunarBullet : LunarBullet
 {
-    public override int DustType
+    protected override int DustType => Projectile.frame switch
     {
-        get
-        {
-            if (Projectile.frame == 0)
-            {
-                return DustType<Solar229>();
-            }
-
-            if (Projectile.frame == 1)
-            {
-                return DustType<Vortex229>();
-            }
-
-            if (Projectile.frame == 2)
-            {
-                return DustType<Nebula229>();
-            }
-
-            if (Projectile.frame == 3)
-            {
-                return DustType<Stardust229>();
-            }
-
-            return 229;
-        }
-    }
+        0 => DustType<Solar229>(),
+        1 => DustType<Vortex229>(),
+        2 => DustType<Nebula229>(),
+        3 => DustType<Stardust229>(),
+        _ => DustID.Phantasmal
+    };
 
     public override void SetStaticDefaults()
     {
@@ -60,17 +41,10 @@ public class SuperLunarBullet : LunarBullet
         NebulaEffect();
     }
 
-    public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit,
-        ref int hitDirection)
-    {
-        SolarEffect(ref damage);
-        base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
-    }
-
     public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
     {
-        base.OnHitNPC(target, damage, knockback, crit);
         VortexEffect(target);
         StardustEffect(target);
+        SolarEffect();
     }
 }

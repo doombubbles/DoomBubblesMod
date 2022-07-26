@@ -4,7 +4,7 @@ namespace DoomBubblesMod.Content.Projectiles.Ranged;
 
 public class VortexBullet2 : LunarBullet
 {
-    public override int DustType => DustType<Vortex229>();
+    protected override int DustType => DustType<Vortex229>();
 
     public override void SetDefaults()
     {

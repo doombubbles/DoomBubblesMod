@@ -7,6 +7,8 @@ namespace DoomBubblesMod.Content.Items.Weapons;
 
 public class TerraRifle : ModItem
 {
+    private int counter;
+
     public override void SetStaticDefaults()
     {
         Tooltip.SetDefault("50% chance to not consume ammo\n" +
@@ -58,20 +60,22 @@ public class TerraRifle : ModItem
         recipe2.Register();
     }
 
-    public override bool CanConsumeAmmo(Item ammo, Player player)
-    {
-        return Main.rand.NextFloat() >= .50f && base.CanConsumeAmmo(ammo, player);
-    }
+    public override bool CanConsumeAmmo(Item ammo, Player player) => Main.rand.NextFloat() >= .50f;
 
     public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity,
         int type, int damage, float knockback)
     {
-        if (Main.rand.NextFloat() <= .2 && player.whoAmI == Main.myPlayer)
+        if (player.whoAmI == Main.myPlayer)
         {
-            var proj = Projectile.NewProjectileDirect(source, position, velocity, ProjectileType<MidnightBlast>(),
-                damage * 2, knockback, player.whoAmI);
-            proj.netUpdate = true;
-            SoundEngine.PlaySound(SoundID.Item38, position);
+            counter++;
+            if (counter >= 7)
+            {
+                var proj = Projectile.NewProjectileDirect(source, position, velocity, ProjectileType<MidnightBlast>(),
+                    damage * 2, knockback, player.whoAmI);
+                proj.netUpdate = true;
+                SoundEngine.PlaySound(SoundID.Item38, position);
+                counter = 0;
+            }
         }
 
         return base.Shoot(player, source, position, velocity, type, damage, knockback);

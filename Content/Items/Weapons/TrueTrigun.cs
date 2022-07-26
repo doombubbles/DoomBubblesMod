@@ -55,7 +55,6 @@ public class TrueTrigun : ModItem
         recipe.AddIngredient(ItemID.SoulofMight, 5);
         recipe.AddIngredient(ItemID.SoulofSight, 5);
         recipe.AddTile(TileID.MythrilAnvil);
-        recipe.ReplaceResult(this);
         recipe.Register();
     }
 
@@ -66,7 +65,7 @@ public class TrueTrigun : ModItem
             return false;
         }
 
-        return player.itemAnimation < Item.useAnimation - 2 && base.CanConsumeAmmo(ammo, player);
+        return player.itemAnimation < Item.useAnimation - 2;
     }
     
     public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage,

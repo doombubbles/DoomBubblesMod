@@ -18,9 +18,8 @@ public class StardustBullet : ModItem
 
     public override void AddRecipes()
     {
-        var recipe = CreateRecipe();
+        var recipe = CreateRecipe(111);
         recipe.AddIngredient(ItemID.FragmentStardust);
-        recipe.ReplaceResult(this, 111);
         recipe.AddTile(TileID.LunarCraftingStation);
         recipe.Register();
     }

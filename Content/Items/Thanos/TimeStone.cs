@@ -38,7 +38,7 @@ public class TimeStone : InfinityStone
                 dust.noGravity = true;
             }
 
-            SoundEngine.PlaySound(SoundID.Item15, gauntletPos).Volume(2f);
+            SoundEngine.PlaySound(SoundID.Item15.WithVolumeScale(2f), gauntletPos);
             player.AddBuff(BuffType<TimeStoneCooldown>(), 1800);
         }
     }

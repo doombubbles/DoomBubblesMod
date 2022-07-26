@@ -19,6 +19,10 @@ public class DoomBubblesPlayer : ModPlayer
     public bool united;
     public bool vampireKnifeBat;
 
+    public bool autoShoot;
+
+    public int weaponDye;
+
     public override void ResetEffects()
     {
         homing = false;
@@ -31,6 +35,8 @@ public class DoomBubblesPlayer : ModPlayer
         emblem = 0;
         vampireKnifeBat = false;
         united = false;
+        autoShoot = false;
+        weaponDye = 0;
 
         NoManaItems.Clear();
     }
@@ -70,6 +76,10 @@ public class DoomBubblesPlayer : ModPlayer
         itemsByMod["Terraria"][0] = item;
     }
 
-    public override bool CanConsumeAmmo(Item weapon, Item ammo) =>
-        !Player.GetModPlayer<DoomBubblesPlayer>().homing && base.CanConsumeAmmo(weapon, ammo);
+    public override bool CanConsumeAmmo(Item weapon, Item ammo) => !Player.GetModPlayer<DoomBubblesPlayer>().homing;
+
+    public override void UpdateDyes()
+    {
+        weaponDye = 0;
+    }
 }

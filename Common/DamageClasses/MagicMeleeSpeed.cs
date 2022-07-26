@@ -7,14 +7,13 @@ public class MagicMeleeSpeed : DamageClass
         ClassName.SetDefault("magic damage");
     }
 
-    public override StatInheritanceData GetModifierInheritance(
-        DamageClass damageClass)
+    public override StatInheritanceData GetModifierInheritance(DamageClass damageClass)
     {
-        if (damageClass == Melee)
+        if (damageClass.CountsAsClass(Melee))
             return new StatInheritanceData(attackSpeedInheritance: 1f);
 
-        return damageClass == Generic || damageClass == Magic ? StatInheritanceData.Full : StatInheritanceData.None;
+        return damageClass == Generic || damageClass.CountsAsClass(Magic) ? StatInheritanceData.Full : StatInheritanceData.None;
     }
 
-    public override bool GetEffectInheritance(DamageClass damageClass) => damageClass == Magic;
+    public override bool GetEffectInheritance(DamageClass damageClass) => damageClass.CountsAsClass(Magic);
 }

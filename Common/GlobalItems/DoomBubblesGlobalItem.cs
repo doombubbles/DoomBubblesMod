@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using DoomBubblesMod.Common.Configs;
 using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Items.Weapons;
+using DoomBubblesMod.Utils;
+using Terraria.ID;
 
 namespace DoomBubblesMod.Common.GlobalItems;
 
@@ -122,7 +124,8 @@ public class DoomBubblesGlobalItem : GlobalItem
             tooltips.ForEach(line => line.Text = line.Text.Replace("Allows to use", "Allows you to use"));
             tooltips.ForEach(line => line.Text = line.Text.Replace("not to consume potion", "to not consume potions"));
             tooltips.ForEach(line => line.Text = line.Text.Replace("have better chance", "have a better chance"));
-            tooltips.ForEach(line => line.Text = line.Text.Replace("Piggy Bank by Quick Buff", "your Piggy Bank via Quick Buff"));
+            tooltips.ForEach(line =>
+                line.Text = line.Text.Replace("Piggy Bank by Quick Buff", "your Piggy Bank via Quick Buff"));
         }
     }
 
@@ -144,5 +147,18 @@ public class DoomBubblesGlobalItem : GlobalItem
         }
 
         return base.CanEquipAccessory(item, player, slot, modded);
+    }
+
+    public override bool? CanAutoReuseItem(Item item, Player player)
+    {
+        if (player.GetDoomBubblesPlayer().autoShoot &&
+            item.DamageType.CountsAsClass(DamageClass.Ranged) &&
+            item.shoot > ProjectileID.None &&
+            item.damage > 0)
+        {
+            return true;
+        }
+        
+        return null;
     }
 }

@@ -32,7 +32,6 @@ public class EndlessSuperLunarPouch : ModItem
         recipe.AddIngredient(ItemType<EndlessVortexPouch>());
         recipe.AddIngredient(ItemType<EndlessStardustPouch>());
         recipe.AddIngredient(ItemID.GravityGlobe);
-        recipe.ReplaceResult(this);
         recipe.AddTile(TileID.LunarCraftingStation);
         recipe.Register();
     }

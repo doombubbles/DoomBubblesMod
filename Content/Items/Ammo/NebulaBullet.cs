@@ -18,9 +18,8 @@ public class NebulaBullet : ModItem
 
     public override void AddRecipes()
     {
-        var recipe = CreateRecipe();
+        var recipe = CreateRecipe(111);
         recipe.AddIngredient(ItemID.FragmentNebula);
-        recipe.ReplaceResult(this, 111);
         recipe.AddTile(TileID.LunarCraftingStation);
         recipe.Register();
     }

@@ -46,8 +46,8 @@ public class PowerStone : InfinityStone
             player.GetModPlayer<ThanosPlayer>().powerStoneCharge += 1;
             if (Main.time % 10 == 0)
             {
-                SoundEngine.PlaySound(SoundID.Item34, gauntletPos)
-                    .Volume(.3f + .05f * Math.Sqrt(player.GetModPlayer<ThanosPlayer>().powerStoneCharge));
+                var volume = (float) (.3f + .05f * Math.Sqrt(player.GetModPlayer<ThanosPlayer>().powerStoneCharge));
+                SoundEngine.PlaySound(SoundID.Item34.WithVolumeScale(volume), gauntletPos);
             }
         }
 
@@ -98,9 +98,9 @@ public class PowerStone : InfinityStone
 
     public static void PowerRelease(Player player, Item item, Vector2 gauntletPos)
     {
-        SoundEngine.PlaySound(SoundID.Item74, gauntletPos).Volume(2f);
-        SoundEngine.PlaySound(SoundID.Item89, gauntletPos).Volume(2f);
-        SoundEngine.PlaySound(SoundID.Item93,gauntletPos).Volume(.5f);
+        SoundEngine.PlaySound(SoundID.Item74.WithVolumeScale(2f), gauntletPos);
+        SoundEngine.PlaySound(SoundID.Item89.WithVolumeScale(2f), gauntletPos);
+        SoundEngine.PlaySound(SoundID.Item93.WithVolumeScale(2f), gauntletPos);
         player.AddBuff(BuffType<PowerStoneBuff>(),
             6 * player.GetModPlayer<ThanosPlayer>().powerStoneCharge);
         for (var i = 0; i <= 360; i += 5)

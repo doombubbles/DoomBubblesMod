@@ -1,10 +1,11 @@
 namespace DoomBubblesMod.Content.Items.Ammo;
 
+// TODO makes solar explosions on hit
 public class SolarBullet : ModItem
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Deals bonus damage to airborne enemies");
+        Tooltip.SetDefault("Causes solar explosions on hit");
         SacrificeTotal = 99;
     }
 
@@ -18,9 +19,8 @@ public class SolarBullet : ModItem
 
     public override void AddRecipes()
     {
-        var recipe = CreateRecipe();
+        var recipe = CreateRecipe(111);
         recipe.AddIngredient(ItemID.FragmentSolar);
-        recipe.ReplaceResult(this, 111);
         recipe.AddTile(TileID.LunarCraftingStation);
         recipe.Register();
     }

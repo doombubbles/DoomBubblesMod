@@ -41,7 +41,7 @@ public class SDLMFAOMFGMG : ModItem
 
     public override bool CanConsumeAmmo(Item ammo, Player player)
     {
-        return Main.rand.NextDouble() <= .75 && base.CanConsumeAmmo(ammo, player);
+        return Main.rand.NextDouble() <= .75;
     }
 
     /*public override void ModifyWeaponDamage(Player player, ref StatModifier damage, ref float flat)

@@ -165,7 +165,7 @@ public static class Extensions
     {
         return player.GetModPlayer<DoomBubblesPlayer>();
     }
-    
+
     public static string SoundPath(this Mod mod, string assetPath) => $"{mod.Name}/Assets/Sounds/{assetPath}";
 
     public static SoundStyle Sound(this Mod mod, string assetPath) => new(mod.SoundPath(assetPath));
@@ -173,7 +173,7 @@ public static class Extensions
     public static ActiveSound GetSound(this SlotId slotId) =>
         slotId.IsValid && SoundEngine.TryGetActiveSound(slotId, out var sound) ? sound : null;
 
-    public static SlotId Volume(this SlotId slotId, float volume)
+    /*public static SlotId Volume(this SlotId slotId, float volume)
     {
         if (slotId.IsValid && SoundEngine.TryGetActiveSound(slotId, out var sound))
         {
@@ -183,7 +183,7 @@ public static class Extensions
         return slotId;
     }
 
-    public static SlotId Volume(this SlotId slotId, double volume) => slotId.Volume((float) volume);
+    public static SlotId Volume(this SlotId slotId, double volume) => slotId.Volume((float) volume);*/
 
     private static void InsertSpecifically(this List<TooltipLine> lines, TooltipLine tooltipLine,
         Func<TooltipPlacement, bool> func)
@@ -217,6 +217,12 @@ public static class Extensions
 
     public static int GetIndex(this List<TooltipLine> lines, TooltipPlacement placement) =>
         lines.FindIndex(line => line.Name == placement.ToString());
+
+    public static TooltipLine GetLine(this IEnumerable<TooltipLine> lines, TooltipPlacement placement) =>
+        lines.FirstOrDefault(line => line.Name == placement.ToString());
+
+    public static TooltipLine GetTooltip(this IEnumerable<TooltipLine> lines, int index) =>
+        lines.FirstOrDefault(line => line.Name == $"Tooltip{index}");
 
     public static ref int FrameCount(this Projectile projectile) => ref Main.projFrames[projectile.type];
 

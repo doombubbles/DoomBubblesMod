@@ -1,9 +1,13 @@
 using System;
+using System.Linq;
 using DoomBubblesMod.Common.Configs;
 using DoomBubblesMod.Common.Players;
+using DoomBubblesMod.Content.Items.Misc;
 using MonoMod.Cil;
 using Main = On.Terraria.Main;
 using Player = On.Terraria.Player;
+using PlayerDrawLayers = On.Terraria.DataStructures.PlayerDrawLayers;
+using Terraria.ID;
 
 namespace DoomBubblesMod.Utils;
 
@@ -19,6 +23,37 @@ public class DoomBubblesHooks : ILoadable
 
         Player.checkDPSTime += PlayerOncheckDPSTime;
         Player.getDPS += PlayerOngetDPS;
+
+        PlayerDrawLayers.DrawPlayer_27_HeldItem += PlayerDrawLayersOnDrawPlayer_27_HeldItem;
+        Player.UpdateItemDye += PlayerOnUpdateItemDye;
+    }
+
+    private void PlayerOnUpdateItemDye(Player.orig_UpdateItemDye orig, Terraria.Player self, bool isNotInVanitySlot,
+        bool isSetToHidden, Item armorItem, Item dyeItem)
+    {
+        orig(self, isNotInVanitySlot, isSetToHidden, armorItem, dyeItem);
+        if (armorItem?.ModItem is SprayPaint)
+        {
+            self.GetDoomBubblesPlayer().weaponDye = dyeItem.dye;
+        }
+    }
+
+    private void PlayerDrawLayersOnDrawPlayer_27_HeldItem(PlayerDrawLayers.orig_DrawPlayer_27_HeldItem orig,
+        ref PlayerDrawSet drawinfo)
+    {
+        var original = drawinfo.DrawDataCache.ToArray();
+        orig(ref drawinfo);
+        for (var i = 0; i < drawinfo.DrawDataCache.Count; i++)
+        {
+            var drawData = drawinfo.DrawDataCache[i];
+            if (original.Contains(drawData) ||
+                !drawinfo.drawPlayer.TryGetModPlayer(out DoomBubblesPlayer doomBubblesPlayer)) continue;
+
+            drawinfo.DrawDataCache[i] = drawData with
+            {
+                shader = doomBubblesPlayer.weaponDye
+            };
+        }
     }
 
     private int PlayerOngetDPS(Player.orig_getDPS orig, Terraria.Player self)

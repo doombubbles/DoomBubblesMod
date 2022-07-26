@@ -1,10 +1,10 @@
 ﻿namespace DoomBubblesMod.Content.Items.Ammo;
 
-public class EndlessSolarPouch : EndlessPouch<SolarBullet>
+public class EndlessHolyPouch : EndlessPouch<HolyBullet>
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Deals bonus damage to airborne enemies");
+        Tooltip.SetDefault("Summons falling stars on impact");
         SacrificeTotal = 1;
     }
 }

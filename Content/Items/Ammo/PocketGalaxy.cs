@@ -24,7 +24,6 @@ public class PocketGalaxy : ModItem
     {
         var recipe = CreateRecipe();
         recipe.AddIngredient(ItemID.FallenStar, 999);
-        recipe.ReplaceResult(this);
         recipe.AddTile(TileID.CrystalBall);
         recipe.Register();
     }

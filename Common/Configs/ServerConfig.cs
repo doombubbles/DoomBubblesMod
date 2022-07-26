@@ -11,6 +11,11 @@ public class ServerConfig : ModConfig
     [Label("Disable Damage Variance")]
     [Tooltip("Disables the default +/- 15% usually applied to all damage")]
     public bool DisableDamageVariance { get; set; }
+    
+    [DefaultValue(true)]
+    [Label("Ropes through Valid Houses")]
+    [Tooltip("Allows a house to still be valid even if theres up to 2 rope blocks in the walls")]
+    public bool RopesThroughWalls { get; set; }
 
     public override bool AcceptClientChanges(ModConfig pendingConfig, int whoAmI, ref string message)
     {
@@ -21,6 +26,16 @@ public class ServerConfig : ModConfig
         }
 
         message = "You had no right to do that.";
+        return false;
+    }
+
+    public override bool NeedsReload(ModConfig pendingConfig)
+    {
+        if (pendingConfig is ServerConfig serverConfig && serverConfig.RopesThroughWalls != RopesThroughWalls)
+        {
+            return true;
+        }
+
         return false;
     }
 }
