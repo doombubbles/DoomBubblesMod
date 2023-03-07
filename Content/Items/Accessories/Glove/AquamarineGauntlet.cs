@@ -2,7 +2,7 @@
 
 namespace DoomBubblesMod.Content.Items.Accessories.Glove;
 
-public class AquamarineGauntlet : GauntletItem
+/*public class AquamarineGauntlet : GauntletItem
 {
     protected override string GemName => "Pearl";
 
@@ -16,4 +16,4 @@ public class AquamarineGauntlet : GauntletItem
     {
         player.RadiantDamage(f => f + .05f);
     }
-}
+}*/

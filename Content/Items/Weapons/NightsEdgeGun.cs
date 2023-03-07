@@ -1,3 +1,4 @@
+using ElementalDamage.Common.Types;
 using ElementalDamage.Content.DamageClasses;
 using Terraria.Audio;
 
@@ -13,7 +14,7 @@ public abstract class NightsEdgeGun : ModItem
     public override void SetDefaults()
     {
         Item.damage = 20;
-        Item.DamageType = GetInstance<RangedShadow>();
+        Item.DamageType = ElementalDamageClass.Get<RangedDamageClass, Shadow>();
         Item.width = 52;
         Item.height = 20;
         Item.useTime = 30;

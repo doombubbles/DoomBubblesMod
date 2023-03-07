@@ -1,4 +1,5 @@
-﻿using DoomBubblesMod.Common.Players;
+﻿using DoomBubblesMod.Common.Configs;
+using DoomBubblesMod.Common.Players;
 
 namespace DoomBubblesMod.Content.Items.Accessories;
 
@@ -8,7 +9,9 @@ public class CharmOfFables : ModItem
     public override void SetStaticDefaults()
     {
         DisplayName.SetDefault("Charm of Fables");
-        Tooltip.SetDefault("Health/mana always regenerates as if you weren't moving\n" +
+        Tooltip.SetDefault((GetInstance<ServerConfig>().SorcerersStoneOP
+                               ? "Health/mana always regenerate as if you weren't moving\n"
+                               : "Your mana always regenerates as if you weren't moving") +
                            "Incrases maximum mana by 20\n" +
                            "Increases mana regeneration rate");
         SacrificeTotal = 1;

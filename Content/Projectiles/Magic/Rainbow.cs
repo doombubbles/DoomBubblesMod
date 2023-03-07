@@ -1,4 +1,5 @@
-﻿using ElementalDamage.Content.DamageClasses;
+﻿using ElementalDamage.Common.Types;
+using ElementalDamage.Content.DamageClasses;
 using Terraria.GameContent;
 using Terraria.Graphics;
 
@@ -16,7 +17,7 @@ public class Rainbow : ModProjectile
         Projectile.extraUpdates = 2;
         Projectile.scale = 1f;
         Projectile.timeLeft = 600;
-        Projectile.DamageType = GetInstance<MagicHoly>();
+        Projectile.DamageType = ElementalDamageClass.Get<MagicDamageClass, Holy>();
         Projectile.ignoreWater = true;
         Projectile.penetrate = -1;
         Projectile.usesLocalNPCImmunity = true;

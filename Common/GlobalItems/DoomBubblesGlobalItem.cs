@@ -1,8 +1,10 @@
 using System.Collections.Generic;
+using System.Linq;
 using DoomBubblesMod.Common.Configs;
 using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Items.Weapons;
 using DoomBubblesMod.Utils;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 
 namespace DoomBubblesMod.Common.GlobalItems;
@@ -62,17 +64,25 @@ public class DoomBubblesGlobalItem : GlobalItem
         base.ModifyWeaponCrit(item, player, ref crit);
     }
 
-    public override void OpenVanillaBag(string context, Player player, int arg)
+    public override void ModifyItemLoot(Item item, ItemLoot itemLoot)
     {
-        if (arg == ItemID.FishronBossBag && context == "bossBag")
+        switch (item.type)
         {
-            if (Main.rand.Next(1, 5) == 1)
+            case ItemID.FishronBossBag:
             {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player, ItemID.FishronBossBag), ItemType<Ultrashark>());
+                var rule = itemLoot.Get().OfType<OneFromOptionsNotScaledWithLuckDropRule>().First();
+                rule.dropIds = rule.dropIds.Append(ItemType<Ultrashark>()).ToArray();
+                break;
             }
-        }
+            case ItemID.LavaCrate or ItemID.LavaCrateHard:
+                var oneSuccessDropRule = itemLoot.Get().OfType<AlwaysAtleastOneSuccessDropRule>().First();
 
-        base.OpenVanillaBag(context, player, arg);
+                oneSuccessDropRule.rules = oneSuccessDropRule.rules
+                    .Append(ItemDropRule.NotScalingWithLuck(ItemID.ObsidianRose, 10))
+                    .ToArray();
+
+                break;
+        }
     }
 
     public override void ModifyManaCost(Item item, Player player, ref float reduce, ref float mult)
@@ -127,6 +137,21 @@ public class DoomBubblesGlobalItem : GlobalItem
             tooltips.ForEach(line =>
                 line.Text = line.Text.Replace("Piggy Bank by Quick Buff", "your Piggy Bank via Quick Buff"));
         }
+
+        if (GetInstance<ClientConfig>().CalamityThrowingDamage)
+        {
+            var modName = item.ModItem?.Mod.Name ?? "";
+            var changeItem = modName.Contains("Calamity") || modName == "SetBonusAccessories";
+            foreach (var line in tooltips.Where(line =>
+                         line.Name != "ItemName" && (changeItem || line.Mod.Contains("Calamity"))))
+            {
+                line.Text = line.Text
+                    .Replace("rogue stealth", "stealth")
+                    .Replace("Rogue stealth", "Stealth")
+                    .Replace("rogue", "throwing")
+                    .Replace("Rogue", "Throwing");
+            }
+        }
     }
 
     public override void UpdateAccessory(Item item, Player player, bool hideVisual)
@@ -158,7 +183,7 @@ public class DoomBubblesGlobalItem : GlobalItem
         {
             return true;
         }
-        
+
         return null;
     }
 }

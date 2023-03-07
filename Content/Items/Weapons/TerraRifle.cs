@@ -1,5 +1,6 @@
 using DoomBubblesMod.Content.Items.Misc;
 using DoomBubblesMod.Content.Projectiles.Ranged;
+using ElementalDamage.Common.Types;
 using ElementalDamage.Content.DamageClasses;
 using Terraria.Audio;
 
@@ -19,7 +20,7 @@ public class TerraRifle : ModItem
     public override void SetDefaults()
     {
         Item.damage = 42;
-        Item.DamageType = GetInstance<RangedNature>();
+        Item.DamageType = ElementalDamageClass.Get<RangedDamageClass, Nature>();
         Item.width = 64;
         Item.height = 22;
         Item.useTime = 10;

@@ -12,23 +12,28 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Remove="OldAssets\**" />
-        <Compile Remove="lib\**" />
     </ItemGroup>
     <ItemGroup>
         <EmbeddedResource Remove="OldAssets\**" />
-        <EmbeddedResource Remove="lib\**" />
     </ItemGroup>
     <ItemGroup>
         <None Remove="OldAssets\**" />
-        <None Remove="lib\**" />
     </ItemGroup>
     <ItemGroup>
         <Reference Include="EasyNetworkingLib">
           <HintPath>lib\EasyNetworkingLib.dll</HintPath>
         </Reference>
-        <Reference Include="ElementalDamage, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <Reference Include="ElementalDamage">
             <HintPath>lib\ElementalDamage.dll</HintPath>
         </Reference>
+        <Reference Include="ClickerClass">
+            <HintPath>lib\ClickerClass.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+      <Content Include="lib\ClickerClass.dll" />
+      <Content Include="lib\EasyNetworkingLib.dll" />
+      <Content Include="lib\ElementalDamage.dll" />
     </ItemGroup>
 
     <Target Name="CopyDll" AfterTargets="Build" Condition="Exists('$(TargetDir)$(TargetName).dll') And Exists('$(ProjectDir)..\DoomBubblesWoWMod\lib\$(TargetName).dll')" BeforeTargets="BuildMod">

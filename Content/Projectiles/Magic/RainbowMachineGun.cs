@@ -1,4 +1,5 @@
 ﻿using System;
+using ElementalDamage.Common.Types;
 using ElementalDamage.Content.DamageClasses;
 using ReLogic.Content;
 using Terraria.Audio;
@@ -22,7 +23,7 @@ public class RainbowMachineGun : ModProjectile
         Projectile.penetrate = -1;
         Projectile.tileCollide = false;
         Projectile.hide = true;
-        Projectile.DamageType = GetInstance<MagicHoly>();
+        Projectile.DamageType = ElementalDamageClass.Get<MagicDamageClass, Holy>();
         Projectile.ignoreWater = true;
     }
 

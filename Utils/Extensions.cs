@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using DoomBubblesMod.Common.Players;
 using ReLogic.Utilities;
 using Terraria.Audio;
+using Terraria.ID;
 
 namespace DoomBubblesMod.Utils;
 
@@ -230,9 +231,26 @@ public static class Extensions
         projectile.owner >= 255 ? null : Main.player[projectile.owner];
 
 
+    public static bool RemoveLine(this List<TooltipLine> lines, TooltipPlacement placement) =>
+        lines.RemoveAll(line => line.Name == placement.ToString()) > 0;
+
+
     public static string ToNameFormat(this string s) => Regex.Replace(
         s,
         "(?<!^)([A-Z][a-z]|(?<=[a-z])[A-Z])",
         " $1",
         RegexOptions.Compiled).Trim();
+
+    public static bool IsServerOwner(this Player player)
+    {
+        return Main.netMode == NetmodeID.MultiplayerClient
+            ? Netplay.Connection.Socket.GetRemoteAddress().IsLocalHost()
+            : Main.player.Any(p =>
+                p == player &&
+                p.active &&
+                Netplay.Clients[p.whoAmI].State == 10 &&
+                Netplay.Clients[p.whoAmI].Socket.GetRemoteAddress().IsLocalHost());
+    }
+
+    public static ModPrefix ModPrefix(this Item item) => PrefixLoader.GetPrefix(item.prefix);
 }

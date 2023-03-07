@@ -1,5 +1,6 @@
 using System;
 using DoomBubblesMod.Content.Projectiles.Ranged;
+using ElementalDamage.Common.Types;
 using ElementalDamage.Content.DamageClasses;
 
 namespace DoomBubblesMod.Content.Items.Weapons;
@@ -15,7 +16,7 @@ public class TrueTrigun : ModItem
     public override void SetDefaults()
     {
         Item.damage = 40;
-        Item.DamageType = GetInstance<RangedHoly>();
+        Item.DamageType = ElementalDamageClass.Get<RangedDamageClass, Holy>();
         Item.width = 56;
         Item.height = 26;
         Item.useTime = 4;

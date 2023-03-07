@@ -1,4 +1,5 @@
-﻿using DoomBubblesMod.Common.Players;
+﻿using DoomBubblesMod.Common.Configs;
+using DoomBubblesMod.Common.Players;
 
 namespace DoomBubblesMod.Content.Items.Accessories;
 
@@ -7,7 +8,9 @@ public class SorcerersStone : ModItem
     public override void SetStaticDefaults()
     {
         DisplayName.SetDefault("Sorcerer's Stone");
-        Tooltip.SetDefault("Your health and mana always regenerate as if you weren't moving");
+        Tooltip.SetDefault(GetInstance<ServerConfig>().SorcerersStoneOP
+            ? "Your health and mana always regenerate as if you weren't moving"
+            : "Your mana always regenerates as if you weren't moving");
         SacrificeTotal = 1;
     }
 

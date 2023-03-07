@@ -69,13 +69,13 @@ public class InfinityGauntletUI : UIState
         }
         else
         {
-            GetInstance<UISystem>().InfinityGauntlet.SetState(null);
+            GetInstance<DoomBubblesSystem>().InfinityGauntlet.SetState(null);
         }
     }
 
     private static void ChooseGem(int gem)
     {
         Main.LocalPlayer.GetModPlayer<ThanosPlayer>().gem = gem;
-        GetInstance<UISystem>().InfinityGauntlet.SetState(null);
+        GetInstance<DoomBubblesSystem>().InfinityGauntlet.SetState(null);
     }
 }

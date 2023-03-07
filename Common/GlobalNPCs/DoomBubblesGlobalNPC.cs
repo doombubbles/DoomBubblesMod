@@ -156,7 +156,7 @@ public class DoomBubblesGlobalNPC : GlobalNPC
             }
             case NPCID.Merchant:
             {
-                shop.item[nextSlot++].SetDefaults(ItemType<SprayPaint>());
+                // shop.item[nextSlot++].SetDefaults(ItemType<SprayPaint>());
                 break;
             }
         }

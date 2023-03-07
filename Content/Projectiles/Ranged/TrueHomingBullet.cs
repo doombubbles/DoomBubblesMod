@@ -1,4 +1,5 @@
 using System;
+using ElementalDamage.Common.Types;
 using ElementalDamage.Content.DamageClasses;
 using Terraria.Audio;
 
@@ -13,7 +14,7 @@ public class TrueHomingBullet : ModProjectile
         Projectile.aiStyle = 1;
         Projectile.friendly = true;
         Projectile.hostile = false;
-        Projectile.DamageType = GetInstance<RangedHoly>();
+        Projectile.DamageType = ElementalDamageClass.Get<RangedDamageClass, Holy>();
         Projectile.penetrate = 1;
         Projectile.timeLeft = 600;
         Projectile.alpha = 255;

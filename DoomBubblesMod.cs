@@ -35,13 +35,9 @@ public class DoomBubblesMod : Mod
     public static List<Color> RainbowColors => new()
         {Color.Red, Color.Orange, Color.Yellow, Color.LimeGreen, Color.Blue, Color.Indigo, Color.Violet};
 
-    public static ushort[] RopesForWalls => new[] { TileID.Rope, TileID.VineRope, TileID.Chain, TileID.SilkRope};
-
-    public override void AddRecipeGroups()
+    public DoomBubblesMod()
     {
-        var recipeGroup = new RecipeGroup(() => "Any Palladium Helmet", ItemID.PalladiumHeadgear,
-            ItemID.PalladiumHelmet, ItemID.PalladiumMask);
-        RecipeGroup.RegisterGroup("DoomBubblesMod:AnyPalladiumHelmet", recipeGroup);
+        PreJITFilter = new DeclaringPreJITFilter();
     }
 
     public override void Load()
@@ -59,11 +55,6 @@ public class DoomBubblesMod : Mod
             //Main.dustTexture = GetTexture("Dusts/Dust"); TODO dust changing
         }
 
-        foreach (var ropesForWall in RopesForWalls)
-        {
-            TileID.Sets.HousingWalls[ropesForWall] = true;
-        }
-
         ThoriumChanges.Load();
     }
 
@@ -76,102 +67,6 @@ public class DoomBubblesMod : Mod
         SoulStoneHotKey = null;
         TimeStoneHotKey = null;
         MindStoneHotKey = null;
-    }
-
-
-    public override void AddRecipes()
-    {
-        var badItems = new[]
-        {
-            "AutoHouse",
-            "BoomShuriken",
-            "CityBuster",
-            "InstaBridge",
-            "DoubleObsidianInstaBridge",
-            "GraveBuster",
-            "HalfInstavator",
-            "Instavator",
-            "InstaBridge",
-            "InstaTrack",
-            "Instavator",
-            "LihzahrdInstactuationBomb",
-            "MiniInstaBridge",
-            "ObsidianInstaBridge",
-            "Trollbomb"
-        };
-
-
-        ModLoader.TryGetMod("Fargowiltas", out var fargo);
-
-        for (var i = 0; i < Recipe.numRecipes; i++)
-        {
-            var recipe = Main.recipe[i];
-
-            if (recipe.HasResult(ItemID.TerraBlade))
-            {
-                //recipe.AddIngredient(ModContent.ItemType<HeartOfTerraria>());
-            }
-
-            if (recipe.HasResult(ItemID.TrueExcalibur) && recipe.HasIngredient(ItemID.ChlorophyteBar))
-            {
-                recipe.RemoveIngredient(ItemID.ChlorophyteBar);
-                recipe.AddIngredient(ItemID.SoulofFright, 5);
-                recipe.AddIngredient(ItemID.SoulofMight, 5);
-                recipe.AddIngredient(ItemID.SoulofSight, 5);
-            }
-
-            if (recipe.HasResult(ItemID.TrueNightsEdge) &&
-                recipe.HasIngredient(ItemID.SoulofFright) &&
-                recipe.HasIngredient(ItemID.SoulofMight) &&
-                recipe.HasIngredient(ItemID.SoulofSight))
-            {
-                recipe.RemoveIngredient(ItemID.ChlorophyteBar);
-                recipe.RemoveIngredient(ItemID.SoulofFright);
-                recipe.RemoveIngredient(ItemID.SoulofMight);
-                recipe.RemoveIngredient(ItemID.SoulofSight);
-                recipe.AddIngredient(ItemID.SoulofFright, 5);
-                recipe.AddIngredient(ItemID.SoulofMight, 5);
-                recipe.AddIngredient(ItemID.SoulofSight, 5);
-            }
-
-
-            if (fargo != null)
-            {
-                foreach (var badItem in badItems)
-                {
-                    if (fargo.TryFind(badItem, out ModItem bad) && recipe.HasResult(bad))
-                    {
-                        recipe.DisableRecipe();
-                    }
-                }
-            }
-        }
-
-        ThoriumChanges.ModifyThoriumRecipes();
-
-        if (ThoriumMod != null)
-        {
-            foreach (var item in GetContent<ModItem>().OfType<IHasThoriumRecipe>())
-            {
-                item.AddThoriumRecipe(ThoriumMod);
-            }
-        }
-
-        /*var mimicDrops = Main.ItemDropsDB
-            .GetRulesForNPCID(NPCID.Mimic, false)
-            .OfType<OneFromOptionsDropRule>()
-            .SelectMany(rule => rule.dropIds)
-            .ToList();
-        foreach (var item in mimicDrops)
-        {
-            var otherDrops = mimicDrops.Where(i => i != item).ToArray();
-            var group = RecipeGroup.RegisterGroup("AnyOtherMimicDropBut" + item,
-                new RecipeGroup(() => "Any Other Mimic Drop", otherDrops));
-            var recipe = CreateRecipe(item);
-            recipe.AddRecipeGroup(group);
-            recipe.AddTile(TileID.CrystalBall);
-            recipe.Register();
-        }*/
     }
 
     public override void HandlePacket(BinaryReader reader, int whoAmI)

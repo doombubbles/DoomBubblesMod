@@ -101,11 +101,6 @@ public class ThanosPlayer : ModPlayer
         base.PreUpdate();
     }
 
-    public override void PostUpdate()
-    {
-        base.PostUpdate();
-    }
-
     public override void UpdateDead()
     {
         powerStoning = new HashSet<int>();

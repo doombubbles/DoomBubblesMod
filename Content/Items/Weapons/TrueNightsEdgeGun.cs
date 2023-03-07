@@ -1,4 +1,5 @@
 using DoomBubblesMod.Content.Projectiles.Ranged;
+using ElementalDamage.Common.Types;
 using ElementalDamage.Content.DamageClasses;
 using Terraria.Audio;
 
@@ -14,7 +15,7 @@ public abstract class TrueNightsEdgeGun<T> : ModItem where T : MidnightBlast
     public override void SetDefaults()
     {
         Item.damage = 40;
-        Item.DamageType = GetInstance<RangedShadow>();
+        Item.DamageType = ElementalDamageClass.Get<RangedDamageClass, Shadow>();
         Item.width = 58;
         Item.height = 24;
         Item.useTime = 30;

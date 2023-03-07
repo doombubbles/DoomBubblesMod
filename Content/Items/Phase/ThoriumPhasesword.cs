@@ -18,10 +18,10 @@ public abstract class ThoriumPhasesword : Phasesword, IHasThoriumRecipe
     }
 }
 
-public class BlackPhasesword : ThoriumPhasesword
+/*public class BlackPhasesword : ThoriumPhasesword
 {
     protected override string PhasesaberModItem => "BlackPhasesaber";
-}
+}*/
 
 public class CyanPhasesword : ThoriumPhasesword
 {

@@ -1,4 +1,5 @@
 using System;
+using ElementalDamage.Common.Types;
 using ElementalDamage.Content.DamageClasses;
 using Terraria.Audio;
 
@@ -10,7 +11,7 @@ public class HolyBullet : ModProjectile
     {
         Projectile.CloneDefaults(ProjectileID.CrystalBullet);
         AIType = ProjectileID.Bullet;
-        Projectile.DamageType = GetInstance<RangedHoly>();
+        Projectile.DamageType = ElementalDamageClass.Get<RangedDamageClass, Holy>();
     }
 
 

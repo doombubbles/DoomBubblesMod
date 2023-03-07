@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using DoomBubblesMod.Common.Configs;
+using Terraria.ID;
 
 namespace DoomBubblesMod.Common.Players;
 
@@ -39,10 +41,14 @@ public class DoomBubblesPlayer : ModPlayer
         weaponDye = 0;
 
         NoManaItems.Clear();
+
+
+        if (GetInstance<ServerConfig>().AutoTorchGod) Player.unlockedBiomeTorches = true;
     }
 
     public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit,
-        ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
+        ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource,
+        ref int cooldownCounter)
     {
         if (explosionBulletBonus &&
             damageSource.SourceProjectileType == ProjectileID.ExplosiveBullet &&
@@ -52,7 +58,7 @@ public class DoomBubblesPlayer : ModPlayer
         }
 
         return base.PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound,
-            ref genGore, ref damageSource);
+            ref genGore, ref damageSource, ref cooldownCounter);
     }
 
     public override void PostUpdateEquips()
@@ -77,9 +83,4 @@ public class DoomBubblesPlayer : ModPlayer
     }
 
     public override bool CanConsumeAmmo(Item weapon, Item ammo) => !Player.GetModPlayer<DoomBubblesPlayer>().homing;
-
-    public override void UpdateDyes()
-    {
-        weaponDye = 0;
-    }
 }

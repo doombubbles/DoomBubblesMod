@@ -176,7 +176,7 @@ public class InfinityGauntlet : ModItem
         {
             //switchGem();
 
-            GetInstance<UISystem>().InfinityGauntlet.SetState(
+            GetInstance<DoomBubblesSystem>().InfinityGauntlet.SetState(
                 new InfinityGauntletUI
                 {
                     mouseX = Main.mouseX,
@@ -277,9 +277,11 @@ public class InfinityGauntlet : ModItem
         recipe.Register();
     }
 
-    public override void OnCraft(Recipe recipe)
+    public override void OnCreate(ItemCreationContext context)
     {
-        SoundEngine.PlaySound(Mod.Sound("GauntletComplete"), Main.LocalPlayer.position);
-        base.OnCraft(recipe);
+        if (context is RecipeCreationContext)
+        {
+            SoundEngine.PlaySound(Mod.Sound("GauntletComplete"), Main.LocalPlayer.position);
+        }
     }
 }

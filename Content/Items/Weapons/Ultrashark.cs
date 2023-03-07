@@ -35,7 +35,7 @@ public class Ultrashark : ModItem
     public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type,
         ref int damage, ref float knockback)
     {
-        velocity = velocity.RotatedByRandom(MathHelper.ToRadians(4));
+        velocity = velocity.RotatedByRandom(MathHelper.ToRadians(3));
     }
 
     public override Vector2? HoldoutOffset() => new Vector2(-2, -3);

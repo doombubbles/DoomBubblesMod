@@ -1,3 +1,4 @@
+using ElementalDamage.Common.Types;
 using ElementalDamage.Content.DamageClasses;
 
 namespace DoomBubblesMod.Content.Items.Ammo;
@@ -14,7 +15,7 @@ public class HolyBullet : ModItem
     {
         Item.CloneDefaults(ItemID.CrystalBullet);
         Item.shoot = ProjectileType<Projectiles.Ranged.HolyBullet>();
-        Item.DamageType = GetInstance<RangedHoly>();
+        Item.DamageType = ElementalDamageClass.Get<RangedDamageClass, Holy>();
     }
 
     public override void AddRecipes()

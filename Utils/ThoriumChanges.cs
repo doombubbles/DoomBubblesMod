@@ -178,29 +178,4 @@ public static class ThoriumChanges
             }
         }
     }*/
-
-
-    internal static void ModifyThoriumRecipes()
-    {
-        var thoriumMod = ThoriumMod;
-        if (thoriumMod == null)
-        {
-            return;
-        }
-
-        Recipe recipe;
-
-        for (var i = 0; i < Recipe.numRecipes; i++)
-        {
-            recipe = Main.recipe[i];
-
-            if (recipe.HasResult(thoriumMod, "TerraStaff") ||
-                recipe.HasResult(thoriumMod, "TerraStaff") ||
-                recipe.HasResult(thoriumMod, "TerraStaff") ||
-                recipe.HasResult(thoriumMod, "TerraStaff"))
-            {
-                //recipe.AddIngredient(ModContent.ItemType<HeartOfTerraria>());
-            }
-        }
-    }
 }

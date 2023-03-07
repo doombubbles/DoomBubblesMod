@@ -1,4 +1,5 @@
-﻿using ElementalDamage.Content.DamageClasses;
+﻿using ElementalDamage.Common.Types;
+using ElementalDamage.Content.DamageClasses;
 
 namespace DoomBubblesMod.Content.Projectiles.Ranged;
 
@@ -7,6 +8,6 @@ public class TerraShard : ModProjectile
     public override void SetDefaults()
     {
         Projectile.CloneDefaults(ProjectileID.CrystalShard);
-        Projectile.DamageType = GetInstance<RangedNature>();
+        Projectile.DamageType = ElementalDamageClass.Get<RangedDamageClass, Nature>();
     }
 }

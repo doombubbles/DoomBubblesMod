@@ -1,4 +1,5 @@
-﻿using DoomBubblesMod.Common.Players;
+﻿using DoomBubblesMod.Common.Configs;
+using DoomBubblesMod.Common.Players;
 
 namespace DoomBubblesMod.Content.Items.Accessories;
 
@@ -9,7 +10,9 @@ public class CharmOfLegends : ModItem
     {
         DisplayName.SetDefault("Charm of Epics");
         Tooltip.SetDefault("Reduces the cooldown of healing potions\n" +
-                           "Health/mana always regenerates as if you weren't moving\n" +
+                           (GetInstance<ServerConfig>().SorcerersStoneOP
+                               ? "Health/mana always regenerate as if you weren't moving\n"
+                               : "Your mana always regenerates as if you weren't moving") +
                            "Incrases maximum mana by 20\n" +
                            "Increases mana and life regeneration rate");
         SacrificeTotal = 1;

@@ -32,7 +32,7 @@ public class MartianMeteorHelmet : ModItem
     public override void Load()
     {
         SetBonusAccessories?.Call(Mod, "Martian Meteor", typeof(MartianMeteorHelmet), typeof(MartianMeteorSuit),
-            typeof(MartianMeteorLeggings), SetBonus);
+            typeof(MartianMeteorLeggings));
     }
 
     public override void UpdateArmorSet(Player player)

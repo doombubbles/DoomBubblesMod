@@ -58,9 +58,9 @@ public class WhitePhaseclaymore : Phaseclaymore<WhitePhasesword>
 {
 }
 
-public class BlackPhaseclaymore : Phaseclaymore<BlackPhasesword>
+/*public class BlackPhaseclaymore : Phaseclaymore<BlackPhasesword>
 {
-}
+}*/
 
 public class CyanPhaseclaymore : Phaseclaymore<CyanPhasesword>
 {

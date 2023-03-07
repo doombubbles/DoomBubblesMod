@@ -45,7 +45,7 @@ public class ChromaticGauntlet : ModItem, IHasThoriumRecipe
         recipe.AddIngredient(ItemType<QuartzGauntlet>());
         recipe.AddIngredient(ItemType<EbonyGauntlet>());
         recipe.AddIngredient(ItemType<RoseGauntlet>());
-        recipe.AddIngredient(ItemType<AquamarineGauntlet>());
+        // recipe.AddIngredient(ItemType<AquamarineGauntlet>());
         recipe.AddTile(TileID.WorkBenches);
         recipe.Register();
     }
