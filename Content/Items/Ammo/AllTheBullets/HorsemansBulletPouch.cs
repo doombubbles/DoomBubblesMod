@@ -8,6 +8,6 @@ public class HorsemansBulletPouch : AllTheBulletsPouch<HorsemansBullet>
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("The Horseman's Bullet Pouch");
+        // DisplayName.SetDefault("The Horseman's Bullet Pouch");
     }
 }

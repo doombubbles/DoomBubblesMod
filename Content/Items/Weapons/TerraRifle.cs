@@ -12,9 +12,9 @@ public class TerraRifle : ModItem
 
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("50% chance to not consume ammo\n" +
-                           "Turns Musket Balls into Terra Bullets");
-        SacrificeTotal = 1;
+        /* Tooltip.SetDefault("50% chance to not consume ammo\n" +
+                           "Turns Musket Balls into Terra Bullets"); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

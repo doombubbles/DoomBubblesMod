@@ -10,13 +10,13 @@ public class SoulStone : InfinityStone
 
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("\"Soul holds a special place among the Infinity Stones.\n" +
+        /* Tooltip.SetDefault("\"Soul holds a special place among the Infinity Stones.\n" +
                            "You might say, it is a certain wisdom. To ensure that\n" +
                            "whoever possesses it understands its power, the stone\n" +
                            "demands a sacrifice. In order to take the stone, you\n" +
                            "must lose that which you love. A soul for a soul.\"\n" +
-                           "-The Stonekeeper");
-        SacrificeTotal = 1;
+                           "-The Stonekeeper"); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public static void SoulAbility(Player player)

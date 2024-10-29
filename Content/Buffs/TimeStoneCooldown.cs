@@ -4,7 +4,7 @@ public class TimeStoneCooldown : ModBuff
 {
     public override void SetStaticDefaults()
     {
-        Description.SetDefault("");
+        // Description.SetDefault("");
         Main.debuff[Type] = true;
         Main.pvpBuff[Type] = true;
         Main.buffNoSave[Type] = true;

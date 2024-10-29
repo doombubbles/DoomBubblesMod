@@ -7,8 +7,8 @@ public class HeavenlyEmblem : ModItem, IHasThoriumRecipe
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("20% increased radiant damage");
-        SacrificeTotal = 1;
+        // Tooltip.SetDefault("20% increased radiant damage");
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

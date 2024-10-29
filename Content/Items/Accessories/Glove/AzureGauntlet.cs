@@ -7,7 +7,7 @@ public class AzureGauntlet : GauntletItem
     public override void SetStaticDefaults()
     {
         base.SetStaticDefaults();
-        Tooltip.SetDefault("5% increased magic damage");
+        // Tooltip.SetDefault("5% increased magic damage");
     }
 
     public override void UpdateAccessory(Player player, bool hideVisual)

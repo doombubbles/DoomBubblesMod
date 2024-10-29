@@ -4,7 +4,7 @@ public abstract class Phaseclaymore<T> : ModItem where T : Phasesword
 {
     public override void SetStaticDefaults()
     {
-        SacrificeTotal = 1;
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

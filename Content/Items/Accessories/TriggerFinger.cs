@@ -6,9 +6,9 @@ public class TriggerFinger : ModItem
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Enables auto shoot for ranged weapons\n" +
-                           "\"Kid named finger: reeeee\"");
-        SacrificeTotal = 1;
+        /* Tooltip.SetDefault("Enables auto shoot for ranged weapons\n" +
+                           "\"Kid named finger: reeeee\""); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

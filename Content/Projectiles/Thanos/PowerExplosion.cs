@@ -1,6 +1,7 @@
 using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Buffs;
 using DoomBubblesMod.Content.Items.Thanos;
+using Terraria;
 
 namespace DoomBubblesMod.Content.Projectiles.Thanos;
 
@@ -48,7 +49,7 @@ public class PowerExplosion : ModProjectile
         return base.CanHitNPC(target);
     }
 
-    public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+    public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
         target.AddBuff(BuffType<PowerStoneDebuff>(), 300);
         if (!Main.player[Projectile.owner].GetModPlayer<ThanosPlayer>().powerStoning.Contains(target.whoAmI))
@@ -56,7 +57,7 @@ public class PowerExplosion : ModProjectile
             Main.player[Projectile.owner].GetModPlayer<ThanosPlayer>().powerStoning.Add(target.whoAmI);
         }
 
-        base.OnHitNPC(target, damage, knockback, crit);
+        base.OnHitNPC(target, hit, damageDone);
     }
 
     public override bool OnTileCollide(Vector2 oldVelocity)

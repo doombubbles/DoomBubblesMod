@@ -4,9 +4,9 @@ public class Ultrashark : ModItem
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("50% chance to not consume ammo\n" +
-                           "'It came from the edge of Minishark's cool uncle'");
-        SacrificeTotal = 1;
+        /* Tooltip.SetDefault("50% chance to not consume ammo\n" +
+                           "'It came from the edge of Minishark's cool uncle'"); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

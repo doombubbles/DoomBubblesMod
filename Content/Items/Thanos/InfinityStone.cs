@@ -17,7 +17,7 @@ public abstract class InfinityStone : ModItem
         Item.useStyle = ItemUseStyleID.HoldUp;
     }
 
-    public override bool? UseItem(Player player)
+    public override Nullable<bool> UseItem(Player player)/* tModPorter Suggestion: Return null instead of false */
     {
         player.KillMe(PlayerDeathReason.ByCustomReason(player.name +
                                                        " wielded power beyond " +

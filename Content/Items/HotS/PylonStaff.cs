@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Items.Talent;
 using DoomBubblesMod.Content.Projectiles.HotS;
@@ -9,11 +10,13 @@ public class PylonStaff : ModItemWithTalents<PylonOvercharge, ConstructAdditiona
 {
     protected override Color? TalentColor => Color.Blue;
 
+    public override int SoldBy => NPCID.Cyborg;
+    
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Warps in Pylons that power Photon Cannons and give regen\n" +
-                           "Max 2");
-        SacrificeTotal = 1;
+        /* Tooltip.SetDefault("Warps in Pylons that power Photon Cannons and give regen\n" +
+                           "Max 2"); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()
@@ -36,7 +39,7 @@ public class PylonStaff : ModItemWithTalents<PylonOvercharge, ConstructAdditiona
         return ChosenTalent == 1 || ChosenTalent == -1;
     }
 
-    public override bool? UseItem(Player player)
+    public override Nullable<bool> UseItem(Player player)/* tModPorter Suggestion: Return null instead of false */
     {
         if (player.altFunctionUse == 2)
         {

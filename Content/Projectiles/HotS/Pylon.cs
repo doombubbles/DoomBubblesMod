@@ -56,11 +56,11 @@ public class Pylon : HotsProjectile
         return false;
     }
 
-    public override void Kill(int timeLeft)
+    public override void OnKill(int timeLeft)
     {
         Main.player[Projectile.owner].GetModPlayer<HotsPlayer>().pylons
             .RemoveAll(i => i == Projectile.whoAmI);
-        base.Kill(timeLeft);
+        base.OnKill(timeLeft);
     }
 
     public override void AI()

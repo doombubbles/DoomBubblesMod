@@ -4,8 +4,8 @@ public class BloodlustTalisman : ModItem
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Your lifesteal is uncapped");
-        SacrificeTotal = 1;
+        // Tooltip.SetDefault("Your lifesteal is uncapped");
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

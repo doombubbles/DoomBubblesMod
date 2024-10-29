@@ -6,8 +6,8 @@ public class CrystalCore : ModItem
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Crystal Bullets release extra shards");
-        SacrificeTotal = 1;
+        // Tooltip.SetDefault("Crystal Bullets release extra shards");
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

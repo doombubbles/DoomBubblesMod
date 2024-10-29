@@ -2,6 +2,7 @@
 using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Buffs;
 using DoomBubblesMod.Utils;
+using Terraria;
 using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Projectiles.HotS;
@@ -54,10 +55,9 @@ public class FlameStrike : KaelThasProjectile
     }
 
 
-    public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit,
-        ref int hitDirection)
+    public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
     {
-        if ((ChosenTalent == 2 || ChosenTalent == -1) && Projectile.localAI[1] < .5)
+        if (ChosenTalent is 2 or -1 && Projectile.localAI[1] < .5)
         {
             var ai = Main.player[Projectile.owner].gravControl2 ? 1 : 0;
             if (Main.player[Projectile.owner].gravControl2)
@@ -65,8 +65,8 @@ public class FlameStrike : KaelThasProjectile
                 target.AddBuff(BuffType<Buffs.LivingBomb>(), 152);
                 var proj = Projectile.NewProjectile(new EntitySource_Parent(Projectile), target.Center,
                     new Vector2(0, 0),
-                    ProjectileType<LivingBomb>(),
-                    (int) (damage / 115f * 160f), 0, Projectile.owner, ai, target.whoAmI);
+                    ProjectileType<LivingBomb>(), 
+                    (int) (Projectile.damage / 115f * 160f), 0, Projectile.owner, ai, target.whoAmI);
                 Main.projectile[proj].netUpdate = true;
                 SoundEngine.PlaySound(Mod.Sound("LivingBombWand2"), target.Center);
             }
@@ -76,7 +76,7 @@ public class FlameStrike : KaelThasProjectile
                 var proj = Projectile.NewProjectile(new EntitySource_Parent(Projectile), target.Center,
                     new Vector2(0, 0),
                     ProjectileType<LivingBomb>(),
-                    (int) (damage / 115f * 160f), 0, Projectile.owner, ai, target.whoAmI);
+                    (int) (Projectile.damage / 115f * 160f), 0, Projectile.owner, ai, target.whoAmI);
                 Main.projectile[proj].netUpdate = true;
 
                 Projectile.localAI[1] += 2 + ai * 2;
@@ -86,7 +86,7 @@ public class FlameStrike : KaelThasProjectile
 
         if (Verdant > 0)
         {
-            damage += target.defDefense * Verdant;
+            modifiers.SourceDamage.Flat += target.defDefense * Verdant;
         }
 
         if ((ChosenTalent == 1 || ChosenTalent == -1) &&
@@ -99,12 +99,12 @@ public class FlameStrike : KaelThasProjectile
             }
         }
 
-        base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
+        base.ModifyHitNPC(target, ref modifiers);
     }
 
-    public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+    public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
-        base.OnHitNPC(target, damage, knockback, crit);
+        base.OnHitNPC(target, hit, damageDone);
         target.immune[Projectile.owner] = 0;
     }
 

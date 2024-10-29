@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using DoomBubblesMod.Common.Configs;
+using Terraria;
 using Terraria.ID;
 
 namespace DoomBubblesMod.Common.Players;
@@ -16,7 +17,7 @@ public class DoomBubblesPlayer : ModPlayer
     public bool luminiteBulletBonus;
     public bool noManaFlower;
 
-    public List<int> NoManaItems { get; } = new();
+    public List<int> NoManaItems { get; } = [];
     public bool sStone;
     public bool united;
     public bool vampireKnifeBat;
@@ -46,19 +47,16 @@ public class DoomBubblesPlayer : ModPlayer
         if (GetInstance<ServerConfig>().AutoTorchGod) Player.unlockedBiomeTorches = true;
     }
 
-    public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit,
-        ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource,
-        ref int cooldownCounter)
+    public override void ModifyHurt(ref Player.HurtModifiers modifiers)
     {
         if (explosionBulletBonus &&
-            damageSource.SourceProjectileType == ProjectileID.ExplosiveBullet &&
-            damageSource.SourcePlayerIndex == Player.whoAmI)
+            modifiers.DamageSource.SourceProjectileType == ProjectileID.ExplosiveBullet &&
+            modifiers.DamageSource.SourcePlayerIndex == Player.whoAmI)
         {
-            return false;
+           modifiers.FinalDamage *= 0;
         }
 
-        return base.PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound,
-            ref genGore, ref damageSource, ref cooldownCounter);
+        base.ModifyHurt(ref modifiers);
     }
 
     public override void PostUpdateEquips()

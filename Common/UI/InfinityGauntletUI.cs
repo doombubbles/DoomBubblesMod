@@ -39,7 +39,7 @@ public class InfinityGauntletUI : UIState
 
     private void InitializeGems()
     {
-        buttonList = new List<UIImageButton>();
+        buttonList = [];
         AddButton(0, GetInstance<PowerStone>().Texture, 52, 9);
         AddButton(1, GetInstance<SpaceStone>().Texture, 37, 7);
         AddButton(2, GetInstance<RealityStone>().Texture, 22, 7);
@@ -53,7 +53,7 @@ public class InfinityGauntletUI : UIState
         var buttonTexture = Request<Texture2D>(texture, AssetRequestMode.ImmediateLoad);
         buttonList.Add(new UIImageButton(buttonTexture));
         var index = i;
-        buttonList[i].OnClick += (_, _) => ChooseGem(index);
+        buttonList[i].OnLeftClick += (_, _) => ChooseGem(index);
         buttonList[i].SetVisibility(1f, .75f);
         buttonList[i].Left.Set(x, 0f);
         buttonList[i].Top.Set(y, 0f);

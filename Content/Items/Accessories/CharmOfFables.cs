@@ -8,13 +8,13 @@ public class CharmOfFables : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Charm of Fables");
-        Tooltip.SetDefault((GetInstance<ServerConfig>().SorcerersStoneOP
+        // DisplayName.SetDefault("Charm of Fables");
+        /* Tooltip.SetDefault((GetInstance<ServerConfig>().SorcerersStoneOP
                                ? "Health/mana always regenerate as if you weren't moving\n"
                                : "Your mana always regenerates as if you weren't moving") +
                            "Incrases maximum mana by 20\n" +
-                           "Increases mana regeneration rate");
-        SacrificeTotal = 1;
+                           "Increases mana regeneration rate"); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

@@ -15,11 +15,11 @@ public class PowerStone : InfinityStone
 
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("\"The stone reacts to anything organic, the bigger\n" +
+        /* Tooltip.SetDefault("\"The stone reacts to anything organic, the bigger\n" +
                            "the target, the bigger the power surge.\"\n" +
-                           "-Gamora");
+                           "-Gamora"); */
 
-        SacrificeTotal = 1;
+        Item.ResearchUnlockCount = 1;
     }
 
 

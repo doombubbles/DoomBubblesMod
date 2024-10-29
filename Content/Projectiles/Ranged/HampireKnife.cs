@@ -1,5 +1,6 @@
 ﻿using System;
 using DoomBubblesMod.Content.Dusts;
+using Terraria;
 
 namespace DoomBubblesMod.Content.Projectiles.Ranged;
 
@@ -44,7 +45,7 @@ public class HampireKnife : ModProjectile
         }
     }
 
-    public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+    public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
         var player = Main.player[Projectile.owner];
 
@@ -52,15 +53,15 @@ public class HampireKnife : ModProjectile
              !player.HasBuff(BuffID.WellFed) ||
              player.buffTime[player.FindBuffIndex(BuffID.WellFed)] < 3500) &&
             target.lifeMax > 5 &&
-            damage > 0)
+            damageDone > 0)
         {
             Projectile.NewProjectile(new EntitySource_Parent(target), target.Center.X, target.Center.Y, 0f, 0f,
                 ProjectileType<HampireRestore>(),
-                0, 0f, Projectile.owner, Projectile.owner, damage);
+                0, 0f, Projectile.owner, Projectile.owner, damageDone);
         }
     }
 
-    public override void Kill(int timeLeft)
+    public override void OnKill(int timeLeft)
     {
         for (var num401 = 0; num401 < 3; num401++)
         {

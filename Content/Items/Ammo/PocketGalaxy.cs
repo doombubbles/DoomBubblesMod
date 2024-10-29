@@ -4,8 +4,8 @@ public class PocketGalaxy : ModItem
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("An endless amount of stars");
-        SacrificeTotal = 1;
+        // Tooltip.SetDefault("An endless amount of stars");
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

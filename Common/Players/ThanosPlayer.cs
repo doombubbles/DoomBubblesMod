@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DoomBubblesMod.Content.Buffs;
 using DoomBubblesMod.Content.Items.Thanos;
+using Terraria;
 using Terraria.GameInput;
 
 namespace DoomBubblesMod.Common.Players;
@@ -14,7 +15,7 @@ public class ThanosPlayer : ModPlayer
     public bool powerStone;
     public int powerStoneCharge;
     public int powerStoned;
-    public HashSet<int> powerStoning = new();
+    public HashSet<int> powerStoning = [];
     public bool soulStone;
     public Tile soulStoneTile;
     public bool soulStoneTileActive;
@@ -103,10 +104,10 @@ public class ThanosPlayer : ModPlayer
 
     public override void UpdateDead()
     {
-        powerStoning = new HashSet<int>();
+        powerStoning = [];
     }
 
-    public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
+    public override void ModifyHitNPCWithItem(Item item, NPC target, ref NPC.HitModifiers modifiers)/* tModPorter If you don't need the Item, consider using ModifyHitNPC instead */
     {
         if (Player.GetModPlayer<ThanosPlayer>().powerStone)
         {
@@ -123,9 +124,7 @@ public class ThanosPlayer : ModPlayer
         }
     }
 
-    public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback,
-        ref bool crit,
-        ref int hitDirection)
+    public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref NPC.HitModifiers modifiers)/* tModPorter If you don't need the Projectile, consider using ModifyHitNPC instead */
     {
         if (Player.GetModPlayer<ThanosPlayer>().powerStone)
         {

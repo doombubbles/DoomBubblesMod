@@ -7,11 +7,11 @@ public class SorcerersStone : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Sorcerer's Stone");
-        Tooltip.SetDefault(GetInstance<ServerConfig>().SorcerersStoneOP
+        // DisplayName.SetDefault("Sorcerer's Stone");
+        /* Tooltip.SetDefault(GetInstance<ServerConfig>().SorcerersStoneOP
             ? "Your health and mana always regenerate as if you weren't moving"
-            : "Your mana always regenerates as if you weren't moving");
-        SacrificeTotal = 1;
+            : "Your mana always regenerates as if you weren't moving"); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

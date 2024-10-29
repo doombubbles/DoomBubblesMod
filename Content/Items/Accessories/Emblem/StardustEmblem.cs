@@ -4,8 +4,8 @@ public class StardustEmblem : ModItem
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("20% increased summon damage");
-        SacrificeTotal = 1;
+        // Tooltip.SetDefault("20% increased summon damage");
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

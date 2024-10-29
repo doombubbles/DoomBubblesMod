@@ -15,8 +15,8 @@ public class TargetingComputer : ModItem
 
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Who needs the Force anyway?");
-        SacrificeTotal = 1;
+        // Tooltip.SetDefault("Who needs the Force anyway?");
+        Item.ResearchUnlockCount = 1;
     }
 
 

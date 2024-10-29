@@ -4,7 +4,7 @@ public class PylonPower : ModBuff
 {
     public override void SetStaticDefaults()
     {
-        Description.SetDefault("Increased Life/Mana Regen");
+        // Description.SetDefault("Increased Life/Mana Regen");
         Main.debuff[Type] = false;
         Main.pvpBuff[Type] = true;
         Main.buffNoSave[Type] = true;

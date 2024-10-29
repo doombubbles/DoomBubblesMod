@@ -9,8 +9,8 @@ public class MartianMeteorHelmet : ModItem
 
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("17% Increased Magic Damage");
-        SacrificeTotal = 1;
+        // Tooltip.SetDefault("17% Increased Magic Damage");
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

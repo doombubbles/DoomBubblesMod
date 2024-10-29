@@ -7,7 +7,7 @@ public class MeteorGauntlet : GauntletItem
     public override void SetStaticDefaults()
     {
         base.SetStaticDefaults();
-        Tooltip.SetDefault("5% increased attack speed");
+        // Tooltip.SetDefault("5% increased attack speed");
     }
 
     public override void UpdateAccessory(Player player, bool hideVisual)

@@ -7,7 +7,7 @@ public class IndigoGauntlet : GauntletItem
     public override void SetStaticDefaults()
     {
         base.SetStaticDefaults();
-        Tooltip.SetDefault("5% reduced damage taken");
+        // Tooltip.SetDefault("5% reduced damage taken");
     }
 
     public override void UpdateAccessory(Player player, bool hideVisual)

@@ -90,7 +90,7 @@ public class Rainbow : ModProjectile
         }
     }
 
-    public override void Kill(int timeLeft)
+    public override void OnKill(int timeLeft)
     {
         var num293 = Main.rand.Next(3, 7);
         for (var num294 = 0; num294 < num293; num294++)
@@ -102,6 +102,6 @@ public class Rainbow : ModProjectile
             Main.dust[num295].noGravity = true;
         }
 
-        base.Kill(timeLeft);
+        base.OnKill(timeLeft);
     }
 }

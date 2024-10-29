@@ -6,9 +6,9 @@ public class EndlessSuperLunarPouch : ModItem
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Effects of all Lunar Bullets combined");
+        // Tooltip.SetDefault("Effects of all Lunar Bullets combined");
         Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(15, 4));
-        SacrificeTotal = 1;
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

@@ -1,4 +1,5 @@
-﻿namespace DoomBubblesMod.Content.Projectiles.HotS;
+﻿using Terraria;
+namespace DoomBubblesMod.Content.Projectiles.HotS;
 
 public class RepeaterBig : Repeater
 {
@@ -18,15 +19,14 @@ public class RepeaterBig : Repeater
     }
 
 
-    public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit,
-        ref int hitDirection)
+    public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
     {
-        var bonus = damage + (int) (target.lifeMax * .006);
-        damage += bonus;
+        modifiers.SourceDamage *= 2;
+        modifiers.SourceDamage.Flat += target.lifeMax * .006f;
     }
 
 
-    public override void Kill(int timeLeft)
+    public override void OnKill(int timeLeft)
     {
         var num293 = Main.rand.Next(3, 7);
         for (var num294 = 0; num294 < num293; num294++)

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Terraria.Audio;
 using Terraria.Chat;
 
@@ -8,9 +9,9 @@ public class AngusBargain : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Angus's Bargain");
-        Tooltip.SetDefault("Gives 100k Gold on use");
-        SacrificeTotal = 1;
+        // DisplayName.SetDefault("Angus's Bargain");
+        // Tooltip.SetDefault("Gives 100k Gold on use");
+        Item.ResearchUnlockCount = 1;
 
         NPCID.Sets.MPAllowedEnemies[NPCID.DD2Betsy] = true;
     }
@@ -40,7 +41,7 @@ public class AngusBargain : ModItem
         .AddTile(TileID.MythrilAnvil)
         .Register();
 
-    public override bool? UseItem(Player player)
+    public override Nullable<bool> UseItem(Player player)/* tModPorter Suggestion: Return null instead of false */
     {
         if (CanUseItem(player) && player.whoAmI == Main.myPlayer)
         {
@@ -57,7 +58,7 @@ public class AngusBargain : ModItem
             {
                 // If the player is in multiplayer, request a spawn
                 // This will only work if NPCID.Sets.MPAllowedEnemies[type] is true, which we set in this class above
-                NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: NPCID.DD2Betsy);
+                NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: NPCID.DD2Betsy);
                 ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(message), Color.White);
             }
 

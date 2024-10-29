@@ -4,8 +4,8 @@ public class NebulaEmblem : ModItem
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("20% increased magic damage");
-        SacrificeTotal = 1;
+        // Tooltip.SetDefault("20% increased magic damage");
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

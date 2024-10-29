@@ -1,4 +1,5 @@
 using System;
+using Terraria;
 
 namespace DoomBubblesMod.Content.Projectiles;
 
@@ -19,24 +20,21 @@ public class Damage : ModProjectile
 
     public override bool? CanHitNPC(NPC target)
     {
-        if (target.whoAmI == (int) Math.Round(Projectile.ai[0]))
+        return target.whoAmI == (int) Math.Round(Projectile.ai[0]);
+    }
+
+    public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+    {
+        if ((int) Math.Round(Projectile.ai[1]) == 1)
         {
-            return true;
+            modifiers.SetCrit();
         }
-
-        return false;
+        base.ModifyHitNPC(target, ref modifiers);
     }
 
-    public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit,
-        ref int hitDirection)
+    public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
-        crit = (int) Math.Round(Projectile.ai[1]) == 1;
-        base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
-    }
-
-    public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-    {
-        base.OnHitNPC(target, damage, knockback, crit);
+        base.OnHitNPC(target, hit, damageDone);
         Projectile.Kill();
     }
 }

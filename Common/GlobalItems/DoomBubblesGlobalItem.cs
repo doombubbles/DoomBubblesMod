@@ -39,7 +39,7 @@ public class DoomBubblesGlobalItem : GlobalItem
 
         if (item.accessory)
         {
-            item.canBePlacedInVanityRegardlessOfConditions = true;
+            item.hasVanityEffects = true;
         }
 
         if (item.type is ItemID.BlueDynastyShingles or ItemID.RedDynastyShingles or ItemID.DynastyWood)
@@ -70,8 +70,10 @@ public class DoomBubblesGlobalItem : GlobalItem
         {
             case ItemID.FishronBossBag:
             {
-                var rule = itemLoot.Get().OfType<OneFromOptionsNotScaledWithLuckDropRule>().First();
-                rule.dropIds = rule.dropIds.Append(ItemType<Ultrashark>()).ToArray();
+                foreach (var rule in itemLoot.GetDescendents<OneFromOptionsNotScaledWithLuckDropRule>())
+                {
+                    rule.dropIds = rule.dropIds.Append(ItemType<Ultrashark>()).ToArray();
+                }
                 break;
             }
             case ItemID.LavaCrate or ItemID.LavaCrateHard:
@@ -122,7 +124,7 @@ public class DoomBubblesGlobalItem : GlobalItem
             }
         }
 
-        if (item.canBePlacedInVanityRegardlessOfConditions)
+        if (item.hasVanityEffects)
         {
             tooltips.RemoveAll(line => line.Name == "VanityLegal");
         }

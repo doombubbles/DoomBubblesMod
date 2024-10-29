@@ -1,5 +1,6 @@
 using System;
 using DoomBubblesMod.Utils;
+using Terraria;
 using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Projectiles.HotS;
@@ -39,10 +40,9 @@ public class LivingBomb : HotsProjectile
         return Projectile.alpha == 255 ? false : base.CanHitNPC(target);
     }
 
-    public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit,
-        ref int hitDirection)
+    public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
     {
-        if (target.whoAmI != Target.whoAmI && (knockback < .5 || ChosenTalent is 3 or -1))
+        if (target.whoAmI != Target.whoAmI && (modifiers.GetKnockback(Projectile.knockBack) < .5 || ChosenTalent is 3 or -1))
         {
             target.buffImmune[BuffType<Buffs.LivingBomb>()] = false;
             if (!target.HasBuff(BuffType<Buffs.LivingBomb>()))
@@ -68,8 +68,8 @@ public class LivingBomb : HotsProjectile
             }
         }
 
-        knockback = 0;
-        base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
+        modifiers.DisableKnockback();
+        base.ModifyHitNPC(target, ref modifiers);
     }
 
     public override void AI()

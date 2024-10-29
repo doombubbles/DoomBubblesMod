@@ -8,10 +8,12 @@ public class FlamestrikeTome : ModItemWithTalents<Convection, Ignite, FuryOfTheS
 {
     protected override Color? TalentColor => Color.LimeGreen;
 
+    public override int SoldBy => NPCID.Wizard;
+
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("After a delay, deal damage in an area");
-        SacrificeTotal = 1;
+        // Tooltip.SetDefault("After a delay, deal damage in an area");
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

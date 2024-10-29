@@ -4,7 +4,7 @@ public class MagicMeleeSpeed : DamageClass
 {
     public override void SetStaticDefaults()
     {
-        ClassName.SetDefault("magic damage");
+        // DisplayName.SetDefault("magic damage");
     }
 
     public override StatInheritanceData GetModifierInheritance(DamageClass damageClass)

@@ -6,7 +6,7 @@ public class VampireKnifeBat : ModBuff
 {
     public override void SetStaticDefaults()
     {
-        Description.SetDefault("Hi Oliver");
+        // Description.SetDefault("Hi Oliver");
         Main.buffNoSave[Type] = true;
         Main.buffNoTimeDisplay[Type] = true;
     }

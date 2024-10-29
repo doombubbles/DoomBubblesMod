@@ -4,8 +4,8 @@ public class SolarEmblem : ModItem
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("20% increased melee damage");
-        SacrificeTotal = 1;
+        // Tooltip.SetDefault("20% increased melee damage");
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

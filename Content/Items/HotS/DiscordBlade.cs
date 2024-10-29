@@ -13,11 +13,13 @@ public class DiscordBlade : ModItemWithTalents<ChaosReigns, Dissonance, LethalOn
 
     private float Length => ChosenTalent is 2 or -1 ? 600f : 300f;
 
+    public override int SoldBy => NPCID.Cyborg;
+
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Makes a very hard to code triangle attack\n" +
-                           "Magic and Melee Weapon");
-        SacrificeTotal = 1;
+        /* Tooltip.SetDefault("Makes a very hard to code triangle attack\n" +
+                           "Magic and Melee Weapon"); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

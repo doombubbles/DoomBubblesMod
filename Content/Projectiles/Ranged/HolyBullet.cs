@@ -30,7 +30,7 @@ public class HolyBullet : ModProjectile
             Projectile.alpha = 0;
     }
 
-    public override void Kill(int timeLeft)
+    public override void OnKill(int timeLeft)
     {
         SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
         for (var num558 = 0; num558 < 10; num558++)

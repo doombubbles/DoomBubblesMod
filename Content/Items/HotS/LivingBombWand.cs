@@ -9,10 +9,12 @@ public class LivingBombWand : ModItemWithTalents<Pyromaniac, SunKingsFury, Maste
 {
     protected override Color? TalentColor => Color.LimeGreen;
 
+    public override int SoldBy => NPCID.Wizard;
+    
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Shoots fireballs that turn targets into Living Bombs");
-        SacrificeTotal = 1;
+        // Tooltip.SetDefault("Shoots fireballs that turn targets into Living Bombs");
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

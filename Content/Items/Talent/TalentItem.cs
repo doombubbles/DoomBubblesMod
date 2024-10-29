@@ -23,7 +23,7 @@ public abstract class TalentItem<T> : TalentItem where T : ModItemWithTalents
     {
         GetInstance<T>().AutoStaticDefaults();
         GetInstance<T>().SetStaticDefaults();
-        DisplayName.SetDefault("Talent: " + Name.ToNameFormat());
-        Tooltip.SetDefault($"{GetInstance<T>().DisplayName.GetDefault()} Talent\n" + Description);
+        // DisplayName.SetDefault("Talent: " + Name.ToNameFormat());
+        // Tooltip.SetDefault($"{GetInstance<T>().DisplayName.GetDefault()} Talent\n" + Description);
     }
 }

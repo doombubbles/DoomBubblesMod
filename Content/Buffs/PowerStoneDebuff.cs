@@ -6,8 +6,8 @@ public class PowerStoneDebuff : ModBuff
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Mercy");
-        Description.SetDefault("At least that's what he calls it");
+        // DisplayName.SetDefault("Mercy");
+        // Description.SetDefault("At least that's what he calls it");
         Main.debuff[Type] = true;
         Main.pvpBuff[Type] = true;
         Main.buffNoSave[Type] = true;

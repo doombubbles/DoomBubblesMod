@@ -4,8 +4,8 @@ public class StardustBullet : ModItem
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Splits into smaller bullets on hit");
-        SacrificeTotal = 99;
+        // Tooltip.SetDefault("Splits into smaller bullets on hit");
+        Item.ResearchUnlockCount = 99;
     }
 
     public override void SetDefaults()

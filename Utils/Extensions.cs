@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using DoomBubblesMod.Common.Players;
 using ReLogic.Utilities;
 using Terraria.Audio;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 
 namespace DoomBubblesMod.Utils;
@@ -253,4 +254,19 @@ public static class Extensions
     }
 
     public static ModPrefix ModPrefix(this Item item) => PrefixLoader.GetPrefix(item.prefix);
+
+
+    public static T GetDescendent<T>(this ItemLoot itemLoot) =>
+        itemLoot.GetDescendents<T>().FirstOrDefault();
+
+    public static IEnumerable<T> GetDescendents<T>(this ItemLoot itemLoot) => 
+        itemLoot.Get().OfType<T>()
+            .Concat(itemLoot.Get().SelectMany(itemDropRule => itemDropRule.GetDescendents<T>()));
+
+    public static T GetDescendent<T>(this IItemDropRule dropRule) =>
+        dropRule.GetDescendents<T>().FirstOrDefault();
+
+    public static IEnumerable<T> GetDescendents<T>(this IItemDropRule dropRule) =>
+        dropRule.ChainedRules.Select(attempt => attempt.RuleToChain).OfType<T>()
+            .Concat(dropRule.ChainedRules.SelectMany(attempt => attempt.RuleToChain.GetDescendents<T>()));
 }

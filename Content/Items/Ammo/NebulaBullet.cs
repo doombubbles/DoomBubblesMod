@@ -4,8 +4,8 @@ public class NebulaBullet : ModItem
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Teleports to enemies if close");
-        SacrificeTotal = 99;
+        // Tooltip.SetDefault("Teleports to enemies if close");
+        Item.ResearchUnlockCount = 99;
     }
 
     public override void SetDefaults()

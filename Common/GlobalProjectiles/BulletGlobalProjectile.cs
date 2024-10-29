@@ -1,13 +1,12 @@
 using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Projectiles.Ranged;
+using Terraria;
 
 namespace DoomBubblesMod.Common.GlobalProjectiles;
 
 public class BulletGlobalProjectile : GlobalProjectile
 {
-    public override void ModifyHitNPC(Projectile projectile, NPC target, ref int damage, ref float knockback,
-        ref bool crit,
-        ref int hitDirection)
+    public override void ModifyHitNPC(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers)
     {
         if (projectile.owner != 255 &&
             Main.player[projectile.owner].GetModPlayer<DoomBubblesPlayer>().luminiteBulletBonus &&
@@ -16,12 +15,12 @@ public class BulletGlobalProjectile : GlobalProjectile
             projectile.damage = (int) (projectile.damage * 1.1f);
         }
 
-        base.ModifyHitNPC(projectile, target, ref damage, ref knockback, ref crit, ref hitDirection);
+        base.ModifyHitNPC(projectile, target, ref modifiers);
     }
 
-    public override void Kill(Projectile projectile, int timeLeft)
+    public override void OnKill(Projectile projectile, int timeLeft)
     {
-        base.Kill(projectile, timeLeft);
+        base.OnKill(projectile, timeLeft);
         if (Main.player[projectile.owner].GetModPlayer<DoomBubblesPlayer>().crystalBulletBonus &&
             projectile.owner == Main.myPlayer)
         {

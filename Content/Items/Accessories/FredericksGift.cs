@@ -6,10 +6,10 @@ public class FredericksGift : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Frederick's Gift");
-        Tooltip.SetDefault("42% reduced mana usage\n" +
-                           "Mana Flower's effects overriden");
-        SacrificeTotal = 1;
+        // DisplayName.SetDefault("Frederick's Gift");
+        /* Tooltip.SetDefault("42% reduced mana usage\n" +
+                           "Mana Flower's effects overriden"); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

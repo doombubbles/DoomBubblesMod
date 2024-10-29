@@ -5,8 +5,8 @@ public class SolarBullet : ModItem
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Causes solar explosions on hit");
-        SacrificeTotal = 99;
+        // Tooltip.SetDefault("Causes solar explosions on hit");
+        Item.ResearchUnlockCount = 99;
     }
 
     public override void SetDefaults()

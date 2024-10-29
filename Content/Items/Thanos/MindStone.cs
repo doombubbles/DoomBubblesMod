@@ -14,11 +14,11 @@ public class MindStone : InfinityStone
 
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("\"The Mind Stone is the fourth of the Infinity Stones to show up in the last\n" +
+        /* Tooltip.SetDefault("\"The Mind Stone is the fourth of the Infinity Stones to show up in the last\n" +
                            "few years. It's not a coincidence. Someone has been playing an intricate\n" +
                            "game and has made pawns of us.\"\n" +
-                           "-Thor");
-        SacrificeTotal = 1;
+                           "-Thor"); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public static void MindAbility(Mod mod, Player player)

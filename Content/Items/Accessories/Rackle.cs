@@ -4,8 +4,8 @@ public class Rackle : ModItem
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("'...and sometimes 5 isn't enough either'");
-        SacrificeTotal = 1;
+        // Tooltip.SetDefault("'...and sometimes 5 isn't enough either'");
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

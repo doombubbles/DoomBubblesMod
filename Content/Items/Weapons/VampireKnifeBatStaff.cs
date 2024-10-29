@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DoomBubblesMod.Content.Projectiles.Summon;
 
 namespace DoomBubblesMod.Content.Items.Weapons;
@@ -7,8 +8,8 @@ public class VampireKnifeBatStaff : ModItem
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Summons Bats that shoot Vampire Knives as you do");
-        SacrificeTotal = 1;
+        // Tooltip.SetDefault("Summons Bats that shoot Vampire Knives as you do");
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()
@@ -44,7 +45,7 @@ public class VampireKnifeBatStaff : ModItem
         return player.altFunctionUse != 2;
     }
 
-    public override bool? UseItem(Player player)
+    public override Nullable<bool> UseItem(Player player)/* tModPorter Suggestion: Return null instead of false */
     {
         if (player.altFunctionUse == 2)
         {

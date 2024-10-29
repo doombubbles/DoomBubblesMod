@@ -32,8 +32,10 @@ public class DoomBubblesMod : Mod
     public static Mod CalamityMod => ModLoader.TryGetMod("CalamityMod", out var mod) ? mod : null;
     public static Mod SetBonusAccessories => ModLoader.TryGetMod("SetBonusAccessories", out var mod) ? mod : null;
 
-    public static List<Color> RainbowColors => new()
-        {Color.Red, Color.Orange, Color.Yellow, Color.LimeGreen, Color.Blue, Color.Indigo, Color.Violet};
+    public static List<Color> RainbowColors =>
+    [
+        Color.Red, Color.Orange, Color.Yellow, Color.LimeGreen, Color.Blue, Color.Indigo, Color.Violet
+    ];
 
     public DoomBubblesMod()
     {

@@ -6,7 +6,7 @@ public class PhotonCannon : ModBuff
 {
     public override void SetStaticDefaults()
     {
-        Description.SetDefault("Make sure they're in Power Fields");
+        // Description.SetDefault("Make sure they're in Power Fields");
         Main.buffNoSave[Type] = true;
         Main.buffNoTimeDisplay[Type] = true;
     }

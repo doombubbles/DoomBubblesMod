@@ -9,7 +9,7 @@ public class RoseGauntlet : GauntletItem
     public override void SetStaticDefaults()
     {
         base.SetStaticDefaults();
-        Tooltip.SetDefault("5% increased symphonic damage");
+        // Tooltip.SetDefault("5% increased symphonic damage");
     }
 
     public override void UpdateAccessory(Player player, bool hideVisual)

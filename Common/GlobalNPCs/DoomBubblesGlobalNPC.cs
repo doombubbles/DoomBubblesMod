@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using DoomBubblesMod.Content.Buffs;
 using DoomBubblesMod.Content.Items.Accessories;
-using DoomBubblesMod.Content.Items.HotS;
 using DoomBubblesMod.Content.Items.Misc;
 using DoomBubblesMod.Content.Items.Talent;
 using DoomBubblesMod.Content.Items.Weapons;
@@ -22,15 +19,9 @@ public class DoomBubblesGlobalNPC : GlobalNPC
     {
         powerStoned = false;
 
-        if (npc.FullName == "Hag")
-        {
-            npc.GivenName = "Bitch";
-        }
+        if (npc.FullName == "Hag") npc.GivenName = "Bitch";
 
-        if (npc.boss)
-        {
-            npc.buffImmune[BuffType<LivingBomb>()] = false;
-        }
+        if (npc.boss) npc.buffImmune[BuffType<LivingBomb>()] = false;
     }
 
 
@@ -45,13 +36,9 @@ public class DoomBubblesGlobalNPC : GlobalNPC
                     .FirstOrDefault(rule => rule.dropIds.Contains(ItemID.RazorbladeTyphoon));
 
                 if (fishronLoot != null)
-                {
                     fishronLoot.dropIds = fishronLoot.dropIds.Append(ItemType<Ultrashark>()).ToArray();
-                }
                 else
-                {
                     Mod.Logger.Warn("Failed to modify Duke Fishron Loot");
-                }
 
                 break;
             case NPCID.Mothron:
@@ -70,119 +57,29 @@ public class DoomBubblesGlobalNPC : GlobalNPC
         }
     }
 
-    public override void SetupShop(int type, Chest shop, ref int nextSlot)
+    public override void ModifyShop(NPCShop shop)
     {
-        switch (type)
+        foreach (var item in GetContent<ModItemWithTalents>())
         {
-            case NPCID.Cyborg when NPC.downedPlantBoss:
-            {
-                var items = new List<ModItemWithTalents>
-                {
-                    GetInstance<LightningSurge>(), GetInstance<DiscordBlade>(),
-                    GetInstance<RepeaterCannon>(), GetInstance<PhaseBombLauncher>(),
-                    GetInstance<ShieldCapacitor>(),
-                    GetInstance<PylonStaff>(), GetInstance<PhotonCannonStaff>()
-                };
+            if (item.SoldBy != shop.NpcType) continue;
 
-                foreach (var modItem in items)
-                {
-                    shop.item[nextSlot].SetDefaults(modItem.Item.type);
-                    nextSlot++;
-                }
+            shop.Add(item.Item, Condition.DownedPlantera);
+            shop.Add(item.Talent1Item.Item, Condition.DownedPumpking, Condition.DownedMourningWood);
+            shop.Add(item.Talent2Item.Item, Condition.DownedIceQueen, Condition.DownedSantaNK1,
+                Condition.DownedEverscream);
+            shop.Add(item.Talent3Item.Item, Condition.DownedMartians);
+        }
 
-                var hash = Math.Abs(Main.LocalPlayer.name.GetHashCode());
-
-                foreach (var talentItem in items.Where(talentItem => Main.LocalPlayer.HasItem(talentItem.Item.type)))
-                {
-                    if (NPC.downedHalloweenKing && NPC.downedHalloweenTree)
-                    {
-                        AddTalent(talentItem, hash % 3 + 1, shop, ref nextSlot);
-                    }
-
-                    if (NPC.downedChristmasIceQueen && NPC.downedChristmasSantank && NPC.downedChristmasTree)
-                    {
-                        AddTalent(talentItem, (hash + 1) % 3 + 1, shop, ref nextSlot);
-                    }
-
-                    if (NPC.downedMartians)
-                    {
-                        AddTalent(talentItem, (hash + 2) % 3 + 1, shop, ref nextSlot);
-                    }
-                }
-
+        switch (shop.NpcType)
+        {
+            case NPCID.DyeTrader:
+                shop.Add<BlankDye>();
                 break;
-            }
-            case NPCID.Wizard when NPC.downedPlantBoss:
-            {
-                var items = new List<ModItemWithTalents>
-                {
-                    GetInstance<FlamestrikeTome>(), GetInstance<LivingBombWand>(),
-                    GetInstance<VerdantSpheres>()
-                };
-
-                foreach (var modItem in items)
-                {
-                    shop.item[nextSlot].SetDefaults(modItem.Item.type);
-                    nextSlot++;
-                }
-
-                var hash = Math.Abs(Main.LocalPlayer.name.GetHashCode());
-
-                foreach (var talentItem in items
-                             .Where(talentItem => Main.LocalPlayer.HasItem(talentItem.Item.type)))
-                {
-                    if (NPC.downedHalloweenKing && NPC.downedHalloweenTree)
-                    {
-                        AddTalent(talentItem, hash % 3 + 1, shop, ref nextSlot);
-                    }
-
-                    if (NPC.downedChristmasIceQueen && NPC.downedChristmasSantank && NPC.downedChristmasTree)
-                    {
-                        AddTalent(talentItem, (hash + 1) % 3 + 1, shop, ref nextSlot);
-                    }
-
-                    if (NPC.downedMartians)
-                    {
-                        AddTalent(talentItem, (hash + 2) % 3 + 1, shop, ref nextSlot);
-                    }
-                }
-
-                break;
-            }
-            case NPCID.DyeTrader when Main.hardMode:
-            {
-                shop.item[nextSlot++].SetDefaults(ItemType<BlankDye>());
-                break;
-            }
             case NPCID.Merchant:
-            {
-                // shop.item[nextSlot++].SetDefaults(ItemType<SprayPaint>());
+                // shop.Add<SprayPaint>();
                 break;
-            }
-        }
-
-
-        /*
-        if (type == NPCID.WitchDoctor && Main.LocalPlayer.ZoneCrimson && NPC.downedMoonlord)
-        {
-            shop.item[nextSlot].SetDefaults(ModContent.ItemType<BloodlustTalisman>());
-            nextSlot++;
-        }
-        */
-    }
-
-    private static void AddTalent(ModItemWithTalents modItemWithTalents, int i, Chest shop, ref int nextSlot)
-    {
-        switch (i)
-        {
-            case 1:
-                shop.item[nextSlot++].SetDefaults(modItemWithTalents.Talent1Item.Type);
-                break;
-            case 2:
-                shop.item[nextSlot++].SetDefaults(modItemWithTalents.Talent1Item.Type);
-                break;
-            case 3:
-                shop.item[nextSlot++].SetDefaults(modItemWithTalents.Talent3Item.Type);
+            case NPCID.WitchDoctor:
+                // shop.Add<BloodlustTalisman>(Condition.InCrimson, Condition.DownedMoonLord);
                 break;
         }
     }

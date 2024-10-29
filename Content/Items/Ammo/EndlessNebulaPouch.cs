@@ -4,7 +4,7 @@ public class EndlessNebulaPouch : EndlessPouch<NebulaBullet>
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Teleports to enemies if close");
-        SacrificeTotal = 1;
+        // Tooltip.SetDefault("Teleports to enemies if close");
+        Item.ResearchUnlockCount = 1;
     }
 }

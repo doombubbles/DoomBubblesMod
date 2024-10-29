@@ -1,10 +1,11 @@
+using Terraria;
 namespace DoomBubblesMod.Content.Items.Tools;
 
 public class ObsidianPickaxe : ModItem
 {
     public override void SetStaticDefaults()
     {
-        SacrificeTotal = 1;
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()
@@ -28,7 +29,7 @@ public class ObsidianPickaxe : ModItem
         var recipe = CreateRecipe();
         recipe.AddIngredient(ItemID.Obsidian, 20);
         recipe.AddTile(TileID.Anvils);
-        recipe.AddCondition(Recipe.Condition.NearLava);
+        recipe.AddCondition(Condition.NearLava);
         recipe.Register();
     }
 }

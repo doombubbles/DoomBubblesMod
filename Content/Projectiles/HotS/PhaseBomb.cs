@@ -1,6 +1,7 @@
 ﻿using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Buffs;
 using DoomBubblesMod.Utils;
+using Terraria;
 using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Projectiles.HotS;
@@ -39,7 +40,7 @@ public class PhaseBomb : HotsProjectile2
         return 1000 - Projectile.timeLeft > (int) Projectile.ai[0] + 1 ? false : base.CanHitNPC(target);
     }
 
-    public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+    public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
         Projectile.localAI[0]++;
     }
@@ -114,7 +115,7 @@ public class PhaseBomb : HotsProjectile2
         }
     }
 
-    public override void Kill(int timeLeft)
+    public override void OnKill(int timeLeft)
     {
         if (Projectile.localAI[0] > 0)
         {
@@ -134,6 +135,6 @@ public class PhaseBomb : HotsProjectile2
             }
         }
 
-        base.Kill(timeLeft);
+        base.OnKill(timeLeft);
     }
 }

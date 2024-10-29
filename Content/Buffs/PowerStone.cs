@@ -6,8 +6,8 @@ public class PowerStoneBuff : ModBuff
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Power Stoned");
-        Description.SetDefault("");
+        // DisplayName.SetDefault("Power Stoned");
+        // Description.SetDefault("");
         Main.debuff[Type] = false;
         Main.pvpBuff[Type] = true;
         Main.buffNoSave[Type] = true;

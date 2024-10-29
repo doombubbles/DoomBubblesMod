@@ -6,9 +6,9 @@ public class TimsRegret : ModItem
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Tim's Regret");
-        Tooltip.SetDefault($"{Factor:P0} increased damage\n100% increased n00b regret");
-        SacrificeTotal = 1;
+        // DisplayName.SetDefault("Tim's Regret");
+        // Tooltip.SetDefault($"{Factor:P0} increased damage\n100% increased n00b regret");
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

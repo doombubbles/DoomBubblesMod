@@ -6,8 +6,8 @@ public class ExplosiveCharm : ModItem
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Explosive Bullets no longer hurt you");
-        SacrificeTotal = 1;
+        // Tooltip.SetDefault("Explosive Bullets no longer hurt you");
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

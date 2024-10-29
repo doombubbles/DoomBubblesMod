@@ -7,13 +7,13 @@ public class CharmOfEpics : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Charm of Legends");
-        Tooltip.SetDefault("Reduces the cooldown of healing potions\n" +
+        // DisplayName.SetDefault("Charm of Legends");
+        /* Tooltip.SetDefault("Reduces the cooldown of healing potions\n" +
                            "Incrases maximum mana by 20\n" +
                            "Improves life/mana regen in many ways\n" +
                            "Increases heart/star pickup range\n" +
-                           "Regenerate mana on taking damage; health on dealing");
-        SacrificeTotal = 1;
+                           "Regenerate mana on taking damage; health on dealing"); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

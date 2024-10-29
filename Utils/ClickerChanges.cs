@@ -26,7 +26,7 @@ public class ClickerChangesGlobalItem : GlobalItem
     public override void SetDefaults(Item item)
     {
         item.accessory = true;
-        item.canBePlacedInVanityRegardlessOfConditions = true;
+        item.hasVanityEffects = true;
     }
 
     public override bool AltFunctionUse(Item item, Player player) => GetInstance<ServerConfig>().ClickerRightClick;
@@ -104,11 +104,11 @@ public class ClickerChangesGlobalItem : GlobalItem
 
     public override void Load()
     {
-        On.Terraria.Player.KeyDoubleTap += OnPlayerOnKeyDoubleTap;
-        On.Terraria.Player.ItemCheck_CheckCanUse += PlayerOnItemCheck_CheckCanUse;
+        Terraria.On_Player.KeyDoubleTap += OnPlayerOnKeyDoubleTap;
+        Terraria.On_Player.ItemCheck_CheckCanUse += PlayerOnItemCheck_CheckCanUse;
     }
 
-    private static bool PlayerOnItemCheck_CheckCanUse(On.Terraria.Player.orig_ItemCheck_CheckCanUse orig, Player player,
+    private static bool PlayerOnItemCheck_CheckCanUse(Terraria.On_Player.orig_ItemCheck_CheckCanUse orig, Player player,
         Item item)
     {
         if (ClickerSystem.IsClickerWeapon(player.HeldItem) && GetInstance<ServerConfig>().ClickerRightClick)
@@ -119,7 +119,7 @@ public class ClickerChangesGlobalItem : GlobalItem
         return orig(player, item);
     }
 
-    private static void OnPlayerOnKeyDoubleTap(On.Terraria.Player.orig_KeyDoubleTap orig, Player player, int dir)
+    private static void OnPlayerOnKeyDoubleTap(Terraria.On_Player.orig_KeyDoubleTap orig, Player player, int dir)
     {
         orig(player, dir);
         if (dir == (Main.ReversedUpDownArmorSetBonuses ? 1 : 0) &&

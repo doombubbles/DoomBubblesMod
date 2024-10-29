@@ -1,5 +1,6 @@
 ﻿using System;
 using DoomBubblesMod.Common.DamageClasses;
+using Terraria;
 
 namespace DoomBubblesMod.Content.Projectiles.HotS;
 
@@ -45,17 +46,17 @@ public class DiscordStrike : HotsProjectile
         Projectile.penetrate = -1;
     }
 
-    public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit,
-        ref int hitDirection)
+    public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
     {
-        if (ChosenTalent == 3 || ChosenTalent == -1)
+        if (ChosenTalent is 3 or -1)
         {
             var missingHp = target.lifeMax - target.life;
-            damage += (int) (damage * ((float) missingHp / target.lifeMax) + missingHp * .02);
+            modifiers.SourceDamage *= 1 + (float) missingHp / target.lifeMax;
+            modifiers.SourceDamage.Flat += missingHp * .02f;
         }
 
-        base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
-        if (ChosenTalent == 1 || ChosenTalent == -1)
+        base.ModifyHitNPC(target, ref modifiers);
+        if (ChosenTalent is 1 or -1)
         {
             Projectile.damage = (int) (Projectile.damage * 1.1);
         }
@@ -126,9 +127,10 @@ public class DiscordStrike : HotsProjectile
         } while ((dot - Projectile.Center).Length() < previousDistance);
     }
 
-    public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+    public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
-        base.OnHitNPC(target, damage, knockback, crit);
+        base.OnHitNPC(target, hit, damageDone);
+        
         if (Main.player[Projectile.owner].gravControl2)
         {
             Projectile.localNPCImmunity[target.whoAmI] = 0;

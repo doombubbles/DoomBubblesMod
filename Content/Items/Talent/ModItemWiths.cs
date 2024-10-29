@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using DoomBubblesMod.Utils;
@@ -17,9 +18,21 @@ public abstract class ModItemWithTalents<T1, T2, T3> : ModItemWithTalents
 
 public abstract class ModItemWithTalents : ModItem
 {
+    
     public abstract TalentItem Talent1Item { get; }
     public abstract TalentItem Talent2Item { get; }
     public abstract TalentItem Talent3Item { get; }
+
+    public TalentItem TalentItem(int i) => i switch
+    {
+        0 => Talent1Item,
+        1 => Talent2Item,
+        2 => Talent3Item,
+        _ => throw new ArgumentOutOfRangeException(nameof(i), i, null)
+    };
+    
+    public abstract int SoldBy { get; }
+    
     protected abstract Color? TalentColor { get; }
 
     private bool Talent1Unlocked { get; set; }

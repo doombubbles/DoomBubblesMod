@@ -6,7 +6,7 @@ public class Convection : ModBuff
 {
     public override void SetStaticDefaults()
     {
-        Description.SetDefault("Flamestrike Damage Bonus: 0");
+        // Description.SetDefault("Flamestrike Damage Bonus: 0");
         Main.debuff[Type] = false;
         Main.pvpBuff[Type] = true;
         Main.buffNoSave[Type] = true;
@@ -19,7 +19,7 @@ public class Convection : ModBuff
         player.buffTime[buffIndex] = 10;
     }
 
-    public override void ModifyBuffTip(ref string tip, ref int rare)
+    public override void ModifyBuffText(ref string buffName, ref string tip, ref int rare)
     {
         var shots = Main.LocalPlayer.GetModPlayer<HotsPlayer>().convection;
         tip = "Flamestrike Damage Bonus: " + shots;

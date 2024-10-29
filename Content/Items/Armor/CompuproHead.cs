@@ -10,11 +10,11 @@ public class CompuproHead : ModItem
 
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Compupro's Terminal");
-        Tooltip.SetDefault("'Great for impersonating compupro!'\n" +
+        // DisplayName.SetDefault("Compupro's Terminal");
+        /* Tooltip.SetDefault("'Great for impersonating compupro!'\n" +
                            "If you look deep into its eyes, you can just about make out the words...\n" +
-                           "'Civilization V has crashed.'");
-        SacrificeTotal = 1;
+                           "'Civilization V has crashed.'"); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

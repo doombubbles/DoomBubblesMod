@@ -1,5 +1,6 @@
 ﻿using System;
 using DoomBubblesMod.Content.Dusts;
+using Terraria;
 
 namespace DoomBubblesMod.Content.Projectiles.Magic;
 
@@ -44,22 +45,22 @@ public class ManapireKnife : ModProjectile
         }
     }
 
-    public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+    public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
         var player = Main.player[Projectile.owner];
 
         if ((player.statLife < player.statLifeMax2 && !player.moonLeech && target.FullName != "Target Dummy" ||
              player.statMana < player.statManaMax2) &&
             target.lifeMax > 5 &&
-            damage > 0)
+            damageDone > 0)
         {
             Projectile.NewProjectile(new EntitySource_Parent(Projectile), target.Center.X,
                 target.Center.Y, 0f, 0f,
-                ProjectileType<ManapireRestore>(), 0, 0f, Projectile.owner, Projectile.owner, damage);
+                ProjectileType<ManapireRestore>(), 0, 0f, Projectile.owner, Projectile.owner, damageDone);
         }
     }
 
-    public override void Kill(int timeLeft)
+    public override void OnKill(int timeLeft)
     {
         for (var num401 = 0; num401 < 3; num401++)
         {

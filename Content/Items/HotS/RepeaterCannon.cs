@@ -10,11 +10,13 @@ public class RepeaterCannon : ModItemWithTalents<MobileOffense, OffensiveCadence
 
     protected override Color? TalentColor => Color.Orange;
 
+    public override int SoldBy => NPCID.Cyborg;
+    
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Shots build up to empower your next Phase Bomb\n" +
-                           "(Stacks up to 10)");
-        SacrificeTotal = 1;
+        /* Tooltip.SetDefault("Shots build up to empower your next Phase Bomb\n" +
+                           "(Stacks up to 10)"); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

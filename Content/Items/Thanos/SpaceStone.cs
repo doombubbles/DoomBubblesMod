@@ -13,9 +13,9 @@ public class SpaceStone : InfinityStone
 
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("\"A lifetime ago, I too sought the stones. I even held one in my hand.\"\n" +
-                           "-Red Skull to Thanos");
-        SacrificeTotal = 1;
+        /* Tooltip.SetDefault("\"A lifetime ago, I too sought the stones. I even held one in my hand.\"\n" +
+                           "-Red Skull to Thanos"); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public static void SpaceAbility(Player player, Item item)

@@ -4,10 +4,7 @@ using DoomBubblesMod.Common.Configs;
 using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Items.Misc;
 using MonoMod.Cil;
-using On.Terraria.GameContent.Drawing;
-using Player = On.Terraria.Player;
-using PlayerDrawLayers = On.Terraria.DataStructures.PlayerDrawLayers;
-using Terraria.ID;
+using Terraria.GameContent.Drawing;
 
 namespace DoomBubblesMod.Utils;
 
@@ -15,25 +12,25 @@ public class DoomBubblesHooks : ILoadable
 {
     public void Load(Mod mod)
     {
-        Player.UpdateLifeRegen += PlayerOnUpdateLifeRegen;
-        Player.UpdateManaRegen += PlayerOnUpdateManaRegen;
-        IL.Terraria.Player.Update += PlayerOnUpdate;
-        On.Terraria.Main.DamageVar += MainOnDamageVar;
-        On.Terraria.Main.DrawCursor += MainOnDrawCursor;
+        On_Player.UpdateLifeRegen += PlayerOnUpdateLifeRegen;
+        On_Player.UpdateManaRegen += PlayerOnUpdateManaRegen;
+        IL_Player.Update += PlayerOnUpdate;
+        On_Main.DamageVar_float_float += MainOnDamageVar;
+        On_Main.DrawCursor += MainOnDrawCursor;
 
-        Player.checkDPSTime += PlayerOncheckDPSTime;
-        Player.getDPS += PlayerOngetDPS;
-        Player.ApplyNPCOnHitEffects += PlayerOnApplyNPCOnHitEffects;
+        On_Player.checkDPSTime += PlayerOncheckDPSTime;
+        On_Player.getDPS += PlayerOngetDPS;
+        On_Player.ApplyNPCOnHitEffects += PlayerOnApplyNPCOnHitEffects;
 
-        PlayerDrawLayers.DrawPlayer_27_HeldItem += PlayerDrawLayersOnDrawPlayer_27_HeldItem;
-        Player.UpdateItemDye += PlayerOnUpdateItemDye;
+        On_PlayerDrawLayers.DrawPlayer_27_HeldItem += PlayerDrawLayersOnDrawPlayer_27_HeldItem;
+        On_Player.UpdateItemDye += PlayerOnUpdateItemDye;
 
-        TileDrawing.DrawAnimatedTile_AdjustForVisionChangers +=
+        On_TileDrawing.DrawAnimatedTile_AdjustForVisionChangers +=
             TileDrawingOnDrawAnimatedTile_AdjustForVisionChangers;
-        TileDrawing.CacheSpecialDraws += TileDrawingOnCacheSpecialDraws;
+        On_TileDrawing.CacheSpecialDraws_Part2 += TileDrawingOnCacheSpecialDraws;
     }
 
-    private void PlayerOnApplyNPCOnHitEffects(Player.orig_ApplyNPCOnHitEffects orig, Terraria.Player self, Item sitem,
+    private void PlayerOnApplyNPCOnHitEffects(On_Player.orig_ApplyNPCOnHitEffects orig, Player self, Item sitem,
         Rectangle itemrectangle, int damage, float knockback, int npcindex, int dmgrandomized, int dmgdone)
     {
         var hasLuckyCoin = self.hasLuckyCoin;
@@ -55,15 +52,15 @@ public class DoomBubblesHooks : ILoadable
         }
     }
 
-    private static void TileDrawingOnCacheSpecialDraws(TileDrawing.orig_CacheSpecialDraws orig,
-        Terraria.GameContent.Drawing.TileDrawing self, int tileX, int tileY, TileDrawInfo drawData)
+    private static void TileDrawingOnCacheSpecialDraws(On_TileDrawing.orig_CacheSpecialDraws_Part2 orig,
+        TileDrawing self, int tileX, int tileY, TileDrawInfo drawData, bool skipDraw)
     {
         DoSpelunkerColor(tileX, tileY, ref drawData.tileLight);
-        orig(self, tileX, tileY, drawData);
+        orig(self, tileX, tileY, drawData, skipDraw);
     }
 
     private static void TileDrawingOnDrawAnimatedTile_AdjustForVisionChangers(
-        TileDrawing.orig_DrawAnimatedTile_AdjustForVisionChangers orig, Terraria.GameContent.Drawing.TileDrawing self,
+        On_TileDrawing.orig_DrawAnimatedTile_AdjustForVisionChangers orig, TileDrawing self,
         int i, int j, Tile typeCache, ushort typecache, short tileFrameX, short tileFrameY, ref Color tileLight,
         bool candodust)
     {
@@ -71,7 +68,7 @@ public class DoomBubblesHooks : ILoadable
         DoSpelunkerColor(i, j, ref tileLight);
     }
 
-    private void PlayerOnUpdateItemDye(Player.orig_UpdateItemDye orig, Terraria.Player self, bool isNotInVanitySlot,
+    private void PlayerOnUpdateItemDye(On_Player.orig_UpdateItemDye orig, Player self, bool isNotInVanitySlot,
         bool isSetToHidden, Item armorItem, Item dyeItem)
     {
         orig(self, isNotInVanitySlot, isSetToHidden, armorItem, dyeItem);
@@ -81,7 +78,7 @@ public class DoomBubblesHooks : ILoadable
         }
     }
 
-    private void PlayerDrawLayersOnDrawPlayer_27_HeldItem(PlayerDrawLayers.orig_DrawPlayer_27_HeldItem orig,
+    private void PlayerDrawLayersOnDrawPlayer_27_HeldItem(On_PlayerDrawLayers.orig_DrawPlayer_27_HeldItem orig,
         ref PlayerDrawSet drawinfo)
     {
         var original = drawinfo.DrawDataCache.ToArray();
@@ -99,7 +96,7 @@ public class DoomBubblesHooks : ILoadable
         }
     }
 
-    private int PlayerOngetDPS(Player.orig_getDPS orig, Terraria.Player self)
+    private int PlayerOngetDPS(On_Player.orig_getDPS orig, Player self)
     {
         var config = GetInstance<ClientConfig>();
         if (!config.SmoothDPSReading) return orig(self);
@@ -120,7 +117,7 @@ public class DoomBubblesHooks : ILoadable
         return (int) (self.dpsDamage / num);
     }
 
-    private void PlayerOncheckDPSTime(Player.orig_checkDPSTime orig, Terraria.Player self)
+    private void PlayerOncheckDPSTime(On_Player.orig_checkDPSTime orig, Player self)
     {
         var config = GetInstance<ClientConfig>();
         if (!config.SmoothDPSReading)
@@ -134,7 +131,7 @@ public class DoomBubblesHooks : ILoadable
     }
 
 
-    private int MainOnDamageVar(On.Terraria.Main.orig_DamageVar orig, float dmg, float luck) =>
+    private int MainOnDamageVar(On_Main.orig_DamageVar_float_float orig, float dmg, float luck) =>
         GetInstance<ServerConfig>().DisableDamageVariance
             ? (int) Math.Round(dmg * (1 + luck / 20))
             : orig(dmg, luck);
@@ -144,7 +141,7 @@ public class DoomBubblesHooks : ILoadable
     }
 
 
-    private static void MainOnDrawCursor(On.Terraria.Main.orig_DrawCursor orig, Vector2 bonus, bool smart)
+    private static void MainOnDrawCursor(On_Main.orig_DrawCursor orig, Vector2 bonus, bool smart)
     {
         var color = Main.cursorColor;
         if (GetInstance<ClientConfig>().PermanentRainbowCursor)
@@ -175,7 +172,7 @@ public class DoomBubblesHooks : ILoadable
         }
     }
 
-    private static void PlayerOnUpdateManaRegen(Player.orig_UpdateManaRegen orig, Terraria.Player self)
+    private static void PlayerOnUpdateManaRegen(On_Player.orig_UpdateManaRegen orig, Player self)
     {
         if (self.active && self.GetDoomBubblesPlayer().sStone)
         {
@@ -189,7 +186,7 @@ public class DoomBubblesHooks : ILoadable
         orig(self);
     }
 
-    private static void PlayerOnUpdateLifeRegen(Player.orig_UpdateLifeRegen orig, Terraria.Player self)
+    private static void PlayerOnUpdateLifeRegen(On_Player.orig_UpdateLifeRegen orig, Player self)
     {
         if (self.active && self.GetDoomBubblesPlayer().sStone && GetInstance<ServerConfig>().SorcerersStoneOP)
         {

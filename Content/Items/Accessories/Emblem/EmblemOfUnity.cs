@@ -7,9 +7,9 @@ public class EmblemOfUnity : ModItem, IHasThoriumRecipe
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("10% increased damage\n" +
-                           "+10% damage for each other player wearing this");
-        SacrificeTotal = 1;
+        /* Tooltip.SetDefault("10% increased damage\n" +
+                           "+10% damage for each other player wearing this"); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

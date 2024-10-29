@@ -7,7 +7,7 @@ public class SaffronGauntlet : GauntletItem
     public override void SetStaticDefaults()
     {
         base.SetStaticDefaults();
-        Tooltip.SetDefault("5% increased thrown damage");
+        // Tooltip.SetDefault("5% increased thrown damage");
     }
 
     public override void SetDefaults()

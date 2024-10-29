@@ -7,9 +7,9 @@ public class HolyAegis : ModItem
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Increases length of invincibility after taking damage\n" +
+        /* Tooltip.SetDefault("Increases length of invincibility after taking damage\n" +
                            "Absorbs 25% of damage done to nearby players on your team when above 25% life\n" +
-                           "Grants immunity to knockback");
+                           "Grants immunity to knockback"); */
     }
 
 

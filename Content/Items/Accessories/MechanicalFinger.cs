@@ -6,9 +6,9 @@ public class MechanicalFinger : ModItem
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("12% increased ranged damage\n" +
-                           "Enables auto shoot for ranged weapons\n");
-        SacrificeTotal = 1;
+        /* Tooltip.SetDefault("12% increased ranged damage\n" +
+                           "Enables auto shoot for ranged weapons\n"); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

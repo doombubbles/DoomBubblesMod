@@ -4,8 +4,8 @@ public class VortexBullet : ModItem
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Creates bullet echos on enemy hits");
-        SacrificeTotal = 99;
+        // Tooltip.SetDefault("Creates bullet echos on enemy hits");
+        Item.ResearchUnlockCount = 99;
     }
 
     public override void SetDefaults()

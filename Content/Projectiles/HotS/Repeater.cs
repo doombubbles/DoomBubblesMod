@@ -2,6 +2,7 @@
 using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Buffs;
 using DoomBubblesMod.Utils;
+using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 
@@ -23,7 +24,7 @@ public class Repeater : HotsProjectile2
         Projectile.ignoreWater = true;
     }
 
-    public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+    public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
         if (Projectile.owner == Main.myPlayer)
         {
@@ -120,7 +121,7 @@ public class Repeater : HotsProjectile2
         }
     }
 
-    public override void Kill(int timeLeft)
+    public override void OnKill(int timeLeft)
     {
         var num293 = Main.rand.Next(3, 7);
         for (var num294 = 0; num294 < num293; num294++)
@@ -134,6 +135,6 @@ public class Repeater : HotsProjectile2
         }
 
         SoundEngine.PlaySound(Mod.Sound("Hit"), Projectile.position);
-        base.Kill(timeLeft);
+        base.OnKill(timeLeft);
     }
 }

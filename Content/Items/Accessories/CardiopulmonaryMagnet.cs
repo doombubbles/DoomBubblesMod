@@ -4,8 +4,8 @@ public class CardiopulmonaryMagnet : ModItem
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Increases pickup range for life hearts");
-        SacrificeTotal = 1;
+        // Tooltip.SetDefault("Increases pickup range for life hearts");
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

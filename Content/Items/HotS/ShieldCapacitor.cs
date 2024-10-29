@@ -8,11 +8,12 @@ public class ShieldCapacitor : ModItemWithTalents<UnconqueredSpirit, DampeningFi
 {
     protected override Color? TalentColor => Color.Orange;
 
+    public override int SoldBy => NPCID.Cyborg;
 
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("You quickly and constantly generate a 50 life shield.");
-        SacrificeTotal = 1;
+        // Tooltip.SetDefault("You quickly and constantly generate a 50 life shield.");
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

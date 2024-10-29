@@ -1,6 +1,7 @@
 using System;
 using DoomBubblesMod.Common.GlobalProjectiles;
 using DoomBubblesMod.Content.Items.Thanos;
+using Terraria;
 
 namespace DoomBubblesMod.Content.Projectiles.Thanos;
 
@@ -90,7 +91,7 @@ public class RealityBeam : ModProjectile
     }
 
 
-    public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+    public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
         target.AddBuff(BuffID.Confused, 60 * Main.rand.Next(5, 10));
         target.AddBuff(BuffID.Ichor, 60 * Main.rand.Next(5, 10));
@@ -107,6 +108,6 @@ public class RealityBeam : ModProjectile
             target.immune[Projectile.owner] = 7;
         }
 
-        base.OnHitNPC(target, damage, knockback, crit);
+        base.OnHitNPC(target, hit, damageDone);
     }
 }

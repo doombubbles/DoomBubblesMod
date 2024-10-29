@@ -6,12 +6,12 @@ public class ChromaticGauntlet : ModItem, IHasThoriumRecipe
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("5% increased damage\n" +
+        /* Tooltip.SetDefault("5% increased damage\n" +
                            "5% increased crit chance\n" +
                            "5% increased attack speed\n" +
                            "5% reduced damage taken\n" +
-                           "Increases armor penetration by 5");
-        SacrificeTotal = 1;
+                           "Increases armor penetration by 5"); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

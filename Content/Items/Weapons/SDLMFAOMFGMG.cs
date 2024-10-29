@@ -6,10 +6,10 @@ public class SDLMFAOMFGMG : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("S.D.L.M.F.A.O.M.F.G.M.G.");
-        Tooltip.SetDefault("It came from the edge of Calamity\n" +
-                           "75% chance to not consume ammo");
-        SacrificeTotal = 1;
+        // DisplayName.SetDefault("S.D.L.M.F.A.O.M.F.G.M.G.");
+        /* Tooltip.SetDefault("It came from the edge of Calamity\n" +
+                           "75% chance to not consume ammo"); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

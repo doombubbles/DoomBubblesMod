@@ -1,4 +1,5 @@
 using DoomBubblesMod.Utils;
+using System;
 using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Items.Misc;
@@ -7,8 +8,8 @@ public class MelodyStick : ModItem
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Time to play chopsticks with these bad boys.");
-        SacrificeTotal = 1;
+        // Tooltip.SetDefault("Time to play chopsticks with these bad boys.");
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()
@@ -34,7 +35,7 @@ public class MelodyStick : ModItem
         recipe.Register();
     }
 
-    public override bool? UseItem(Player player)
+    public override Nullable<bool> UseItem(Player player)/* tModPorter Suggestion: Return null instead of false */
     {
         if (player.itemAnimation == player.itemAnimationMax - 1)
         {

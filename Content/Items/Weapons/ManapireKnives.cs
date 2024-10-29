@@ -6,9 +6,9 @@ public class ManapireKnives : ModItem
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Rapidly throw mana stealing daggers;\n" +
-                           "Or, life stealing if at max");
-        SacrificeTotal = 1;
+        /* Tooltip.SetDefault("Rapidly throw mana stealing daggers;\n" +
+                           "Or, life stealing if at max"); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

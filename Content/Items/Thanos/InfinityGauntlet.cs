@@ -19,12 +19,12 @@ public class InfinityGauntlet : ModItem
 
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Right click to select stone\n" +
+        /* Tooltip.SetDefault("Right click to select stone\n" +
                            "\"Perfectly balanced...\n" +
                            "...as all things should be.\"\n" +
-                           "-Thanos");
+                           "-Thanos"); */
 
-        SacrificeTotal = 1;
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()
@@ -141,7 +141,7 @@ public class InfinityGauntlet : ModItem
         base.UseStyle(player, heldItemFrame);
     }
 
-    public override bool? UseItem(Player player)
+    public override Nullable<bool> UseItem(Player player)/* tModPorter Suggestion: Return null instead of false */
     {
         if (player.altFunctionUse != 2 && player.itemAnimation == player.itemAnimationMax - 1)
         {
@@ -277,9 +277,9 @@ public class InfinityGauntlet : ModItem
         recipe.Register();
     }
 
-    public override void OnCreate(ItemCreationContext context)
+    public override void OnCreated(ItemCreationContext context)
     {
-        if (context is RecipeCreationContext)
+        if (context is RecipeItemCreationContext)
         {
             SoundEngine.PlaySound(Mod.Sound("GauntletComplete"), Main.LocalPlayer.position);
         }

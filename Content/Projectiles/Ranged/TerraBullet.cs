@@ -137,7 +137,7 @@ public class TerraBullet : ModProjectile
         return base.PreAI();
     }
 
-    public override void Kill(int timeLeft)
+    public override void OnKill(int timeLeft)
     {
         SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
         for (var index1 = 0; index1 < 5; ++index1)

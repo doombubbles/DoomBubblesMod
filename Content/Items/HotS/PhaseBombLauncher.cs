@@ -10,11 +10,13 @@ public class PhaseBombLauncher : ModItemWithTalents<SecondaryFire, SingularityCh
 {
     protected override Color? TalentColor => Color.Orange;
 
+    public override int SoldBy => NPCID.Cyborg;
+    
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Buffs Repeater Cannon attack speed for each enemy hit\n" +
-                           "(Up to 10)");
-        SacrificeTotal = 1;
+        /* Tooltip.SetDefault("Buffs Repeater Cannon attack speed for each enemy hit\n" +
+                           "(Up to 10)"); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

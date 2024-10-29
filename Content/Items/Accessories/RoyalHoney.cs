@@ -13,8 +13,8 @@ public class RoyalHoney : ModItem
 
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Bees are friendly");
-        SacrificeTotal = 1;
+        // Tooltip.SetDefault("Bees are friendly");
+        Item.ResearchUnlockCount = 1;
     }
 
 

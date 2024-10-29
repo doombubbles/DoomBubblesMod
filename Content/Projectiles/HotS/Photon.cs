@@ -1,5 +1,6 @@
 ﻿using System;
 using DoomBubblesMod.Utils;
+using Terraria;
 using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Projectiles.HotS;
@@ -26,8 +27,7 @@ public class Photon : CenteredProjectile
         Projectile.aiStyle = -1;
     }
 
-    public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit,
-        ref int hitDirection)
+    public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
     {
         if (target.whoAmI == (int) Projectile.ai[1])
         {
@@ -35,7 +35,7 @@ public class Photon : CenteredProjectile
             SoundEngine.PlaySound(Mod.Sound("PhotonHit"), Projectile.Center);
         }
 
-        base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
+        base.ModifyHitNPC(target, ref modifiers);
     }
 
     public override void AI()

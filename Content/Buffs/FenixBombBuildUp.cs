@@ -6,8 +6,8 @@ public class FenixBombBuildUp : ModBuff
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Phase Bomb Build Up");
-        Description.SetDefault("");
+        // DisplayName.SetDefault("Phase Bomb Build Up");
+        // Description.SetDefault("");
         Main.debuff[Type] = false;
         Main.pvpBuff[Type] = true;
         Main.buffNoSave[Type] = true;
@@ -18,7 +18,7 @@ public class FenixBombBuildUp : ModBuff
     {
     }
 
-    public override void ModifyBuffTip(ref string tip, ref int rare)
+    public override void ModifyBuffText(ref string buffName, ref string tip, ref int rare)
     {
         var shots = Main.LocalPlayer.GetModPlayer<HotsPlayer>().fenixBombBuildUp;
         tip = "Stacks: " + shots;

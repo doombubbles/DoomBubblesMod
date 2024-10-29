@@ -9,8 +9,8 @@ public class TrueTrigun : ModItem
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("25% chance not to consume ammo\nShoots in three round bursts with True Bullets");
-        SacrificeTotal = 1;
+        // Tooltip.SetDefault("25% chance not to consume ammo\nShoots in three round bursts with True Bullets");
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

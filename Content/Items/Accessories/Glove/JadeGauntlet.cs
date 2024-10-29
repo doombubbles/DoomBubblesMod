@@ -7,7 +7,7 @@ public class JadeGauntlet : GauntletItem
     public override void SetStaticDefaults()
     {
         base.SetStaticDefaults();
-        Tooltip.SetDefault("5% increased ranged damage");
+        // Tooltip.SetDefault("5% increased ranged damage");
     }
 
     public override void UpdateAccessory(Player player, bool hideVisual)

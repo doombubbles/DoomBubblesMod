@@ -1,13 +1,14 @@
-﻿namespace DoomBubblesMod.Content.Items.Accessories;
+﻿using Terraria.ModLoader;
+namespace DoomBubblesMod.Content.Items.Accessories;
 
 [AutoloadEquip(EquipType.Balloon)]
 public class BigBadBundle : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Big Bad Blessed Bundle of Balloons");
-        Tooltip.SetDefault("Allows the holder to septuple jump\nReleases bees when damaged");
-        SacrificeTotal = 1;
+        // DisplayName.SetDefault("Big Bad Blessed Bundle of Balloons");
+        // Tooltip.SetDefault("Allows the holder to septuple jump\nReleases bees when damaged");
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()
@@ -22,12 +23,12 @@ public class BigBadBundle : ModItem
 
     public override void UpdateAccessory(Player player, bool hideVisual)
     {
-        player.hasJumpOption_Blizzard = true;
-        player.hasJumpOption_Cloud = true;
-        player.hasJumpOption_Fart = true;
-        player.hasJumpOption_Sandstorm = true;
-        player.hasJumpOption_Sail = true;
-        player.hasJumpOption_Unicorn = true;
+        player.GetJumpState(ExtraJump.BlizzardInABottle).Enable();
+        player.GetJumpState(ExtraJump.CloudInABottle).Enable();
+        player.GetJumpState(ExtraJump.FartInAJar).Enable();
+        player.GetJumpState(ExtraJump.SandstormInABottle).Enable();
+        player.GetJumpState(ExtraJump.TsunamiInABottle).Enable();
+        player.GetJumpState(ExtraJump.UnicornMount).Enable();
         player.honeyCombItem = Item;
     }
 

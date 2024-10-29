@@ -9,12 +9,13 @@ public class LightningSurge : ModItemWithTalents<SustainingPower, LightningBarra
 {
     protected override Color? TalentColor => Color.Red;
 
+    public override int SoldBy => NPCID.Cyborg;
 
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Shoots lightning at an enemy by your cursor\n" +
-                           "Enemies hit along the way take bonus damage");
-        SacrificeTotal = 1;
+        /* Tooltip.SetDefault("Shoots lightning at an enemy by your cursor\n" +
+                           "Enemies hit along the way take bonus damage"); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

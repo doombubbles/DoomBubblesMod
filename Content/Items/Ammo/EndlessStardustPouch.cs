@@ -4,7 +4,7 @@ public class EndlessStardustPouch : EndlessPouch<StardustBullet>
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Splits into smaller bullets on hit");
-        SacrificeTotal = 1;
+        // Tooltip.SetDefault("Splits into smaller bullets on hit");
+        Item.ResearchUnlockCount = 1;
     }
 }

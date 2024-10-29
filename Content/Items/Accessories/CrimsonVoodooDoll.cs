@@ -4,8 +4,8 @@ public class CrimsonVoodooDoll : ModItem
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Your life regenerates crimsonly");
-        SacrificeTotal = 1;
+        // Tooltip.SetDefault("Your life regenerates crimsonly");
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

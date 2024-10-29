@@ -17,7 +17,7 @@ public class HotsPlayer : ModPlayer
 
     public bool photonCannon;
 
-    public List<int> pylons = new();
+    public List<int> pylons = [];
 
     public int shieldCapacitorChosenTalent;
 

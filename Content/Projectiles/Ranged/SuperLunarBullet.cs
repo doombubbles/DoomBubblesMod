@@ -1,4 +1,5 @@
 using DoomBubblesMod.Content.Dusts;
+using Terraria;
 
 namespace DoomBubblesMod.Content.Projectiles.Ranged;
 
@@ -41,7 +42,7 @@ public class SuperLunarBullet : LunarBullet
         NebulaEffect();
     }
 
-    public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+    public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
         VortexEffect(target);
         StardustEffect(target);

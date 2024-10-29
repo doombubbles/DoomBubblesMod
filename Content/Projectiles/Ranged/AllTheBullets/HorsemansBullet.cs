@@ -1,5 +1,6 @@
 using System;
 using DoomBubblesMod.Utils;
+using Terraria;
 
 namespace DoomBubblesMod.Content.Projectiles.Ranged.AllTheBullets;
 
@@ -7,7 +8,7 @@ public class HorsemansBullet : AllTheBullet
 {
     protected override short SourceItem => ItemID.TheHorsemansBlade;
 
-    public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+    public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
         if (Main.myPlayer == Projectile.owner &&
             Main.rand.NextFloat() <= .25 &&

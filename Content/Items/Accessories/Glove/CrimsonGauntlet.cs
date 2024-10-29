@@ -7,7 +7,7 @@ public class CrimsonGauntlet : GauntletItem
     public override void SetStaticDefaults()
     {
         base.SetStaticDefaults();
-        Tooltip.SetDefault("5% increased melee damage");
+        // Tooltip.SetDefault("5% increased melee damage");
     }
 
     public override void UpdateAccessory(Player player, bool hideVisual)

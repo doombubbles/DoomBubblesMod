@@ -1,4 +1,5 @@
 using DoomBubblesMod.Utils;
+using System;
 using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Items.Misc;
@@ -7,8 +8,8 @@ public class RhythmStick : ModItem
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("\"Hit me with your rhythm stick.\"\n\t-some song I listened to");
-        SacrificeTotal = 1;
+        // Tooltip.SetDefault("\"Hit me with your rhythm stick.\"\n\t-some song I listened to");
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()
@@ -34,7 +35,7 @@ public class RhythmStick : ModItem
         recipe.Register();
     }
 
-    public override bool? UseItem(Player player)
+    public override Nullable<bool> UseItem(Player player)/* tModPorter Suggestion: Return null instead of false */
     {
         if (player.itemAnimation == player.itemAnimationMax - 1)
         {

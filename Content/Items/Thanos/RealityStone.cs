@@ -12,13 +12,13 @@ public class RealityStone : InfinityStone
 
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("\"Long before the birth of light there was darkness, and from that darkness\n" +
+        /* Tooltip.SetDefault("\"Long before the birth of light there was darkness, and from that darkness\n" +
                            "came the Dark Elves. Millennia ago the most ruthless of their\n" +
                            "kind, Malekith, sought to transform our universe back into one of eternal\n" +
                            "night. Such evil was possible through the power of the Aether, an ancient\n" +
                            "force of infinite destruction.\"\n" +
-                           "-Odin");
-        SacrificeTotal = 1;
+                           "-Odin"); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public static void RealityAbility(Player player, Item item)

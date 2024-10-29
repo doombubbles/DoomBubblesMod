@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DoomBubblesMod.Content.Items.Talent;
 using DoomBubblesMod.Content.Projectiles.HotS;
 
@@ -8,11 +9,13 @@ public class PhotonCannonStaff : ModItemWithTalents<WarpResonance, TowerDefense,
 {
     protected override Color? TalentColor => Color.Blue;
 
+    public override int SoldBy => NPCID.Cyborg;
+    
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Warps Photon Cannons as stationary minions\n" +
-                           "Photon Cannons require a Pylon power field");
-        SacrificeTotal = 1;
+        /* Tooltip.SetDefault("Warps Photon Cannons as stationary minions\n" +
+                           "Photon Cannons require a Pylon power field"); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()
@@ -38,7 +41,7 @@ public class PhotonCannonStaff : ModItemWithTalents<WarpResonance, TowerDefense,
     }
 
 
-    public override bool? UseItem(Player player)
+    public override Nullable<bool> UseItem(Player player)/* tModPorter Suggestion: Return null instead of false */
     {
         if (player.altFunctionUse == 2)
         {

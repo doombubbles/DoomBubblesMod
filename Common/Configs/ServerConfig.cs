@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Linq;
 using DoomBubblesMod.Common.AccessorySlots;
 using DoomBubblesMod.Utils;
+using Terraria.Localization;
 using Terraria.ModLoader.Config;
 
 namespace DoomBubblesMod.Common.Configs;
@@ -19,9 +20,11 @@ public class ServerConfig : ModConfig
     [DefaultValue(true)] [Label("Automatic Torch God's Favor")] [Tooltip("Self explanatory")]
     public bool AutoTorchGod;
 
-    [DefaultValue(true)] [Label("Proportionate Lucky Coin")] [Tooltip("Makes the Lucky Coin effect give money proportionate to the damage dealt.")]
+    [DefaultValue(true)]
+    [Label("Proportionate Lucky Coin")]
+    [Tooltip("Makes the Lucky Coin effect give money proportionate to the damage dealt.")]
     public bool ProportionateLuckyCoin;
-    
+
     [DefaultValue(false)]
     [Label("Sorcerer's Stone Effect Affects Health Too")]
     [Tooltip(
@@ -46,17 +49,17 @@ public class ServerConfig : ModConfig
     [Label("Non-Combat Accessories")]
     [Tooltip("The list of accessories that will be allowed for Non-Combat Accessory slots.")]
     public List<ItemDefinition> NonCombatAccessories =
-        new(NonCombatAccessorySlot.AllDefaultItems.Select(i => new ItemDefinition(i)));
+        NonCombatAccessorySlot.AllDefaultItems.Select(i => new ItemDefinition(i)).ToList();
 
-    public override bool AcceptClientChanges(ModConfig pendingConfig, int whoAmI, ref string message)
+    public override bool AcceptClientChanges(ModConfig pendingConfig, int whoAmI, ref NetworkText message)
     {
         if (Main.player[whoAmI].IsServerOwner())
         {
-            message = "Changes accepted!";
+            message = NetworkText.FromKey(GetInstance<DoomBubblesMod>().GetLocalizationKey("NetworkText.Success"));
             return true;
         }
 
-        message = "You had no right to do that.";
+        message = NetworkText.FromKey(GetInstance<DoomBubblesMod>().GetLocalizationKey("NetworkText.NotAllowed"));
         return false;
     }
 

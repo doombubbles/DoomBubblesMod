@@ -7,7 +7,7 @@ public class QuartzGauntlet : GauntletItem
     public override void SetStaticDefaults()
     {
         base.SetStaticDefaults();
-        Tooltip.SetDefault("5% increased crit chance");
+        // Tooltip.SetDefault("5% increased crit chance");
     }
 
     public override void UpdateAccessory(Player player, bool hideVisual)

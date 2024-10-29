@@ -7,11 +7,13 @@ public class VerdantSpheres : ModItemWithTalents<FelInfusion, ManaTap, TwinSpher
 {
     protected override Color? TalentColor => Color.Lime;
 
+    public override int SoldBy => NPCID.Wizard;
+    
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Flamestrike has increased radius and damage\n" +
-                           "Living Bomb has extra pierce and costs no mana");
-        SacrificeTotal = 1;
+        /* Tooltip.SetDefault("Flamestrike has increased radius and damage\n" +
+                           "Living Bomb has extra pierce and costs no mana"); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

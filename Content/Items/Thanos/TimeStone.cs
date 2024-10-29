@@ -14,9 +14,9 @@ public class TimeStone : InfinityStone
 
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("\"Dormammu, I've come to bargain.\"\n" +
-                           "-Doctor Strange, multiple occasions");
-        SacrificeTotal = 1;
+        /* Tooltip.SetDefault("\"Dormammu, I've come to bargain.\"\n" +
+                           "-Doctor Strange, multiple occasions"); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public static void TimeAbility(Player player)

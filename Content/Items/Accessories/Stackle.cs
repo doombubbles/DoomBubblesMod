@@ -4,8 +4,8 @@ public class Stackle : ModItem
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("'Sometimes 1 just isn't enough'");
-        SacrificeTotal = 1;
+        // Tooltip.SetDefault("'Sometimes 1 just isn't enough'");
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

@@ -11,14 +11,14 @@ public class ChromaticEmblem : ModItem, IHasThoriumRecipe
 
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault($"{Factor:P0} increased damage\n" +
+        /* Tooltip.SetDefault($"{Factor:P0} increased damage\n" +
                            $"{Factor:P0} increased crit chance\n" +
                            $"{Factor:P0} increased attack speed\n" +
                            $"{Factor:P0} reduced damage taken\n" +
                            $"Increases armor penetration by {Factor * 100:N0}\n" +
                            "Gravity Globe benefits ;)\n" +
-                           "Can't be equipped with any other 'Emblems'");
-        SacrificeTotal = 1;
+                           "Can't be equipped with any other 'Emblems'"); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

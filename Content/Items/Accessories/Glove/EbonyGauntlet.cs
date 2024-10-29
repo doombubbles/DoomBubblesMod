@@ -7,7 +7,7 @@ public class EbonyGauntlet : GauntletItem
     public override void SetStaticDefaults()
     {
         base.SetStaticDefaults();
-        Tooltip.SetDefault("Increases armor penetration by 5");
+        // Tooltip.SetDefault("Increases armor penetration by 5");
     }
 
     public override void UpdateAccessory(Player player, bool hideVisual)

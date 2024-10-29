@@ -7,8 +7,8 @@ public class HolyBullet : ModItem
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Summons falling stars on impact");
-        SacrificeTotal = 99;
+        // Tooltip.SetDefault("Summons falling stars on impact");
+        Item.ResearchUnlockCount = 99;
     }
 
     public override void SetDefaults()

@@ -6,9 +6,9 @@ public class HampireKnives : ModItem
 {
     public override void SetStaticDefaults()
     {
-        Tooltip.SetDefault("Rapidly throw food stealing daggers;\n" +
-                           "Or, life stealing if at max duration");
-        SacrificeTotal = 1;
+        /* Tooltip.SetDefault("Rapidly throw food stealing daggers;\n" +
+                           "Or, life stealing if at max duration"); */
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()
