@@ -17,6 +17,8 @@ public class StarWrathBullet : AllTheBullet
         return true;
     }
 
+    // pointPoisition = new Vector2(position.X + (float)width * 0.5f + (float)(Main.rand.Next(201) * -direction) + ((float)Main.mouseX + Main.screenPosition.X - position.X), MountedCenter.Y - 600f);
+    
     private void DoStarWrath()
     {
         var value4 = Projectile.Center;

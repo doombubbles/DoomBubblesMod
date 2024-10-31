@@ -77,6 +77,11 @@ Mods: {
 				DisplayName: Mods.DoomBubblesMod.BuffName.VampireKnifeBat
 				Description: Hi Oliver
 			}
+
+			WormholeSickness: {
+				Description: Cannot consume any more teleportation items
+				DisplayName: Wormhole Sickness
+			}
 		}
 
 		Items: {
@@ -104,10 +109,10 @@ Mods: {
 				Tooltip:
 					'''
 					Reduces the cooldown of healing potions
-					Incrases maximum mana by 20
+					Increases maximum mana by 20
 					Improves life/mana regen in many ways
 					Increases heart/star pickup range
-					Regenerate mana on taking damage; health on dealing
+					Regenerate mana on taking damage; health on dealing damage
 					'''
 			}
 
@@ -115,7 +120,8 @@ Mods: {
 				DisplayName: Charm of Fables
 				Tooltip:
 					'''
-					Your mana always regenerates as if you weren't movingIncrases maximum mana by 20
+					Your mana always regenerates as if you weren't moving
+					Increases maximum mana by 20
 					Increases mana regeneration rate
 					'''
 			}
@@ -125,7 +131,8 @@ Mods: {
 				Tooltip:
 					'''
 					Reduces the cooldown of healing potions
-					Your mana always regenerates as if you weren't movingIncrases maximum mana by 20
+					Your mana always regenerates as if you weren't moving
+					Increases maximum mana by 20
 					Increases mana and life regeneration rate
 					'''
 			}
@@ -1233,37 +1240,42 @@ Mods: {
 
 				DisableDamageVariance: {
 					Label: Disable Damage Variance
-					Tooltip: ""
+					Tooltip: Disables the default +/- 15% usually applied to all damage
 				}
 
 				AutoTorchGod: {
-					Label: Auto Torch God
-					Tooltip: ""
+					Label: Automatic Torch God's Favor
+					Tooltip: Self explanatory
 				}
 
 				ProportionateLuckyCoin: {
 					Label: Proportionate Lucky Coin
-					Tooltip: ""
+					Tooltip: Makes the Lucky Coin effect give money proportionate to the damage dealt.
 				}
 
 				SorcerersStoneOP: {
-					Label: Sorcerers Stone O P
-					Tooltip: ""
+					Label: Sorcerer's Stone Effect Affects Health Too
+					Tooltip: Toggle's whether the Sorcerer's Stone and other items that inherit its effect will improve both life and mana regen, or just mana regen.
 				}
 
 				ClickerAccessories: {
 					Label: Clicker Accessories
-					Tooltip: ""
+					Tooltip: If playing with the Clicker Class mod, lets you use Clickers also as accessories to gain their click effect.
 				}
 
 				ClickerRightClick: {
 					Label: Clicker Right Click
-					Tooltip: ""
+					Tooltip: If playing with the Clicker Class mod, lets you also use Right Click to activate Clickers.\nMakes Motherboard and Mice armor effects activate like Vortex armor.
 				}
 
 				NonCombatAccessories: {
-					Label: Non Combat Accessories
-					Tooltip: ""
+					Label: Non-Combat Accessories
+					Tooltip: The list of accessories that will be allowed for Non-Combat Accessory slots.
+				}
+
+				WormholeSicknessItems: {
+					Label: Wormhole Sickness Items
+					Tooltip: List of items affected by Wormhole Sickness
 				}
 			}
 		}

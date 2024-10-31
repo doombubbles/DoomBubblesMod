@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,6 +9,7 @@ using ReLogic.Utilities;
 using Terraria.Audio;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
+using Terraria.ModLoader.Config;
 
 namespace DoomBubblesMod.Utils;
 
@@ -259,7 +261,7 @@ public static class Extensions
     public static T GetDescendent<T>(this ItemLoot itemLoot) =>
         itemLoot.GetDescendents<T>().FirstOrDefault();
 
-    public static IEnumerable<T> GetDescendents<T>(this ItemLoot itemLoot) => 
+    public static IEnumerable<T> GetDescendents<T>(this ItemLoot itemLoot) =>
         itemLoot.Get().OfType<T>()
             .Concat(itemLoot.Get().SelectMany(itemDropRule => itemDropRule.GetDescendents<T>()));
 
@@ -269,4 +271,7 @@ public static class Extensions
     public static IEnumerable<T> GetDescendents<T>(this IItemDropRule dropRule) =>
         dropRule.ChainedRules.Select(attempt => attempt.RuleToChain).OfType<T>()
             .Concat(dropRule.ChainedRules.SelectMany(attempt => attempt.RuleToChain.GetDescendents<T>()));
+
+    public static bool Contains(this IEnumerable<ItemDefinition> items, int itemType) =>
+        items.Any(def => def.Type == itemType);
 }

@@ -157,6 +157,11 @@ public class DoomBubblesSystem : ModSystem
                 recipe.AddIngredient(ItemID.SoulofMight, 5);
                 recipe.AddIngredient(ItemID.SoulofSight, 5);
             }
+
+            if (recipe.HasResult(ItemID.DrillContainmentUnit))
+            {
+                recipe.RemoveIngredient(ItemID.LunarBar);
+            }
             
             if (fargo != null)
             {

@@ -1,11 +1,13 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using DoomBubblesMod.Common.Configs;
 using DoomBubblesMod.Common.Players;
+using DoomBubblesMod.Content.Buffs;
 using DoomBubblesMod.Content.Items.Weapons;
 using DoomBubblesMod.Utils;
+using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.ID;
 
 namespace DoomBubblesMod.Common.GlobalItems;
 
@@ -26,7 +28,10 @@ public class DoomBubblesGlobalItem : GlobalItem
             {"Rare Waifu in a Bottle", "Rare Weeaboo in a Bottle"},
             {"Twin's Ire", "Twin's Aiur"},
             {"Crystal Ball", "Krystal Ball"},
-            {"Omega Core", "Varp Kore"}
+            {"Omega Core", "Varp Kore"},
+            {"Dead Man's Sweater", "Dead Woman's Sweater"},
+            {"Gender Change Potion", "Sophie's Choice"},
+            {"Vitamins", "Hormones"}
         };
 
         foreach (var (itemId, replacementName) in itemNameOverrides)
@@ -35,11 +40,6 @@ public class DoomBubblesGlobalItem : GlobalItem
             {
                 item.SetNameOverride(replacementName);
             }
-        }
-
-        if (item.accessory)
-        {
-            item.hasVanityEffects = true;
         }
 
         if (item.type is ItemID.BlueDynastyShingles or ItemID.RedDynastyShingles or ItemID.DynastyWood)
@@ -55,7 +55,40 @@ public class DoomBubblesGlobalItem : GlobalItem
             return false;
         }
 
+        if (GetInstance<ServerConfig>().WormholeSicknessItems.Contains(item.type) && player.HasBuff<WormholeSickness>())
+        {
+            return false;
+        }
+
         return base.CanUseItem(item, player);
+    }
+
+    public override bool? UseItem(Item item, Player player)
+    {
+        if (item.type == ItemID.PotionOfReturn && GetInstance<ServerConfig>().WormholeSicknessItems.Contains(item.type))
+        {
+            player.AddBuff(BuffType<WormholeSickness>(), player.potionDelayTime);
+        }
+
+        return base.UseItem(item, player);
+    }
+
+    public override void PostDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame,
+        Color drawColor, Color itemColor, Vector2 origin, float scale)
+    {
+        if (!Main.CurrentPlayer.HasBuff<WormholeSickness>() ||
+            !GetInstance<ServerConfig>().WormholeSicknessItems.Contains(item.type) ||
+            Main.playerInventory) return;
+
+        var buffTime = Main.CurrentPlayer.buffTime[Main.CurrentPlayer.FindBuffIndex(BuffType<WormholeSickness>())];
+
+        var itemTexture = TextureAssets.Item[item.type].Value;
+        var realScale = scale * Math.Max(itemTexture.Height, itemTexture.Width) / 32f;
+        var cdTexture = TextureAssets.Cd.Value;
+        var position3 = position + itemTexture.Size() * scale / 2f - cdTexture.Size() * realScale / 2f;
+        var color = item.GetAlpha(drawColor) * (buffTime / (float) Main.CurrentPlayer.potionDelayTime);
+        spriteBatch.Draw(cdTexture, position3, new Rectangle(0, 0, 32, 32), color, 0f, origin,
+            realScale, SpriteEffects.None, 0f);
     }
 
     public override void ModifyWeaponCrit(Item item, Player player, ref float crit)
@@ -74,6 +107,7 @@ public class DoomBubblesGlobalItem : GlobalItem
                 {
                     rule.dropIds = rule.dropIds.Append(ItemType<Ultrashark>()).ToArray();
                 }
+
                 break;
             }
             case ItemID.LavaCrate or ItemID.LavaCrateHard:
@@ -95,6 +129,24 @@ public class DoomBubblesGlobalItem : GlobalItem
         }
     }
 
+    private static readonly Dictionary<string, string> AlchemistGrammarFixes = new()
+    {
+        {"Avenger Emblem", "Avengers Emblem"},
+        {"Celestial Fragment", "Heavenly Fragment"},
+        {"Celestial Crown", "Heavenly Crown"},
+        {"Celestial Vestment", "Heavenly Vestment"},
+        {"Celestial Leggings", "Heavenly Leggings"},
+        {"Celestial Carrier", "Heavenly Carrier"},
+        {"Celestial Burst Staff", "Heavenly Burst Staff"},
+        {"Waifu in a Bottle", "Weeaboo in a Bottle"},
+        {"Rare Waifu in a Bottle", "Rare Weeaboo in a Bottle"},
+        {"Twin's Ire", "Twin's Aiur"},
+        {"Crystal Ball", "Krystal Ball"},
+        {"Omega Core", "Varp Kore"},
+        {"Dead Man's Sweater", "Dead Woman's Sweater"},
+        {"Gender Change Potion", "Sophie's Choice"}
+    };
+
     public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
     {
         if (item.type == ItemID.GravityGlobe)
@@ -109,10 +161,7 @@ public class DoomBubblesGlobalItem : GlobalItem
             });
         }
 
-        if (!Main.gameMenu &&
-            Main.LocalPlayer
-                .GetModPlayer<DoomBubblesPlayer>()
-                .NoManaItems.Contains(item.type))
+        if (!Main.gameMenu && Main.LocalPlayer.GetModPlayer<DoomBubblesPlayer>().NoManaItems.Contains(item.type))
         {
             for (var i = 0; i < tooltips.Count; i++)
             {
@@ -124,20 +173,12 @@ public class DoomBubblesGlobalItem : GlobalItem
             }
         }
 
-        if (item.hasVanityEffects)
-        {
-            tooltips.RemoveAll(line => line.Name == "VanityLegal");
-        }
-
         if (GetInstance<ClientConfig>().FixAlchemistNPCGrammar)
         {
-            tooltips.ForEach(line => line.Text = line.Text.Replace("are providing", "provide a"));
-            tooltips.ForEach(line => line.Text = line.Text.Replace("Buffs duration is", "Buffs' durations are"));
-            tooltips.ForEach(line => line.Text = line.Text.Replace("Allows to use", "Allows you to use"));
-            tooltips.ForEach(line => line.Text = line.Text.Replace("not to consume potion", "to not consume potions"));
-            tooltips.ForEach(line => line.Text = line.Text.Replace("have better chance", "have a better chance"));
-            tooltips.ForEach(line =>
-                line.Text = line.Text.Replace("Piggy Bank by Quick Buff", "your Piggy Bank via Quick Buff"));
+            foreach (var (find, replace) in AlchemistGrammarFixes)
+            {
+                tooltips.ForEach(line => line.Text = line.Text.Replace(find, replace));
+            }
         }
 
         if (GetInstance<ClientConfig>().CalamityThrowingDamage)

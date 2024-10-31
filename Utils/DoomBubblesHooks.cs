@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using DoomBubblesMod.Common.Configs;
 using DoomBubblesMod.Common.Players;
+using DoomBubblesMod.Content.Buffs;
 using DoomBubblesMod.Content.Items.Misc;
 using MonoMod.Cil;
 using Terraria.GameContent.Drawing;
@@ -28,9 +29,28 @@ public class DoomBubblesHooks : ILoadable
         On_TileDrawing.DrawAnimatedTile_AdjustForVisionChangers +=
             TileDrawingOnDrawAnimatedTile_AdjustForVisionChangers;
         On_TileDrawing.CacheSpecialDraws_Part2 += TileDrawingOnCacheSpecialDraws;
+
+        On_Player.HasUnityPotion += On_PlayerOnHasUnityPotion;
+        On_Player.TakeUnityPotion += On_PlayerOnTakeUnityPotion;
     }
 
-    private void PlayerOnApplyNPCOnHitEffects(On_Player.orig_ApplyNPCOnHitEffects orig, Player self, Item sitem,
+    private static void On_PlayerOnTakeUnityPotion(On_Player.orig_TakeUnityPotion orig, Player self)
+    {
+        orig(self);
+        if (GetInstance<ServerConfig>().WormholeSicknessItems.Contains(ItemID.WormholePotion))
+        {
+            self.AddBuff(BuffType<WormholeSickness>(), self.potionDelayTime);
+        }
+    }
+
+    private static bool On_PlayerOnHasUnityPotion(On_Player.orig_HasUnityPotion orig, Player self)
+    {
+        return orig(self) &&
+               (!GetInstance<ServerConfig>().WormholeSicknessItems.Contains(ItemID.WormholePotion) ||
+                !self.HasBuff<WormholeSickness>());
+    }
+
+    private static void PlayerOnApplyNPCOnHitEffects(On_Player.orig_ApplyNPCOnHitEffects orig, Player self, Item sitem,
         Rectangle itemrectangle, int damage, float knockback, int npcindex, int dmgrandomized, int dmgdone)
     {
         var hasLuckyCoin = self.hasLuckyCoin;
@@ -38,6 +58,7 @@ public class DoomBubblesHooks : ILoadable
         {
             self.hasLuckyCoin = false;
         }
+
         orig(self, sitem, itemrectangle, damage, knockback, npcindex, dmgrandomized, dmgdone);
         self.hasLuckyCoin = hasLuckyCoin;
     }
@@ -68,7 +89,7 @@ public class DoomBubblesHooks : ILoadable
         DoSpelunkerColor(i, j, ref tileLight);
     }
 
-    private void PlayerOnUpdateItemDye(On_Player.orig_UpdateItemDye orig, Player self, bool isNotInVanitySlot,
+    private static void PlayerOnUpdateItemDye(On_Player.orig_UpdateItemDye orig, Player self, bool isNotInVanitySlot,
         bool isSetToHidden, Item armorItem, Item dyeItem)
     {
         orig(self, isNotInVanitySlot, isSetToHidden, armorItem, dyeItem);
@@ -78,7 +99,7 @@ public class DoomBubblesHooks : ILoadable
         }
     }
 
-    private void PlayerDrawLayersOnDrawPlayer_27_HeldItem(On_PlayerDrawLayers.orig_DrawPlayer_27_HeldItem orig,
+    private static void PlayerDrawLayersOnDrawPlayer_27_HeldItem(On_PlayerDrawLayers.orig_DrawPlayer_27_HeldItem orig,
         ref PlayerDrawSet drawinfo)
     {
         var original = drawinfo.DrawDataCache.ToArray();
@@ -96,7 +117,7 @@ public class DoomBubblesHooks : ILoadable
         }
     }
 
-    private int PlayerOngetDPS(On_Player.orig_getDPS orig, Player self)
+    private static int PlayerOngetDPS(On_Player.orig_getDPS orig, Player self)
     {
         var config = GetInstance<ClientConfig>();
         if (!config.SmoothDPSReading) return orig(self);
@@ -117,7 +138,7 @@ public class DoomBubblesHooks : ILoadable
         return (int) (self.dpsDamage / num);
     }
 
-    private void PlayerOncheckDPSTime(On_Player.orig_checkDPSTime orig, Player self)
+    private static void PlayerOncheckDPSTime(On_Player.orig_checkDPSTime orig, Player self)
     {
         var config = GetInstance<ClientConfig>();
         if (!config.SmoothDPSReading)
@@ -131,7 +152,7 @@ public class DoomBubblesHooks : ILoadable
     }
 
 
-    private int MainOnDamageVar(On_Main.orig_DamageVar_float_float orig, float dmg, float luck) =>
+    private static int MainOnDamageVar(On_Main.orig_DamageVar_float_float orig, float dmg, float luck) =>
         GetInstance<ServerConfig>().DisableDamageVariance
             ? (int) Math.Round(dmg * (1 + luck / 20))
             : orig(dmg, luck);
@@ -139,7 +160,6 @@ public class DoomBubblesHooks : ILoadable
     public void Unload()
     {
     }
-
 
     private static void MainOnDrawCursor(On_Main.orig_DrawCursor orig, Vector2 bonus, bool smart)
     {
