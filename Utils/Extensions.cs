@@ -1,14 +1,11 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using DoomBubblesMod.Common.Players;
 using ReLogic.Utilities;
 using Terraria.Audio;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.ID;
 using Terraria.ModLoader.Config;
 
 namespace DoomBubblesMod.Utils;
@@ -193,7 +190,7 @@ public static class Extensions
         Func<TooltipPlacement, bool> func)
     {
         var index = lines.FindIndex(line =>
-            Enum.TryParse(line.Name, out TooltipPlacement placement) && func(placement));
+            Enum.TryParse(Regex.Replace(line.Name, @"\d+", ""), out TooltipPlacement placement) && func(placement));
         if (index == -1)
         {
             // If all else fails, stick it at the end
@@ -244,17 +241,6 @@ public static class Extensions
         " $1",
         RegexOptions.Compiled).Trim();
 
-    public static bool IsServerOwner(this Player player)
-    {
-        return Main.netMode == NetmodeID.MultiplayerClient
-            ? Netplay.Connection.Socket.GetRemoteAddress().IsLocalHost()
-            : Main.player.Any(p =>
-                p == player &&
-                p.active &&
-                Netplay.Clients[p.whoAmI].State == 10 &&
-                Netplay.Clients[p.whoAmI].Socket.GetRemoteAddress().IsLocalHost());
-    }
-
     public static ModPrefix ModPrefix(this Item item) => PrefixLoader.GetPrefix(item.prefix);
 
 
@@ -271,6 +257,9 @@ public static class Extensions
     public static IEnumerable<T> GetDescendents<T>(this IItemDropRule dropRule) =>
         dropRule.ChainedRules.Select(attempt => attempt.RuleToChain).OfType<T>()
             .Concat(dropRule.ChainedRules.SelectMany(attempt => attempt.RuleToChain.GetDescendents<T>()));
+
+    public static IEnumerable<T> GetDescendents<T>(this NPCLoot npcLoot) =>
+        npcLoot.Get().SelectMany(rule => rule.GetDescendents<T>());
 
     public static bool Contains(this IEnumerable<ItemDefinition> items, int itemType) =>
         items.Any(def => def.Type == itemType);

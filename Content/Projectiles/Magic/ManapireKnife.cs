@@ -1,6 +1,5 @@
 ﻿using System;
 using DoomBubblesMod.Content.Dusts;
-using Terraria;
 
 namespace DoomBubblesMod.Content.Projectiles.Magic;
 

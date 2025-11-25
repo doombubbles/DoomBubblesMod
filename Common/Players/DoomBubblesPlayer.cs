@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using DoomBubblesMod.Common.Configs;
-using Terraria;
-using Terraria.ID;
 
 namespace DoomBubblesMod.Common.Players;
 

@@ -16,7 +16,8 @@ public class DoomBubblesHooks : ILoadable
         On_Player.UpdateLifeRegen += PlayerOnUpdateLifeRegen;
         On_Player.UpdateManaRegen += PlayerOnUpdateManaRegen;
         IL_Player.Update += PlayerOnUpdate;
-        On_Main.DamageVar_float_float += MainOnDamageVar;
+        On_Main.DamageVar_float_float += On_MainOnDamageVar;
+        On_Main.DamageVar_float_int_float += On_MainOnDamageVar_float_int_float;
         On_Main.DrawCursor += MainOnDrawCursor;
 
         On_Player.checkDPSTime += PlayerOncheckDPSTime;
@@ -34,10 +35,16 @@ public class DoomBubblesHooks : ILoadable
         On_Player.TakeUnityPotion += On_PlayerOnTakeUnityPotion;
     }
 
+
+    private static bool DoWormholeSickness =>
+        GetInstance<ServerConfig>().WormholeSicknessItems.Contains(ItemID.WormholePotion) &&
+        (!GetInstance<ServerConfig>().OnlyWormholeSicknessDuringBosses ||
+         Main.npc.Any(npc => npc.active && npc.boss));
+
     private static void On_PlayerOnTakeUnityPotion(On_Player.orig_TakeUnityPotion orig, Player self)
     {
         orig(self);
-        if (GetInstance<ServerConfig>().WormholeSicknessItems.Contains(ItemID.WormholePotion))
+        if (DoWormholeSickness)
         {
             self.AddBuff(BuffType<WormholeSickness>(), self.potionDelayTime);
         }
@@ -45,9 +52,7 @@ public class DoomBubblesHooks : ILoadable
 
     private static bool On_PlayerOnHasUnityPotion(On_Player.orig_HasUnityPotion orig, Player self)
     {
-        return orig(self) &&
-               (!GetInstance<ServerConfig>().WormholeSicknessItems.Contains(ItemID.WormholePotion) ||
-                !self.HasBuff<WormholeSickness>());
+        return orig(self) && (!DoWormholeSickness || !self.HasBuff<WormholeSickness>());
     }
 
     private static void PlayerOnApplyNPCOnHitEffects(On_Player.orig_ApplyNPCOnHitEffects orig, Player self, Item sitem,
@@ -152,10 +157,13 @@ public class DoomBubblesHooks : ILoadable
     }
 
 
-    private static int MainOnDamageVar(On_Main.orig_DamageVar_float_float orig, float dmg, float luck) =>
-        GetInstance<ServerConfig>().DisableDamageVariance
-            ? (int) Math.Round(dmg * (1 + luck / 20))
-            : orig(dmg, luck);
+    private static int On_MainOnDamageVar(On_Main.orig_DamageVar_float_float orig, float dmg, float luck) =>
+        GetInstance<ServerConfig>().DisableDamageVariance ? (int) Math.Round(dmg * (1 + luck / 20)) : orig(dmg, luck);
+
+    private static int On_MainOnDamageVar_float_int_float(On_Main.orig_DamageVar_float_int_float orig, float dmg,
+        int percent, float luck) => GetInstance<ServerConfig>().DisableDamageVariance
+        ? (int) Math.Round(dmg * (1 + luck / 20))
+        : orig(dmg, percent, luck);
 
     public void Unload()
     {

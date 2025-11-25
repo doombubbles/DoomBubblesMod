@@ -1,5 +1,4 @@
-﻿using Terraria;
-namespace DoomBubblesMod.Content.Projectiles.HotS;
+﻿namespace DoomBubblesMod.Content.Projectiles.HotS;
 
 public class RepeaterBig : Repeater
 {

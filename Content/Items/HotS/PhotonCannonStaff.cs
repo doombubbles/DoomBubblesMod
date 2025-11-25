@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using DoomBubblesMod.Content.Items.Talent;
 using DoomBubblesMod.Content.Projectiles.HotS;
+using ElementalDamage.Common.Types;
+using ElementalDamage.Content.DamageClasses;
 
 namespace DoomBubblesMod.Content.Items.HotS;
 
@@ -10,13 +12,6 @@ public class PhotonCannonStaff : ModItemWithTalents<WarpResonance, TowerDefense,
     protected override Color? TalentColor => Color.Blue;
 
     public override int SoldBy => NPCID.Cyborg;
-    
-    public override void SetStaticDefaults()
-    {
-        /* Tooltip.SetDefault("Warps Photon Cannons as stationary minions\n" +
-                           "Photon Cannons require a Pylon power field"); */
-        Item.ResearchUnlockCount = 1;
-    }
 
     public override void SetDefaults()
     {
@@ -33,6 +28,7 @@ public class PhotonCannonStaff : ModItemWithTalents<WarpResonance, TowerDefense,
         Item.rare = ItemRarityID.Yellow;
         Item.buffType = BuffType<Buffs.PhotonCannon>();
         Item.buffTime = 3600;
+        Item.DamageType = ElementalDamageClass.Get<Energy>(DamageClass.Summon);
     }
 
     public override bool AltFunctionUse(Player player)

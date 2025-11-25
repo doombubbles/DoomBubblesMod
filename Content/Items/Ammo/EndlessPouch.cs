@@ -1,5 +1,3 @@
-using System.Text.RegularExpressions;
-
 namespace DoomBubblesMod.Content.Items.Ammo;
 
 public abstract class EndlessPouch : ModItem

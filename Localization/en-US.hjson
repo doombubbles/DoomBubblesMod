@@ -206,6 +206,7 @@ Mods: {
 					20% increased damage
 					100% increased n00b regret
 					'''
+			    // 
 			}
 
 			VortexEmblem: {
@@ -1201,7 +1202,11 @@ Mods: {
 
 				EasyItemSwapping: {
 					Label: Easy Item Swapping
-					Tooltip: ""
+					Tooltip:
+						'''
+						Lets you more easily switch between which item you're using by making holding down the associated
+						               hotbar key actually switch to the item after the current animation finishes, not just queue it up.
+						'''
 				}
 
 				PermanentRainbowCursor: {
@@ -1211,27 +1216,35 @@ Mods: {
 
 				NoSpelunkerTint: {
 					Label: No Spelunker Tint
-					Tooltip: ""
+					Tooltip:
+						'''
+						Makes the spelunker potion not change the colors of ores.
+						NOTE: Fancy Lighting mod overwrites this.
+						'''
 				}
 
 				SmoothDPSReading: {
-					Label: Smooth D P S Reading
-					Tooltip: ""
+					Label: Smooth DPS Reading
+					Tooltip: Smooths out the reading ot the DPS meter
 				}
 
 				DpsSeconds: {
-					Label: Dps Seconds
-					Tooltip: ""
+					Label: Smooth DPS Seconds
+					Tooltip: How many seconds the DPS meter tracks for. Lower for more immediately accurate, higher for more consistent.
 				}
 
 				FixAlchemistNPCGrammar: {
-					Label: Fix Alchemist N P C Grammar
-					Tooltip: ""
+					Label: Fix Alchemist NPC Grammar
+					Tooltip: Improves the grammar on certain tooltips in the AlchemistNPCLite mod
 				}
 
 				CalamityThrowingDamage: {
 					Label: Calamity Throwing Damage
-					Tooltip: ""
+					Tooltip:
+						'''
+						If used with Calamity Mod, will replace all tooltip instances of "rogue damage" with "throwing damage".
+						They are already compatible with each other.
+						'''
 				}
 			}
 
@@ -1277,7 +1290,38 @@ Mods: {
 					Label: Wormhole Sickness Items
 					Tooltip: List of items affected by Wormhole Sickness
 				}
+
+				OnlyWormholeSicknessDuringBosses: {
+					Tooltip: Makes Wormhole Sickness only apply while a Boss is alive
+					Label: Only Wormhole Sickness During Bosses
+				}
 			}
 		}
 	}
+
+	ThoriumMod: {
+		Items.TwinsIre.DisplayName: Twin's Aiur
+
+		NPCs: {
+			BlueHag.DisplayName: Bitch
+			CyanHag.DisplayName: Bitch
+			GreenHag.DisplayName: Bitch
+			RedHag.DisplayName: Bitch
+		}
+
+		Projectiles: {
+			CyanHagPro.DisplayName: Bitch's Tornado
+			GreenHagPro1.DisplayName: Bitch's Toxic Vine
+			GreenHagPro2.DisplayName: Bitch's Toxic Vine
+			GreenHagPro3.DisplayName: Bitch's Toxic Vine
+			HagGlobule.DisplayName: Bitch's Volatile Globule
+			HagGlobulePro.DisplayName: Bitch's Volatile Globule
+		}
+	}
+}
+
+ItemName: {
+	AvengerEmblem: Avengers Emblem
+	GenderChangePotion: Sophie's Choice
+	Vitamins: Hormones
 }

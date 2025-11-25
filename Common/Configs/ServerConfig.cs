@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using DoomBubblesMod.Common.AccessorySlots;
-using DoomBubblesMod.Utils;
-using Terraria.Localization;
 using Terraria.ModLoader.Config;
 
 namespace DoomBubblesMod.Common.Configs;
@@ -29,20 +28,36 @@ public class ServerConfig : ModConfig
 
     public List<ItemDefinition> WormholeSicknessItems =
     [
-        new(ItemID.WormholePotion),
-        new(ItemID.PotionOfReturn),
+        new(ItemID.WormholePotion)
     ];
+
+    public bool OnlyWormholeSicknessDuringBosses = true;
 
     public override bool AcceptClientChanges(ModConfig pendingConfig, int whoAmI, ref NetworkText message)
     {
-        if (Main.player[whoAmI].IsServerOwner())
+        var success = false;
+        try
         {
-            message = NetworkText.FromKey(GetInstance<DoomBubblesMod>().GetLocalizationKey("NetworkText.Success"));
-            return true;
-        }
+            if (ModLoader.TryGetMod("MagicStorage", out var magicStorage) &&
+                magicStorage.TryFind("OperatorPlayer", out ModPlayer modPlayer))
+            {
+                success = (bool) modPlayer.GetType()
+                    .GetField("hasOp", BindingFlags.Public | BindingFlags.Instance)!
+                    .GetValue(Main.player[whoAmI].GetModPlayer(modPlayer))!;
+            }
 
-        message = NetworkText.FromKey(GetInstance<DoomBubblesMod>().GetLocalizationKey("NetworkText.NotAllowed"));
-        return false;
+            if (Main.countsAsHostForGameplay[whoAmI])
+            {
+                success = true;
+            }
+
+            return success;
+        }
+        finally
+        {
+            message = NetworkText.FromKey(GetInstance<DoomBubblesMod>()
+                .GetLocalizationKey(success ? "NetworkText.Success" : "NetworkText.NotAllowed"));
+        }
     }
 
     public override bool NeedsReload(ModConfig pendingConfig) => false;

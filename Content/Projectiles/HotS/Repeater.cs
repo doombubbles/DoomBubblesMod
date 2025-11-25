@@ -2,7 +2,6 @@
 using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Buffs;
 using DoomBubblesMod.Utils;
-using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 

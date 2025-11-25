@@ -1,6 +1,5 @@
 ﻿using System;
 using DoomBubblesMod.Utils;
-using Terraria;
 using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Projectiles.HotS;

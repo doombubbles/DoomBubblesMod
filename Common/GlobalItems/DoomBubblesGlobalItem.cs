@@ -17,7 +17,6 @@ public class DoomBubblesGlobalItem : GlobalItem
     {
         var itemNameOverrides = new Dictionary<string, string>
         {
-            {"Avenger Emblem", "Avengers Emblem"},
             {"Celestial Fragment", "Heavenly Fragment"},
             {"Celestial Crown", "Heavenly Crown"},
             {"Celestial Vestment", "Heavenly Vestment"},
@@ -26,12 +25,7 @@ public class DoomBubblesGlobalItem : GlobalItem
             {"Celestial Burst Staff", "Heavenly Burst Staff"},
             {"Waifu in a Bottle", "Weeaboo in a Bottle"},
             {"Rare Waifu in a Bottle", "Rare Weeaboo in a Bottle"},
-            {"Twin's Ire", "Twin's Aiur"},
-            {"Crystal Ball", "Krystal Ball"},
             {"Omega Core", "Varp Kore"},
-            {"Dead Man's Sweater", "Dead Woman's Sweater"},
-            {"Gender Change Potion", "Sophie's Choice"},
-            {"Vitamins", "Hormones"}
         };
 
         foreach (var (itemId, replacementName) in itemNameOverrides)
@@ -76,9 +70,11 @@ public class DoomBubblesGlobalItem : GlobalItem
     public override void PostDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame,
         Color drawColor, Color itemColor, Vector2 origin, float scale)
     {
-        if (!Main.CurrentPlayer.HasBuff<WormholeSickness>() ||
+        if (Main.gameMenu ||
+            Main.playerInventory ||
+            GetInstance<ServerConfig>() == null ||
             !GetInstance<ServerConfig>().WormholeSicknessItems.Contains(item.type) ||
-            Main.playerInventory) return;
+            !Main.CurrentPlayer.HasBuff<WormholeSickness>()) return;
 
         var buffTime = Main.CurrentPlayer.buffTime[Main.CurrentPlayer.FindBuffIndex(BuffType<WormholeSickness>())];
 
@@ -105,7 +101,10 @@ public class DoomBubblesGlobalItem : GlobalItem
             {
                 foreach (var rule in itemLoot.GetDescendents<OneFromOptionsNotScaledWithLuckDropRule>())
                 {
-                    rule.dropIds = rule.dropIds.Append(ItemType<Ultrashark>()).ToArray();
+                    if (rule.dropIds.Contains(ItemID.RazorbladeTyphoon))
+                    {
+                        rule.dropIds = rule.dropIds.Append(ItemType<Ultrashark>()).ToArray();
+                    }
                 }
 
                 break;

@@ -1,6 +1,5 @@
 using ElementalDamage.Common.Types;
 using Terraria.Audio;
-using Terraria.ID;
 
 namespace DoomBubblesMod.Content.Projectiles.Ranged.AllTheBullets;
 

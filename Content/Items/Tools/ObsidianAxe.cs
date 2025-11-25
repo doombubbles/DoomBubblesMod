@@ -1,4 +1,3 @@
-using Terraria;
 namespace DoomBubblesMod.Content.Items.Tools;
 
 public class ObsidianAxe : ModItem

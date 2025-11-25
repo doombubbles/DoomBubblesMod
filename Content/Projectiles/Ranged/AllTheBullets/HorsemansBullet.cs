@@ -1,6 +1,5 @@
 using System;
 using DoomBubblesMod.Utils;
-using Terraria;
 
 namespace DoomBubblesMod.Content.Projectiles.Ranged.AllTheBullets;
 

@@ -4,6 +4,7 @@ using DoomBubblesMod.Content.Items.Accessories;
 using DoomBubblesMod.Content.Items.Misc;
 using DoomBubblesMod.Content.Items.Talent;
 using DoomBubblesMod.Content.Items.Weapons;
+using DoomBubblesMod.Utils;
 using Terraria.GameContent.ItemDropRules;
 
 namespace DoomBubblesMod.Common.GlobalNPCs;
@@ -19,8 +20,6 @@ public class DoomBubblesGlobalNPC : GlobalNPC
     {
         powerStoned = false;
 
-        if (npc.FullName == "Hag") npc.GivenName = "Bitch";
-
         if (npc.boss) npc.buffImmune[BuffType<LivingBomb>()] = false;
     }
 
@@ -30,29 +29,19 @@ public class DoomBubblesGlobalNPC : GlobalNPC
         switch (npc.type)
         {
             case NPCID.DukeFishron:
-                var fishronLoot = npcLoot.Get().OfType<LeadingConditionRule>().SelectMany(rule => rule.ChainedRules)
-                    .OfType<Chains.TryIfSucceeded>().Select(succeeded => succeeded.RuleToChain)
-                    .OfType<OneFromOptionsDropRule>()
-                    .FirstOrDefault(rule => rule.dropIds.Contains(ItemID.RazorbladeTyphoon));
-
-                if (fishronLoot != null)
-                    fishronLoot.dropIds = fishronLoot.dropIds.Append(ItemType<Ultrashark>()).ToArray();
-                else
-                    Mod.Logger.Warn("Failed to modify Duke Fishron Loot");
+                foreach (var rule in npcLoot.GetDescendents<OneFromOptionsNotScaledWithLuckDropRule>())
+                {
+                    if (rule.dropIds.Contains(ItemID.RazorbladeTyphoon))
+                    {
+                        rule.dropIds = rule.dropIds.Append(ItemType<Ultrashark>()).ToArray();
+                    }
+                }
 
                 break;
             case NPCID.Mothron:
                 npcLoot.Add(
                     new LeadingConditionRule(new Conditions.DownedAllMechBosses()).OnSuccess(
                         ItemDropRule.ExpertGetsRerolls(ItemType<BrokenHeroGun>(), 4, 1)));
-                break;
-            case NPCID.ShortBones:
-            case NPCID.BigBoned:
-            case NPCID.AngryBones:
-            case NPCID.AngryBonesBig:
-            case NPCID.AngryBonesBigMuscle:
-            case NPCID.AngryBonesBigHelmet:
-                npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<TriggerFinger>(), 100, 50));
                 break;
         }
     }

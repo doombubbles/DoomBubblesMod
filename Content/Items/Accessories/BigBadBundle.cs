@@ -1,5 +1,4 @@
-﻿using Terraria.ModLoader;
-namespace DoomBubblesMod.Content.Items.Accessories;
+﻿namespace DoomBubblesMod.Content.Items.Accessories;
 
 [AutoloadEquip(EquipType.Balloon)]
 public class BigBadBundle : ModItem

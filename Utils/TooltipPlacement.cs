@@ -30,6 +30,7 @@ public enum TooltipPlacement
     Ammo,
     Consumable,
     Material,
+    Tooltip,
     EtherianManaWarning,
     WellFedExpert,
     BuffTime,
@@ -49,6 +50,10 @@ public enum TooltipPlacement
     PrefixAccMeleeSpeed,
     SetBonus,
     Expert,
+    Master,
+    JourneyResearch,
+    ModifiedByMods,
+    BestiaryNotes,
     SpecialPrice,
     Price
 }

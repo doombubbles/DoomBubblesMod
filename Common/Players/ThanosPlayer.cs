@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using DoomBubblesMod.Content.Buffs;
 using DoomBubblesMod.Content.Items.Thanos;
-using Terraria;
 using Terraria.GameInput;
 
 namespace DoomBubblesMod.Common.Players;

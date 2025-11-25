@@ -1,4 +1,3 @@
-using System;
 using DoomBubblesMod.Content.Projectiles.Ranged;
 using ElementalDamage.Common.Types;
 using ElementalDamage.Content.DamageClasses;
@@ -7,12 +6,6 @@ namespace DoomBubblesMod.Content.Items.Weapons;
 
 public class TrueTrigun : ModItem
 {
-    public override void SetStaticDefaults()
-    {
-        // Tooltip.SetDefault("25% chance not to consume ammo\nShoots in three round bursts with True Bullets");
-        Item.ResearchUnlockCount = 1;
-    }
-
     public override void SetDefaults()
     {
         Item.damage = 40;

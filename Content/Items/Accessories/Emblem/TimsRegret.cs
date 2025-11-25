@@ -2,14 +2,7 @@
 
 public class TimsRegret : ModItem
 {
-    private static float Factor => ThoriumMod != null ? .2f : .15f;
-
-    public override void SetStaticDefaults()
-    {
-        // DisplayName.SetDefault("Tim's Regret");
-        // Tooltip.SetDefault($"{Factor:P0} increased damage\n100% increased n00b regret");
-        Item.ResearchUnlockCount = 1;
-    }
+    private static float Factor => .15f;
 
     public override void SetDefaults()
     {
@@ -19,7 +12,6 @@ public class TimsRegret : ModItem
         Item.rare = ItemRarityID.LightPurple;
         Item.accessory = true;
     }
-
 
     public override void UpdateAccessory(Player player, bool hideVisual)
     {

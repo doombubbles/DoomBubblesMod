@@ -1,6 +1,3 @@
-using Terraria;
-using Terraria.ID;
-
 namespace DoomBubblesMod.Common.Players;
 
 public class BetterWeaponImbues : ModPlayer

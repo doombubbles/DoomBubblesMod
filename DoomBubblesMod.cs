@@ -10,11 +10,8 @@ global using EasyNetworkingLib;
 global using static DoomBubblesMod.DoomBubblesMod;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using DoomBubblesMod.Content.Items.Misc;
 using DoomBubblesMod.Utils;
 using Microsoft.Xna.Framework.Input;
-using Terraria.GameContent.ItemDropRules;
 
 
 namespace DoomBubblesMod;
@@ -56,8 +53,6 @@ public class DoomBubblesMod : Mod
             //TextureAssets.Projectile[ProjectileID.MoonlordBullet]. TODO texture changing
             //Main.dustTexture = GetTexture("Dusts/Dust"); TODO dust changing
         }
-
-        ThoriumChanges.Load();
     }
 
 

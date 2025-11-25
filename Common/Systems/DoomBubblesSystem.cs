@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using DoomBubblesMod.Content.Items.Misc;
-using DoomBubblesMod.Utils;
 using Terraria.UI;
 
 namespace DoomBubblesMod.Common.Systems;

@@ -1,7 +1,6 @@
 using System;
 using DoomBubblesMod.Common.GlobalProjectiles;
 using DoomBubblesMod.Content.Items.Thanos;
-using Terraria;
 
 namespace DoomBubblesMod.Content.Projectiles.Thanos;
 

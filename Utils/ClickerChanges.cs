@@ -3,11 +3,9 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using ClickerClass;
 using ClickerClass.Items;
-using ClickerClass.Items.Weapons.Clickers;
 using ClickerClass.Prefixes.ClickerPrefixes;
 using ClickerClass.Utilities;
 using DoomBubblesMod.Common.Configs;
-using Terraria.GameInput;
 
 namespace DoomBubblesMod.Utils;
 

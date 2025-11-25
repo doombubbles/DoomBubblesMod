@@ -1,5 +1,4 @@
-﻿using DoomBubblesMod.Common.Configs;
-using DoomBubblesMod.Common.Players;
+﻿using DoomBubblesMod.Common.Players;
 
 namespace DoomBubblesMod.Content.Items.Accessories;
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using DoomBubblesMod.Common.Players;
 using DoomBubblesMod.Content.Buffs;
-using DoomBubblesMod.Utils;
 using Terraria.Audio;
 
 namespace DoomBubblesMod.Content.Items.Thanos;

@@ -1,6 +1,4 @@
-﻿using DoomBubblesMod.Utils;
-
-namespace DoomBubblesMod.Content.Items.Accessories.Glove;
+﻿namespace DoomBubblesMod.Content.Items.Accessories.Glove;
 
 /*public class AquamarineGauntlet : GauntletItem
 {
